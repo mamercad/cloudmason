@@ -1,0 +1,11 @@
+---
+- name: docker-py
+  pip:
+    name: docker-py
+- name: foo
+  docker_container:
+    name: foo
+    state: started
+    image: centos:7
+    command: sleep 1800 
+  

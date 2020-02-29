@@ -1,0 +1,58 @@
+{
+  "variables": {
+    "centos_version": "8.1.1911",
+    "build_number": "{{timestamp}}",
+    "centos_arch": "x86_64",
+    "username": "root",
+    "password": "vagrant",
+    "disk_size": "20480",
+    "timeout": "30m",
+    "headless": "true"
+  },
+  "builders": [
+    {
+      "type": "virtualbox-iso",
+      "guest_os_type": "RedHat_64",
+      "iso_url": "http://mirrors.umflint.edu/centos/8/isos/x86_64/CentOS-{{ user `centos_version` }}-{{ user `centos_arch` }}-boot.iso",
+      "iso_checksum": "ee153d8587c42c6831a7ff88a48e27dd",
+      "iso_checksum_type": "md5",
+      "ssh_username": "{{ user `username` }}",
+      "ssh_password": "{{ user `password` }}",
+      "ssh_wait_timeout": "{{ user `timeout` }}",
+      "headless": "{{user `headless`}}",
+      "boot_command": [
+        "<tab> text ks=http://{{ .HTTPIP }}:{{ .HTTPPort }}/anaconda-ks.cfg<enter><wait>"
+      ],
+      "disk_size": "{{user `disk_size`}}",
+      "hard_drive_interface": "sata",
+      "http_directory": ".",
+      "shutdown_command": "shutdown -P now",
+      "vboxmanage": [
+        [
+          "modifyvm",
+          "{{.Name}}",
+          "--memory",
+          "2048"
+        ],
+        [
+          "modifyvm",
+          "{{.Name}}",
+          "--cpus",
+          "1"
+        ]
+      ]
+    }
+  ],
+  "provisioners": [
+    {
+      "type": "shell",
+      "scripts": "vboxtools.sh"
+    }
+  ],
+  "post-processors": [
+    {
+      "type": "vagrant",
+      "output": "CentOS-{{ user `centos_version` }}-{{ user `centos_arch` }}-{{ user `build_number` }}-{{ .Provider }}.box"
+    }
+  ]
+}

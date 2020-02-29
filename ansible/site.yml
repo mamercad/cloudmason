@@ -1,0 +1,22 @@
+#!/usr/bin/env ansible-playbook -i inventory/cloudmason --vault-password-file .vault_pass
+---
+- name: common
+  hosts: all
+  roles:
+    - common
+    - user
+- name: macos
+  hosts: macos
+  roles:
+    - macos
+- name: centos
+  hosts: centos
+  roles:
+    - centos
+- name: docker
+  hosts: docker
+  become: yes
+  roles:
+    - docker
+  tags:
+    - docker

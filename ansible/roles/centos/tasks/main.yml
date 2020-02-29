@@ -1,0 +1,6 @@
+---
+- name: upgrade everything
+  yum:
+    name: '*'
+    state: latest
+  become: yes
