@@ -3,3 +3,51 @@
   homebrew:
     update_homebrew: yes
     upgrade_all: yes
+- name: install some brew packages
+  homebrew:
+    name:
+      - ansible
+      - autoconf
+      - bash
+      - bash-git-prompt
+      - composer
+      - docker-machine
+      - docker-machine-driver-xhyve
+      - fd
+      - gdbm
+      - htop
+      - hyperkit
+      - jq
+      - kubernetes-cli
+      - libev
+      - libyaml
+      - minikube
+      - ncurses
+      - oniguruma
+      - openssl@1.1
+      - packer
+      - pcre
+      - pkg-config
+      - pyenv
+      - pyenv-virtualenv
+      - python
+      - python@2
+      - python@3.8
+      - readline
+      - ruby
+      - sqlite
+      - the_silver_searcher
+      - tree
+      - xhyve
+      - xz
+      - yq
+    state: present
+- name: install some cask packages
+  homebrew_cask:
+    name:
+    - google-chrome
+    - minikube
+    - vagrant
+    - vagrant-manager
+    - wkhtmltopdf
+    state: present
