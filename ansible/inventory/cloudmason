@@ -1,9 +1,9 @@
 [macos]
-jonagold ansible_python_interpreter=/usr/bin/python group=staff home=/Users/mark
-honeycrisp ansible_python_interpreter=/usr/bin/python group=staff home=/Users/mark
+jonagold ansible_python_interpreter=/usr/bin/python user=mark group=staff home=/Users/mark
+honeycrisp ansible_python_interpreter=/usr/bin/python user=mark group=staff home=/Users/mark
 
 [centos]
-lenovo group=mark home=/home/mark
+lenovo user=mark group=mark home=/home/mark
 
 [docker]
-lenovo group=mark home=/home/mark
+lenovo user=mark group=mark home=/home/mark

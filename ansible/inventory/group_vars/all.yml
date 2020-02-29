@@ -1,4 +1,7 @@
 ---
+full_name: Mark Mercado
+email: mamercad@gmail.com
+
 ssh_private_key: !vault |
           $ANSIBLE_VAULT;1.1;AES256
           62663130316437373530373466336436396133363235623762333265396130356531366562393166
