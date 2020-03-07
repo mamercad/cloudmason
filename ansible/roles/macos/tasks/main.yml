@@ -21,7 +21,7 @@
       - kubernetes-cli
       - libev
       - libyaml
-      - minikube
+      # - minikube
       - ncurses
       - oniguruma
       - openssl@1.1
@@ -46,8 +46,8 @@
   homebrew_cask:
     name:
       - caffeine
-      - google-chrome
-      - minikube
+      # - google-chrome
+      # - minikube
       - vagrant
       - vagrant-manager
       - wkhtmltopdf

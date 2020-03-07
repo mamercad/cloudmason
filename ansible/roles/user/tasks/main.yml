@@ -34,8 +34,11 @@
     mode: 0644
   with_items:
     - bash_profile
+    - inputrc
     - gitconfig
     - gitignores
     - screenrc
     - tmux.conf
     - vimrc
+    - xbindkeysrc
+    - xinitrc
