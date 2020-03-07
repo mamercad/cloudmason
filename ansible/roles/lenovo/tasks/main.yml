@@ -1,0 +1,24 @@
+---
+- cron: 
+    name: rsync /mnt/sdb1/{{ item }} /mnt/sdc1
+    hour: '00'
+    minute: '00'
+    job: "rsync -avz /mnt/sdb1/{{ item }} /mnt/sdc1"
+  with_items:
+    - documents
+    - homemovies
+    - mary
+    - pictures
+  tags: cron
+- service:
+    name: "{{ item }}"
+    state: started
+    enabled: yes
+  with_items:
+    - nginx
+    - couchpotato
+    - sonarr
+    - plexmediaserver
+    - sabnzbd
+  become: yes
+  tags: media
