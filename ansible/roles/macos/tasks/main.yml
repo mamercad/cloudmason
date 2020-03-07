@@ -45,9 +45,10 @@
 - name: install some cask packages
   homebrew_cask:
     name:
-    - google-chrome
-    - minikube
-    - vagrant
-    - vagrant-manager
-    - wkhtmltopdf
+      - caffeine
+      - google-chrome
+      - minikube
+      - vagrant
+      - vagrant-manager
+      - wkhtmltopdf
     state: present

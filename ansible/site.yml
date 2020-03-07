@@ -20,3 +20,10 @@
     - docker
   tags:
     - docker
+- name: stackstorm
+  hosts: all
+  roles:
+    - stackstorm
+  tags:
+    - stackstorm
+  become: yes

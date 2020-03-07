@@ -25,32 +25,17 @@
     dest: "{{ home }}/.ssh/mamercad.key"
     owner: "{{ user }}"
     group: "{{ group }}"
-    mode: 0400
-- name: deploy ~mark/.bash_profile
+- name: deploy ~mark/.dotfile
   template:
-    src: templates/bash_profile.j2
-    dest: "{{ home }}/.bash_profile"
+    src: templates/{{ item }}.j2
+    dest: "{{ home }}/.{{ item }}"
     owner: "{{ user }}"
     group: "{{ group }}"
     mode: 0644
-- name: deploy ~mark/.vimrc
-  template:
-    src: templates/vimrc.j2
-    dest: "{{ home }}/.vimrc"
-    owner: "{{ user }}"
-    group: "{{ group }}"
-    mode: 0644
-- name: deploy ~mark/.gitconfig
-  template:
-    src: templates/gitconfig.j2
-    dest: "{{ home }}/.gitconfig"
-    owner: "{{ user }}"
-    group: "{{ group }}"
-    mode: 0644
-- name: deploy ~mark/.gitignores
-  template:
-    src: templates/gitignores.j2
-    dest: "{{ home }}/.gitignores"
-    owner: "{{ user }}"
-    group: "{{ group }}"
-    mode: 0644
+  with_items:
+    - bash_profile
+    - gitconfig
+    - gitignores
+    - screenrc
+    - tmux.conf
+    - vimrc

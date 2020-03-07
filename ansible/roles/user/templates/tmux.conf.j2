@@ -1,0 +1,59 @@
+set -g alternate-screen on
+set -g base-index 1
+set -g escape-time 0
+set -g history-limit 50000
+set -g mode-keys vi
+set -g monitor-activity on
+set -g prefix C-a
+#set -g utf8 on
+#set -g status-utf8 on
+
+set-option -g prefix C-a
+unbind-key C-b
+bind-key C-a send-prefix
+set-option -g prefix C-a
+bind-key C-a last-window
+
+bind a send-prefix
+bind d detach
+#bind k kill-window
+#bind K kill-pane
+#bind l select-pane -R
+bind r source-file ~/.tmux.conf
+bind '"' choose-window
+bind | split-window -h
+bind - split-window -v
+bind ^@ next-window
+bind ^N next-window
+bind " " next-window
+bind n next-window
+bind ^H previous-window
+bind ^P previous-window
+bind p previous-window
+bind BSpace previous-window
+bind < resize-pane -L 10
+bind Left resize-pane -L 10
+bind > resize-pane -R 10
+bind Right resize-pane -R 10
+bind Up resize-pane -U 10
+bind Down resize-pane -D 10
+#bind H select-pane -L
+#bind J select-pane -D
+#bind K select-pane -U
+
+set -g status-left-length 20
+set -g status-right-length 40
+set -g default-terminal screen-256color
+set -g clock-mode-style 24
+set -g status-fg cyan
+set -g status-bg default
+set -g window-status-current-fg black
+set -g window-status-current-bg cyan
+set -g status-left '#[fg=yellow,bg=default]#S:#h#[default] '
+set -g status-right ' #[fg=yellow,bg=default]%a %b %d %H:%M#[default]'
+set -g pane-active-border-fg cyan
+set -g pane-active-border-bg 0
+
+bind-key \ set-option status
+bind-key / command-prompt "split-window 'exec man %%'"
+bind-key S command-prompt "new-window -n %1 'ssh %1'"
