@@ -11,6 +11,7 @@
     owner: "{{ user }}"
     group: "{{ group }}"
     mode: 0644
+    backup: yes
 - name: deploy ~mark/.ssh/mamercad.key.pub
   copy:
     content: |
@@ -19,12 +20,14 @@
     owner: "{{ user }}"
     group: "{{ group }}"
     mode: 0444
+    backup: yes
 - name: deploy ~mark/.ssh/mamercad.key
   copy:
     content: "{{ ssh_private_key }}"
     dest: "{{ home }}/.ssh/mamercad.key"
     owner: "{{ user }}"
     group: "{{ group }}"
+    backup: yes
 - name: deploy ~mark/.dotfile
   template:
     src: templates/{{ item }}.j2
@@ -32,6 +35,7 @@
     owner: "{{ user }}"
     group: "{{ group }}"
     mode: 0644
+    backup: yes
   with_items:
     - bash_profile
     - inputrc
@@ -42,3 +46,4 @@
     - vimrc
     - xbindkeysrc
     - xinitrc
+    backup: yes
