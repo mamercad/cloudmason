@@ -10,3 +10,6 @@ lenovo user=mark group=mark home=/home/mark
 
 [stackstorm]
 lenovo user=mark group=mark home=/home/mark
+
+[ubuntu]
+prodesk user=mark group=mark home=/home/mark

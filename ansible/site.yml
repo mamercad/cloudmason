@@ -1,4 +1,4 @@
-#!/usr/bin/env ansible-playbook -i inventory/cloudmason --vault-password-file .vault_pass
+#!/usr/bin/env -S ansible-playbook -i inventory/cloudmason --vault-password-file .vault_pass
 ---
 - name: common
   hosts: all
@@ -31,3 +31,8 @@
   hosts: lenovo
   roles:
     - lenovo
+- name: ubuntu
+  hosts: ubuntu
+  roles:
+    - ubuntu
+    - microk8s
