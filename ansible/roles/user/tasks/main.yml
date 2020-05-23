@@ -37,8 +37,20 @@
     - inputrc
     - gitconfig
     - gitignores
+    - muttrc
     - screenrc
     - tmux.conf
     - vimrc
     - xbindkeysrc
     - xinitrc
+    - zshrc
+- name: clone ohmyzsh/ohmyzsh
+  git:
+    repo: https://github.com/ohmyzsh/ohmyzsh.git
+    dest: "{{ home }}/.oh-my-zsh"
+    version: master
+- name: clone gpakosz/tmux
+  git:
+    repo: https://github.com/gpakosz/.tmux.git
+    dest: "{{ home }}/.tmux"
+    version: master

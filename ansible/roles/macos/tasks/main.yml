@@ -3,17 +3,20 @@
   homebrew:
     update_homebrew: yes
     upgrade_all: yes
+
 - name: install some brew packages
   homebrew:
     name:
       - ansible
       - autoconf
       - bash
+      - bash-completion
       - bash-git-prompt
       - composer
       - docker-machine
       - docker-machine-driver-xhyve
       - fd
+      - fzf
       - gdbm
       - htop
       - hyperkit
@@ -21,7 +24,6 @@
       - kubernetes-cli
       - libev
       - libyaml
-      # - minikube
       - ncurses
       - oniguruma
       - openssl@1.1
@@ -42,6 +44,7 @@
       - xz
       - yq
     state: present
+
 - name: install some cask packages
   homebrew_cask:
     name:
