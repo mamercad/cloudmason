@@ -1,5 +1,4 @@
 [macos]
-jonagold ansible_python_interpreter=/usr/bin/python user=mark group=staff home=/Users/mark
 honeycrisp ansible_python_interpreter=/usr/bin/python user=mark group=staff home=/Users/mark
 
 [centos]
@@ -12,4 +11,5 @@ lenovo user=mark group=mark home=/home/mark
 lenovo user=mark group=mark home=/home/mark
 
 [ubuntu]
-prodesk user=mark group=mark home=/home/mark
+ambrosia user=mark group=mark home=/home/mark
+jonagold user=mark group=mark home=/home/mark
