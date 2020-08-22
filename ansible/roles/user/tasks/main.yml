@@ -3,10 +3,16 @@
   user:
     name: "{{ user }}"
     comment: "{{ full_name }}"
+  become: yes
+- name: give mark passwordless sudo
+  copy:
+    content: mark ALL=(ALL:ALL) NOPASSWD:ALL
+    dest: /etc/sudoers.d/mark
+    mode: 0440
 - name: deploy ~mark/.ssh/authorized_keys
   copy:
     content: |
-      ssh-rsa AAAAB3NzaC1yc2EAAAABJQAAAQEAirA5p3ABC+MQqE1bJkA83SHUkVBoiuaZyYRMB7up+6NW/9bSxMp36o2eFu+jFYh6O5K74Kp6yDPl+FUCXkpdmRHiEmKp6ET5+1LYc93CgWp1kieTDUVoM3e5IOmBvJrwFn/ot3ghQciO7jM34/r6j6LpDTVEXxtC0tT4SL+gXWhoWe9/McS0ElDkw0Eq7khyws6TXbSzIxNghtW+WzEFW+DYHVXRsTqhOI3AcQW4uQ8FLd5/qEvDRBZxsleTU1LUNNq99nuWpwvpRBwyAYWKkvDDz8bKj98ciqvjFShF3IUPGxrKVhgzKEN5GORTeZgQG+qQrv0AiIYyXsF+EFkOEQ== rsa-key-20180113 
+      ssh-rsa AAAAB3NzaC1yc2EAAAABJQAAAQEAirA5p3ABC+MQqE1bJkA83SHUkVBoiuaZyYRMB7up+6NW/9bSxMp36o2eFu+jFYh6O5K74Kp6yDPl+FUCXkpdmRHiEmKp6ET5+1LYc93CgWp1kieTDUVoM3e5IOmBvJrwFn/ot3ghQciO7jM34/r6j6LpDTVEXxtC0tT4SL+gXWhoWe9/McS0ElDkw0Eq7khyws6TXbSzIxNghtW+WzEFW+DYHVXRsTqhOI3AcQW4uQ8FLd5/qEvDRBZxsleTU1LUNNq99nuWpwvpRBwyAYWKkvDDz8bKj98ciqvjFShF3IUPGxrKVhgzKEN5GORTeZgQG+qQrv0AiIYyXsF+EFkOEQ== rsa-key-20180113
     dest: "{{ home }}/.ssh/authorized_keys"
     owner: "{{ user }}"
     group: "{{ group }}"
