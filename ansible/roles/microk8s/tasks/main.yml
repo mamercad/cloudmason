@@ -14,10 +14,10 @@
 - shell: usermod -a -G microk8s {{ lookup('env', 'USER') }}
   become: yes
 
-- shell: chown -f -R {{ lookup('env', 'USER') }} {{ lookup('env', 'HOME') }}/.kube
-  become: yes
-  args:
-    warn: no
+# - shell: chown -f -R {{ lookup('env', 'USER') }} {{ lookup('env', 'HOME') }}/.kube
+#   become: yes
+#   args:
+#     warn: no
 
 - shell: microk8s kubectl completion bash >/etc/bash_completion.d/kubectl
   become: yes
