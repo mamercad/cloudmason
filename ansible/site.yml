@@ -4,7 +4,6 @@
   hosts: all
   roles:
     - common
-    - user
 - name: macos
   hosts: macos
   roles:
@@ -36,3 +35,7 @@
   roles:
     - ubuntu
     - microk8s
+- name: user
+  hosts: all
+  roles:
+    - user
