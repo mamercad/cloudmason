@@ -15,44 +15,139 @@
     name:
       - certbot
 
-- name: deploy cloudmason nginx conf
+- name: install php-fpm
+  apt:
+    name: php-fpm
+
+- name: deploy /etc/nginx/sites-available/cloudmason.org
   copy:
-    dest: /etc/nginx/conf.d/cloudmason.conf
+    dest: /etc/nginx/sites-available/cloudmason.org
+    mode: 0644
     content: |
       server {
-        listen *:80 default_server;
-        add_header Front-End-Https on;
-        add_header X-Content-Type-Options nosniff;
-        if ($ssl_protocol = "") {
-          return 308 https://$host$request_uri;
-        }
-        index  index.html;
-        access_log /var/log/nginx/http.access.log combined;
-        error_log /var/log/nginx/http.error.log;
-      }
-      server {
-        listen *:443 ssl;
-        ssl_certificate     /etc/letsencrypt/live/cloudmason.org/fullchain.pem;
-        ssl_certificate_key /etc/letsencrypt/live/cloudmason.org/privkey.pem;
-        ssl_session_cache   shared:SSL:10m;
-        ssl_session_timeout 5m;
-        ssl_protocols       TLSv1 TLSv1.1 TLSv1.2;
-        ssl_ciphers         EECDH+AESGCM:EDH+AESGCM:AES256+EECDH:AES256+EDH:ECDHE-RSA-AES128-GCM-SHA384:ECDHE
-        ssl_prefer_server_ciphers on;
-        root   /usr/share/nginx/html;
-        index  index.php index.html index.htm;
+        listen 80;
+        root /var/www/html;
+        index index.php index.html index.htm index.nginx-debian.html;
+        server_name ambrosia.cloudmason.org;
         location / {
           try_files $uri $uri/ =404;
         }
-        error_page 404 /404.html;
-        error_page 500 502 503 504 /50x.html;
-        location = /50x.html {
-          root /usr/share/nginx/html;
+        location ~ \.php$ {
+          include snippets/fastcgi-php.conf;
+          fastcgi_pass unix:/var/run/php/php7.4-fpm.sock;
         }
-        access_log   /var/log/nginx/https.access.log combined;
-        error_log    /var/log/nginx/https.error.log;
-        add_header   Front-End-Https on;
-        add_header   X-Content-Type-Options nosniff;
-        add_header   Access-Control-Allow-Origin *;
-        add_header   Content-Security-Policy "frame-ancestors cloudmason.org";
+        location ~ /\.ht {
+          deny all;
+        }
       }
+
+- name: enable nginx cloudmason.org
+  file:
+    state: link
+    src: /etc/nginx/sites-available/cloudmason.org
+    dest: /etc/nginx/sites-enabled/cloudmason
+
+- name: deploy cloudmason nginx conf
+  copy:
+    dest: /etc/nginx/conf.d/cloudmason.conf
+    mode: 0644
+    content: |
+      # server {
+      #   listen *:80 default_server;
+      #   add_header Front-End-Https on;
+      #   add_header X-Content-Type-Options nosniff;
+      #   # if ($ssl_protocol = "") {
+      #   #   return 308 https://$host$request_uri;
+      #   # }
+      #   index  index.html;
+      #   access_log /var/log/nginx/http.access.log combined;
+      #   error_log /var/log/nginx/http.error.log;
+      # }
+      # server {
+      #   listen *:443 ssl;
+      #   ssl_certificate     /etc/letsencrypt/live/cloudmason.org/fullchain.pem;
+      #   ssl_certificate_key /etc/letsencrypt/live/cloudmason.org/privkey.pem;
+      #   ssl_session_cache   shared:SSL:10m;
+      #   ssl_session_timeout 5m;
+      #   ssl_protocols       TLSv1 TLSv1.1 TLSv1.2;
+      #   ssl_ciphers         EECDH+AESGCM:EDH+AESGCM:AES256+EECDH:AES256+EDH:ECDHE-RSA-AES128-GCM-SHA384:ECDHE
+      #   ssl_prefer_server_ciphers on;
+      #   root   /usr/share/nginx/html;
+      #   index  index.php index.html index.htm;
+      #   location / {
+      #     try_files $uri $uri/ =404;
+      #   }
+      #   error_page 404 /404.html;
+      #   error_page 500 502 503 504 /50x.html;
+      #   location = /50x.html {
+      #     root /usr/share/nginx/html;
+      #   }
+      #   access_log   /var/log/nginx/https.access.log combined;
+      #   error_log    /var/log/nginx/https.error.log;
+      #   add_header   Front-End-Https on;
+      #   add_header   X-Content-Type-Options nosniff;
+      #   add_header   Access-Control-Allow-Origin *;
+      #   add_header   Content-Security-Policy "frame-ancestors cloudmason.org";
+      # }
+
+- name: deploy /var/www/html/index.php
+  copy:
+    dest: /var/www/html/index.php
+    mode: 0644
+    content: |
+      <html>
+      <head>
+        <title>cloudmason.org</title>
+        <!-- Global site tag (gtag.js) - Google Analytics -->
+        <script async src="https://www.googletagmanager.com/gtag/js?id=UA-49577207-1"></script>
+        <script>
+          window.dataLayer = window.dataLayer || [];
+          function gtag(){dataLayer.push(arguments);}
+          gtag('js', new Date());
+          gtag('config', 'UA-49577207-1');
+        </script>
+        <style rel="stylesheet" type="text/css">
+        html, body {
+          margin: 10;
+          padding: 10;
+          width: 75%;
+          height: 75%;
+          display: table
+        }
+        #content {
+          display: table-cell;
+          text-align: left;
+          vertical-align: middle;
+        }
+        </style>
+        </head>
+        <body bgcolor="#292929">
+          <div id="content">
+          <p style="font-family:Courier New;color:#eaeaea;font-size:44px;text-align:left">cloudmason.org</p>
+          <iframe src="https://cloudmason.org/grafana/d-solo/KVfnOrmMk/new-dashboard-copy?orgId=1&panelId=2&refresh=1" width="700" height="350" frameborder="0"></iframe>
+          <p style="font-family:Courier New;color:#eaeaea;font-size:24px;text-align:left">chop wood and carry water</p>
+          <p style="font-family:Courier New;color:#eaeaea;font-size:14px;text-align:left"><?= shell_exec('date'); ?><br><?= shell_exec('date -u'); ?></p>
+          <p style="font-family:Courier New;color:#eaeaea;font-size:14px;text-align:left"><?= shell_exec('uptime'); ?></p>
+          <pre><p style="font-family:Courier New;color:#eaeaea;font-size:14px;text-align:left"><?= shell_exec('df -h / /home /var /data /mnt/sdb2 /mnt/sdc1 /mnt/sdd1'); ?></p></pre>
+          <p style="font-family:Courier New;color:#eaeaea;font-size:14px;text-align:left">
+            nginx: <?= shell_exec('pgrep -f nginx | paste -sd,'); ?><br>
+            sabnzbd: <?= shell_exec('pgrep -f sabnzbd | paste -sd,'); ?><br>
+            sonarr: <?= shell_exec('pgrep -f sonarr | paste -sd,'); ?><br>
+            couchpotato: <?= shell_exec('pgrep -f couchpotato | paste -sd,'); ?><br>
+            plexmediaserver: <?= shell_exec('pgrep -f plexmediaserver | paste -sd,'); ?><br>
+            <br>
+            /mnt/sdb2: movies: <?= shell_exec('find /mnt/sdb2/Movies -type f -size +10000 | wc -l'); ?>
+            tvshows: <?= shell_exec('find /mnt/sdb2/TvShows -type f -size +10000 | wc -l'); ?>
+            <br>
+            /mnt/sdc1: movies: <?= shell_exec('find /mnt/sdc1/movies -type f -size +10000 | wc -l'); ?>
+            tvshows: <?= shell_exec('find /mnt/sdc1/tvshows -type f -size +10000 | wc -l'); ?>
+            <br>
+            /mnt/sdd1: movies: <?= shell_exec('find /mnt/sdd1/movies -type f -size +10000 | wc -l'); ?>
+            tvshows: <?= shell_exec('find /mnt/sdd1/tvshows -type f -size +10000 | wc -l'); ?>
+          </p>
+          <p style="font-family:Courier New;color:#eaeaea;font-size:14px;text-align:left"><?= rand(); ?><br><?= shell_exec('openssl rand -hex 20'); ?></p>
+          <pre><p style="font-family:Courier New;color:#eaeaea;font-size:14px;text-align:left">fail2ban:<br><?= shell_exec('cat f2b-sshd'); ?></p></pre>
+          <pre><p style="font-family:Courier New;color:#eaeaea;font-size:14px;text-align:left"><?= shell_exec('fortune computers'); ?></p></pre>
+          </div>
+        </body>
+        </html>
