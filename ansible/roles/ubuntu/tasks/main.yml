@@ -4,5 +4,101 @@
     state: present
   loop:
     - bash-completion
+    - bridge-utils
+    - fail2ban
     - git
+    - htop
+    - libvirt-clients
+    - libvirt-daemon-system
+    - netdata
+    - prometheus
+    - prometheus-node-exporter
+    - qemu-kvm
+    - screen
+    - speedtest-cli
     - vim
+    - virtinst
+
+- name: deploy /etc/sysctl.d/bridge.conf
+  copy:
+    dest: /etc/sysctl.d/bridge.conf
+    mode: 0644
+    content: |
+      net.bridge.bridge-nf-call-ip6tables=0
+      net.bridge.bridge-nf-call-iptables=0
+      net.bridge.bridge-nf-call-arptables=0
+    backup: yes
+
+- name: deploy /etc/udev/rules.d/99-bridge.rules
+  copy:
+    dest: /etc/udev/rules.d/99-bridge.rules
+    mode: 0644
+    content: |
+      ACTION=="add", SUBSYSTEM=="module", KERNEL=="br_netfilter", RUN+="/sbin/sysctl -p /etc/sysctl.d/bridge.conf"
+    backup: yes
+
+- name: deploy /etc/netplan/01-network-manager-all.yaml
+  copy:
+    dest: /etc/netplan/01-network-manager-all.yaml
+    mode: 0644
+    content: |
+      network:
+        version: 2
+        renderer: networkd
+        ethernets:
+          enp2s0:
+            dhcp4: yes
+        bridges:
+          br0:
+            dhcp4: yes
+            interfaces:
+              - enp2s0
+    backup: yes
+
+- name: punch a hole for stuff
+  iptables:
+    chain: INPUT
+    protocol: tcp
+    destination_port: "{{ item.0 }}"
+    ctstate: NEW
+    syn: match
+    jump: ACCEPT
+    comment: "{{ item.1 }}"
+  with_together:
+    - ['19999', '9090', '9100']
+    - ['netdata', 'prometheus', 'prometheus-node-exporter']
+
+- name: fixup /etc/netdata/netdata.conf
+  copy:
+    dest: /etc/netdata/netdata.conf
+    content: |
+      # NetData Configuration
+
+      # The current full configuration can be retrieved from the running
+      # server at the URL
+      #
+      #   http://localhost:19999/netdata.conf
+      #
+      # for example:
+      #
+      #   wget -O /etc/netdata/netdata.conf http://localhost:19999/netdata.conf
+      #
+
+      [global]
+        hostname = ambrosia.cloudmason.org
+        run as user = netdata
+        web files owner = root
+        web files group = root
+        # Netdata is not designed to be exposed to potentially hostile
+        # networks. See https://github.com/netdata/netdata/issues/164
+        bind socket to IP = 0.0.0.0
+    backup: yes
+  notify: restart netdata
+
+- name: fail2ban cron for nginx wall of shame
+  cron:
+    name: fail2-ban cron
+    minute: "*/5"
+    user: root
+    job: |
+      /sbin/iptables -L f2b-sshd 2>/dev/null | grep REJECT | awk '{print $4}' >/usr/share/nginx/html/f2b-sshd 2>/dev/null
