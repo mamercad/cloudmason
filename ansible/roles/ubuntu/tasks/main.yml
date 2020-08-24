@@ -10,7 +10,9 @@
     - htop
     - libvirt-clients
     - libvirt-daemon-system
+    - mailutils
     - netdata
+    - postfix
     - prometheus
     - prometheus-node-exporter
     - qemu-kvm
@@ -95,10 +97,76 @@
     backup: yes
   notify: restart netdata
 
+- name: deploy /etc/fail2ban/jail.local
+  copy:
+    dest: /etc/fail2ban/jail.local
+    mode: 0644
+    content: |
+      [sshd]
+      enabled = true
+      port = 22
+      filter = sshd
+      logpath = /var/log/auth.log
+      maxretry = 3
+
 - name: fail2ban cron for nginx wall of shame
   cron:
     name: fail2-ban cron
     minute: "*/5"
     user: root
     job: |
-      /sbin/iptables -L f2b-sshd 2>/dev/null | grep REJECT | awk '{print $4}' >/usr/share/nginx/html/f2b-sshd 2>/dev/null
+      /sbin/iptables -L f2b-sshd 2>/dev/null | grep REJECT | awk '{print $4}' >/var/www/html/f2b-sshd 2>/dev/null
+
+- name: deploy /etc/postfix/gmail_sasl
+  copy:
+    dest: /etc/postfix/gmail_sasl
+    mode: 0600
+    content:
+      !vault |
+      $ANSIBLE_VAULT;1.1;AES256
+      39316133316539343231343435343363666633643563336661323633616630316639646534656436
+      6130633766323763353439306365663531393734643137390a636238376563396461343962343163
+      36363361653032346134643666353035666639376465393432313439323939616263353066353665
+      6135323338383034650a623930353763366535336164653736303538633638396130393366306233
+      63333737303639396230396331353161623539653266636637316165666365336136383662343266
+      34626564613638336465373563643536646563613566306337353463666138643630626362353735
+      343536353463343431363534356639373665
+
+- name: postmap /etc/postfix/gmail_sasl
+  shell:
+    postmap /etc/postfix/gmail_sasl
+
+- name: set up postfix for relay
+  blockinfile:
+    path: /etc/postfix/main.cf
+    block: |
+      relayhost = [smtp.gmail.com]:587
+      smtp_sasl_auth_enable = yes
+      smtp_sasl_security_options = noanonymous
+      smtp_sasl_password_maps = hash:/etc/postfix/gmail_sasl
+      smtp_tls_security_level = encrypt
+      smtp_tls_security_level = verify
+      smtp_tls_CAfile = /etc/ssl/certs/ca-certificates.crt
+
+- name: deploy /etc/postfix/access
+  copy:
+    dest: /etc/postfix/access
+    mode: 0644
+    content: |
+      192.168/16 OK
+
+- name: postmap /etc/postfix/access
+  shell:
+    postmap /etc/postfix/access
+
+- name: update /etc/aliases
+  blockinfile:
+    path: /etc/aliases
+    block: |
+      root: mark
+      mark: mamercad@gmail.com
+    backup: yes
+
+- name: newaliases
+  shell: |
+    newaliases
