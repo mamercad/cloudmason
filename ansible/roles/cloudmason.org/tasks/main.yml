@@ -90,11 +90,19 @@
       #   add_header   Content-Security-Policy "frame-ancestors cloudmason.org";
       # }
 
-- name: deploy /var/www/html/index.php
+- name: deploy /usr/share/nginx/html/cloudmason.org/cloudmason.php
   copy:
-    dest: /var/www/html/index.php
+    dest: /usr/share/nginx/html/cloudmason.org/cloudmason.php
     mode: 0644
     content: |
+      <?php
+      if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+        $payload = json_decode(file_get_contents('php://input'), true);
+        if (isset($payload['ref']) && $payload['ref'] == 'refs/heads/main') {
+          exec("echo == $(date) == >>./webhook.log && git pull origin main >>./webhook.log 2>&1");
+        }
+      }
+      ?>
       <html>
       <head>
         <title>cloudmason.org</title>
@@ -106,48 +114,50 @@
           gtag('js', new Date());
           gtag('config', 'UA-49577207-1');
         </script>
-        <style rel="stylesheet" type="text/css">
-        html, body {
+      <style rel="stylesheet" type="text/css">
+      html, body {
           margin: 10;
           padding: 10;
           width: 75%;
           height: 75%;
           display: table
-        }
-        #content {
+      }
+      #content {
           display: table-cell;
           text-align: left;
           vertical-align: middle;
-        }
-        </style>
-        </head>
-        <body bgcolor="#292929">
-          <div id="content">
-          <p style="font-family:Courier New;color:#eaeaea;font-size:44px;text-align:left">cloudmason.org</p>
-          <iframe src="https://cloudmason.org/grafana/d-solo/KVfnOrmMk/new-dashboard-copy?orgId=1&panelId=2&refresh=1" width="700" height="350" frameborder="0"></iframe>
-          <p style="font-family:Courier New;color:#eaeaea;font-size:24px;text-align:left">chop wood and carry water</p>
-          <p style="font-family:Courier New;color:#eaeaea;font-size:14px;text-align:left"><?= shell_exec('date'); ?><br><?= shell_exec('date -u'); ?></p>
-          <p style="font-family:Courier New;color:#eaeaea;font-size:14px;text-align:left"><?= shell_exec('uptime'); ?></p>
-          <pre><p style="font-family:Courier New;color:#eaeaea;font-size:14px;text-align:left"><?= shell_exec('df -h / /home /var /data /mnt/sdb2 /mnt/sdc1 /mnt/sdd1'); ?></p></pre>
-          <p style="font-family:Courier New;color:#eaeaea;font-size:14px;text-align:left">
-            nginx: <?= shell_exec('pgrep -f nginx | paste -sd,'); ?><br>
-            sabnzbd: <?= shell_exec('pgrep -f sabnzbd | paste -sd,'); ?><br>
-            sonarr: <?= shell_exec('pgrep -f sonarr | paste -sd,'); ?><br>
-            couchpotato: <?= shell_exec('pgrep -f couchpotato | paste -sd,'); ?><br>
-            plexmediaserver: <?= shell_exec('pgrep -f plexmediaserver | paste -sd,'); ?><br>
-            <br>
-            /mnt/sdb2: movies: <?= shell_exec('find /mnt/sdb2/Movies -type f -size +10000 | wc -l'); ?>
-            tvshows: <?= shell_exec('find /mnt/sdb2/TvShows -type f -size +10000 | wc -l'); ?>
-            <br>
-            /mnt/sdc1: movies: <?= shell_exec('find /mnt/sdc1/movies -type f -size +10000 | wc -l'); ?>
-            tvshows: <?= shell_exec('find /mnt/sdc1/tvshows -type f -size +10000 | wc -l'); ?>
-            <br>
-            /mnt/sdd1: movies: <?= shell_exec('find /mnt/sdd1/movies -type f -size +10000 | wc -l'); ?>
-            tvshows: <?= shell_exec('find /mnt/sdd1/tvshows -type f -size +10000 | wc -l'); ?>
-          </p>
-          <p style="font-family:Courier New;color:#eaeaea;font-size:14px;text-align:left"><?= rand(); ?><br><?= shell_exec('openssl rand -hex 20'); ?></p>
-          <pre><p style="font-family:Courier New;color:#eaeaea;font-size:14px;text-align:left">fail2ban:<br><?= shell_exec('cat f2b-sshd'); ?></p></pre>
-          <pre><p style="font-family:Courier New;color:#eaeaea;font-size:14px;text-align:left"><?= shell_exec('fortune computers'); ?></p></pre>
-          </div>
-        </body>
-        </html>
+      }
+      </style>
+      </head>
+      <body bgcolor="#292929">
+        <div id="content">
+        <p style="font-family:Courier New;color:#eaeaea;font-size:44px;text-align:left">cloudmason.org</p>
+        <iframe src="https://cloudmason.org/grafana/d-solo/KVfnOrmMk/new-dashboard-copy?orgId=1&panelId=2&refresh=1" width="700" height="350" frameborder="0"></iframe>
+        <p style="font-family:Courier New;color:#eaeaea;font-size:24px;text-align:left">chop wood and carry water</p>
+        <p style="font-family:Courier New;color:#eaeaea;font-size:14px;text-align:left"><?= shell_exec('date'); ?><br><?= shell_exec('date -u'); ?></p>
+        <p style="font-family:Courier New;color:#eaeaea;font-size:14px;text-align:left"><?= shell_exec('uptime'); ?></p>
+        <pre><p style="font-family:Courier New;color:#eaeaea;font-size:14px;text-align:left"><?= shell_exec('df -h / /home /var /data /mnt/sdb2 /mnt/sdc1 /mnt/sdd1'); ?></p></pre>
+        <p style="font-family:Courier New;color:#eaeaea;font-size:14px;text-align:left">
+          nginx: <?= shell_exec('pgrep -f nginx | paste -sd,'); ?><br>
+          sabnzbd: <?= shell_exec('pgrep -f sabnzbd | paste -sd,'); ?><br>
+          sonarr: <?= shell_exec('pgrep -f sonarr | paste -sd,'); ?><br>
+          couchpotato: <?= shell_exec('pgrep -f couchpotato | paste -sd,'); ?><br>
+          plexmediaserver: <?= shell_exec('pgrep -f plexmediaserver | paste -sd,'); ?><br>
+          <br>
+          /mnt/sdb2: movies: <?= shell_exec('find /mnt/sdb2/Movies -type f -size +10000 | wc -l'); ?>
+          tvshows: <?= shell_exec('find /mnt/sdb2/TvShows -type f -size +10000 | wc -l'); ?>
+          <br>
+          /mnt/sdc1: movies: <?= shell_exec('find /mnt/sdc1/movies -type f -size +10000 | wc -l'); ?>
+          tvshows: <?= shell_exec('find /mnt/sdc1/tvshows -type f -size +10000 | wc -l'); ?>
+          <br>
+          /mnt/sdd1: movies: <?= shell_exec('find /mnt/sdd1/movies -type f -size +10000 | wc -l'); ?>
+          tvshows: <?= shell_exec('find /mnt/sdd1/tvshows -type f -size +10000 | wc -l'); ?>
+        </p>
+        <p style="font-family:Courier New;color:#eaeaea;font-size:14px;text-align:left">rand: <?= rand(); ?><br>openssl rand -hex 20: <?= shell_exec('openssl rand -hex 20'); ?></p>
+        <p style="font-family:Courier New;color:#eaeaea;font-size:14px;text-align:left">rand: <?= rand(); ?><br>openesl rand -base64 20: <?= shell_exec('openssl rand -base64 20'); ?></p>
+        <pre><p style="font-family:Courier New;color:#eaeaea;font-size:14px;text-align:left">fail2ban:<br><?= shell_exec('cat ../f2b-sshd'); ?></p></pre>
+        <pre><p style="font-family:Courier New;color:#eaeaea;font-size:14px;text-align:left"><?= shell_exec('fortune computers'); ?></p></pre>
+        <pre><p style="font-family:Courier New;color:#eaeaea;font-size:6px;text-align:left"><?= shell_exec('git log -1'); ?></p></pre>
+        </div>
+      </body>
+      </html>
