@@ -104,6 +104,7 @@
       - openssl@1.1
       - p11-kit
       - packer
+      - pandoc
       - pango
       - pcre
       - perl
