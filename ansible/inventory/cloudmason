@@ -13,3 +13,6 @@ lenovo user=mark group=mark home=/home/mark
 [ubuntu]
 ambrosia user=mark group=mark home=/home/mark
 jonagold user=mark group=mark home=/home/mark
+
+[prometheus]
+lenovo user=mark group=mark home=/home/mark
