@@ -69,8 +69,8 @@
       maxretry = 3
 
 - name: check if /var/www/html exists
-  shell:
-    stat: /var/www/html
+  stat:
+    path: /var/www/html
   register: var_www_html
   failed_when: no
 
@@ -81,7 +81,7 @@
     user: root
     job: |
       /sbin/iptables -L f2b-sshd 2>/dev/null | grep REJECT | awk '{print $4}' >/var/www/html/f2b-sshd 2>/dev/null
-  when: var_www_html is not failed
+  when: var_www_html.stat.exists
 
 - name: deploy /etc/postfix/gmail_sasl
   copy:
