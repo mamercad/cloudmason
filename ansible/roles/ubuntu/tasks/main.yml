@@ -4,58 +4,17 @@
     state: present
   loop:
     - bash-completion
-    - bridge-utils
     - fail2ban
     - git
     - htop
-    - libvirt-clients
-    - libvirt-daemon-system
     - mailutils
     - netdata
     - postfix
     - prometheus
     - prometheus-node-exporter
-    - qemu-kvm
     - screen
     - speedtest-cli
     - vim
-    - virtinst
-
-- name: deploy /etc/sysctl.d/bridge.conf
-  copy:
-    dest: /etc/sysctl.d/bridge.conf
-    mode: 0644
-    content: |
-      net.bridge.bridge-nf-call-ip6tables=0
-      net.bridge.bridge-nf-call-iptables=0
-      net.bridge.bridge-nf-call-arptables=0
-    backup: yes
-
-- name: deploy /etc/udev/rules.d/99-bridge.rules
-  copy:
-    dest: /etc/udev/rules.d/99-bridge.rules
-    mode: 0644
-    content: |
-      ACTION=="add", SUBSYSTEM=="module", KERNEL=="br_netfilter", RUN+="/sbin/sysctl -p /etc/sysctl.d/bridge.conf"
-    backup: yes
-
-- name: deploy /etc/netplan/01-network-manager-all.yaml
-  copy:
-    dest: /etc/netplan/01-network-manager-all.yaml
-    mode: 0644
-    content: |
-      network:
-        version: 2
-        renderer: networkd
-        ethernets:
-          enp2s0:
-            dhcp4: yes
-        bridges:
-          br0:
-            dhcp4: yes
-            interfaces:
-              - enp2s0
-    backup: yes
 
 - name: punch a hole for stuff
   iptables:
@@ -87,7 +46,7 @@
       #
 
       [global]
-        hostname = ambrosia.cloudmason.org
+        hostname = {{ inventory_hostname }}.cloudmason.org
         run as user = netdata
         web files owner = root
         web files group = root
@@ -109,6 +68,12 @@
       logpath = /var/log/auth.log
       maxretry = 3
 
+- name: check if /var/www/html exists
+  shell:
+    stat: /var/www/html
+  register: var_www_html
+  failed_when: no
+
 - name: fail2ban cron for nginx wall of shame
   cron:
     name: fail2-ban cron
@@ -116,6 +81,7 @@
     user: root
     job: |
       /sbin/iptables -L f2b-sshd 2>/dev/null | grep REJECT | awk '{print $4}' >/var/www/html/f2b-sshd 2>/dev/null
+  when: var_www_html is not failed
 
 - name: deploy /etc/postfix/gmail_sasl
   copy:

@@ -37,10 +37,17 @@
     - lenovo
 
 - name: ubuntu
-  hosts: ubuntu
+  hosts:
+    - ubuntu
+    - nodes
   roles:
     - ubuntu
     - microk8s
+
+- name: ubuntu-hypervisor
+  hosts: ubuntu-hypervisor
+  roles:
+    - ubuntu-hypervisor
 
 - name: user
   hosts: all
