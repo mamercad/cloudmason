@@ -65,6 +65,7 @@
     - cloudmason.org
 
 - name: prometheus
-  hosts: prometheus
+  hosts:
+    - prometheus
   roles:
     - prometheus

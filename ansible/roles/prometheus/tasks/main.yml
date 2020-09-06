@@ -84,6 +84,7 @@
     backup: yes
   become: yes
   notify: restart prometheus
+  tags: prometheus
 
 - name: deploy /etc/prometheus/alertmanager.yml
   copy:
@@ -112,3 +113,4 @@
     backup: yes
   become: yes
   notify: restart prometheus
+  tags: prometheus
