@@ -4,46 +4,60 @@
   hosts: all
   roles:
     - common
-# - name: macos
-#   hosts: macos
-#   roles:
-#     - macos
-# - name: centos
-#   hosts: centos
-#   roles:
-#     - centos
-# - name: docker
-#   hosts: docker
-#   become: yes
-#   roles:
-#     - docker
-#   tags:
-#     - docker
-# - name: stackstorm
-#   hosts: all
-#   roles:
-#     - stackstorm
-#   tags:
-#     - stackstorm
-#   become: yes
-# - name: lenovo
-#   hosts: lenovo
-#   roles:
-#     - lenovo
+
+- name: macos
+  hosts: macos
+  roles:
+    - macos
+
+- name: centos
+  hosts: centos
+  roles:
+    - centos
+
+- name: docker
+  hosts: docker
+  become: yes
+  roles:
+    - docker
+  tags:
+    - docker
+
+- name: stackstorm
+  hosts: all
+  roles:
+    - stackstorm
+  tags:
+    - stackstorm
+  become: yes
+
+- name: lenovo
+  hosts: lenovo
+  roles:
+    - lenovo
+
 - name: ubuntu
   hosts: ubuntu
   roles:
     - ubuntu
-#     - microk8s
-# - name: user
-#   hosts: all
-#   roles:
-#     - user
+    - microk8s
+
+- name: user
+  hosts: all
+  roles:
+    - user
+
 - name: plex
   hosts: ambrosia
   roles:
     - plex
+
 - name: cloudmason.org
   hosts: ambrosia
   roles:
     - cloudmason.org
+
+- name: prometheus
+  hosts: prometheus
+  roles:
+    - prometheus
