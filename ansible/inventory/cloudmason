@@ -10,6 +10,10 @@ lenovo user=mark group=mark home=/home/mark
 [stackstorm]
 lenovo user=mark group=mark home=/home/mark
 
+[ubuntu-hypervisor]
+ambrosia user=mark group=mark home=/home/mark
+jonagold user=mark group=mark home=/home/mark
+
 [ubuntu]
 ambrosia user=mark group=mark home=/home/mark
 jonagold user=mark group=mark home=/home/mark
