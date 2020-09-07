@@ -5,11 +5,6 @@
   roles:
     - common
 
-- name: macos
-  hosts: macos
-  roles:
-    - macos
-
 - name: centos
   hosts: centos
   roles:

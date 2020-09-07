@@ -1,6 +1,3 @@
-[macos]
-honeycrisp ansible_python_interpreter=/usr/bin/python user=mark group=staff home=/Users/mark
-
 [centos]
 lenovo user=mark group=mark home=/home/mark
 
