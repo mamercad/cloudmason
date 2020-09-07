@@ -6,6 +6,7 @@
     - bash-completion
     - fail2ban
     - git
+    - glances
     - htop
     - mailutils
     - netdata
@@ -15,6 +16,7 @@
     - screen
     - speedtest-cli
     - vim
+  become: yes
 
 - name: punch a hole for stuff
   iptables:
@@ -28,6 +30,7 @@
   with_together:
     - ['19999', '9090', '9100']
     - ['netdata', 'prometheus', 'prometheus-node-exporter']
+  become: yes
 
 - name: fixup /etc/netdata/netdata.conf
   copy:
@@ -55,6 +58,7 @@
         bind socket to IP = 0.0.0.0
     backup: yes
   notify: restart netdata
+  become: yes
 
 - name: deploy /etc/fail2ban/jail.local
   copy:
@@ -73,6 +77,7 @@
     path: /var/www/html
   register: var_www_html
   failed_when: no
+  become: yes
 
 - name: fail2ban cron for nginx wall of shame
   cron:
@@ -82,6 +87,7 @@
     job: |
       /sbin/iptables -L f2b-sshd 2>/dev/null | grep REJECT | awk '{print $4}' >/var/www/html/f2b-sshd 2>/dev/null
   when: var_www_html.stat.exists
+  become: yes
 
 - name: deploy /etc/postfix/gmail_sasl
   copy:
@@ -97,10 +103,12 @@
       63333737303639396230396331353161623539653266636637316165666365336136383662343266
       34626564613638336465373563643536646563613566306337353463666138643630626362353735
       343536353463343431363534356639373665
+  become: yes
 
 - name: postmap /etc/postfix/gmail_sasl
   shell:
     postmap /etc/postfix/gmail_sasl
+  become: yes
 
 - name: set up postfix for relay
   blockinfile:
@@ -113,6 +121,7 @@
       smtp_tls_security_level = encrypt
       smtp_tls_security_level = verify
       smtp_tls_CAfile = /etc/ssl/certs/ca-certificates.crt
+  become: yes
 
 - name: deploy /etc/postfix/access
   copy:
@@ -120,10 +129,12 @@
     mode: 0644
     content: |
       192.168/16 OK
+  become: yes
 
 - name: postmap /etc/postfix/access
   shell:
     postmap /etc/postfix/access
+  become: yes
 
 - name: update /etc/aliases
   blockinfile:
@@ -132,7 +143,9 @@
       root: mark
       mark: mamercad@gmail.com
     backup: yes
+  become: yes
 
 - name: newaliases
   shell: |
     newaliases
+  become: yes
