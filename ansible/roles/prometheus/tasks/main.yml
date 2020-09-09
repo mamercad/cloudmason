@@ -66,6 +66,13 @@
           static_configs:
             - targets: ['localhost:10101']
 
+        - job_name: ambientweather
+          metrics_path: /
+          scrape_interval: 5m
+          scrape_timeout: 1m
+          static_configs:
+            - targets: ['localhost:10102']
+
         - job_name: 'snmp'
           static_configs:
             - targets:
