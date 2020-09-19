@@ -89,6 +89,8 @@
           honor_labels: true
           static_configs:
             - targets:
+                - 'dns1.cloudmason.org:19999'
+                - 'dns2.cloudmason.org:19999'
                 - 'lenovo.cloudmason.org:19999'
                 - 'jonagold.cloudmason.org:19999'
                 - 'ambrosia.cloudmason.org:19999'
