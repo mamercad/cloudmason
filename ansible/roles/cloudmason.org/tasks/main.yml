@@ -247,3 +247,28 @@
       }
   become: yes
   notify: Reload nginx
+
+- name: Deploy /var/lib/nginx/.ssh/config (ssh config hack for multiple GH deploy keys)
+  copy:
+    dest: /var/lib/nginx/.ssh/config
+    owner: nginx
+    group: nginx
+    mode: 0600
+    content: |
+      Host github.com-cloudmason.org
+        HostName github.com
+        User git
+        IdentityFile ~/.ssh/id_rsa
+      Host github.com-letsbuildthe.cloud
+        HostName github.com
+        User git
+        IdentityFile ~/.ssh/id_rsa2
+  become: yes
+
+- name: Cloudmason ping sweep cron
+  cron:
+    name: Cloudmason ping sweep cron
+    user: nginx
+    minute: '0'
+    job: /usr/sbin/fping -a -d -q -g 192.168.1.0/24 | sed -E 's,.cloudmason.org$,,' | paste -sd' ' >/usr/share/nginx/html/cloudmason.org/cloudmason
+  become: yes
