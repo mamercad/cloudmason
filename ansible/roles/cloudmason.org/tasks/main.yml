@@ -265,6 +265,32 @@
         IdentityFile ~/.ssh/id_rsa2
   become: yes
 
+- name: Deploy /var/lib/nginx/.ssh/...
+  copy:
+    dest: /var/lib/nginx/.ssh/{{ item }}
+    src: "{{ item }}"
+    owner: nginx
+    group: nginx
+    mode: 0600
+    backup: yes
+  loop:
+    - id_rsa
+    - id_rsa2
+  become: yes
+
+- name: Deploy /var/lib/nginx/.ssh/...
+  copy:
+    dest: /var/lib/nginx/.ssh/{{ item }}
+    src: "{{ item }}"
+    owner: nginx
+    group: nginx
+    mode: 0644
+    backup: yes
+  loop:
+    - id_rsa.pub
+    - id_rsa2.pub
+  become: yes
+
 - name: Cloudmason ping sweep cron
   cron:
     name: Cloudmason ping sweep cron
