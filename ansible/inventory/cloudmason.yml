@@ -1,6 +1,9 @@
 all:
   hosts:
   children:
+    centos:
+      hosts:
+        lenovo:
     cloudmason.org:
       hosts:
         lenovo:

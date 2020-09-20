@@ -1,0 +1,44 @@
+---
+
+- name: Install OutsideIT/FireMotD prerequisites
+  package:
+    name: "{{ item }}"
+    state: present
+  loop:
+    - bc
+    - jq
+    - moreutils
+    - sysstat
+  become: yes
+
+- name: Fetch FireMottD
+  get_url:
+    url: https://raw.githubusercontent.com/OutsideIT/FireMotD/master/FireMotD
+    dest: /tmp/FireMotD
+    owner: root
+    group: root
+    mode: 0755
+  become: yes
+
+- name: Run FireMotD installer
+  shell: |
+    ( /tmp/FireMotD -I -d && /tmp/FireMotD -G all -d ) && touch /tmp/FireMotD.installed
+  args:
+    creates: /tmp/FireMotD.installed
+  become: yes
+
+- name: Build the FireMotD cache daily
+  cron:
+    user: root
+    hour: '0'
+    minute: '0'
+    job: perl -e 'sleep int(rand(21600))' && /usr/local/bin/FireMotD -S &>/dev/null
+  become: yes
+
+- name: Drop FireMotD in /etc/profile
+  lineinfile:
+    path: /etc/profile
+    line: /usr/local/bin/FireMotD -T Gray
+    create: yes
+    backup: yes
+  become: yes

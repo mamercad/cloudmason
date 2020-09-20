@@ -1,6 +1,10 @@
 ---
-- name: upgrade everything
-  yum:
-    name: '*'
-    state: latest
-  become: yes
+
+# - name: upgrade everything
+#   yum:
+#     name: '*'
+#     state: latest
+#   become: yes
+
+- name: Include FireMotD
+  include_tasks: firemotd.yml

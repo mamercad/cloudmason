@@ -94,6 +94,7 @@
                 - 'lenovo.cloudmason.org:19999'
                 - 'jonagold.cloudmason.org:19999'
                 - 'ambrosia.cloudmason.org:19999'
+                - 'chef.cloudmason.org:19999'
 
         - job_name: 'snmp'
           static_configs:

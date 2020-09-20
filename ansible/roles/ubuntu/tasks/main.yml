@@ -150,3 +150,6 @@
   shell: |
     newaliases
   become: yes
+
+- name: Include FireMotD
+  include_tasks: firemotd.yml
