@@ -27,17 +27,17 @@
     creates: /tmp/FireMotD.installed
   become: yes
 
-- name: Build the FireMotD cache daily
-  cron:
-    user: root
-    hour: '0'
-    minute: '0'
-    job: perl -e 'sleep int(rand(21600))' && /usr/local/bin/FireMotD -S &>/dev/null
+- name: Remove FireMotD in /etc/profile
+  lineinfile:
+    state: absent
+    path: /etc/profile
+    line: /usr/local/bin/FireMotD -T Gray
+    backup: yes
   become: yes
 
-- name: Drop FireMotD in /etc/profile
+- name: Drop FireMotD in /etc/profile.d/firemotd.sh
   lineinfile:
-    path: /etc/profile
+    path: /etc/profile.d/firemotd.sh
     line: /usr/local/bin/FireMotD -T Gray
     create: yes
     backup: yes

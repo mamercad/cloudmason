@@ -48,8 +48,12 @@
       192.168.1.140 livingroomtv.cloudmason.org
       192.168.1.142 wiiu.cloudmason.org
       192.168.1.144 basementlamp2.cloudmason.org
+      192.168.1.147 buddyiphone.cloudmason.org
       192.168.1.187 ringbasestation.cloudmason.org
       192.168.1.202 biaslighting.cloudmason.org
       192.168.1.210 dehumidifier.cloudmason.org
       192.168.1.253 basementlamp1.cloudmason.org
   become: yes
+
+- name: Include FireMotD
+  include_tasks: firemotd.yml
