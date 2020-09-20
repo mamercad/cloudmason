@@ -1,6 +1,9 @@
 all:
   hosts:
   children:
+    cloudmason.org:
+      hosts:
+        lenovo:
     pihole:
       hosts:
         dns1:

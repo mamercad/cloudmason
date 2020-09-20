@@ -1,163 +1,249 @@
-- name: install nginx
-  apt:
-    name: nginx
-  become: yes
-  tags: cloudmason.org
+---
 
-- name: install python3-pip and python3-certbot-nginx
-  apt:
-    name:
-      - python3-pip
-      - python3-certbot-nginx
-
-- name: install certbot python3-certbot-nginx
-  pip:
-    name:
-      - certbot
-
-- name: install php-fpm
-  apt:
-    name: php-fpm
-
-- name: deploy /etc/nginx/sites-available/cloudmason.org
+- name: Deploy /etc/nginx/conf.d/default.conf
   copy:
-    dest: /etc/nginx/sites-available/cloudmason.org
+    dest: /etc/nginx/conf.d/default.conf
+    owner: root
+    group: root
     mode: 0644
+    backup: yes
     content: |
       server {
-        listen 80;
-        root /var/www/html;
-        index index.php index.html index.htm index.nginx-debian.html;
-        server_name ambrosia.cloudmason.org;
+        listen *:80 default_server;
+        add_header Front-End-Https on;
+        add_header X-Content-Type-Options nosniff;
+        if ($ssl_protocol = "") {
+          return 308 https://$host$request_uri;
+        }
+        index  index.html;
+        access_log /var/log/nginx/http.access.log combined;
+        error_log /var/log/nginx/http.error.log;
+      }
+      server {
+        listen *:443 ssl;
+        server_name cloudmason.org;
+        ssl_certificate     /etc/letsencrypt/live/cloudmason.org/fullchain.pem;
+        ssl_certificate_key /etc/letsencrypt/live/cloudmason.org/privkey.pem;
+        ssl_session_cache   shared:SSL:10m;
+        ssl_session_timeout 5m;
+        ssl_protocols       TLSv1 TLSv1.1 TLSv1.2;
+        ssl_ciphers         EECDH+AESGCM:EDH+AESGCM:AES256+EECDH:AES256+EDH:ECDHE-RSA-AES128-GCM-SHA384:ECDHE-RSA-AES128-GCM-SHA256:ECDHE-RSA-AES128-GCM-SHA128:DHE-RSA-AES128-GCM-SHA384:DHE-RSA-AES128-GCM-SHA256:DHE-RSA-AES128-GCM-SHA128:ECDHE-RSA-AES128-SHA384:ECDHE-RSA-AES128-SHA128:ECDHE-RSA-AES128-SHA:ECDHE-RSA-AES128-SHA:DHE-RSA-AES128-SHA128:DHE-RSA-AES128-SHA128:DHE-RSA-AES128-SHA:DHE-RSA-AES128-SHA:AES128-GCM-SHA384:AES128-GCM-SHA128:AES128-SHA128:AES128-SHA128:AES128-SHA:AES128-SHA:HIGH:!aNULL:!eNULL:!EXPORT:!DES:!MD5:!PSK:!RC4;
+        ssl_prefer_server_ciphers on;
+        root   /usr/share/nginx/html/cloudmason.org;
+        index  index.php index.html index.htm;
         location / {
           try_files $uri $uri/ =404;
         }
-        location ~ \.php$ {
-          include snippets/fastcgi-php.conf;
-          fastcgi_pass unix:/var/run/php/php7.4-fpm.sock;
+        location /humble {
+          autoindex on;
         }
-        location ~ /\.ht {
-          deny all;
+        error_page 404 /404.html;
+        error_page 500 502 503 504 /50x.html;
+        location = /50x.html {
+          root /usr/share/nginx/html;
+        }
+        location ~ .php$ {
+          try_files $uri =404;
+          fastcgi_pass 127.0.0.1:9000;
+          fastcgi_index index.php;
+          fastcgi_param SCRIPT_FILENAME $document_root$fastcgi_script_name;
+          include fastcgi_params;
+        }
+        access_log   /var/log/nginx/https.access.log combined;
+        error_log    /var/log/nginx/https.error.log;
+        add_header   Front-End-Https on;
+        add_header   X-Content-Type-Options nosniff;
+        add_header   Access-Control-Allow-Origin *;
+        add_header   Content-Security-Policy "frame-ancestors cloudmason.org";
+        location /grafana/ {
+          proxy_pass            http://127.0.0.1:3000/;
+          proxy_read_timeout    90;
+          proxy_connect_timeout 90;
+          proxy_redirect        off;
+          proxy_set_header Connection '';
+          chunked_transfer_encoding off;
+          proxy_buffering off;
+          proxy_cache off;
+          access_log   /var/log/nginx/grafana.access.log combined;
+          error_log    /var/log/nginx/grafana.error.log;
+        }
+        location /sabnzbd/ {
+          proxy_pass            http://127.0.0.1:7777/;
+          proxy_read_timeout    90;
+          proxy_connect_timeout 90;
+          proxy_redirect        off;
+          proxy_set_header      Host $host;
+          proxy_set_header      X-Real-IP $remote_addr;
+          proxy_set_header      X-Forwarded-For $proxy_add_x_forwarded_for;
+          proxy_pass_header     Authorization;
+          proxy_set_header Connection '';
+          chunked_transfer_encoding off;
+          proxy_buffering off;
+          proxy_cache off;
+          proxy_set_header Host $host;
+          access_log   /var/log/nginx/sabnzbd.access.log combined;
+          error_log    /var/log/nginx/sabnzbd.error.log;
+          satisfy all;
+          auth_basic "Authentication Required";
+          auth_basic_user_file /etc/nginx/htpasswd;
+        }
+        location /sabnzbd/api {
+          proxy_pass            http://127.0.0.1:7777/api;
+          proxy_read_timeout    90;
+          proxy_connect_timeout 90;
+          proxy_redirect        off;
+          proxy_set_header      Host $host;
+          proxy_set_header      X-Real-IP $remote_addr;
+          proxy_set_header      X-Forwarded-For $proxy_add_x_forwarded_for;
+          proxy_pass_header     Authorization;
+          proxy_set_header Connection '';
+          chunked_transfer_encoding off;
+          proxy_buffering off;
+          proxy_cache off;
+          proxy_set_header Host $host;
+          access_log   /var/log/nginx/sabnzbd-api.access.log combined;
+          error_log    /var/log/nginx/sabnzbd-api.error.log;
+        }
+        location /sonarr/ {
+          proxy_pass            http://127.0.0.1:8888/sonarr/;
+          proxy_read_timeout    90;
+          proxy_connect_timeout 90;
+          proxy_redirect        off;
+          proxy_set_header      Host $host;
+          proxy_set_header      X-Real-IP $remote_addr;
+          proxy_set_header      X-Forwarded-For $proxy_add_x_forwarded_for;
+          proxy_pass_header     Authorization;
+          proxy_set_header Connection '';
+          chunked_transfer_encoding off;
+          proxy_buffering off;
+          proxy_cache off;
+          proxy_set_header Host $host;
+          access_log   /var/log/nginx/sonarr.access.log combined;
+          error_log    /var/log/nginx/sonarr.error.log;
+          satisfy all;
+          auth_basic "Authentication Required";
+          auth_basic_user_file /etc/nginx/htpasswd;
+        }
+        location /radarr/ {
+          proxy_pass            http://127.0.0.1:7878/radarr/;
+          proxy_read_timeout    90;
+          proxy_connect_timeout 90;
+          proxy_redirect        off;
+          proxy_set_header      Host $host;
+          proxy_set_header      X-Real-IP $remote_addr;
+          proxy_set_header      X-Forwarded-For $proxy_add_x_forwarded_for;
+          proxy_pass_header     Authorization;
+          proxy_set_header Connection '';
+          chunked_transfer_encoding off;
+          proxy_buffering off;
+          proxy_cache off;
+          proxy_set_header Host $host;
+          access_log   /var/log/nginx/radarr.access.log combined;
+          error_log    /var/log/nginx/radarr.error.log;
+          satisfy all;
+          auth_basic "Authentication Required";
+          auth_basic_user_file /etc/nginx/htpasswd;
+        }
+        location /couchpotato/ {
+          proxy_pass            http://127.0.0.1:5050/couchpotato/;
+          proxy_read_timeout    90;
+          proxy_connect_timeout 90;
+          proxy_redirect        off;
+          proxy_set_header      Host $host;
+          proxy_set_header      X-Real-IP $remote_addr;
+          proxy_set_header      X-Forwarded-For $proxy_add_x_forwarded_for;
+          proxy_pass_header     Authorization;
+          proxy_set_header Connection '';
+          chunked_transfer_encoding off;
+          proxy_buffering off;
+          proxy_cache off;
+          proxy_set_header Host $host;
+          access_log   /var/log/nginx/couchpotato.access.log combined;
+          error_log    /var/log/nginx/couchpotato.error.log;
+          satisfy all;
+          auth_basic "Authentication Required";
+          auth_basic_user_file /etc/nginx/htpasswd;
+        }
+        location /stackstorm/ {
+          proxy_pass            https://lenovo.cloudmason.org:4443/;
+          proxy_read_timeout    90;
+          proxy_connect_timeout 90;
+          proxy_redirect        off;
+          proxy_set_header      Host $host;
+          proxy_set_header      X-Real-IP $remote_addr;
+          proxy_set_header      X-Forwarded-For $proxy_add_x_forwarded_for;
+          proxy_pass_header     Authorization;
+          proxy_set_header Connection '';
+          chunked_transfer_encoding off;
+          proxy_buffering off;
+          proxy_cache off;
+          proxy_set_header Host $host;
+          access_log   /var/log/nginx/stackstorm.access.log combined;
+          error_log    /var/log/nginx/stackstorm.error.log;
+        }
+        location /prometheus/ {
+          proxy_pass            http://localhost:9090/prometheus/;
+          proxy_read_timeout    90;
+          proxy_connect_timeout 90;
+          proxy_redirect        off;
+          access_log   /var/log/nginx/prometheus.access.log combined;
+          error_log    /var/log/nginx/prometheus.error.log;
+        }
+        location /jenkins/ {
+          proxy_pass http://localhost:8080/jenkins/;
+          proxy_redirect http:// https://;
+          sendfile off;
+          proxy_set_header   Host             $host:$server_port;
+          proxy_set_header   X-Real-IP        $remote_addr;
+          proxy_set_header   X-Forwarded-For  $proxy_add_x_forwarded_for;
+          proxy_max_temp_file_size 0;
+          client_max_body_size       10m;
+          client_body_buffer_size    128k;
+          proxy_connect_timeout      90;
+          proxy_send_timeout         90;
+          proxy_read_timeout         90;
+          proxy_temp_file_write_size 64k;
+          proxy_http_version 1.1;
+          proxy_request_buffering off;
+          proxy_buffering off; # Required for HTTP-based CLI to work over SSL
+          access_log   /var/log/nginx/jenkins.access.log combined;
+          error_log    /var/log/nginx/jenkins.error.log;
+          #add_header 'X-SSH-Endpoint' 'localhost:50022' always;
         }
       }
-
-- name: enable nginx cloudmason.org
-  file:
-    state: link
-    src: /etc/nginx/sites-available/cloudmason.org
-    dest: /etc/nginx/sites-enabled/cloudmason
-
-- name: deploy cloudmason nginx conf
-  copy:
-    dest: /etc/nginx/conf.d/cloudmason.conf
-    mode: 0644
-    content: |
-      # server {
-      #   listen *:80 default_server;
-      #   add_header Front-End-Https on;
-      #   add_header X-Content-Type-Options nosniff;
-      #   # if ($ssl_protocol = "") {
-      #   #   return 308 https://$host$request_uri;
-      #   # }
-      #   index  index.html;
-      #   access_log /var/log/nginx/http.access.log combined;
-      #   error_log /var/log/nginx/http.error.log;
-      # }
-      # server {
-      #   listen *:443 ssl;
-      #   ssl_certificate     /etc/letsencrypt/live/cloudmason.org/fullchain.pem;
-      #   ssl_certificate_key /etc/letsencrypt/live/cloudmason.org/privkey.pem;
-      #   ssl_session_cache   shared:SSL:10m;
-      #   ssl_session_timeout 5m;
-      #   ssl_protocols       TLSv1 TLSv1.1 TLSv1.2;
-      #   ssl_ciphers         EECDH+AESGCM:EDH+AESGCM:AES256+EECDH:AES256+EDH:ECDHE-RSA-AES128-GCM-SHA384:ECDHE
-      #   ssl_prefer_server_ciphers on;
-      #   root   /usr/share/nginx/html;
-      #   index  index.php index.html index.htm;
-      #   location / {
-      #     try_files $uri $uri/ =404;
-      #   }
-      #   error_page 404 /404.html;
-      #   error_page 500 502 503 504 /50x.html;
-      #   location = /50x.html {
-      #     root /usr/share/nginx/html;
-      #   }
-      #   access_log   /var/log/nginx/https.access.log combined;
-      #   error_log    /var/log/nginx/https.error.log;
-      #   add_header   Front-End-Https on;
-      #   add_header   X-Content-Type-Options nosniff;
-      #   add_header   Access-Control-Allow-Origin *;
-      #   add_header   Content-Security-Policy "frame-ancestors cloudmason.org";
-      # }
-
-- name: deploy /usr/share/nginx/html/cloudmason.org/cloudmason.php
-  copy:
-    dest: /usr/share/nginx/html/cloudmason.org/cloudmason.php
-    mode: 0644
-    content: |
-      <?php
-      if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-        $payload = json_decode(file_get_contents('php://input'), true);
-        if (isset($payload['ref']) && $payload['ref'] == 'refs/heads/main') {
-          exec("echo == $(date) == >>./webhook.log && git pull origin main >>./webhook.log 2>&1");
+      server {
+        listen *:443 ssl;
+        server_name letsbuildthe.cloud;
+        ssl_certificate     /etc/letsencrypt/live/letsbuildthe.cloud/fullchain.pem;
+        ssl_certificate_key /etc/letsencrypt/live/letsbuildthe.cloud/privkey.pem;
+        ssl_session_cache   shared:SSL:10m;
+        ssl_session_timeout 5m;
+        ssl_protocols       TLSv1 TLSv1.1 TLSv1.2;
+        ssl_ciphers         EECDH+AESGCM:EDH+AESGCM:AES256+EECDH:AES256+EDH:ECDHE-RSA-AES128-GCM-SHA384:ECDHE-RSA-AES128-GCM-SHA256:ECDHE-RSA-AES128-GCM-SHA128:DHE-RSA-AES128-GCM-SHA384:DHE-RSA-AES128-GCM-SHA256:DHE-RSA-AES128-GCM-SHA128:ECDHE-RSA-AES128-SHA384:ECDHE-RSA-AES128-SHA128:ECDHE-RSA-AES128-SHA:ECDHE-RSA-AES128-SHA:DHE-RSA-AES128-SHA128:DHE-RSA-AES128-SHA128:DHE-RSA-AES128-SHA:DHE-RSA-AES128-SHA:AES128-GCM-SHA384:AES128-GCM-SHA128:AES128-SHA128:AES128-SHA128:AES128-SHA:AES128-SHA:HIGH:!aNULL:!eNULL:!EXPORT:!DES:!MD5:!PSK:!RC4;
+        ssl_prefer_server_ciphers on;
+        root   /usr/share/nginx/html/letsbuildthe.cloud;
+        index  index.php index.html index.htm;
+        location / {
+          try_files $uri $uri/ =404;
         }
+        error_page 404 /404.html;
+        error_page 500 502 503 504 /50x.html;
+        location = /50x.html {
+          root /usr/share/nginx/html;
+        }
+        location ~ .php$ {
+          try_files $uri =404;
+          fastcgi_pass 127.0.0.1:9000;
+          fastcgi_index index.php;
+          fastcgi_param SCRIPT_FILENAME $document_root$fastcgi_script_name;
+          include fastcgi_params;
+        }
+        access_log /var/log/nginx/https.access.log combined;
+        error_log  /var/log/nginx/https.error.log;
+        add_header Front-End-Https on;
+        add_header X-Content-Type-Options nosniff;
+        add_header Access-Control-Allow-Origin *;
+        add_header Content-Security-Policy "frame-ancestors letsbuildthe.cloud";
       }
-      ?>
-      <html>
-      <head>
-        <title>cloudmason.org</title>
-        <!-- Global site tag (gtag.js) - Google Analytics -->
-        <script async src="https://www.googletagmanager.com/gtag/js?id=UA-49577207-1"></script>
-        <script>
-          window.dataLayer = window.dataLayer || [];
-          function gtag(){dataLayer.push(arguments);}
-          gtag('js', new Date());
-          gtag('config', 'UA-49577207-1');
-        </script>
-      <style rel="stylesheet" type="text/css">
-      html, body {
-          margin: 10;
-          padding: 10;
-          width: 75%;
-          height: 75%;
-          display: table
-      }
-      #content {
-          display: table-cell;
-          text-align: left;
-          vertical-align: middle;
-      }
-      </style>
-      </head>
-      <body bgcolor="#292929">
-        <div id="content">
-        <p style="font-family:Courier New;color:#eaeaea;font-size:44px;text-align:left">cloudmason.org</p>
-        <iframe src="https://cloudmason.org/grafana/d-solo/KVfnOrmMk/new-dashboard-copy?orgId=1&panelId=2&refresh=1" width="700" height="350" frameborder="0"></iframe>
-        <p style="font-family:Courier New;color:#eaeaea;font-size:24px;text-align:left">chop wood and carry water</p>
-        <p style="font-family:Courier New;color:#eaeaea;font-size:14px;text-align:left"><?= shell_exec('date'); ?><br><?= shell_exec('date -u'); ?></p>
-        <p style="font-family:Courier New;color:#eaeaea;font-size:14px;text-align:left"><?= shell_exec('uptime'); ?></p>
-        <pre><p style="font-family:Courier New;color:#eaeaea;font-size:14px;text-align:left"><?= shell_exec('df -h / /home /var /data /mnt/sdb2 /mnt/sdc1 /mnt/sdd1'); ?></p></pre>
-        <p style="font-family:Courier New;color:#eaeaea;font-size:14px;text-align:left">
-          nginx: <?= shell_exec('pgrep -f nginx | paste -sd,'); ?><br>
-          sabnzbd: <?= shell_exec('pgrep -f sabnzbd | paste -sd,'); ?><br>
-          sonarr: <?= shell_exec('pgrep -f sonarr | paste -sd,'); ?><br>
-          couchpotato: <?= shell_exec('pgrep -f couchpotato | paste -sd,'); ?><br>
-          plexmediaserver: <?= shell_exec('pgrep -f plexmediaserver | paste -sd,'); ?><br>
-          <br>
-          /mnt/sdb2: movies: <?= shell_exec('find /mnt/sdb2/Movies -type f -size +10000 | wc -l'); ?>
-          tvshows: <?= shell_exec('find /mnt/sdb2/TvShows -type f -size +10000 | wc -l'); ?>
-          <br>
-          /mnt/sdc1: movies: <?= shell_exec('find /mnt/sdc1/movies -type f -size +10000 | wc -l'); ?>
-          tvshows: <?= shell_exec('find /mnt/sdc1/tvshows -type f -size +10000 | wc -l'); ?>
-          <br>
-          /mnt/sdd1: movies: <?= shell_exec('find /mnt/sdd1/movies -type f -size +10000 | wc -l'); ?>
-          tvshows: <?= shell_exec('find /mnt/sdd1/tvshows -type f -size +10000 | wc -l'); ?>
-        </p>
-        <p style="font-family:Courier New;color:#eaeaea;font-size:14px;text-align:left">rand: <?= rand(); ?><br>openssl rand -hex 20: <?= shell_exec('openssl rand -hex 20'); ?></p>
-        <p style="font-family:Courier New;color:#eaeaea;font-size:14px;text-align:left">rand: <?= rand(); ?><br>openesl rand -base64 20: <?= shell_exec('openssl rand -base64 20'); ?></p>
-        <pre><p style="font-family:Courier New;color:#eaeaea;font-size:14px;text-align:left">fail2ban:<br><?= shell_exec('cat ../f2b-sshd'); ?></p></pre>
-        <pre><p style="font-family:Courier New;color:#eaeaea;font-size:14px;text-align:left"><?= shell_exec('fortune computers'); ?></p></pre>
-        <pre><p style="font-family:Courier New;color:#eaeaea;font-size:6px;text-align:left"><?= shell_exec('git log -1'); ?></p></pre>
-        </div>
-      </body>
-      </html>
+  become: yes
+  notify: Reload nginx
