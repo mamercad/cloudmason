@@ -1,0 +1,9 @@
+all:
+  hosts:
+  children:
+    pihole:
+      hosts:
+        dns1:
+        dns2:
+  vars:
+    ansible_ssh_common_args: '-o ProxyCommand="ssh -W %h:%p -q cloudmason.org"'

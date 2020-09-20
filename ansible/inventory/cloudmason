@@ -18,8 +18,6 @@ jonagold user=mark group=mark home=/home/mark
 [prometheus]
 lenovo user=mark group=mark home=/home/mark
 
-[nodes]
-node0 user=mark group=mark home=/home/mark
-node1 user=mark group=mark home=/home/mark
-node2 user=mark group=mark home=/home/mark
-node3 user=mark group=mark home=/home/mark
+[pihole]
+dns1 user=mark group=mark home=/home/mark
+dns2 user=mark group=mark home=/home/mark
