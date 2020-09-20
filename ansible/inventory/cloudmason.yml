@@ -4,6 +4,9 @@ all:
     cloudmason.org:
       hosts:
         lenovo:
+    chef:
+      hosts:
+        chef:
     pihole:
       hosts:
         dns1:
