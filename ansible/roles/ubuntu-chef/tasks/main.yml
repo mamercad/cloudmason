@@ -16,3 +16,17 @@
   shell: |
     chef-server-ctl reconfigure --chef-license=accept
   become: yes
+
+- name: Create a Chef Admin (mark)
+  shell: |
+    chef-server-ctl user-create mark Mark Mercado mamercad@gmail.com password --filename /home/mark/chef-mark.pem
+  args:
+    creates: /home/mark/chef-mark.pem
+  become: yes
+
+- name: Create a Chef Organization (cloudmason)
+  shell: |
+    chef-server-ctl org-create cloudmason Cloudmason --association_user mark --filename /home/mark/chef-cloudmason-validator.pem
+  args:
+    creates: /home/mark/chef-cloudmason-validator.pem
+  become: yes
