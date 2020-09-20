@@ -295,7 +295,7 @@
   cron:
     name: Cloudmason ping sweep cron
     user: nginx
-    minute: '0'
+    minute: '*/20'
     job: /usr/sbin/fping -a -d -q -g 192.168.1.0/24 | sed -E 's,.cloudmason.org$,,' | paste -sd' ' >/usr/share/nginx/html/cloudmason.org/cloudmason
   become: yes
 
