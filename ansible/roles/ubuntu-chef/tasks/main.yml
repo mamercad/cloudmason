@@ -14,5 +14,5 @@
 
 - name: Bootstrap Chef Server Core
   shell: |
-    chef-server-ctl reconfigure
+    chef-server-ctl reconfigure --chef-license=accept
   become: yes
