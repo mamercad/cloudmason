@@ -298,3 +298,12 @@
     minute: '0'
     job: /usr/sbin/fping -a -d -q -g 192.168.1.0/24 | sed -E 's,.cloudmason.org$,,' | paste -sd' ' >/usr/share/nginx/html/cloudmason.org/cloudmason
   become: yes
+
+- name: fail2ban wall of shame cron
+  cron:
+    name: fail2-ban wall of shame cron
+    minute: "*/5"
+    user: root
+    job: |
+      /sbin/iptables -L f2b-sshd 2>/dev/null | grep REJECT | awk '{print $4}' >/usr/share/nginx/html/f2b-sshd 2>/dev/null
+  become: yes
