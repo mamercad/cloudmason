@@ -1,0 +1,56 @@
+---
+
+- name: Deploy /etc/pihole/custom.list
+  copy:
+    dest: /etc/pihole/custom.list
+    owner: root
+    group: root
+    mode: 0644
+    content: |
+      192.168.1.1 gateway.cloudmason.org
+      192.168.1.2 cloudkey.cloudmason.org
+      192.168.1.10 dns1.cloudmason.org
+      192.168.1.11 dns2.cloudmason.org
+      192.168.1.14 printer.cloudmason.org
+      192.168.1.20 openhab.cloudmason.org
+      192.168.1.22 rokufamilyroom.cloudmason.org
+      192.168.1.26 jonagold.cloudmason.org
+      192.168.1.32 rokubedroom.cloudmason.org
+      192.168.1.50 buddyxboxone.cloudmason.org
+      192.168.1.55 buddyrokutv.cloudmason.org
+      192.168.1.53 node1.cloudmason.org
+      192.168.1.58 node2.cloudmason.org
+      192.168.1.68 ringbasestation.cloudmason.org
+      192.168.1.69 roomba.cloudmason.org
+      192.168.1.73 rokufamilyroom.cloudmason.org
+      192.168.1.76 nest.cloudmason.org
+      192.168.1.79 coffeepot.cloudmason.org
+      192.168.1.80 alexa1.cloudmason.org
+      192.168.1.85 alexa2.cloudmason.org
+      192.168.1.86 streamlabs.cloudmason.org
+      192.168.1.89 cloudmason.org
+      192.168.1.89 lenovo.cloudmason.org
+      192.168.1.93 rokulivingroom.cloudmason.org
+      192.168.1.96 sense.cloudmason.org
+      192.168.1.97 buddyipad.cloudmason.org
+      192.168.1.98 SC05F036.cloudmason.org
+      192.168.1.99 ringbridge.cloudmason.org
+      192.168.1.112 smartthings.cloudmason.org
+      192.168.1.113 ringdoorbell.cloudmason.org
+      192.168.1.114 markipad.cloudmason.org
+      192.168.1.116 C02D6D7BMD6M.cloudmason.org
+      192.168.1.117 ooma.cloudmason.org
+      192.168.1.121 garagedoor.cloudmason.org
+      192.168.1.127 pws.cloudmason.org
+      192.168.1.135 ambrosia.cloudmason.org
+      192.168.1.136 rog.cloudmason.org
+      192.168.1.137 rokubedroom.cloudmason.org
+      192.168.1.138 alexa3.cloudmason.org
+      192.168.1.140 livingroomtv.cloudmason.org
+      192.168.1.142 wiiu.cloudmason.org
+      192.168.1.144 basementlamp2.cloudmason.org
+      192.168.1.187 ringbasestation.cloudmason.org
+      192.168.1.202 biaslighting.cloudmason.org
+      192.168.1.210 dehumidifier.cloudmason.org
+      192.168.1.253 basementlamp1.cloudmason.org
+  become: yes
