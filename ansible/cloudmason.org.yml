@@ -1,4 +1,4 @@
-#!/usr/bin/env pipenv run ansible-playbook -i inventory/cloudmason.yml -v
+#!/usr/bin/env pipenv run ansible-playbook -i inventory/cloudmason.yml --vault-password-file .vault_pass -v
 ---
 
 - name: cloudmason.org
