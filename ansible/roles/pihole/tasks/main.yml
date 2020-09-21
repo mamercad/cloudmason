@@ -21,7 +21,7 @@
       192.168.1.58 chef.cloudmason.org
       192.168.1.68 ringbasestation.cloudmason.org
       192.168.1.69 roomba.cloudmason.org
-      192.168.1.73 rokufamilyroom.cloudmason.org
+      192.168.1.73 honeycrisp.cloudmason.org
       192.168.1.76 nest.cloudmason.org
       192.168.1.79 coffeepot.cloudmason.org
       192.168.1.80 alexa1.cloudmason.org
@@ -55,5 +55,5 @@
       192.168.1.253 basementlamp1.cloudmason.org
   become: yes
 
-- name: Include FireMotD
-  include_tasks: firemotd.yml
+# - name: Include FireMotD
+#   include_tasks: firemotd.yml
