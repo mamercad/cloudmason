@@ -1,0 +1,59 @@
+---
+
+- name: Install netdata
+  package:
+    name: "{{ item }}"
+    state: present
+  loop:
+    - netdata
+
+- name: Punch a hole for netdata
+  iptables:
+    chain: INPUT
+    protocol: tcp
+    destination_port: "{{ item.0 }}"
+    ctstate: NEW
+    syn: match
+    jump: ACCEPT
+    comment: "{{ item.1 }}"
+  with_together:
+    - ['19999']
+    - ['netdata']
+  become: yes
+
+- name: Fixup /etc/netdata/netdata.conf
+  copy:
+    dest: /etc/netdata/netdata.conf
+    content: |
+      # NetData Configuration
+      # The current full configuration can be retrieved from the running
+      # server at the URL
+      #
+      #   http://localhost:19999/netdata.conf
+      #
+      # for example:
+      #
+      #   wget -O /etc/netdata/netdata.conf http://localhost:19999/netdata.conf
+      #
+      [global]
+        hostname = {{ inventory_hostname }}.cloudmason.org
+        run as user = netdata
+        web files owner = root
+        web files group = root
+        # Netdata is not designed to be exposed to potentially hostile
+        # networks. See https://github.com/netdata/netdata/issues/164
+        bind socket to IP = 0.0.0.0
+    backup: yes
+  notify: Restart netdata
+  become: yes
+
+- name: Deploy /etc/netdata/health_alarm_notify.conf
+  copy:
+    src: files/netdata/health_alarm_notify.conf
+    dest: /etc/netdata/health_alarm_notify.conf
+    owner: root
+    group: root
+    mode: 0644
+    backup: yes
+  notify: Restart netdata
+  become: yes

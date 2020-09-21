@@ -1,4 +1,4 @@
-- name: restart netdata
+- name: Restart netdata
   service:
     name: netdata
     state: restarted

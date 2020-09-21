@@ -1,0 +1,23 @@
+---
+
+- name: Install Prometheus things
+  package:
+    state: present
+    name:
+      - prometheus
+      - prometheus-node-exporter
+  become: yes
+
+- name: Punch a hole for Prometheus things
+  iptables:
+    chain: INPUT
+    protocol: tcp
+    destination_port: "{{ item.0 }}"
+    ctstate: NEW
+    syn: match
+    jump: ACCEPT
+    comment: "{{ item.1 }}"
+  with_together:
+    - ['9090', '9100']
+    - ['prometheus', 'prometheus-node-exporter']
+  become: yes
