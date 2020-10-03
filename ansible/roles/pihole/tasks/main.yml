@@ -25,6 +25,7 @@
       192.168.1.58 chef.cloudmason.org
       192.168.1.68 ringbasestation.cloudmason.org
       192.168.1.69 roomba.cloudmason.org
+      192.168.1.70 switch3.cloudmason.org
       192.168.1.73 honeycrisp.cloudmason.org
       192.168.1.76 nest.cloudmason.org
       192.168.1.79 coffeepot.cloudmason.org
@@ -55,7 +56,8 @@
       192.168.1.144 basementlamp2.cloudmason.org
       192.168.1.146 maryipad.cloudmason.org
       192.168.1.147 buddyiphone.cloudmason.org
-      192.168.1.147 fuji.cloudmason.org
+      192.168.1.148 fuji.cloudmason.org
+      192.168.1.162 marymacbook.cloudmason.org
       192.168.1.180 judeipad.cloudmason.org
       192.168.1.187 ringbasestation.cloudmason.org
       192.168.1.202 biaslighting.cloudmason.org
