@@ -1,0 +1,28 @@
+---
+
+- name: install copr:copr.fedorainfracloud.org:konimex:neofetch repo
+  yum_repository:
+    name: copr:copr.fedorainfracloud.org:konimex:neofetch
+    description: Copr repo for neofetch owned by konimex
+    baseurl: https://download.copr.fedorainfracloud.org/results/konimex/neofetch/epel-7-$basearch/
+    gpgkey: https://download.copr.fedorainfracloud.org/results/konimex/neofetch/pubkey.gpg
+  become: yes
+
+- name: install neofetch
+  yum:
+    state: present
+    name: neofetch
+  become: yes
+
+# [copr:copr.fedorainfracloud.org:konimex:neofetch]
+# name=Copr repo for neofetch owned by konimex
+# type=rpm-md
+# skip_if_unavailable=True
+# gpgcheck=1
+# gpgkey=https://download.copr.fedorainfracloud.org/results/konimex/neofetch/pubkey.gpg
+# repo_gpgcheck=0
+# enabled=1
+# enabled_metadata=1
+
+# /etc/yum.repos.d/konimex-neofetch-epel-7.repo
+# https://copr.fedorainfracloud.org/coprs/konimex/neofetch/repo/epel-7/konimex-neofetch-epel-7.repo
