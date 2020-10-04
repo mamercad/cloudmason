@@ -13,7 +13,7 @@
 
 - name: Fetch FireMottD
   get_url:
-    url: https://raw.githubusercontent.com/OutsideIT/FireMotD/master/FireMotD
+    url: https://raw.githubusercontent.com/mamercad/FireMotD/mamercad/procps_unknown/FireMotD # use my fork
     dest: /tmp/FireMotD
     owner: root
     group: root
