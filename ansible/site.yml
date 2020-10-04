@@ -34,15 +34,8 @@
 - name: ubuntu
   hosts:
     - ubuntu
-    - nodes
   roles:
     - ubuntu
-    - microk8s
-
-- name: ubuntu-docker
-  hosts: nodes
-  roles:
-    - ubuntu-docker
 
 - name: ubuntu-hypervisor
   hosts: ubuntu-hypervisor
