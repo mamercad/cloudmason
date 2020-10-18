@@ -7,7 +7,7 @@
         name: Healthchecks.io
         minute: "00"
         hour: "*"
-        job: "/usr/bin/curl -s {{ healthchecks.io }}"
+        job: "/usr/bin/curl -s {{ healthchecks_io }}"
         user: awx
       when:
-        healthchecks.io is defined
+        healthchecks_io is defined
