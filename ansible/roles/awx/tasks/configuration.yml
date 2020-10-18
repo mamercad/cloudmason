@@ -140,3 +140,21 @@
       - Slack
     notification_templates_error:
       - Slack
+
+- name: Healthchecks.io Job Template
+  awx.awx.tower_job_template:
+    state: present
+    name: Healthchecks.io
+    job_type: run
+    organization: Cloudmason
+    inventory: Cloudmason
+    project: Cloudmason
+    playbook: ansible/playbooks/healthchecks.io.yml
+    credentials:
+      - Cloudmason Machine
+    notification_templates_started:
+      - Slack
+    notification_templates_success:
+      - Slack
+    notification_templates_error:
+      - Slack
