@@ -1,5 +1,5 @@
 ---
-- name: healthchecks.io
+- name: Healthchecks.io
   hosts: all
   tasks:
     - name: Add Healthchecks.io to cron
