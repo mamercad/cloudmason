@@ -71,6 +71,10 @@
     scm_type: git
     scm_url: git@github.com:mamercad/cloudmason.git
     scm_branch: main
+    scm_clean: yes
+    scm_delete_on_update: yes
+    scm_update_on_launch: yes
+    scm_update_cache_timeout: 600
     credential: Cloudmason SCM
 
 - name: Inventory
@@ -90,3 +94,49 @@
     source: scm
     source_project: Cloudmason
     source_path: ansible/inventory/cloudmason.yml
+    overwrite: yes
+    update_cache_timeout: 600
+    update_on_project_update: yes
+
+- name: Slack Notification Template
+  awx.awx.tower_notification_template:
+    name: Slack
+    organization: Cloudmason
+    notification_type: slack
+    notification_configuration:
+      channels:
+        - awx
+      token: $ANSIBLE_VAULT;1.1;AES256
+          61373333306138633663623733623830326533616632323165613462376533616562326434613863
+          6430613137376566316235363831646138363463613765610a623465316330316631336531653736
+          38623762613633663935313433626630633333656438323164663230353737383634656363643962
+          3639656366326137610a303062393130653061333434656437316438376662393264616237616132
+          38303032313966643965666431323831326162323266303338333037356230643137363062386238
+          64636565313638356336636532343836316431393132373433366365626463313632373662626461
+          373939393333323932386130643733353062
+    messages:
+      started:
+        message: "{{ '{{ job_friendly_name }}{{ job.id }} started' }}"
+      success:
+        message: "{{ '{{ job_friendly_name }} completed in {{ job.elapsed }} seconds' }}"
+      error:
+        message: "{{ '{{ job_friendly_name }} FAILED! Please look at {{ job.url }}' }}"
+    state: present
+
+- name: Ping Job Template
+  awx.awx.tower_job_template:
+    state: present
+    name: Ping
+    job_type: run
+    organization: Cloudmason
+    inventory: Cloudmason
+    project: Clodumason
+    playbook: ping.yml
+    credentials:
+      - Cloudmason Machine
+    notification_templates_started:
+      - Slack
+    notification_templates_success:
+      - Slack
+    notification_templates_error:
+      - Slack
