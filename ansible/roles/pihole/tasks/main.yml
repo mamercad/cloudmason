@@ -66,8 +66,8 @@
       192.168.1.221 awx.cloudmason.org
   become: yes
 
-- name: Include FireMotD
-  include_tasks: firemotd.yml
+# - name: Include FireMotD
+#   include_tasks: firemotd.yml
 
-- name: Include neofetch
-  include_tasks: neofetch.yml
+# - name: Include neofetch
+#   include_tasks: neofetch.yml
