@@ -1,0 +1,15 @@
+---
+
+- name: install neofetch
+  apt:
+    state: present
+    name: neofetch
+  become: yes
+
+- name: Drop neofetch in /etc/profile.d/neofetch.sh
+  lineinfile:
+    path: /etc/profile.d/neofetch.sh
+    line: /usr/bin/neofetch
+    create: yes
+    backup: yes
+  become: yes
