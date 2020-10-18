@@ -20,7 +20,7 @@ all:
         lenovo:
         jonagold:
   vars:
-    ansible_ssh_common_args: '-o ProxyCommand="ssh -W %h:%p -q cloudmason.org"'
+    # ansible_ssh_common_args: '-o ProxyCommand="ssh -W %h:%p -q cloudmason.org"'
     full_name: Mark Mercado
     user_name: mark
     email: mamercad@gmail.com
