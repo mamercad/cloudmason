@@ -1,4 +1,4 @@
-#!/usr/bin/env ansible-playbook -i localhost, -c local
+#!/usr/bin/env ansible-playbook -i localhost, -c local --vault-password-file .vault_pass
 
 - name: awx
   hosts:
