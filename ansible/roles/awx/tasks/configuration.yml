@@ -130,8 +130,8 @@
     job_type: run
     organization: Cloudmason
     inventory: Cloudmason
-    project: Clodumason
-    playbook: ping.yml
+    project: Cloudmason
+    playbook: ansible/playbooks/ping.yml
     credentials:
       - Cloudmason Machine
     notification_templates_started:
