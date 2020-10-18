@@ -7,7 +7,14 @@
     description: Cloudmason
 
 - name: Team
-  awx.awx.tower_organization:
+  awx.awx.tower_team:
+    state: present
+    name: Cloudmason
+    description: Cloudmason
+    organization: Cloudmason
+
+- name: Inventory
+  awx.awx.tower_inventory:
     state: present
     name: Cloudmason
     description: Cloudmason
