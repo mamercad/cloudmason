@@ -20,6 +20,7 @@
       192.168.1.32 rokubedroom.cloudmason.org
       192.168.1.47 markxboxone.cloudmason.org
       192.168.1.50 buddyxboxone.cloudmason.org
+      192.168.1.52 basementlamp1.cloudmason.org
       192.168.1.54 judepc.cloudmason.org
       192.168.1.55 buddyrokutv.cloudmason.org
       192.168.1.58 chef.cloudmason.org
@@ -49,6 +50,7 @@
       192.168.1.116 C02D6D7BMD6M.cloudmason.org
       192.168.1.117 ooma.cloudmason.org
       192.168.1.121 garagedoor.cloudmason.org
+      192.168.1.123 marypc.cloudmason.org
       192.168.1.127 pws.cloudmason.org
       192.168.1.135 ambrosia.cloudmason.org
       192.168.1.136 rog.cloudmason.org
@@ -60,9 +62,11 @@
       192.168.1.146 maryipad.cloudmason.org
       192.168.1.147 buddyiphone.cloudmason.org
       192.168.1.148 fuji.cloudmason.org
+      192.168.1.149 biaslighting.cloudmason.org
       192.168.1.162 marymacbook.cloudmason.org
       192.168.1.180 judeipad.cloudmason.org
       192.168.1.187 ringbasestation.cloudmason.org
+      192.168.1.188 alexa3.cloudmason.org
       192.168.1.221 awx.cloudmason.org
   become: yes
 
