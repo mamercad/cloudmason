@@ -1,12 +1,12 @@
 ---
 
-# - name: awx configuration
-#   hosts: localhost
-#   tasks:
-#     - name: awx
-#       include_role:
-#         name: awx
-#         tasks_from: awx_configuration.yml
+- name: awx configuration
+  hosts: localhost
+  tasks:
+    - name: awx
+      include_role:
+        name: awx
+        tasks_from: awx_configuration.yml
 
 - name: awx service account
   hosts: linux
