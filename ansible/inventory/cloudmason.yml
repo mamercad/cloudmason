@@ -19,6 +19,7 @@ all:
       hosts:
         lenovo:
         jonagold:
+        ambrosia:
   vars:
     # ansible_ssh_common_args: '-o ProxyCommand="ssh -W %h:%p -q cloudmason.org"'
     full_name: Mark Mercado
