@@ -1,5 +1,14 @@
 all:
   hosts:
+    dns1:
+      vars:
+        healthchecks.io: https://hc-ping.com/ae55147f-0aff-4b0e-b0f9-1f55c81c5a1a
+    dns2:
+      vars:
+        healthchecks.io: https://hc-ping.com/b4576296-81ee-4cf5-a239-4286af184cf3
+    lenovo:
+      vars:
+        healthchecks.io: https://hc-ping.com/c8bd3c9c-9d8b-445b-bdf0-75935b4e6db4
   children:
     centos:
       hosts:
@@ -17,6 +26,8 @@ all:
         jonagold:
     linux:
       hosts:
+        dns1:
+        dns2:
         lenovo:
         jonagold:
         ambrosia:
