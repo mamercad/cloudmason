@@ -23,6 +23,7 @@
       192.168.1.54 judepc.cloudmason.org
       192.168.1.55 buddyrokutv.cloudmason.org
       192.168.1.58 chef.cloudmason.org
+      192.168.1.60 dehumidifier.cloudmason.org
       192.168.1.68 ringbasestation.cloudmason.org
       192.168.1.69 roomba.cloudmason.org
       192.168.1.70 switch3.cloudmason.org
@@ -32,6 +33,7 @@
       192.168.1.80 alexa1.cloudmason.org
       192.168.1.85 alexa2.cloudmason.org
       192.168.1.86 streamlabs.cloudmason.org
+      192.168.1.87 plugoutside1.cloudmason.org
       192.168.1.89 cloudmason.org
       192.168.1.89 lenovo.cloudmason.org
       192.168.1.93 rokulivingroom.cloudmason.org
@@ -39,6 +41,7 @@
       192.168.1.97 buddyipad.cloudmason.org
       192.168.1.98 SC05F036.cloudmason.org
       192.168.1.99 ringbridge.cloudmason.org
+      192.168.1.100 plugoutside2.cloudmason.org
       192.168.1.103 marymercado.cloudmason.org
       192.168.1.112 smartthings.cloudmason.org
       192.168.1.113 ringdoorbell.cloudmason.org
@@ -60,9 +63,7 @@
       192.168.1.162 marymacbook.cloudmason.org
       192.168.1.180 judeipad.cloudmason.org
       192.168.1.187 ringbasestation.cloudmason.org
-      192.168.1.202 biaslighting.cloudmason.org
-      192.168.1.210 dehumidifier.cloudmason.org
-      192.168.1.253 basementlamp1.cloudmason.org
+      192.168.1.221 awx.cloudmason.org
   become: yes
 
 - name: Include FireMotD
