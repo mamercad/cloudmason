@@ -1,0 +1,14 @@
+---
+
+- name: Organization
+  awx.awx.tower_organization:
+    state: present
+    name: Cloudmason
+    description: Cloudmason
+
+- name: Team
+  awx.awx.tower_organization:
+    state: present
+    name: Cloudmason
+    description: Cloudmason
+    organization: Cloudmason

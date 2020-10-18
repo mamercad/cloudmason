@@ -1,0 +1,7 @@
+#!/usr/bin/env ansible-playbook -i localhost, -c local
+
+- name: awx
+  hosts:
+    - localhost
+  roles:
+    - awx

@@ -62,3 +62,9 @@
     - prometheus
   roles:
     - prometheus
+
+- name: awx
+  hosts:
+    - localhost
+  roles:
+    - awx

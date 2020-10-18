@@ -28,3 +28,6 @@
 
 - name: Include FireMotD
   include_tasks: firemotd.yml
+
+- name: Include neofetch
+  include_tasks: neofetch.yml

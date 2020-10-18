@@ -65,5 +65,8 @@
       192.168.1.253 basementlamp1.cloudmason.org
   become: yes
 
-# - name: Include FireMotD
-#   include_tasks: firemotd.yml
+- name: Include FireMotD
+  include_tasks: firemotd.yml
+
+- name: Include neofetch
+  include_tasks: neofetch.yml
