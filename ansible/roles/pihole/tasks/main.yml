@@ -3,8 +3,8 @@
 - name: Deploy /etc/pihole/custom.list
   copy:
     dest: /etc/pihole/custom.list
-    owner: root
-    group: root
+    owner: pihole
+    group: pihole
     mode: 0644
     content: |
       192.168.1.1 gateway.cloudmason.org

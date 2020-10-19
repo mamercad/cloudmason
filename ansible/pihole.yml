@@ -1,9 +1,0 @@
-#!/usr/bin/env pipenv run ansible-playbook -i inventory/cloudmason.yml -v
----
-
-- name: pihole
-  hosts: pihole
-  gather_facts: no
-  become: no
-  roles:
-    - pihole
