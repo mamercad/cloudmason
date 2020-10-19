@@ -3,4 +3,5 @@
   hosts: pihole
   tasks:
     - name: Include Pi-hole Role
-      include_role: pihole
+      include_role:
+        name: pihole
