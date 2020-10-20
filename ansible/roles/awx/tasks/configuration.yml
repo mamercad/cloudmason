@@ -91,11 +91,11 @@
       token: "{{ slack_token }}"
     messages:
       started:
-        message: "{{ '{{ job_friendly_name }}{{ job.id }} started' }}"
+        message: "{{ '{{ job_friendly_name }} {{ job.id }} ({{ job.playbook }}) started' }}"
       success:
-        message: "{{ '{{ job_friendly_name }}{{ job.id }} completed in {{ job.elapsed }} seconds' }}"
+        message: "{{ '{{ job_friendly_name }} {{ job.id }} completed in {{ job.elapsed }} seconds' }}"
       error:
-        message: "{{ '{{ job_friendly_name }}{{ job.id }} failed, please look at {{ job.url }}' }}"
+        message: "{{ '{{ job_friendly_name }} {{ job.id }} failed, please look at {{ job.url }}' }}"
     state: present
 
 - name: Ping Job Template
