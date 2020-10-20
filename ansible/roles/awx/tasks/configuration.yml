@@ -93,9 +93,9 @@
       started:
         message: "{{ '{{ job_friendly_name }}{{ job.id }} started' }}"
       success:
-        message: "{{ '{{ job_friendly_name }} completed in {{ job.elapsed }} seconds' }}"
+        message: "{{ '{{ job_friendly_name }}{{ job.id }} completed in {{ job.elapsed }} seconds' }}"
       error:
-        message: "{{ '{{ job_friendly_name }} FAILED! Please look at {{ job.url }}' }}"
+        message: "{{ '{{ job_friendly_name }}{{ job.id }} failed, please look at {{ job.url }}' }}"
     state: present
 
 - name: Ping Job Template
@@ -143,6 +143,24 @@
     inventory: Cloudmason
     project: Cloudmason
     playbook: ansible/playbooks/pi-hole.yml
+    credentials:
+      - Cloudmason Machine
+    notification_templates_started:
+      - Slack
+    notification_templates_success:
+      - Slack
+    notification_templates_error:
+      - Slack
+
+- name: Prometheus Job Template
+  awx.awx.tower_job_template:
+    state: present
+    name: Prometheus
+    job_type: run
+    organization: Cloudmason
+    inventory: Cloudmason
+    project: Cloudmason
+    playbook: ansible/playbooks/prometheus.yml
     credentials:
       - Cloudmason Machine
     notification_templates_started:
