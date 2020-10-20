@@ -7,6 +7,7 @@
       include_role:
         name: awx
         tasks_from: configuration.yml
+  tags: configuration
 
 - name: AWX Service Account
   hosts: linux
@@ -15,3 +16,6 @@
       include_role:
         name: awx
         tasks_from: service_account.yml
+  tags:
+    - service_account
+    - account
