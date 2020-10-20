@@ -25,6 +25,9 @@ all:
       hosts:
         ambrosia:
         jonagold:
+    prometheus:
+      hosts:
+        lenovo:
     linux:
       hosts:
         dns1:
