@@ -1,6 +1,6 @@
 ---
 
-- name: awx configuration
+- name: AWX Configuration
   hosts: localhost
   tasks:
     - name: awx
@@ -8,10 +8,10 @@
         name: awx
         tasks_from: configuration.yml
 
-# - name: awx service account
-#   hosts: linux
-#   tasks:
-#     - name: awx
-#       include_role:
-#         name: awx
-#         tasks_from: service_account.yml
+- name: AWX Service Account
+  hosts: linux
+  tasks:
+    - name: awx
+      include_role:
+        name: awx
+        tasks_from: service_account.yml
