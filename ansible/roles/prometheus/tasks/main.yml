@@ -30,10 +30,6 @@
               - 'pihole:9100'
               - 'jonagold:9100'
               - 'ambrosia:9100'
-              - 'node0:9100'
-              - 'node1:9100'
-              - 'node2:9100'
-              - 'node3:9100'
               - 'dns1:9100'
               - 'dns2:9100'
 
