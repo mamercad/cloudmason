@@ -1,0 +1,7 @@
+---
+- name: Prometheus
+  hosts: prometheus
+  tasks:
+    - name: Include Prometheus Role
+      include_role:
+        name: prometheus

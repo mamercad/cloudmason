@@ -1,7 +1,0 @@
-#!/usr/bin/env pipenv run ansible-playbook -i inventory/cloudmason.yml --vault-password-file .vault_pass -v
----
-
-- name: prometheus
-  hosts: prometheus
-  roles:
-    - prometheus
