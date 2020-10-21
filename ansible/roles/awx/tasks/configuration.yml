@@ -91,7 +91,7 @@
       token: "{{ slack_token }}"
     messages:
       started:
-        message: "{{ '{{ job_friendly_name }} {{ job.id }} ({{ job.playbook }}) started' }}"
+        message: "{{ '{{ job_friendly_name }} {{ job.id }} started [{{ job.summary_fields.project.name }}|{{ job.name }}|{{ job.playbook }}]' }}"
       success:
         message: "{{ '{{ job_friendly_name }} {{ job.id }} completed in {{ job.elapsed }} seconds' }}"
       error:
