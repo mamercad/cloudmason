@@ -212,9 +212,10 @@
         }
         location /dns1/ {
           proxy_pass            http://dns1/admin/;
-          proxy_read_timeout    90;
-          proxy_connect_timeout 90;
-          proxy_redirect        off;
+          proxy_set_header Host $host;
+          proxy_set_header X-Real-IP $remote_addr;
+          proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+          proxy_read_timeout 90;
           access_log   /var/log/nginx/dns1.access.log combined;
           error_log    /var/log/nginx/dns1.error.log;
           satisfy all;
@@ -223,9 +224,10 @@
         }
         location /dns2/ {
           proxy_pass            http://dns2/admin/;
-          proxy_read_timeout    90;
-          proxy_connect_timeout 90;
-          proxy_redirect        off;
+          proxy_set_header Host $host;
+          proxy_set_header X-Real-IP $remote_addr;
+          proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+          proxy_read_timeout 90;
           access_log   /var/log/nginx/dns2.access.log combined;
           error_log    /var/log/nginx/dns2.error.log;
           satisfy all;
