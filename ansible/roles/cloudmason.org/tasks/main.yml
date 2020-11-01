@@ -210,6 +210,28 @@
           error_log    /var/log/nginx/jenkins.error.log;
           #add_header 'X-SSH-Endpoint' 'localhost:50022' always;
         }
+        location /dns1/ {
+          proxy_pass            http://dns1/admin/;
+          proxy_read_timeout    90;
+          proxy_connect_timeout 90;
+          proxy_redirect        off;
+          access_log   /var/log/nginx/dns1.access.log combined;
+          error_log    /var/log/nginx/dns1.error.log;
+          satisfy all;
+          auth_basic "Authentication Required";
+          auth_basic_user_file /etc/nginx/htpasswd;
+        }
+        location /dns2/ {
+          proxy_pass            http://dns2/admin/;
+          proxy_read_timeout    90;
+          proxy_connect_timeout 90;
+          proxy_redirect        off;
+          access_log   /var/log/nginx/dns2.access.log combined;
+          error_log    /var/log/nginx/dns2.error.log;
+          satisfy all;
+          auth_basic "Authentication Required";
+          auth_basic_user_file /etc/nginx/htpasswd;
+        }
       }
       server {
         listen *:443 ssl;
