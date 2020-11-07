@@ -1,0 +1,8 @@
+---
+- name: octodns
+  hosts: localhost
+  tasks:
+    - name: install octodns
+      pip:
+        state: present
+        name: octodns
