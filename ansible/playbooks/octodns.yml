@@ -6,5 +6,3 @@
   tasks:
     - name: octodns-sync
       command: /opt/octodns/bin/octodns-sync --config config/production.yaml
-      args:
-        chdir: octodns
