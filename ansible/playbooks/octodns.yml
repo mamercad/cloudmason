@@ -5,5 +5,10 @@
   vars:
     ansible_python_interpreter: /opt/octodns/bin/python
   tasks:
-    - name: octodns-sync
-      command: /opt/octodns/bin/octodns-sync --config config/production.yaml
+    - name: pwd
+      command: pwd
+      register: pwd
+    - debug:
+        var: pwd
+    # - name: octodns-sync
+    #   command: /opt/octodns/bin/octodns-sync --config config/production.yaml
