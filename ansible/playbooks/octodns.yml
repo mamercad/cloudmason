@@ -4,5 +4,7 @@
   vars:
     ansible_python_interpreter: /opt/octodns/bin/python
   tasks:
-    - name: octodns-validate
-      command: /opt/octodns/bin/octodns-validate
+    - name: octodns-sync
+      command: /opt/octodns/bin/octodns-sync --config config/production.yaml
+      args:
+        chdir: octodns
