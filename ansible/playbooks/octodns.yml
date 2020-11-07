@@ -6,3 +6,4 @@
       pip:
         state: present
         name: octodns
+        virtualenv: /home/awx/octodns
