@@ -1,0 +1,26 @@
+---
+manager:
+  max_workers: 2
+
+providers:
+  config:
+    class: octodns.provider.yaml.YamlProvider
+    directory: ./config
+    default_ttl: 3600
+    enforce_order: True
+  powerdns:
+    class: octodns.provider.powerdns.PowerDnsProvider
+    host: lenovo.cloudmason.org
+    api_key: env/POWERDNS_API_KEY
+    port: 8081
+    nameserver_values:
+      - 192.168.1.10.
+      - 192.168.1.11.
+    nameserver_ttl: 3600
+
+zones:
+  cloudmason.org.:
+    sources:
+      - config
+    targets:
+      - powerdns

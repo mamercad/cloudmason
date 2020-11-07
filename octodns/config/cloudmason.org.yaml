@@ -1,0 +1,13 @@
+---
+cloudkey:
+  type: A
+  value: 192.168.1.2
+dns1:
+  type: A
+  value: 192.168.1.10
+dns2:
+  type: A
+  value: 192.168.1.11
+gateway:
+  type: A
+  value: 192.168.1.1
