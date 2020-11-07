@@ -1,9 +1,8 @@
 ---
 - name: octodns
-  hosts: localhost
+  hosts: all
+  vars:
+    ansible_python_interpreter: /opt/octodns/bin/python
   tasks:
-    - name: install octodns
-      pip:
-        state: present
-        name: octodns
-        virtualenv: /home/awx/octodns
+    - name: octodns-validate
+      command: /opt/octodns/bin/octodns-validate
