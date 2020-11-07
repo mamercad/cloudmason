@@ -11,3 +11,6 @@ dns2:
 gateway:
   type: A
   value: 192.168.1.1
+printer:
+  type: A
+  value: 192.168.1.14
