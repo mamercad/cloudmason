@@ -24,4 +24,4 @@
 
     - name: show the results of the sync
       debug:
-        msg: "{{ octodns_sync.stderr_lines | join("\n") }}"
+        msg: "{{ octodns_sync.stderr_lines | join('\n') }}"
