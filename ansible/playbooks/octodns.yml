@@ -5,10 +5,9 @@
   vars:
     ansible_python_interpreter: /opt/octodns/bin/python
   tasks:
-    - name: pwd
-      command: pwd
-      register: pwd
-    - debug:
-        var: pwd
+    - name: clone git@github.com:mamercad/cloudmason.git
+      git:
+        repo: git@github.com:mamercad/cloudmason.git
+        dest: /home/awx/src/github.com/mamercad/cloudmason
     # - name: octodns-sync
     #   command: /opt/octodns/bin/octodns-sync --config config/production.yaml
