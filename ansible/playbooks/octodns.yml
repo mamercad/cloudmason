@@ -27,5 +27,5 @@
         seconds: 1
         prompt: |
           {% for line in octodns_sync.stderr_lines %}
-          {{ host }}
+          {{ line }}
           {% endfor %}
