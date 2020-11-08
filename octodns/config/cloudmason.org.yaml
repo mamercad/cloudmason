@@ -53,3 +53,6 @@ nest:
 judeypc:
   type: A
   value: 192.168.1.77
+alexa1:
+  type: A
+  value: 192.168.1.80
