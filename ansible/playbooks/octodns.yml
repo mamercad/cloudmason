@@ -20,3 +20,8 @@
         chdir: /home/awx/src/github.com/mamercad/cloudmason/octodns
       environment:
         POWERDNS_API_KEY: "{{ lookup('env', 'POWERDNS_API_KEY') }}"
+      register: octodns_sync
+
+    - name: show the results of the sync
+      debug:
+        msg: "{{ octodns_sync.stderr_lines | join("\n") }}"
