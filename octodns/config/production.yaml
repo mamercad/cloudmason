@@ -7,7 +7,7 @@ providers:
     class: octodns.provider.yaml.YamlProvider
     directory: ./config
     default_ttl: 3600
-    enforce_order: True
+    enforce_order: False # I'd rather order by IP
   powerdns:
     class: octodns.provider.powerdns.PowerDnsProvider
     host: lenovo.cloudmason.org
