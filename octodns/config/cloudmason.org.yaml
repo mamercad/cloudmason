@@ -32,3 +32,9 @@ rokubedroom:
 basementlamp1:
   type: A
   value: 192.168.1.52
+buddyrokutv:
+  type: A
+  value: 192.168.1.55
+alexa5:
+  type: A
+  value: 192.168.1.56
