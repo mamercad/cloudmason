@@ -56,3 +56,12 @@ judeypc:
 alexa1:
   type: A
   value: 192.168.1.80
+alexa2:
+  type: A
+  value: 192.168.1.85
+streamlabs:
+  type: A
+  value: 192.168.1.86
+lenovo:
+  type: A
+  value: 192.168.1.89
