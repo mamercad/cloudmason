@@ -26,5 +26,6 @@
       pause:
         seconds: 1
         prompt: |
-          "{{ item }}"
-      loop: "{{ octodns_sync.stderr_lines }}"
+          {% for line in octodns_sync.stderr_lines %}
+          {{ host }}
+          {% endfor %}
