@@ -38,3 +38,9 @@ buddyrokutv:
 alexa5:
   type: A
   value: 192.168.1.56
+chef:
+  type: A
+  value: 192.168.1.59
+dehumidifier:
+  type: A
+  value: 192.168.1.60
