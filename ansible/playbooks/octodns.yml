@@ -26,4 +26,5 @@
       pause:
         seconds: 1
         prompt: |
-          "{{ octodns_sync.stderr_lines | join('\n') }}
+          "{{ item }}"
+      loop: octodns_sync.stderr_lines
