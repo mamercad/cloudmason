@@ -92,3 +92,6 @@ C02D6D7BMD6M:
 ooma:
   type: A
   value: 192.168.1.117
+garagedoor:
+  type: A
+  value: 192.168.1.121
