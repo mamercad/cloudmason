@@ -20,3 +20,15 @@ ringdoorbell:
 openhab:
   type: A
   value: 192.168.1.20
+rokufamilyroom:
+  type: A
+  value: 192.168.1.22
+coffeepot:
+  type: A
+  value: 192.168.1.30
+rokubedroom:
+  type: A
+  value: 192.168.1.32
+basementlamp1:
+  type: A
+  value: 192.168.1.52
