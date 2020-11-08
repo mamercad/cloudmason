@@ -83,3 +83,12 @@ ringbridge:
 marymercado:
   type: A
   value: 192.168.1.103
+smartthings:
+  type: A
+  value: 192.168.1.112
+C02D6D7BMD6M:
+  type: A
+  value: 192.168.1.116
+ooma:
+  type: A
+  value: 192.168.1.117
