@@ -9,5 +9,6 @@
       git:
         repo: git@github.com:mamercad/cloudmason.git
         dest: /home/awx/src/github.com/mamercad/cloudmason
+        key_file: /home/awx/.ssh/id_rsa
     # - name: octodns-sync
     #   command: /opt/octodns/bin/octodns-sync --config config/production.yaml
