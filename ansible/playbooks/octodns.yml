@@ -2,17 +2,21 @@
 - name: octodns
   hosts: all
   gather_facts: no
+
   vars:
     ansible_python_interpreter: /opt/octodns/bin/python
+
   tasks:
+
     - name: clone git@github.com:mamercad/cloudmason.git
       git:
         repo: git@github.com:mamercad/cloudmason.git
         dest: /home/awx/src/github.com/mamercad/cloudmason
         accept_hostkey: yes
-    # - name: octodns-sync
-    #   command: /opt/octodns/bin/octodns-sync --config config/production.yaml
-    #   args:
-    #     chdir: /home/awx/src/github.com/mamercad/cloudmason/octodns
-    - debug:
-        msg: "{{ lookup('env', 'POWERDNS_API_KEY') }}"
+
+    - name: octodns-sync
+      command: /opt/octodns/bin/octodns-sync --config config/production.yaml
+      args:
+        chdir: /home/awx/src/github.com/mamercad/cloudmason/octodns
+      environment:
+        POWERDNS_API_KEY: "{{ lookup('env', 'POWERDNS_API_KEY') }}"
