@@ -71,6 +71,15 @@ marypc:
 rokulivingroom:
   type: A
   value: 192.168.1.93
-senseu:
+sense:
   type: A
   value: 192.168.1.96
+buddyipad:
+  type: A
+  value: 192.168.1.97
+ringbridge:
+  type: A
+  value: 192.168.1.99
+marymercado:
+  type: A
+  value: 192.168.1.103
