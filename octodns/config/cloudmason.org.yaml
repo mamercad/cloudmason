@@ -65,3 +65,12 @@ streamlabs:
 lenovo:
   type: A
   value: 192.168.1.89
+marypc:
+  type: A
+  value: 192.168.1.90
+rokulivingroom:
+  type: A
+  value: 192.168.1.93
+senseu:
+  type: A
+  value: 192.168.1.96
