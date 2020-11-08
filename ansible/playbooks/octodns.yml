@@ -15,7 +15,7 @@
         accept_hostkey: yes
 
     - name: octodns-sync
-      command: /opt/octodns/bin/octodns-sync --config config/production.yaml
+      command: /opt/octodns/bin/octodns-sync --config config/production.yaml --doit
       args:
         chdir: /home/awx/src/github.com/mamercad/cloudmason/octodns
       environment:
