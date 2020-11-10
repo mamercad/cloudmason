@@ -89,6 +89,7 @@
 - name: Add padd.sh to ~pi/.bashrc
   blockinfile:
     path: /home/pi/.bashrc
+    backup: yes
     block: |
       # Run PADD
       # If we’re on the PiTFT screen (ssh is xterm)
