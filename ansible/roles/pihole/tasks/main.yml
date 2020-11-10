@@ -121,6 +121,6 @@
 - name: Start and enable unbound
   service:
     name: unbound
-    started: yes
+    state: started
     enabled: yes
   become: yes
