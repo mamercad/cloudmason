@@ -117,3 +117,10 @@
     group: root
     mode: 0644
   become: yes
+
+- name: Start and enable unbound
+  service:
+    name: unbound
+    started: yes
+    enabled: yes
+  become: yes
