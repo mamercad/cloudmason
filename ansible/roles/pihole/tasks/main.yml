@@ -102,3 +102,9 @@
         done
       fi
   become: yes
+
+- name: Install unbound
+  apt:
+    state: present
+    name: unbound
+  become: yes
