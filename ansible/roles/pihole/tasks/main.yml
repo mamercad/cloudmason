@@ -81,7 +81,7 @@
   get_url:
     url: https://raw.githubusercontent.com/pi-hole/PADD/master/padd.sh
     checksum: sha256:7ad4349d7a96308f5d71a6bd4a54e090ac496997b9c9b3118fa01ffe68492499
-    path: /home/pi/padd.sh
+    dest: /home/pi/padd.sh
     owner: pi
     group: pi
     mode: 0755
