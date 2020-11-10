@@ -108,3 +108,11 @@
     state: present
     name: unbound
   become: yes
+
+- name: Deploy /etc/unbound/unbound.conf.d/pi-hole.conf
+  template:
+    src: pi-hole.conf.j2
+    dest: /etc/unbound/unbound.conf.d/pi-hole.conf
+    owner: root
+    group: root
+    mode: 0644
