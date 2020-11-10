@@ -85,6 +85,7 @@
     owner: pi
     group: pi
     mode: 0755
+  become: yes
 
 - name: Add padd.sh to ~pi/.bashrc
   blockinfile:
@@ -100,3 +101,4 @@
           sleep 1
         done
       fi
+  become: yes
