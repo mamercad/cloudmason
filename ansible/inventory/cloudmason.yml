@@ -37,6 +37,8 @@ all:
         lenovo:
         jonagold:
         ambrosia:
+        192.168.1.131:
+        192.168.1.137:
     powerdns:
       hosts:
         192.168.1.131:
