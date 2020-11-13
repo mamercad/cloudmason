@@ -16,13 +16,34 @@
       nameserver 192.168.1.1
   become: yes
 
-- name: Install pdns-server, pdns-backend-mysql, mysql-server
+- name: Install pdns-server, pdns-backend-mysql, pdns-recursor, mysql-server
   apt:
     state: present
     name:
       - pdns-server
       - pdns-backend-mysql
+      - pdns-recursor
       - mysql-server
+  become: yes
+
+- name: Deploy /etc/powerdns/recursor.conf
+  copy:
+    dest: /etc/powerdns/recursor.conf
+    owner: pdns
+    group: root
+    mode: 0640
+    content: |
+      local-address=0.0.0.0:53
+      forward-zones=cloudmason.org=127.0.0.1:5353
+      # forward-zones+=another.example.com=127.0.0.1:5300
+  notify: Restart pdns-recursor
+  become: yes
+
+- name: Start and enable pdns-recursor
+  systemd:
+    name: pdns-recursor
+    state: started
+    enabled: yes
   become: yes
 
 - name: Install python3-pymysql

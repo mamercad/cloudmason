@@ -4,3 +4,10 @@
     state: restarted
     daemon_reload: yes
   become: yes
+
+- name: Restart pdns-recursor
+  systemd:
+    name: pdns-recursor
+    state: restarted
+    daemon_reload: yes
+  become: yes
