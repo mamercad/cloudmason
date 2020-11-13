@@ -33,8 +33,13 @@
     group: root
     mode: 0640
     content: |
+      api-key=hunter2
+      webserver=yes
+      webserver-address=0.0.0.0
+      webserver-port=8082
       local-address=0.0.0.0:53
-      forward-zones=cloudmason.org=127.0.0.1:5353
+      serve-rfc1918=no
+      forward-zones=cloudmason.org=127.0.0.1:5353,1.168.192.in-addr.arpa=127.0.0.1:5353
       # forward-zones+=another.example.com=127.0.0.1:5300
   notify: Restart pdns-recursor
   become: yes
@@ -158,6 +163,7 @@
       local-address=0.0.0.0:5353
       api=yes
       api-key=hunter2
+      webserver=yes
       webserver-address=0.0.0.0
       webserver-allow-from=0.0.0.0/0
       launch=gmysql
