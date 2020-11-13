@@ -145,3 +145,28 @@
     mode: 0644
   become: yes
   notify: Restart unbound
+
+- name: Install pdns-server, pdns-backend-sqlite3, and sqlite3
+  apt:
+    state: present
+    name:
+      - pdns-server
+      - pdns-backend-sqlite3
+      - sqlite3
+  become: yes
+  tags: pdns
+
+- name: Deploy schema.sql
+  template:
+    src: powerdns.sql.j2
+    dest: /var/tmp/powerdns.sql
+  become: yes
+  tags: pdns
+
+- name: Create sqlite3 database for PowerDNS
+  shell: cat powerdns.sql | sqlite3 powerdns.db
+  args:
+    chdir: /var/tmp
+    creates: /var/tmp/powerdns.db
+  become: yes
+  tags: pdns

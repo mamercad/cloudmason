@@ -5,3 +5,4 @@
     - name: Include Pi-hole Role
       include_role:
         name: pihole
+      tags: pdns
