@@ -25,6 +25,8 @@ all:
       hosts:
         ambrosia:
         jonagold:
+        192.168.1.131:
+        192.168.1.137:
     prometheus:
       hosts:
         lenovo:
@@ -35,6 +37,10 @@ all:
         lenovo:
         jonagold:
         ambrosia:
+    powerdns:
+      hosts:
+        192.168.1.131:
+        192.168.1.137:
   vars:
     # ansible_ssh_common_args: '-o ProxyCommand="ssh -W %h:%p -q cloudmason.org"'
     full_name: Mark Mercado
