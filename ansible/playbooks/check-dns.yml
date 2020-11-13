@@ -1,6 +1,6 @@
 ---
 - name: Check DNS
-  hosts: all
+  hosts: linux
   gather_facts: no
 
   vars:
