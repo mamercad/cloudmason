@@ -4,7 +4,10 @@
   gather_facts: no
 
   vars:
-    nameservers: '@192.168.1.8,192.168.1.9'
+    # nameservers: '@192.168.1.8,192.168.1.9'
+    nameservers:
+      - 192.168.1.8
+      - 192.168.1.9
     records:
       - facebook.com.
       - google.com.
@@ -17,17 +20,33 @@
       - unifi.cloudmason.org.
       - powerdns1.cloudmason.org.
       - powerdns2.cloudmason.org.
+      # - bad
 
   tasks:
 
-    - name: Simple A record (IPV4 address) lookup
-      ansible.builtin.debug:
-        msg: "{{ lookup('community.general.dig', '{{ item }}', '{{ nameservers }}' )}}"
-      loop: "{{ records }}"
+    - name: Check
+      command: |
+        dig @{{ item.0 }} +short {{ item.1 }}
       register: foo
+      with_nested:
+        - "{{ nameservers }}"
+        - "{{ records }}"
+      changed_when: no # Don't care
 
     - name: Debug
-      ansible.builtin.debug:
-        msg: "{{ item.msg }}"
+      debug:
+        msg: "{{ item.stdout }}"
       loop: "{{ foo.results }}"
-      failed_when: item.msg == '' or item.msg == 'NXDOMAIN'
+      failed_when: item.stdout == ''
+
+    # - name: Simple A record (IPV4 address) lookup
+    #   ansible.builtin.debug:
+    #     msg: "{{ lookup('community.general.dig', '{{ item }}', '{{ nameservers }}' )}}"
+    #   loop: "{{ records }}"
+    #   register: foo
+
+    # - name: Debug
+    #   ansible.builtin.debug:
+    #     msg: "{{ item.msg }}"
+    #   loop: "{{ foo.results }}"
+    #   failed_when: item.msg == '' or item.msg == 'NXDOMAIN'
