@@ -1,0 +1,32 @@
+---
+- name: Check DNS
+  hosts: all
+  gather_facts: no
+
+  vars:
+    nameservers: '@192.168.1.8,192.168.1.9'
+    records:
+      - facebook.com.
+      - google.com.
+      - reddit.com.
+      - twitter.com.
+      - cloudmason.org.
+      - gateway.cloudmason.org.
+      - cloudkey.cloudmason.org.
+      - unifi.cloudmason.org.
+      - powerdns1.cloudmason.org.
+      - powerdns2.cloudmason.org.
+
+  tasks:
+
+    - name: Simple A record (IPV4 address) lookup
+      ansible.builtin.debug:
+        msg: "{{ lookup('community.general.dig', '{{ item }}', '{{ nameservers }}' )}}"
+      loop: "{{ records }}"
+      register: foo
+
+    - name: Debug
+      ansible.builtin.debug:
+        msg: "{{ item.msg }}"
+      loop: "{{ foo.results }}"
+      failed_when: item.msg == '' or item.msg == 'NXDOMAIN'
