@@ -98,6 +98,11 @@ C02D6D7BMD6M:
 ooma:
   type: A
   value: 192.168.1.117
+qnap:
+  type: A
+  value:
+    - 192.168.1.118
+    - 192.168.1.119
 garagedoor:
   type: A
   value: 192.168.1.121
