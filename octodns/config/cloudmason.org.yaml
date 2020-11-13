@@ -5,6 +5,12 @@ gateway:
 cloudkey:
   type: A
   value: 192.168.1.2
+powerdns1:
+  type: A
+  value: 192.168.1.8
+powerdns2:
+  type: A
+  value: 192.168.1.9
 dns1:
   type: A
   value: 192.168.1.10
@@ -98,12 +104,6 @@ garagedoor:
 pws:
   type: A
   value: 192.168.1.127
-powerdns1:
-  type: A
-  value: 192.168.1.131
-powerdns2:
-  type: A
-  value: 192.168.1.137
 ambrosia:
   type: A
   value: 192.168.1.135
