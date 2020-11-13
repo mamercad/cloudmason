@@ -34,3 +34,9 @@ zones:
     targets:
       - powerdns1
       - powerdns2
+  1.168.192.in-addr.arpa.:
+    sources:
+      - config
+    targets:
+      - powerdns1
+      - powerdns2

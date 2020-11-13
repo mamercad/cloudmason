@@ -1,0 +1,136 @@
+---
+1:
+  type: PTR
+  value: gateway.cloudmason.org.
+2:
+  type: PTR
+  value: cloudkey.cloudmason.org.
+8:
+  type: PTR
+  value: powerdns1.cloudmason.org.
+9:
+  type: PTR
+  value: powerdns2.cloudmason.org.
+10:
+  type: PTR
+  value: dns1.cloudmason.org.
+11:
+  type: PTR
+  value: dns2.cloudmason.org.
+14:
+  type: PTR
+  value: printer.cloudmason.org.
+16:
+  type: PTR
+  value: ringdoorbell.cloudmason.org.
+20:
+  type: PTR
+  value: openhab.cloudmason.org.
+22:
+  type: PTR
+  value: rokufamilyroom.cloudmason.org.
+26:
+  type: PTR
+  value: jonagold.cloudmason.org.
+30:
+  type: PTR
+  value: coffeepot.cloudmason.org.
+32:
+  type: PTR
+  value: rokubedroom.cloudmason.org.
+52:
+  type: PTR
+  value: basementlamp1.cloudmason.org.
+55:
+  type: PTR
+  value: buddyrokutv.cloudmason.org.
+56:
+  type: PTR
+  value: alexa5.cloudmason.org.
+60:
+  type: PTR
+  value: dehumidifier.cloudmason.org.
+69:
+  type: PTR
+  value: roomba.cloudmason.org.
+76:
+  type: PTR
+  value: nest.cloudmason.org.
+77:
+  type: PTR
+  value: judeypc.cloudmason.org.
+80:
+  type: PTR
+  value: alexa1.cloudmason.org.
+85:
+  type: PTR
+  value: alexa2.cloudmason.org.
+86:
+  type: PTR
+  value: streamlabs.cloudmason.org.
+89:
+  type: PTR
+  value: lenovo.cloudmason.org.
+90:
+  type: PTR
+  value: marypc.cloudmason.org.
+93:
+  type: PTR
+  value: rokulivingroom.cloudmason.org.
+96:
+  type: PTR
+  value: sense.cloudmason.org.
+97:
+  type: PTR
+  value: buddyipad.cloudmason.org.
+99:
+  type: PTR
+  value: ringbridge.cloudmason.org.
+103:
+  type: PTR
+  value: marymercado.cloudmason.org.
+112:
+  type: PTR
+  value: smartthings.cloudmason.org.
+116:
+  type: PTR
+  value: C02D6D7BMD6M.cloudmason.org.
+117:
+  type: PTR
+  value: ooma.cloudmason.org.
+118:
+  type: PTR
+  value: qnap.cloudmason.org.
+119:
+  type: PTR
+  value: qnap.cloudmason.org.
+121:
+  type: PTR
+  value: garagedoor.cloudmason.org.
+127:
+  type: PTR
+  value: pws.cloudmason.org.
+135:
+  type: PTR
+  value: ambrosia.cloudmason.org.
+136:
+  type: PTR
+  value: rog.cloudmason.org.
+140:
+  type: PTR
+  value: livingroomtv.cloudmason.org.
+144:
+  type: PTR
+  value: basementlamp2.cloudmason.org.
+149:
+  type: PTR
+  value: biaslighting.cloudmason.org.
+162:
+  type: PTR
+  value: marymacbook.cloudmason.org.
+187:
+  type: PTR
+  value: ringbasestation.cloudmason.org.
+188:
+  type: PTR
+  value: alexa3.cloudmason.org.
