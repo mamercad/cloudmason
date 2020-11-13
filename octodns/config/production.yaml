@@ -8,14 +8,23 @@ providers:
     directory: ./config
     default_ttl: 3600
     enforce_order: False # I'd rather order by IP
-  powerdns:
+  dns1:
     class: octodns.provider.powerdns.PowerDnsProvider
-    host: lenovo.cloudmason.org
+    host: 192.168.1.131
     api_key: env/POWERDNS_API_KEY
     port: 8081
     nameserver_values:
       - 192.168.1.131.
       - 192.168.1.137.
+    nameserver_ttl: 3600
+  dns2:
+    class: octodns.provider.powerdns.PowerDnsProvider
+    host: 192.168.1.137
+    api_key: env/POWERDNS_API_KEY
+    port: 8081
+    nameserver_values:
+      - 192.168.1.137.
+      - 192.168.1.131.
     nameserver_ttl: 3600
 
 zones:
@@ -23,4 +32,5 @@ zones:
     sources:
       - config
     targets:
-      - powerdns
+      - dns1
+      - dns2
