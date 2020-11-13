@@ -1,0 +1,63 @@
+- name: Disable systemd-resolved
+  systemd:
+    state: stopped
+    enabled: no
+    name: systemd-resolved
+  become: yes
+
+- name: Deploy /etc/resolv.conf
+  copy:
+    dest: /etc/resolv.conf
+    owner: root
+    group: root
+    mode: 0644
+    content: |
+      search cloudmason.org
+      nameserver 192.168.1.1
+  become: yes
+
+- name: Install pdns-server, pdns-backend-sqlite3, and sqlite3
+  apt:
+    state: present
+    name:
+      - pdns-server
+      - pdns-backend-sqlite3
+      - sqlite3
+  become: yes
+
+- name: Start and enable pdns
+  systemd:
+    name: pdns
+    state: started
+    enabled: yes
+  become: yes
+
+- name: Enable the PowerDNS api and set the api-key
+  copy:
+    dest: /etc/powerdns/pdns.d/api.conf
+    owner: pdns
+    group: root
+    mode: 0640
+    content: |
+      api=yes
+      api-key=hunter2
+      webserver-address=0.0.0.0
+  notify: Restart pdns
+  become: yes
+
+# - name: Deploy schema.sql
+#   template:
+#     src: powerdns.sql.j2
+#     dest: /var/tmp/powerdns.sql
+#     owner: pdns
+#     group: pdns
+#     mode: 0644
+#   become: yes
+
+# - name: Create sqlite3 database for PowerDNS
+#   shell: cat powerdns.sql | sqlite3 powerdns.db
+#   args:
+#     chdir: /var/tmp
+#     creates: /var/tmp/powerdns.db
+#   become: yes
+#   become_user: pdns
