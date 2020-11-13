@@ -8,23 +8,23 @@ providers:
     directory: ./config
     default_ttl: 3600
     enforce_order: False # I'd rather order by IP
-  dns1:
+  powerdns1:
     class: octodns.provider.powerdns.PowerDnsProvider
-    host: 192.168.1.131
+    host: 192.168.1.8
     api_key: env/POWERDNS_API_KEY
     port: 8081
     nameserver_values:
-      - dns1.cloudmason.org.
-      - dns2.cloudmason.org.
+      - powerdns1.cloudmason.org.
+      - powerdns2.cloudmason.org.
     nameserver_ttl: 3600
-  dns2:
+  powerdns2:
     class: octodns.provider.powerdns.PowerDnsProvider
-    host: 192.168.1.137
+    host: 192.168.1.9
     api_key: env/POWERDNS_API_KEY
     port: 8081
     nameserver_values:
-      - dns1.cloudmason.org.
-      - dns2.cloudmason.org.
+      - powerdns1.cloudmason.org.
+      - powerdns2.cloudmason.org.
     nameserver_ttl: 3600
 
 zones:
@@ -32,5 +32,5 @@ zones:
     sources:
       - config
     targets:
-      - dns1
-      - dns2
+      - powerdns1
+      - powerdns2
