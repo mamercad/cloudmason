@@ -54,8 +54,7 @@
     login_db: pdns
     login_unix_socket: /var/run/mysqld/mysqld.sock
     query:
-
-      - CREATE TABLE domains (
+      - CREATE TABLE IF NOT EXISTS domains (
           id                    INT AUTO_INCREMENT,
           name                  VARCHAR(255) NOT NULL,
           master                VARCHAR(128) DEFAULT NULL,
@@ -66,7 +65,7 @@
           PRIMARY KEY (id)
         ) Engine=InnoDB CHARACTER SET 'latin1';
       - ALTER TABLE domains ADD INDEX (name);
-      - CREATE TABLE records (
+      - CREATE TABLE IF NOT EXISTS records (
           id                    BIGINT AUTO_INCREMENT,
           domain_id             INT DEFAULT NULL,
           name                  VARCHAR(255) DEFAULT NULL,
@@ -83,13 +82,13 @@
       - ALTER TABLE records ADD INDEX (name, type);
       - ALTER TABLE records ADD INDEX (domain_id);
       - ALTER TABLE records ADD INDEX (ordername);
-      - CREATE TABLE supermasters (
+      - CREATE TABLE IF NOT EXISTS supermasters (
           ip                    VARCHAR(64) NOT NULL,
           nameserver            VARCHAR(255) NOT NULL,
           account               VARCHAR(40) CHARACTER SET 'utf8' NOT NULL,
           PRIMARY KEY (ip, nameserver)
         ) Engine=InnoDB CHARACTER SET 'latin1';
-      - CREATE TABLE comments (
+      - CREATE TABLE IF NOT EXISTS comments (
           id                    INT AUTO_INCREMENT,
           domain_id             INT NOT NULL,
           name                  VARCHAR(255) NOT NULL,
@@ -101,7 +100,7 @@
         ) Engine=InnoDB CHARACTER SET 'latin1';
       - ALTER TABLE comments ADD INDEX (name, type);
       - ALTER TABLE comments ADD INDEX (domain_id, modified_at);
-      - CREATE TABLE domainmetadata (
+      - CREATE TABLE IF NOT EXISTS domainmetadata (
           id                    INT AUTO_INCREMENT,
           domain_id             INT NOT NULL,
           kind                  VARCHAR(32),
@@ -109,7 +108,7 @@
           PRIMARY KEY (id)
         ) Engine=InnoDB CHARACTER SET 'latin1';
       - ALTER TABLE domainmetadata ADD INDEX (domain_id, kind);
-      - CREATE TABLE cryptokeys (
+      - CREATE TABLE IF NOT EXISTS cryptokeys (
           id                    INT AUTO_INCREMENT,
           domain_id             INT NOT NULL,
           flags                 INT NOT NULL,
@@ -118,7 +117,7 @@
           PRIMARY KEY(id)
         ) Engine=InnoDB CHARACTER SET 'latin1';
       - ALTER TABLE cryptokeys ADD INDEX (domain_id);
-      - CREATE TABLE tsigkeys (
+      - CREATE TABLE IF NOT EXISTS tsigkeys (
           id                    INT AUTO_INCREMENT,
           name                  VARCHAR(255),
           algorithm             VARCHAR(50),
@@ -135,10 +134,11 @@
     group: root
     mode: 0640
     content: |
+      local-address=0.0.0.0:5353
       api=yes
       api-key=hunter2
       webserver-address=0.0.0.0
-      webserver-allow-from=0.0.0.0/0,::/0
+      webserver-allow-from=0.0.0.0/0
       launch=gmysql
       gmysql-socket=/var/run/mysqld/mysqld.sock
       gmysql-dbname=pdns
