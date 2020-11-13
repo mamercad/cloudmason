@@ -10,6 +10,10 @@ all:
       healthchecks_io: https://hc-ping.com/177cb674-b199-4fbb-8879-5f83ba901fa5
     ambrosia:
       healthchecks_io: https://hc-ping.com/1ec80f6a-b747-4b8f-9a6e-ee9b5dfbbe05
+    powerdns1:
+      healthchecks_io: https://hc-ping.com/19217f13-73b5-493e-9a00-a22796f47fee
+    powerdns2:
+      healthchecks_io: https://hc-ping.com/5970d9fb-08be-4110-88fd-55e47c2efab8
   children:
     centos:
       hosts:
