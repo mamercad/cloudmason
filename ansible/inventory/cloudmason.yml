@@ -8,8 +8,6 @@ all:
       healthchecks_io: https://hc-ping.com/c8bd3c9c-9d8b-445b-bdf0-75935b4e6db4
     jonagold:
       healthchecks_io: https://hc-ping.com/177cb674-b199-4fbb-8879-5f83ba901fa5
-    # ambrosia:
-    #   healthchecks_io: https://hc-ping.com/1ec80f6a-b747-4b8f-9a6e-ee9b5dfbbe05
     powerdns1:
       healthchecks_io: https://hc-ping.com/19217f13-73b5-493e-9a00-a22796f47fee
     powerdns2:
@@ -18,16 +16,15 @@ all:
     centos:
       hosts:
         lenovo:
-    cloudmason.org:
-      hosts:
-        lenovo:
+    # cloudmason.org:
+    #   hosts:
+    #     lenovo:
     pihole:
       hosts:
         dns1:
         dns2:
     ubuntu:
       hosts:
-        # ambrosia:
         jonagold:
         powerdns1:
         powerdns2:
@@ -40,7 +37,6 @@ all:
         dns2:
         lenovo:
         jonagold:
-        # ambrosia:
         powerdns1:
         powerdns2:
     powerdns:

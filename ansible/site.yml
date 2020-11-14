@@ -1,70 +1,70 @@
-#!/usr/bin/env -S ansible-playbook -i inventory/cloudmason --vault-password-file .vault_pass
+#!/usr/bin/env -S ansible-playbook -i inventory/cloudmason.yml --vault-password-file .vault_pass
 ---
 - name: common
   hosts: all
   roles:
     - common
 
-- name: centos
-  hosts: centos
-  roles:
-    - centos
+# - name: centos
+#   hosts: centos
+#   roles:
+#     - centos
 
-- name: docker
-  hosts: docker
-  become: yes
-  roles:
-    - docker
-  tags:
-    - docker
+# - name: docker
+#   hosts: docker
+#   become: yes
+#   roles:
+#     - docker
+#   tags:
+#     - docker
 
-- name: stackstorm
-  hosts: all
-  roles:
-    - stackstorm
-  tags:
-    - stackstorm
-  become: yes
+# - name: stackstorm
+#   hosts: all
+#   roles:
+#     - stackstorm
+#   tags:
+#     - stackstorm
+#   become: yes
 
-- name: lenovo
-  hosts: lenovo
-  roles:
-    - lenovo
+# - name: lenovo
+#   hosts: lenovo
+#   roles:
+#     - lenovo
 
-- name: ubuntu
-  hosts:
-    - ubuntu
-  roles:
-    - ubuntu
+# - name: ubuntu
+#   hosts:
+#     - ubuntu
+#   roles:
+#     - ubuntu
 
-- name: ubuntu-hypervisor
-  hosts: ubuntu-hypervisor
-  roles:
-    - ubuntu-hypervisor
+# - name: ubuntu-hypervisor
+#   hosts: ubuntu-hypervisor
+#   roles:
+#     - ubuntu-hypervisor
 
-- name: user
-  hosts: all
-  roles:
-    - user
+# - name: user
+#   hosts: all
+#   roles:
+#     - user
 
-- name: plex
-  hosts: ambrosia
-  roles:
-    - plex
+# - name: plex
+#   hosts: ambrosia
+#   roles:
+#     - plex
 
-- name: cloudmason.org
-  hosts: ambrosia
-  roles:
-    - cloudmason.org
+# - name: cloudmason.org
+#   hosts: ambrosia
+#   roles:
+#     - cloudmason.org
 
-- name: prometheus
-  hosts:
-    - prometheus
-  roles:
-    - prometheus
+# - name: prometheus
+#   hosts:
+#     - prometheus
+#   roles:
+#     - prometheus
 
-- name: awx
-  hosts:
-    - localhost
-  roles:
-    - awx
+# - name: awx
+#   hosts:
+#     - localhost
+#   roles:
+#     - awx
