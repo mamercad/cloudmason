@@ -16,18 +16,6 @@ all:
     centos:
       hosts:
         lenovo:
-    pihole:
-      hosts:
-        dns1:
-        dns2:
-    ubuntu:
-      hosts:
-        jonagold:
-        powerdns1:
-        powerdns2:
-    prometheus:
-      hosts:
-        lenovo:
     linux:
       hosts:
         dns1:
@@ -36,8 +24,20 @@ all:
         jonagold:
         powerdns1:
         powerdns2:
+    pihole:
+      hosts:
+        dns1:
+        dns2:
     powerdns:
       hosts:
+        powerdns1:
+        powerdns2:
+    prometheus:
+      hosts:
+        lenovo:
+    ubuntu:
+      hosts:
+        jonagold:
         powerdns1:
         powerdns2:
   vars:
