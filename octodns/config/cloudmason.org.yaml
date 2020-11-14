@@ -136,3 +136,6 @@ ringbasestation:
 alexa3:
   type: A
   value: 192.168.1.188
+awx:
+  type: A
+  value: 192.168.1.221

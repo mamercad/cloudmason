@@ -134,3 +134,6 @@
 188:
   type: PTR
   value: alexa3.cloudmason.org.
+221:
+  type: PTR
+  value: awx.cloudmason.org.
