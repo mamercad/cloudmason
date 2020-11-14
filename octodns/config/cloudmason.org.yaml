@@ -124,6 +124,9 @@ familyroom:
 garagedoor:
   type: A
   value: 192.168.1.121
+switch2:
+  type: A
+  value: 192.168.1.126
 pws:
   type: A
   value: 192.168.1.127
