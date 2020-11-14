@@ -1,0 +1,34 @@
+---
+- name: letsbuildthe.cloud
+  hosts: all
+  gather_facts: no
+
+  vars:
+    host: '@'
+    domain: letsbuildthe.cloud
+    password: !vault |
+      $ANSIBLE_VAULT;1.1;AES256
+      63663062663239373237383631646235613630663064613064653334666334656532656430333434
+      6530353361393032356236656238633931313534623062630a383036373332303462666634313837
+      37613532376233326333663966616638383266663438383766363938653134303938663364636239
+      3866353938373633360a663937653834366566316461303431663962353036383532353736643134
+      66383438396166643533653162383934343231393638633065343931336435666139343766373461
+      6633373764363135653861316261333431303733373931323863
+
+  tasks:
+
+    - name: Figure out our IP
+      uri:
+        url: https://ifconfig.co/
+        http_agent: curl
+        return_content: yes
+      register: ifconfig
+
+    - set_fact:
+        ip: "{{ ifconfig.content | trim }}"
+
+    - name: Update DNS for letsbuildthe.cloud
+      uri:
+        url: https://dynamicdns.park-your-domain.com/update?host={{ host }}&domain={{ domain }}&password={{ password }}&ip={{ ip }}
+        http_agent: curl
+        return_content: yes
