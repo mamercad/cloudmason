@@ -62,6 +62,9 @@ roomba:
 switch3:
   type: A
   value: 192.168.1.70
+honeycrisp:
+  type: A
+  value: 192.168.1.73
 nest:
   type: A
   value: 192.168.1.76
