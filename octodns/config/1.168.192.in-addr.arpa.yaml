@@ -137,6 +137,9 @@
 140:
   type: PTR
   value: livingroomtv.cloudmason.org.
+141:
+  type: PTR
+  value: bedroom.cloudmason.org.
 144:
   type: PTR
   value: basementlamp2.cloudmason.org.
