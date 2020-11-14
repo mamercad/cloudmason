@@ -19,6 +19,7 @@
       - cloudkey.cloudmason.org.
       - powerdns1.cloudmason.org.
       - powerdns2.cloudmason.org.
+      - -t ptr 1.1.168.192.in-addr.arpa.
       # - bad
 
   tasks:
