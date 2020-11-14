@@ -53,6 +53,9 @@ alexa5:
 dehumidifier:
   type: A
   value: 192.168.1.60
+basement:
+  type: A
+  value: 192.168.1.63
 roomba:
   type: A
   value: 192.168.1.69

@@ -50,6 +50,9 @@
 60:
   type: PTR
   value: dehumidifier.cloudmason.org.
+63:
+  type: PTR
+  value: basement.cloudmason.org.
 69:
   type: PTR
   value: roomba.cloudmason.org.
