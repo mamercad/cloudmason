@@ -89,6 +89,9 @@ marypc:
 rokulivingroom:
   type: A
   value: 192.168.1.93
+switch1:
+  type: A
+  value: 192.168.1.95
 sense:
   type: A
   value: 192.168.1.96

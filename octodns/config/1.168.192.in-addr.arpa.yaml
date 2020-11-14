@@ -86,6 +86,9 @@
 93:
   type: PTR
   value: rokulivingroom.cloudmason.org.
+95:
+  type: PTR
+  value: switch1.cloudmason.org.
 96:
   type: PTR
   value: sense.cloudmason.org.
