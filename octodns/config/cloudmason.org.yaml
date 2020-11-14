@@ -59,6 +59,9 @@ basement:
 roomba:
   type: A
   value: 192.168.1.69
+switch3:
+  type: A
+  value: 192.168.1.70
 nest:
   type: A
   value: 192.168.1.76

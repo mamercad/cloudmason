@@ -56,6 +56,9 @@
 69:
   type: PTR
   value: roomba.cloudmason.org.
+70:
+  type: PTR
+  value: switch3.cloudmason.org.
 76:
   type: PTR
   value: nest.cloudmason.org.
