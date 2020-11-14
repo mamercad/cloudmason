@@ -12,12 +12,8 @@ all:
     #   healthchecks_io: https://hc-ping.com/1ec80f6a-b747-4b8f-9a6e-ee9b5dfbbe05
     powerdns1:
       healthchecks_io: https://hc-ping.com/19217f13-73b5-493e-9a00-a22796f47fee
-    192.168.1.8:
-      healthchecks_io: https://hc-ping.com/19217f13-73b5-493e-9a00-a22796f47fee
     powerdns2:
       healthchecks_io: https://hc-ping.com/5970d9fb-08be-4110-88fd-55e47c2efab8
-    192.168.1.9:
-      healthchecks_io: https://hc-ping.com/19217f13-73b5-493e-9a00-a22796f47fee
   children:
     centos:
       hosts:
@@ -33,8 +29,8 @@ all:
       hosts:
         # ambrosia:
         jonagold:
-        192.168.1.8:
-        192.168.1.9:
+        powerdns1:
+        powerdns2:
     prometheus:
       hosts:
         lenovo:
@@ -45,12 +41,12 @@ all:
         lenovo:
         jonagold:
         # ambrosia:
-        192.168.1.8:
-        192.168.1.9:
+        powerdns1:
+        powerdns2:
     powerdns:
       hosts:
-        192.168.1.8:
-        192.168.1.9:
+        powerdns1:
+        powerdns2:
   vars:
     # ansible_ssh_common_args: '-o ProxyCommand="ssh -W %h:%p -q cloudmason.org"'
     full_name: Mark Mercado
