@@ -1,9 +1,17 @@
 #!/usr/bin/env -S ansible-playbook -i inventory/cloudmason.yml --vault-password-file .vault_pass
 ---
+
 - name: common
   hosts: all
   roles:
     - common
+
+- name: mark
+  hosts:
+    - jonagold
+    - lenovo
+  roles:
+    - mark
 
 # - name: centos
 #   hosts: centos
