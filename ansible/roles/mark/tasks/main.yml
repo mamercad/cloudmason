@@ -24,6 +24,15 @@
     create_home: yes
   become: yes
 
+- name: Create ~mark/.ssh
+  file:
+    state: directory
+    path: "{{ home }}/.ssh"
+    owner: "{{ user }}"
+    group: "{{ group }}"
+    mode: 0700
+  become: yes
+
 - name: Give mark passwordless sudo
   copy:
     content: mark ALL=(ALL:ALL) NOPASSWD:ALL
