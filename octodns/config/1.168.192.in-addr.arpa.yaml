@@ -158,3 +158,9 @@
 221:
   type: PTR
   value: awx.cloudmason.org.
+222:
+  type: PTR
+  value: prometheus.cloudmason.org.
+223:
+  type: PTR
+  value: grafana.cloudmason.org.

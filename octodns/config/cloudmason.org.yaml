@@ -160,3 +160,9 @@ alexa3:
 awx:
   type: A
   value: 192.168.1.221
+prometheus:
+  type: A
+  value: 192.168.1.222
+grafana:
+  type: A
+  value: 192.168.1.223
