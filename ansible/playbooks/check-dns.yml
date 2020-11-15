@@ -1,10 +1,9 @@
 ---
 - name: Check DNS
-  hosts: linux
+  hosts: all
   gather_facts: no
 
   vars:
-    # nameservers: '@192.168.1.8,192.168.1.9'
     nameservers:
       - 192.168.1.8
       - 192.168.1.9
@@ -20,7 +19,6 @@
       - powerdns1.cloudmason.org.
       - powerdns2.cloudmason.org.
       - -t ptr 1.1.168.192.in-addr.arpa.
-      # - bad
 
   tasks:
 
@@ -38,15 +36,3 @@
         msg: "{{ item.stdout }}"
       loop: "{{ foo.results }}"
       failed_when: item.stdout == ''
-
-    # - name: Simple A record (IPV4 address) lookup
-    #   ansible.builtin.debug:
-    #     msg: "{{ lookup('community.general.dig', '{{ item }}', '{{ nameservers }}' )}}"
-    #   loop: "{{ records }}"
-    #   register: foo
-
-    # - name: Debug
-    #   ansible.builtin.debug:
-    #     msg: "{{ item.msg }}"
-    #   loop: "{{ foo.results }}"
-    #   failed_when: item.msg == '' or item.msg == 'NXDOMAIN'
