@@ -164,3 +164,6 @@
 223:
   type: PTR
   value: grafana.cloudmason.org.
+224:
+  type: PTR
+  value: kiali.cloudmason.org.
