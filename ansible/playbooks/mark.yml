@@ -1,0 +1,8 @@
+---
+
+- name: mark
+  hosts: linux
+  tasks:
+    - name: mark
+      include_role:
+        name: mark
