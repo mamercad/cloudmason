@@ -3,6 +3,7 @@
   group:
     state: present
     name: "{{ group }}"
+  become: yes
 
 - name: Ensure mark exists
   user:
