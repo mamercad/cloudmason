@@ -4,6 +4,7 @@
   apt:
     state: present
     name: bind9-dnsutils
+  become: yes
 
 # - name: Deploy /etc/pihole/custom.list
 #   copy:
