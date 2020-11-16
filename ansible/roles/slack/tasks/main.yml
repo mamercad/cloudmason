@@ -1,0 +1,7 @@
+---
+
+- name: Send notification message via Slack
+  community.general.slack:
+    token: "{{ slack_token }}"
+    msg: "{{ slack_message }}"
+    channel: "{{ slack_channel }}"
