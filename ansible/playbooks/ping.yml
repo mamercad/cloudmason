@@ -1,6 +1,6 @@
 ---
-- name: ping
+- name: Ping
   hosts: all
+  gather_facts: no
   tasks:
-    - name: ping
-      action: ping
+    - action: ping
