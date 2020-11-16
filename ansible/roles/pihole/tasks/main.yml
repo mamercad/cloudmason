@@ -6,6 +6,9 @@
     name: dnsutils
   become: yes
 
+- name: Install PowerDNS
+  include_tasks: powerdns.yml
+
 # - name: Deploy /etc/pihole/custom.list
 #   copy:
 #     dest: /etc/pihole/custom.list

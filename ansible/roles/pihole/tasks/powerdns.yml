@@ -1,0 +1,37 @@
+---
+
+- name: Configure upstream PowerDNS 4.4 repositories
+  block:
+
+    - name: Add PowerDNS apt GPG key
+      apt_key:
+        state: present
+        id: 9FAAA5577E8FCF62093D036C1B0C6205FD380FBB
+        # url: https://repo.powerdns.com/FD380FBB-pub.asc
+        keyserver: keys.gnupg.net
+
+    - name: Add PowerDNS 4.4 recursor repository
+      apt_repository:
+        state: present
+        repo: deb http://repo.powerdns.com/raspbian buster-rec-44 main
+
+    - name: Add PowerDNS 4.4 authoritative server repository
+      apt_repository:
+        state: present
+        repo: deb http://repo.powerdns.com/raspbian buster-auth-44 main
+
+    - name: Add pin-priority for PowerDNS packages
+      copy:
+        dest: /etc/apt/preferences.d/pdns
+        owner: root
+        group: root
+        mode: 0644
+        content: |
+          Package: pdns-*
+          Pin: origin repo.powerdns.com
+          Pin-Priority: 600
+
+  when:
+    - ansible_architecture == 'armv7l'
+    - ansible_distribution_release == 'buster'
+  become: yes
