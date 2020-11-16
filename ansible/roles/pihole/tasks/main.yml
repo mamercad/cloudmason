@@ -1,172 +1,177 @@
 ---
 
-- name: Deploy /etc/pihole/custom.list
-  copy:
-    dest: /etc/pihole/custom.list
-    owner: pihole
-    group: pihole
-    mode: 0644
-    content: |
-      192.168.1.1 gateway.cloudmason.org
-      192.168.1.2 cloudkey.cloudmason.org
-      192.168.1.10 dns1.cloudmason.org
-      192.168.1.11 dns2.cloudmason.org
-      192.168.1.14 printer.cloudmason.org
-      192.168.1.16 ringdoorbell.cloudmason.org
-      192.168.1.20 openhab.cloudmason.org
-      192.168.1.22 rokufamilyroom.cloudmason.org
-      192.168.1.26 jonagold.cloudmason.org
-      192.168.1.30 coffeepot.cloudmason.org
-      192.168.1.32 rokubedroom.cloudmason.org
-      192.168.1.47 markxboxone.cloudmason.org
-      192.168.1.50 buddyxboxone.cloudmason.org
-      192.168.1.52 basementlamp1.cloudmason.org
-      192.168.1.54 judepc.cloudmason.org
-      192.168.1.55 buddyrokutv.cloudmason.org
-      192.168.1.58 chef.cloudmason.org
-      192.168.1.60 dehumidifier.cloudmason.org
-      192.168.1.61 judeyrokutv.cloudmason.org
-      192.168.1.63 basement.cloudmason.org
-      192.168.1.68 ringbasestation.cloudmason.org
-      192.168.1.69 roomba.cloudmason.org
-      192.168.1.70 switch3.cloudmason.org
-      192.168.1.73 honeycrisp.cloudmason.org
-      192.168.1.76 nest.cloudmason.org
-      192.168.1.79 coffeepot.cloudmason.org
-      192.168.1.80 alexa1.cloudmason.org
-      192.168.1.85 alexa2.cloudmason.org
-      192.168.1.86 streamlabs.cloudmason.org
-      192.168.1.87 plugoutside1.cloudmason.org
-      192.168.1.89 cloudmason.org
-      192.168.1.89 lenovo.cloudmason.org
-      192.168.1.92 buddyiphone.cloudmason.org
-      192.168.1.93 rokulivingroom.cloudmason.org
-      192.168.1.95 switch1.cloudmason.org
-      192.168.1.96 sense.cloudmason.org
-      192.168.1.97 buddyipad.cloudmason.org
-      192.168.1.98 SC05F036.cloudmason.org
-      192.168.1.99 ringbridge.cloudmason.org
-      192.168.1.100 plugoutside2.cloudmason.org
-      192.168.1.103 marymercado.cloudmason.org
-      192.168.1.112 smartthings.cloudmason.org
-      192.168.1.113 ringdoorbell.cloudmason.org
-      192.168.1.114 markipad.cloudmason.org
-      192.168.1.116 C02D6D7BMD6M.cloudmason.org
-      192.168.1.117 ooma.cloudmason.org
-      192.168.1.118 qnap.cloudmason.org
-      192.168.1.119 qnap2.cloudmason.org
-      192.168.1.120 familyroom.cloudmason.org
-      192.168.1.121 garagedoor.cloudmason.org
-      192.168.1.123 marypc.cloudmason.org
-      192.168.1.126 switch2.cloudmason.org
-      192.168.1.127 pws.cloudmason.org
-      192.168.1.129 markiphone.cloudmason.org
-      192.168.1.135 ambrosia.cloudmason.org
-      192.168.1.136 rog.cloudmason.org
-      192.168.1.137 rokubedroom.cloudmason.org
-      192.168.1.138 alexa3.cloudmason.org
-      192.168.1.140 livingroomtv.cloudmason.org
-      192.168.1.141 bedroom.cloudmason.org
-      192.168.1.142 wiiu.cloudmason.org
-      192.168.1.144 basementlamp2.cloudmason.org
-      192.168.1.146 maryipad.cloudmason.org
-      192.168.1.148 fuji.cloudmason.org
-      192.168.1.149 biaslighting.cloudmason.org
-      192.168.1.162 marymacbook.cloudmason.org
-      192.168.1.180 judeipad.cloudmason.org
-      192.168.1.187 ringbasestation.cloudmason.org
-      192.168.1.188 alexa3.cloudmason.org
-      192.168.1.221 awx.cloudmason.org
-  become: yes
-
-- name: Deploy ~pi/padd.sh
-  get_url:
-    url: https://raw.githubusercontent.com/pi-hole/PADD/master/padd.sh
-    checksum: sha256:7ad4349d7a96308f5d71a6bd4a54e090ac496997b9c9b3118fa01ffe68492499
-    dest: /home/pi/padd.sh
-    owner: pi
-    group: pi
-    mode: 0755
-  become: yes
-
-- name: Add padd.sh to ~pi/.bashrc
-  blockinfile:
-    path: /home/pi/.bashrc
-    backup: yes
-    block: |
-      # Run PADD
-      # If we’re on the PiTFT screen (ssh is xterm)
-      if [ "$TERM" == "linux" ] ; then
-        while :
-        do
-          ./padd.sh
-          sleep 1
-        done
-      fi
-  become: yes
-
-- name: Install unbound
+- name: Install bind9-dnsutils
   apt:
     state: present
-    name: unbound
-  become: yes
+    name: bind9-dnsutils
 
-- name: Deploy /etc/unbound/unbound.conf.d/pi-hole.conf
-  template:
-    src: pi-hole.conf.j2
-    dest: /etc/unbound/unbound.conf.d/pi-hole.conf
-    owner: root
-    group: root
-    mode: 0644
-  become: yes
+# - name: Deploy /etc/pihole/custom.list
+#   copy:
+#     dest: /etc/pihole/custom.list
+#     owner: pihole
+#     group: pihole
+#     mode: 0644
+#     content: |
+#       192.168.1.1 gateway.cloudmason.org
+#       192.168.1.2 cloudkey.cloudmason.org
+#       192.168.1.10 dns1.cloudmason.org
+#       192.168.1.11 dns2.cloudmason.org
+#       192.168.1.14 printer.cloudmason.org
+#       192.168.1.16 ringdoorbell.cloudmason.org
+#       192.168.1.20 openhab.cloudmason.org
+#       192.168.1.22 rokufamilyroom.cloudmason.org
+#       192.168.1.26 jonagold.cloudmason.org
+#       192.168.1.30 coffeepot.cloudmason.org
+#       192.168.1.32 rokubedroom.cloudmason.org
+#       192.168.1.47 markxboxone.cloudmason.org
+#       192.168.1.50 buddyxboxone.cloudmason.org
+#       192.168.1.52 basementlamp1.cloudmason.org
+#       192.168.1.54 judepc.cloudmason.org
+#       192.168.1.55 buddyrokutv.cloudmason.org
+#       192.168.1.58 chef.cloudmason.org
+#       192.168.1.60 dehumidifier.cloudmason.org
+#       192.168.1.61 judeyrokutv.cloudmason.org
+#       192.168.1.63 basement.cloudmason.org
+#       192.168.1.68 ringbasestation.cloudmason.org
+#       192.168.1.69 roomba.cloudmason.org
+#       192.168.1.70 switch3.cloudmason.org
+#       192.168.1.73 honeycrisp.cloudmason.org
+#       192.168.1.76 nest.cloudmason.org
+#       192.168.1.79 coffeepot.cloudmason.org
+#       192.168.1.80 alexa1.cloudmason.org
+#       192.168.1.85 alexa2.cloudmason.org
+#       192.168.1.86 streamlabs.cloudmason.org
+#       192.168.1.87 plugoutside1.cloudmason.org
+#       192.168.1.89 cloudmason.org
+#       192.168.1.89 lenovo.cloudmason.org
+#       192.168.1.92 buddyiphone.cloudmason.org
+#       192.168.1.93 rokulivingroom.cloudmason.org
+#       192.168.1.95 switch1.cloudmason.org
+#       192.168.1.96 sense.cloudmason.org
+#       192.168.1.97 buddyipad.cloudmason.org
+#       192.168.1.98 SC05F036.cloudmason.org
+#       192.168.1.99 ringbridge.cloudmason.org
+#       192.168.1.100 plugoutside2.cloudmason.org
+#       192.168.1.103 marymercado.cloudmason.org
+#       192.168.1.112 smartthings.cloudmason.org
+#       192.168.1.113 ringdoorbell.cloudmason.org
+#       192.168.1.114 markipad.cloudmason.org
+#       192.168.1.116 C02D6D7BMD6M.cloudmason.org
+#       192.168.1.117 ooma.cloudmason.org
+#       192.168.1.118 qnap.cloudmason.org
+#       192.168.1.119 qnap2.cloudmason.org
+#       192.168.1.120 familyroom.cloudmason.org
+#       192.168.1.121 garagedoor.cloudmason.org
+#       192.168.1.123 marypc.cloudmason.org
+#       192.168.1.126 switch2.cloudmason.org
+#       192.168.1.127 pws.cloudmason.org
+#       192.168.1.129 markiphone.cloudmason.org
+#       192.168.1.135 ambrosia.cloudmason.org
+#       192.168.1.136 rog.cloudmason.org
+#       192.168.1.137 rokubedroom.cloudmason.org
+#       192.168.1.138 alexa3.cloudmason.org
+#       192.168.1.140 livingroomtv.cloudmason.org
+#       192.168.1.141 bedroom.cloudmason.org
+#       192.168.1.142 wiiu.cloudmason.org
+#       192.168.1.144 basementlamp2.cloudmason.org
+#       192.168.1.146 maryipad.cloudmason.org
+#       192.168.1.148 fuji.cloudmason.org
+#       192.168.1.149 biaslighting.cloudmason.org
+#       192.168.1.162 marymacbook.cloudmason.org
+#       192.168.1.180 judeipad.cloudmason.org
+#       192.168.1.187 ringbasestation.cloudmason.org
+#       192.168.1.188 alexa3.cloudmason.org
+#       192.168.1.221 awx.cloudmason.org
+#   become: yes
 
-- name: Start and enable unbound
-  service:
-    name: unbound
-    state: started
-    enabled: yes
-  become: yes
+# - name: Deploy ~pi/padd.sh
+#   get_url:
+#     url: https://raw.githubusercontent.com/pi-hole/PADD/master/padd.sh
+#     checksum: sha256:7ad4349d7a96308f5d71a6bd4a54e090ac496997b9c9b3118fa01ffe68492499
+#     dest: /home/pi/padd.sh
+#     owner: pi
+#     group: pi
+#     mode: 0755
+#   become: yes
 
-- name: Create /var/log/unbound
-  file:
-    state: directory
-    path: /var/log/unbound
-    owner: unbound
-    group: unbound
-    mode: 0755
-  become: yes
+# - name: Add padd.sh to ~pi/.bashrc
+#   blockinfile:
+#     path: /home/pi/.bashrc
+#     backup: yes
+#     block: |
+#       # Run PADD
+#       # If we’re on the PiTFT screen (ssh is xterm)
+#       if [ "$TERM" == "linux" ] ; then
+#         while :
+#         do
+#           ./padd.sh
+#           sleep 1
+#         done
+#       fi
+#   become: yes
 
-- name: Create /var/log/unbound/unbound.log
-  file:
-    state: touch
-    path: /var/log/unbound/unbound.log
-    owner: unbound
-    group: unbound
-    mode: 0644
-  become: yes
-  notify: Restart unbound
+# - name: Install unbound
+#   apt:
+#     state: present
+#     name: unbound
+#   become: yes
 
-- name: Install pdns-server, pdns-backend-sqlite3, and sqlite3
-  apt:
-    state: present
-    name:
-      - pdns-server
-      - pdns-backend-sqlite3
-      - sqlite3
-  become: yes
-  tags: pdns
+# - name: Deploy /etc/unbound/unbound.conf.d/pi-hole.conf
+#   template:
+#     src: pi-hole.conf.j2
+#     dest: /etc/unbound/unbound.conf.d/pi-hole.conf
+#     owner: root
+#     group: root
+#     mode: 0644
+#   become: yes
 
-- name: Deploy schema.sql
-  template:
-    src: powerdns.sql.j2
-    dest: /var/tmp/powerdns.sql
-  become: yes
-  tags: pdns
+# - name: Start and enable unbound
+#   service:
+#     name: unbound
+#     state: started
+#     enabled: yes
+#   become: yes
 
-- name: Create sqlite3 database for PowerDNS
-  shell: cat powerdns.sql | sqlite3 powerdns.db
-  args:
-    chdir: /var/tmp
-    creates: /var/tmp/powerdns.db
-  become: yes
-  tags: pdns
+# - name: Create /var/log/unbound
+#   file:
+#     state: directory
+#     path: /var/log/unbound
+#     owner: unbound
+#     group: unbound
+#     mode: 0755
+#   become: yes
+
+# - name: Create /var/log/unbound/unbound.log
+#   file:
+#     state: touch
+#     path: /var/log/unbound/unbound.log
+#     owner: unbound
+#     group: unbound
+#     mode: 0644
+#   become: yes
+#   notify: Restart unbound
+
+# - name: Install pdns-server, pdns-backend-sqlite3, and sqlite3
+#   apt:
+#     state: present
+#     name:
+#       - pdns-server
+#       - pdns-backend-sqlite3
+#       - sqlite3
+#   become: yes
+#   tags: pdns
+
+# - name: Deploy schema.sql
+#   template:
+#     src: powerdns.sql.j2
+#     dest: /var/tmp/powerdns.sql
+#   become: yes
+#   tags: pdns
+
+# - name: Create sqlite3 database for PowerDNS
+#   shell: cat powerdns.sql | sqlite3 powerdns.db
+#   args:
+#     chdir: /var/tmp
+#     creates: /var/tmp/powerdns.db
+#   become: yes
+#   tags: pdns
