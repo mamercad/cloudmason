@@ -26,17 +26,27 @@ providers:
       - powerdns1.cloudmason.org.
       - powerdns2.cloudmason.org.
     nameserver_ttl: 3600
+  dns2:
+    class: octodns.provider.powerdns.PowerDnsProvider
+    host: 192.168.1.11
+    api_key: env/POWERDNS_API_KEY
+    port: 8081
+    nameserver_values:
+      - dns2.cloudmason.org.
+    nameserver_ttl: 3600
 
 zones:
   cloudmason.org.:
     sources:
       - config
     targets:
+      # - dns2
       - powerdns1
       - powerdns2
   1.168.192.in-addr.arpa.:
     sources:
       - config
     targets:
+      # - dns2
       - powerdns1
       - powerdns2
