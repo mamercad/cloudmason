@@ -2,7 +2,7 @@
 - name: Pi-hole
   hosts: pihole
   tasks:
-    - name: Include Pi-hole Role
+    - name: Include Pi-hole role
       include_role:
         name: pihole
       tags: pdns
