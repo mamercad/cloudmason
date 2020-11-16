@@ -17,6 +17,8 @@
       - cloudmason.org.
       - gateway.cloudmason.org.
       - cloudkey.cloudmason.org.
+      - dns1.cloudmason.org.
+      - dns2.cloudmason.org.
       - powerdns1.cloudmason.org.
       - powerdns2.cloudmason.org.
       - -t ptr 1.1.168.192.in-addr.arpa.
