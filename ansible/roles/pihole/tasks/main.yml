@@ -1,9 +1,9 @@
 ---
 
-- name: Install bind9-dnsutils
+- name: Install dnsutils
   apt:
     state: present
-    name: bind9-dnsutils
+    name: dnsutils
   become: yes
 
 # - name: Deploy /etc/pihole/custom.list
