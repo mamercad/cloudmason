@@ -20,6 +20,7 @@
         chdir: /home/awx/src/github.com/mamercad/cloudmason/octodns
       environment:
         POWERDNS_API_KEY: "{{ lookup('env', 'POWERDNS_API_KEY') }}"
+        CLOUDFLARE_API_KEY: "{{ lookup('env', 'CLOUDFLARE_API_KEY') }}"
       register: octodns_sync
       changed_when: no # Don't care, we'll see the results below
 
