@@ -154,6 +154,9 @@ bedroom:
 basementlamp2:
   type: A
   value: 192.168.1.144
+fuji:
+  type: A
+  value: 192.168.1.148
 biaslighting:
   type: A
   value: 192.168.1.149

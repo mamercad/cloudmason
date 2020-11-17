@@ -152,6 +152,9 @@
 144:
   type: PTR
   value: basementlamp2.cloudmason.org.
+148:
+  type: PTR
+  value: fuji.cloudmaosn.org.
 149:
   type: PTR
   value: biaslighting.cloudmason.org.
