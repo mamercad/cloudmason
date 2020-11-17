@@ -110,6 +110,9 @@ marymercado:
 smartthings:
   type: A
   value: 192.168.1.112
+livingroomlamp:
+  type: A
+  value: 192.168.1.115
 C02D6D7BMD6M:
   type: A
   value: 192.168.1.116

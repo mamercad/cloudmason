@@ -107,6 +107,9 @@
 112:
   type: PTR
   value: smartthings.cloudmason.org.
+115:
+  type: PTR
+  value: livingroomlamp.cloudmason.org.
 116:
   type: PTR
   value: C02D6D7BMD6M.cloudmason.org.
