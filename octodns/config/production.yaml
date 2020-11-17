@@ -34,6 +34,9 @@ providers:
     nameserver_values:
       - dns2.cloudmason.org.
     nameserver_ttl: 3600
+  cloudflare:
+    class: octodns.provider.cloudflare.CloudflareProvider
+    token: env/CLOUDFLARE_API_KEY
 
 zones:
   cloudmason.org.:
@@ -50,3 +53,8 @@ zones:
       # - dns2
       - powerdns1
       - powerdns2
+  letsbuildthe.cloud.:
+    sources:
+      - config
+    targets:
+      - cloudflare
