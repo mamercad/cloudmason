@@ -41,6 +41,9 @@
 52:
   type: PTR
   value: basementlamp1.cloudmason.org.
+53:
+  type: PTR
+  value: familyroomlamp.cloudmason.org.
 55:
   type: PTR
   value: buddyrokutv.cloudmason.org.
