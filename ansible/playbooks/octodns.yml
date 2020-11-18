@@ -20,6 +20,7 @@
         chdir: /home/awx/src/github.com/mamercad/cloudmason/octodns
       environment:
         eth2: "{{ eth2 }}"
+        eth0: "{{ eth0 }}"
 
     - name: octodns-sync
       command: /opt/octodns/bin/octodns-sync --config config/production.yaml --doit
