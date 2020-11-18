@@ -12,6 +12,7 @@ all:
       healthchecks_io: https://hc-ping.com/19217f13-73b5-493e-9a00-a22796f47fee
     powerdns2:
       healthchecks_io: https://hc-ping.com/5970d9fb-08be-4110-88fd-55e47c2efab8
+    gateway:
   children:
     centos:
       hosts:
