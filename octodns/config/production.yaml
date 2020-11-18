@@ -63,3 +63,8 @@ zones:
       - external
     targets:
       - cloudflare
+  cloudmason.org.:
+    sources:
+      - external
+    targets:
+      - cloudflare
