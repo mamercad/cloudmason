@@ -2,7 +2,15 @@
 '':
   type: A
   value: {{eth2}}
-  ttl: 1
+  ttl: 3600
+att:
+  type: A
+  value: {{eth2}}
+  ttl: 3600
+xfinity:
+  type: A
+  value: {{eth0}}
+  ttl: 3600
 digitalocean:
   type: NS
   values:
