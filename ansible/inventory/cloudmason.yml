@@ -25,7 +25,8 @@ all:
         powerdns1:
         powerdns2:
     unifi:
-      gateway:
+      hosts:
+        gateway:
     pihole:
       hosts:
         dns1:
