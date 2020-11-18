@@ -2,7 +2,7 @@
 '':
   type: A
   value: 162.230.47.152
-  ttl: 1
+  ttl: 3600
 digitalocean:
   type: NS
   values:
