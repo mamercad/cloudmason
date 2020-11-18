@@ -1,7 +1,7 @@
 ---
 '':
   type: A
-  value: 162.230.47.152
+  value: {{eth2}}
   ttl: 1
 digitalocean:
   type: NS
