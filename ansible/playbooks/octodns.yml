@@ -21,20 +21,20 @@
       environment:
         eth2: "{{ eth2 }}"
 
-    # - name: octodns-sync
-    #   command: /opt/octodns/bin/octodns-sync --config config/production.yaml --doit
-    #   args:
-    #     chdir: /home/awx/src/github.com/mamercad/cloudmason/octodns
-    #   environment:
-    #     POWERDNS_API_KEY: "{{ lookup('env', 'POWERDNS_API_KEY') }}"
-    #     CLOUDFLARE_API_KEY: "{{ lookup('env', 'CLOUDFLARE_API_KEY') }}"
-    #   register: octodns_sync
-    #   changed_when: no # Don't care, we'll see the results below
+    - name: octodns-sync
+      command: /opt/octodns/bin/octodns-sync --config config/production.yaml # --doit
+      args:
+        chdir: /home/awx/src/github.com/mamercad/cloudmason/octodns
+      environment:
+        POWERDNS_API_KEY: "{{ lookup('env', 'POWERDNS_API_KEY') }}"
+        CLOUDFLARE_API_KEY: "{{ lookup('env', 'CLOUDFLARE_API_KEY') }}"
+      register: octodns_sync
+      changed_when: no # Don't care, we'll see the results below
 
-    # - name: show the results of the sync
-    #   pause:
-    #     seconds: 1
-    #     prompt: |
-    #       {% for line in octodns_sync.stderr_lines %}
-    #       {{ line }}
-    #       {% endfor %}
+    - name: show the results of the sync
+      pause:
+        seconds: 1
+        prompt: |
+          {% for line in octodns_sync.stderr_lines %}
+          {{ line }}
+          {% endfor %}
