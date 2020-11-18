@@ -31,3 +31,10 @@
           {% for line in octodns_sync.stderr_lines %}
           {{ line }}
           {% endfor %}
+
+    - name: Run scripts/wan/eth2
+      command: /home/awx/src/github.com/mamercad/cloudmason/scripts/wan/eth2
+      register: wan2
+
+    - debug:
+        var: wan2
