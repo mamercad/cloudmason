@@ -24,6 +24,8 @@ all:
         jonagold:
         powerdns1:
         powerdns2:
+    unifi:
+      gateway:
     pihole:
       hosts:
         dns1:
