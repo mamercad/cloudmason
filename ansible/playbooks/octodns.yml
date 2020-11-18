@@ -16,6 +16,8 @@
 
     - name: do the mo templates
       command: ../scripts/mo config/letsbuildthe.cloud.mo | tee config/letsbuildthe.cloud
+      args:
+        chdir: /home/awx/src/github.com/mamercad/cloudmason/octodns
       environment:
         eth2: "{{ eth2 }}"
 
