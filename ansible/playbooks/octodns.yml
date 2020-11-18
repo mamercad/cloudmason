@@ -15,7 +15,7 @@
         accept_hostkey: yes
 
     - name: do the mo templates
-      shell: ../scripts/mo config/external/letsbuildthe.cloud.yaml.mo | tee config/external/letsbuildthe.yaml.cloud
+      shell: ../scripts/mo config/external/letsbuildthe.cloud.yaml.mo | tee config/external/letsbuildthe.cloud.yaml
       args:
         chdir: /home/awx/src/github.com/mamercad/cloudmason/octodns
       environment:
