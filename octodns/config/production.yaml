@@ -3,9 +3,14 @@ manager:
   max_workers: 2
 
 providers:
-  config:
+  internal:
     class: octodns.provider.yaml.YamlProvider
-    directory: ./config
+    directory: ./config/internal
+    default_ttl: 3600
+    enforce_order: False # I'd rather order by IP
+  external:
+    class: octodns.provider.yaml.YamlProvider
+    directory: ./config/external
     default_ttl: 3600
     enforce_order: False # I'd rather order by IP
   powerdns1:
@@ -41,20 +46,20 @@ providers:
 zones:
   cloudmason.org.:
     sources:
-      - config
+      - internal
     targets:
       # - dns2
       - powerdns1
       - powerdns2
   1.168.192.in-addr.arpa.:
     sources:
-      - config
+      - internal
     targets:
       # - dns2
       - powerdns1
       - powerdns2
   letsbuildthe.cloud.:
     sources:
-      - config
+      - external
     targets:
       - cloudflare
