@@ -9,5 +9,4 @@
         hour: "*"
         job: "/usr/bin/curl -s {{ healthchecks_io }}"
         user: awx
-      when:
-        healthchecks_io is defined
+      when: healthchecks_io is defined
