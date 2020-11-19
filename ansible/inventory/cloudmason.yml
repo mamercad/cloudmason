@@ -13,6 +13,7 @@ all:
     powerdns2:
       healthchecks_io: https://hc-ping.com/5970d9fb-08be-4110-88fd-55e47c2efab8
     gateway:
+    traefik1:
   children:
     centos:
       hosts:
