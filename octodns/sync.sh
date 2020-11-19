@@ -11,4 +11,5 @@ fi
 ../scripts/mo config/external/cloudmason.org.yaml.mo | tee config/external/cloudmason.org.yaml
 ../scripts/mo config/external/letsbuildthe.cloud.yaml.mo | tee config/external/letsbuildthe.cloud.yaml
 
-octodns-sync --config-file config/production.yaml $*
+octodns-sync --config-file config/external.yaml $*
+octodns-sync --config-file config/internal.yaml $*

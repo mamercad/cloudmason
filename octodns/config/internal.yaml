@@ -8,11 +8,6 @@ providers:
     directory: ./config/internal
     default_ttl: 3600
     enforce_order: False # I'd rather order by IP
-  external:
-    class: octodns.provider.yaml.YamlProvider
-    directory: ./config/external
-    default_ttl: 3600
-    enforce_order: False # I'd rather order by IP
   powerdns1:
     class: octodns.provider.powerdns.PowerDnsProvider
     host: 192.168.1.8
@@ -39,9 +34,6 @@ providers:
     nameserver_values:
       - dns2.cloudmason.org.
     nameserver_ttl: 3600
-  cloudflare:
-    class: octodns.provider.cloudflare.CloudflareProvider
-    token: env/CLOUDFLARE_API_KEY
 
 zones:
   cloudmason.org.:
@@ -60,11 +52,7 @@ zones:
       - powerdns2
   letsbuildthe.cloud.:
     sources:
-      - external
+      - internal
     targets:
-      - cloudflare
-  cloudmason.org.:
-    sources:
-      - external
-    targets:
-      - cloudflare
+      - powerdns1
+      - powerdns2
