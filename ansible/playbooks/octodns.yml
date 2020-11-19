@@ -25,7 +25,9 @@
         eth0: "{{ eth0 }}"
 
     - name: octodns-sync
-      command: /opt/octodns/bin/octodns-sync --config config/production.yaml --doit
+      shell: |
+        /opt/octodns/bin/octodns-sync --config config/external.yaml --doit
+        /opt/octodns/bin/octodns-sync --config config/internal.yaml --doit
       args:
         chdir: /home/awx/src/github.com/mamercad/cloudmason/octodns
       environment:
