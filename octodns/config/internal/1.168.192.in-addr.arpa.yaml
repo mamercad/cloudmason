@@ -128,6 +128,9 @@
 121:
   type: PTR
   value: garagedoor.cloudmason.org.
+122:
+  type: PTR
+  value: traefik1.cloudmason.org.
 126:
   type: PTR
   value: switch2.cloudmason.org.
