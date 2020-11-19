@@ -8,4 +8,4 @@
     - shell: |
         pwd;
         ls -la;
-        ansible-galaxy collection install community.general;
+        cat collections/requirements.yml;
