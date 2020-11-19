@@ -8,3 +8,4 @@
     - shell: |
         pwd;
         ls -la;
+        ansible-galaxy collection list;
