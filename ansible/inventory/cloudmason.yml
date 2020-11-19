@@ -26,6 +26,7 @@ all:
         jonagold:
         powerdns1:
         powerdns2:
+        traefik1:
     unifi:
       hosts:
         gateway:
@@ -47,3 +48,4 @@ all:
         jonagold:
         powerdns1:
         powerdns2:
+        traefik1:
