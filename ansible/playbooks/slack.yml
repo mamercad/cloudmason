@@ -10,5 +10,5 @@
     - include_role:
         name: slack
       vars:
-        slack_channel: "#bots"
+        slack_channel: "#general"
         slack_message: "> {{ fortune.stdout }}"
