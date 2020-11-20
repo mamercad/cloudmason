@@ -1,8 +1,0 @@
----
-- name: Debug
-  hosts: all
-  gather_facts: yes
-  tasks:
-    - shell: |
-        pwd;
-        ls -la;
