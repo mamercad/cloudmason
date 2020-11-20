@@ -1,8 +1,8 @@
 all:
   hosts:
-    dns1:
+    net1:
       healthchecks_io: https://hc-ping.com/ae55147f-0aff-4b0e-b0f9-1f55c81c5a1a
-    dns2:
+    net2:
       healthchecks_io: https://hc-ping.com/b4576296-81ee-4cf5-a239-4286af184cf3
     jonagold:
       healthchecks_io: https://hc-ping.com/177cb674-b199-4fbb-8879-5f83ba901fa5
@@ -20,8 +20,8 @@ all:
         lenovo:
     linux:
       hosts:
-        dns1:
-        dns2:
+        net1:
+        net2:
         lenovo:
         jonagold:
         powerdns1:
@@ -32,8 +32,8 @@ all:
         gateway:
     pihole:
       hosts:
-        dns1:
-        dns2:
+        net1:
+        net2:
       vars:
         ansible_python_interpreter: /usr/bin/python3
     powerdns:

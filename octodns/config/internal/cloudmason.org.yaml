@@ -14,10 +14,10 @@ powerdns1:
 powerdns2:
   type: A
   value: 192.168.1.9
-dns1:
+net1:
   type: A
   value: 192.168.1.10
-dns2:
+net2:
   type: A
   value: 192.168.1.11
 printer:

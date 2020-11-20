@@ -29,8 +29,8 @@
               - 'lenovo:9111'
               - 'jonagold:9100'
               - 'ambrosia:9100'
-              - 'dns1:9100'
-              - 'dns2:9100'
+              - 'net1:9100'
+              - 'net2:9100'
               - 'qnap:9100'
 
         - job_name: 'grafana'
@@ -85,8 +85,8 @@
           honor_labels: true
           static_configs:
             - targets:
-                - 'dns1.cloudmason.org:19999'
-                - 'dns2.cloudmason.org:19999'
+                - 'net1.cloudmason.org:19999'
+                - 'net2.cloudmason.org:19999'
                 - 'lenovo.cloudmason.org:19999'
                 - 'jonagold.cloudmason.org:19999'
                 - 'ambrosia.cloudmason.org:19999'

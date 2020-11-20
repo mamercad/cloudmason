@@ -26,7 +26,7 @@ providers:
       - powerdns1.cloudmason.org.
       - powerdns2.cloudmason.org.
     nameserver_ttl: 3600
-  dns2:
+  net2:
     class: octodns.provider.powerdns.PowerDnsProvider
     host: 192.168.1.11
     api_key: env/POWERDNS_API_KEY

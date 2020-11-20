@@ -13,10 +13,10 @@
   value: powerdns2.cloudmason.org.
 10:
   type: PTR
-  value: dns1.cloudmason.org.
+  value: net1.cloudmason.org.
 11:
   type: PTR
-  value: dns2.cloudmason.org.
+  value: net2.cloudmason.org.
 14:
   type: PTR
   value: printer.cloudmason.org.
