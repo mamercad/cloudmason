@@ -4,7 +4,7 @@
   gather_facts: no
   tasks:
 
-    - shell: fortune
+    - shell: fortune bofh-excuses linuxcookie computers osfortune linux
       register: fortune
 
     - include_role:
