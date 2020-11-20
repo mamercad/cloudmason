@@ -1,0 +1,7 @@
+---
+- name: Nginx
+  hosts: net
+  tasks:
+    - name: Include Nginx role
+      include_role:
+        name: nginx
