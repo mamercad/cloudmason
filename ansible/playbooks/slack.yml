@@ -11,4 +11,4 @@
         name: slack
       vars:
         slack_channel: "#bots"
-        slack_message: "{{ fortune.stdout }}"
+        slack_message: "> {{ fortune.stdout }}"
