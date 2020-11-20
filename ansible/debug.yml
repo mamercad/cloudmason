@@ -9,3 +9,9 @@
         pwd;
         ls -la;
         cat collections/requirements.yml;
+
+    - include_role:
+        name: slack
+      vars:
+        slack_channel: "#bots"
+        slack_message: "Yo!"
