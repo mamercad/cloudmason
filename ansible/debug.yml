@@ -3,6 +3,9 @@
   hosts: all
   gather_facts: yes
 
+  collections:
+    - community.general
+
   tasks:
 
     - shell: |
