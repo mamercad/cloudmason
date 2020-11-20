@@ -8,6 +8,18 @@
       - php-fpm
   become: yes
 
+- name: Check if /etc/nginx/sites-enabled/default exists
+  stat:
+    path: /etc/nginx/sites-enabled/default
+  register: default
+  become: yes
+
+- name: Move /etc/nginx/sites-enabled/default out of the way
+  shell: rm -f /etc/nginx/sites-enabled/default
+  when: default.stat.islnk is defined
+  notify: Reload nginx
+  become: yes
+
 - name: Deploy /etc/nginx/conf.d/default.conf
   copy:
     dest: /etc/nginx/conf.d/default.conf
@@ -26,6 +38,7 @@
         index  index.html;
         access_log /var/log/nginx/http.access.log combined;
         error_log /var/log/nginx/http.error.log;
+        root /usr/share/nginx/html;
       }
       # server {
       #   listen *:443 ssl;
@@ -69,4 +82,21 @@
     name: nginx
     state: started
     enabled: yes
+  become: yes
+
+- name: Deploy stock site
+  copy:
+    dest: /usr/share/nginx/html/index.html
+    owner: root
+    group: root
+    mode: 0644
+    content: |
+      <html>
+      <head>
+        <title>Hello, World</title>
+      </head>
+      <body>
+        Hello, World
+      </body>
+      </html>
   become: yes
