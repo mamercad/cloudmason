@@ -13,3 +13,6 @@ fi
 
 octodns-sync --config-file config/external.yaml $*
 octodns-sync --config-file config/internal.yaml $*
+
+ssh -v powerdns1 "sudo systemctl restart pdns; sudo systemctl restart pdns-recursor"
+ssh -v powerdns2 "sudo systemctl restart pdns; sudo systemctl restart pdns-recursor"
