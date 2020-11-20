@@ -3,8 +3,12 @@
   hosts: all
   gather_facts: no
   tasks:
+
+    - shell: fortune
+      register: fortune
+
     - include_role:
         name: slack
       vars:
         slack_channel: "#bots"
-        slack_message: "Yo!"
+        slack_message: "{{ fortune.stdout }}"
