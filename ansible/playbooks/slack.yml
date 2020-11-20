@@ -12,3 +12,11 @@
       vars:
         slack_channel: "#general"
         slack_message: "> {{ fortune.stdout }}"
+
+    - shell: sleep 28800 # 8h
+
+    - include_role:
+        name: slack
+      vars:
+        slack_channel: "#general"
+        slack_message: "> {{ fortune.stdout }}"
