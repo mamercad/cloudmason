@@ -7,7 +7,9 @@
   loop:
     - mailutils
     - postfix
+    - libsasl2-modules
   become: yes
+  notify: Reload postfix
 
 - name: Deploy /etc/postfix/gmail_sasl
   copy:
@@ -24,11 +26,13 @@
       34626564613638336465373563643536646563613566306337353463666138643630626362353735
       343536353463343431363534356639373665
   become: yes
+  notify: Reload postfix
 
 - name: Call postmap /etc/postfix/gmail_sasl
   shell:
     postmap /etc/postfix/gmail_sasl
   become: yes
+  notify: Reload postfix
 
 - name: Set up postfix for relay
   blockinfile:
@@ -41,6 +45,7 @@
       smtp_use_tls = yes
       smtp_tls_CAfile = /etc/ssl/certs/ca-certificates.crt
   become: yes
+  notify: Reload postfix
 
 - name: Deploy /etc/postfix/access
   copy:
@@ -49,11 +54,13 @@
     content: |
       192.168/16 OK
   become: yes
+  notify: Reload postfix
 
 - name: Call postmap /etc/postfix/access
   shell:
     postmap /etc/postfix/access
   become: yes
+  notify: Reload postfix
 
 - name: Update /etc/aliases
   blockinfile:
@@ -63,8 +70,10 @@
       mark: mamercad@gmail.com
     backup: yes
   become: yes
+  notify: Reload postfix
 
 - name: Call newaliases
   shell: |
     newaliases
   become: yes
+  notify: Reload postfix
