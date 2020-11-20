@@ -34,6 +34,14 @@
   become: yes
   notify: Reload postfix
 
+- name: Remove empty relayhost
+  lineinfile:
+    state: absent
+    path: /etc/postfix/main.cf
+    line: 'relayhost = '
+  become: yes
+  notify: Reload postfix
+
 - name: Set up postfix for relay
   blockinfile:
     path: /etc/postfix/main.cf
