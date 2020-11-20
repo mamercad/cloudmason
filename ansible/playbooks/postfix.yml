@@ -1,0 +1,7 @@
+---
+- name: Postfix
+  hosts: net
+  tasks:
+    - name: Include Postfix role
+      include_role:
+        name: postfix

@@ -27,6 +27,10 @@ all:
         powerdns1:
         powerdns2:
         traefik1:
+    net:
+      hosts:
+        net1:
+        net2:
     unifi:
       hosts:
         gateway:
