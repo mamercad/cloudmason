@@ -11,7 +11,7 @@
         name: slack
       vars:
         slack_channel: "#general"
-        slack_message: "> {{ fortune.stdout }}"
+        slack_message: "```{{ fortune.stdout_lines | join('\n') }}```"
 
     - shell: sleep 28800 # 8h
 
@@ -19,4 +19,4 @@
         name: slack
       vars:
         slack_channel: "#general"
-        slack_message: "> {{ fortune.stdout }}"
+        slack_message: "```{{ fortune.stdout_lines | join('\n') }}```"
