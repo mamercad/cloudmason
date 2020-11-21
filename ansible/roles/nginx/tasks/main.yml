@@ -83,9 +83,11 @@
   become: yes
   notify: Reload nginx
 
-- name: Start and enable nginx
+- name: Start and enable nginx and php7.3-fpm
   systemd:
-    name: nginx
+    name:
+      - nginx
+      - php7.3-fpm
     state: started
     enabled: yes
   become: yes
