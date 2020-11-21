@@ -5,7 +5,7 @@
 
   tasks:
 
-    - shell: fortune bofh-excuses linuxcookie computers osfortune linux
+    - shell: fortune bofh-excuses linuxcookie computers linux
       register: fortune
 
     - include_role:

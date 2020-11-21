@@ -211,12 +211,14 @@
     force: yes
   become: yes
 
-- name: Install fping and fortune
+- name: Install fping, fortune and fortunes
   apt:
     state: present
     name:
       - fping
       - fortune
+      - fortunes
+      - fortunes-bofh-excuses
   become: yes
 
 - name: Install cron ping thing
