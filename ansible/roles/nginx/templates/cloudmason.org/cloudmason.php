@@ -124,7 +124,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 <b>$ f2b-sshd</b><br/><pre><?= shell_exec('cat /usr/share/nginx/html/f2b-sshd'); ?></pre>
 <br/>
 -->
-<b>$ fortune computers</b><br/><pre><?= shell_exec('/usr/games/fortune bofh-excuses linuxcookie computers linux'); ?></pre>
+<b>$ fortune bofh-excuses linuxcookie computers linux</b><br/><pre><?= shell_exec('/usr/games/fortune bofh-excuses linuxcookie computers linux'); ?></pre>
 <br/>
 <!--
 <b>$ git log -1</b><br/><pre><?= shell_exec('git log -1'); ?></pre>
