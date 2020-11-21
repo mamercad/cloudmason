@@ -2,6 +2,7 @@
 - name: Slack
   hosts: all
   gather_facts: no
+
   tasks:
 
     - shell: fortune bofh-excuses linuxcookie computers osfortune linux
