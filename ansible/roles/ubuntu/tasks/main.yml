@@ -14,20 +14,20 @@
     - vim
   become: yes
 
-- name: Include postfix
-  include_tasks: postfix.yml
+# - name: Include postfix
+#   include_tasks: postfix.yml
 
-- name: Include fail2ban
-  include_tasks: fail2ban.yml
+# - name: Include fail2ban
+#   include_tasks: fail2ban.yml
 
-- name: Include Prometheus
-  include_tasks: prometheus.yml
+# - name: Include Prometheus
+#   include_tasks: prometheus.yml
 
-- name: Include Netdata
-  include_tasks: netdata.yml
+# - name: Include Netdata
+#   include_tasks: netdata.yml
 
-- name: Include FireMotD
-  include_tasks: firemotd.yml
+# - name: Include FireMotD
+#   include_tasks: firemotd.yml
 
-- name: Include neofetch
-  include_tasks: neofetch.yml
+# - name: Include neofetch
+#   include_tasks: neofetch.yml

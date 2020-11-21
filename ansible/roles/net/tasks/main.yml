@@ -1,0 +1,10 @@
+---
+
+- name: Disable PasswordAuthentication
+  lineinfile:
+    state: present
+    path: /etc/ssh/sshd_config
+    line: PasswordAuthentication no
+    backup: yes
+  become: yes
+  notify: Restart sshd
