@@ -30,15 +30,21 @@
     content: |
       server {
         listen *:80 default_server;
-        add_header Front-End-Https on;
-        add_header X-Content-Type-Options nosniff;
+        # add_header Front-End-Https on;
+        # add_header X-Content-Type-Options nosniff;
         # if ($ssl_protocol = "") {
         #   return 308 https://$host$request_uri;
         # }
-        index  index.html;
+        index index.html;
         access_log /var/log/nginx/http.access.log combined;
         error_log /var/log/nginx/http.error.log;
         root /usr/share/nginx/html;
+        location ~ \.php$ {
+          fastcgi_pass unix:/run/php/php7.3-fpm.sock;
+          include /etc/nginx/fastcgi_params;
+          fastcgi_index index.php;
+          fastcgi_param SCRIPT_FILENAME $document_root$fastcgi_script_name;
+        }
       }
       # server {
       #   listen *:443 ssl;
