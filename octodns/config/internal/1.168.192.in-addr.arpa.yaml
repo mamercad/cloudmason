@@ -104,6 +104,9 @@
 97:
   type: PTR
   value: buddyipad.cloudmason.org.
+98:
+  type: PTR
+  value: plugoutside2.cloudmason.org.
 99:
   type: PTR
   value: ringbridge.cloudmason.org.

@@ -122,6 +122,9 @@ sense:
 buddyipad:
   type: A
   value: 192.168.1.97
+plugoutside2:
+  type: A
+  value: 192.168.1.98
 ringbridge:
   type: A
   value: 192.168.1.99
