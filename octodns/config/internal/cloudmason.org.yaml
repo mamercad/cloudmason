@@ -56,6 +56,9 @@ coffeepot:
 rokubedroom:
   type: A
   value: 192.168.1.32
+markxboxone:
+  type: A
+  value: 192.168.1.47
 basementlamp1:
   type: A
   value: 192.168.1.52

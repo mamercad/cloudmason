@@ -38,6 +38,9 @@
 32:
   type: PTR
   value: rokubedroom.cloudmason.org.
+47:
+  type: PTR
+  value: markxboxone.cloudmason.org.
 52:
   type: PTR
   value: basementlamp1.cloudmason.org.
