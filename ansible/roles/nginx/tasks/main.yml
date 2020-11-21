@@ -85,11 +85,12 @@
 
 - name: Start and enable nginx and php7.3-fpm
   systemd:
-    name:
-      - nginx
-      - php7.3-fpm
+    name: "{{ item }}"
     state: started
     enabled: yes
+  loop:
+    - nginx
+    - php7.3-fpm
   become: yes
 
 - name: Deploy stock site
