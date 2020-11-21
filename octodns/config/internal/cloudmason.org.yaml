@@ -59,6 +59,9 @@ rokubedroom:
 markxboxone:
   type: A
   value: 192.168.1.47
+buddyxboxone:
+  type: A
+  value: 192.168.1.50
 basementlamp1:
   type: A
   value: 192.168.1.52
@@ -95,6 +98,9 @@ judeypc:
 alexa1:
   type: A
   value: 192.168.1.80
+nintendoswitch:
+  type: A
+  value: 192.168.1.84
 alexa2:
   type: A
   value: 192.168.1.85
@@ -128,6 +134,9 @@ plugoutside2:
 ringbridge:
   type: A
   value: 192.168.1.99
+maryipad:
+  type: A
+  value: 192.168.1.100
 marymercado:
   type: A
   value: 192.168.1.103
