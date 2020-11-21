@@ -83,6 +83,9 @@
 86:
   type: PTR
   value: streamlabs.cloudmason.org.
+87:
+  type: PTR
+  value: plugoutside1.cloudmason.org.
 89:
   type: PTR
   value: lenovo.cloudmason.org.
