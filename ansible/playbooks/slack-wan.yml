@@ -1,0 +1,24 @@
+---
+- name: Slack
+  hosts: all
+  gather_facts: no
+
+  tasks:
+
+    - uri:
+        url: http://lenovo:9090/prometheus/api/v1/query
+        method: POST
+        body: 'query=sum(increase(unifipoller_device_wan_receive_bytes_total{port="wan"}[1d]))'
+        body_format: form-urlencoded
+        return_content: yes
+      register: wan
+
+    - set_fact:
+        daily_wan_traffic: "{{ wan.json.data.result.0.value.1 | filesizeformat(True) }}"
+
+    - include_role:
+        name: slack
+      vars:
+        slack_channel: "#testing"
+        slack_message: "```Today's WAN traffic was {{ daily_wan_traffic }}```"
+    #     slack_message: "```{{ fortune.stdout_lines | join('\n') }}```"
