@@ -1,0 +1,15 @@
+---
+- name: Slack
+  hosts: all
+  gather_facts: no
+
+  tasks:
+
+    - shell: fortune bofh-excuses linuxcookie computers osfortune linux
+      register: fortune
+
+    - include_role:
+        name: slack
+      vars:
+        slack_channel: "#general"
+        slack_message: "```{{ fortune.stdout_lines | join('\n') }}```"
