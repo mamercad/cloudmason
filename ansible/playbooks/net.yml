@@ -1,0 +1,7 @@
+---
+- name: Net
+  hosts: net
+  tasks:
+    - name: Include Net role
+      include_role:
+        name: net
