@@ -6,7 +6,7 @@
   tasks:
 
     - uri:
-        url: http://lenovo:9090/prometheus/api/v1/query
+        url: http://prometheus.cloudmason.org:9090/api/v1/query
         method: POST
         body: 'query=sum(increase(unifipoller_device_wan_receive_bytes_total{port="wan"}[1d]))'
         body_format: form-urlencoded
