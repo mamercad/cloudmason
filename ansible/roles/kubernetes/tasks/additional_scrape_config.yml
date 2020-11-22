@@ -7,10 +7,14 @@
       - job_name: "prometheus"
         static_configs:
         - targets: ["qnap.cloudmason.org:9100"]
+        - targets: ["net1.cloudmason.org:9100"]
+        - targets: ["net2.cloudmason.org:9100"]
 
+# TODO: This is terrible
 - name: Create a Kube secret out of ^
   shell: |
-    kubectl -n monitoring create secret generic additional-scrape-configs --from-file=/tmp/prometheus-additional.yaml -o yaml
+    kubectl -n monitoring delete secret additional-scrape-configs;
+    kubectl -n monitoring create secret generic additional-scrape-configs --from-file=/tmp/prometheus-additional.yaml -o yaml;
   register: additional_scrape_config
 
 - debug:
