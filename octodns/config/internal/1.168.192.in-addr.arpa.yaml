@@ -98,6 +98,9 @@
 90:
   type: PTR
   value: marypc.cloudmason.org.
+92:
+  type: PTR
+  value: buddyiphone.cloudmason.org.
 93:
   type: PTR
   value: rokulivingroom.cloudmason.org.
