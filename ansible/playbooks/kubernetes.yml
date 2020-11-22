@@ -3,8 +3,14 @@
   hosts: localhost
   connection: local
   gather_facts: no
+
+  vars:
+    ansible_python_interpreter: /Users/mark/.pyenv/versions/ansible/bin/python3
+
   tasks:
+
     - name: Include Kubernetes role
       include_role:
         name: kubernetes
-        tasks_from: additional_scrape_config.yml
+        # tasks_from: additional_scrape_config.yml
+        tasks_from: sense-exporter.yml
