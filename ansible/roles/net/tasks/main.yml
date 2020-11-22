@@ -8,3 +8,33 @@
     backup: yes
   become: yes
   notify: Restart sshd
+
+- name: Install fail2ban
+  apt:
+    name: fail2ban
+    state: present
+  become: yes
+
+- name: Start and enable fail2ban
+  systemd:
+    name: fail2ban
+    state: started
+    enabled: yes
+  become: yes
+
+- name: Create /etc/fail2ban/jail.local
+  copy:
+    dest: /etc/fail2ban/jail.local
+    owner: root
+    group: root
+    mode: 0644
+    content: |
+      [sshd]
+      enabled = true
+      port = 22
+      filter = sshd
+      logpath = /var/log/auth.log
+      maxretry = 3
+    backup: yes
+  become: yes
+  notify: Restart fail2ban

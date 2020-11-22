@@ -5,3 +5,9 @@
     name: sshd
     state: restarted
   become: yes
+
+- name: Restart fail2ban
+  systemd:
+    name: fail2ban
+    state: restarted
+  become: yes
