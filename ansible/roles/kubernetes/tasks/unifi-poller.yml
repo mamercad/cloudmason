@@ -155,7 +155,7 @@
                 configMap:
                   name: unifi-poller-config
 
-- name: Create unifi-poller-influxdb Deployement
+- name: Create unifi-poller-influxdb Deployment
   community.kubernetes.k8s:
     state: present
     definition:
