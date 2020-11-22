@@ -1,0 +1,10 @@
+---
+- name: Kubernetes
+  hosts: localhost
+  connection: local
+  gather_facts: no
+  tasks:
+    - name: Include Kubernetes role
+      include_role:
+        name: kubernetes
+        tasks_from: additional_scrape_config.yml

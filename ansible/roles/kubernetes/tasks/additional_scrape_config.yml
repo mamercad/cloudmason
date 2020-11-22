@@ -1,0 +1,17 @@
+---
+
+- name: Create additional Prometheus scrape_config
+  copy:
+    dest: /tmp/prometheus-additional.yaml
+    content: |
+      - job_name: "prometheus"
+        static_configs:
+        - targets: ["qnap.cloudmason.org:9100"]
+
+- name: Create a Kube secret out of ^
+  shell: |
+    kubectl -n monitoring create secret generic additional-scrape-configs --from-file=/tmp/prometheus-additional.yaml -o yaml
+  register: additional_scrape_config
+
+- debug:
+    var: additional_scrape_config
