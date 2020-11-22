@@ -125,6 +125,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 <br/>
 -->
 <b>$ fortune bofh-excuses linuxcookie computers linux</b><br/><pre><?= shell_exec('/usr/games/fortune bofh-excuses linuxcookie computers linux'); ?></pre>
+<b>$ sshbrutes.sh</b><br/><pre><?= shell_exec('cat /usr/share/nginx/html/cloudmason.org/sshbrutes'); ?></pre>
 <br/>
 <!--
 <b>$ git log -1</b><br/><pre><?= shell_exec('git log -1'); ?></pre>

@@ -228,3 +228,31 @@
     user: root
     minute: "15"
   become: yes
+
+- name: Lay down /usr/local/bin/sshbrutes.sh
+  copy:
+    dest: /usr/local/bin/sshbrutes.sh
+    owner: root
+    group: root
+    mode: 0755
+    content: |
+      #!/usr/bin/env bash
+      IFS=$'\n'
+      for x in $(sudo grep "$(date '+%b %d')" /var/log/auth.log | grep 'Bye Bye \[preauth\]' | grep -v grep | awk '{print $9}' | sort -nr | uniq -c); do
+        count="$(echo $x | awk '{print $1}')"
+        ip="$(echo $x | awk '{print $2}')"
+        host="$(dig -x $ip +short)"
+        if [[ -n "$host" ]]; then
+          host="(${host})"
+        fi
+        echo "$ip $host $count"
+      done
+  become: yes
+
+- name: Install cron ssh brutes
+  cron:
+    name: cron-ssh-brutes
+    job: /usr/local/bin/sshbrutes.sh >/usr/share/nginx/html/cloudmason.org/sshbrutes
+    user: root
+    minute: "30"
+  become: yes
