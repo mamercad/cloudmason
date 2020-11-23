@@ -152,6 +152,9 @@
 122:
   type: PTR
   value: traefik1.cloudmason.org.
+124:
+  type: PTR
+  value: alexashow1.cloudmason.org.
 126:
   type: PTR
   value: switch2.cloudmason.org.

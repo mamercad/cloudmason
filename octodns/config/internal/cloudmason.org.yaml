@@ -171,6 +171,9 @@ garagedoor:
 traefik1:
   type: A
   value: 192.168.1.122
+alexashow1:
+  type: A
+  value: 192.168.1.124
 switch2:
   type: A
   value: 192.168.1.126
