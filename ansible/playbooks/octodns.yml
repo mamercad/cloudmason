@@ -1,6 +1,6 @@
 ---
 - name: octodns
-  hosts: all
+  hosts: jonagold
   gather_facts: no
 
   vars:
@@ -12,7 +12,10 @@
       git:
         repo: git@github.com:mamercad/cloudmason.git
         dest: /home/awx/src/github.com/mamercad/cloudmason
+        key_file: /home/awx/.ssh/id_rsa
         accept_hostkey: yes
+      become: yes
+      become_user: awx
 
     - name: do the mo templates
       shell: |
