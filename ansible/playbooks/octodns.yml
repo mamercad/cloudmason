@@ -5,6 +5,8 @@
 
   vars:
     ansible_python_interpreter: /opt/octodns/bin/python
+    eth0: 68.46.132.66
+    eth2: 162.230.47.152
 
   tasks:
 
@@ -26,11 +28,13 @@
       environment:
         eth2: "{{ eth2 }}"
         eth0: "{{ eth0 }}"
+      become: yes
+      become_user: awx
 
     - name: octodns-sync
       shell: |
-        /opt/octodns/bin/octodns-sync --config config/external.yaml --doit
-        /opt/octodns/bin/octodns-sync --config config/internal.yaml --doit
+        /opt/octodns/bin/octodns-sync --config config/external.yaml --doit;
+        /opt/octodns/bin/octodns-sync --config config/internal.yaml --doit;
       args:
         chdir: /home/awx/src/github.com/mamercad/cloudmason/octodns
       environment:
@@ -38,6 +42,8 @@
         CLOUDFLARE_API_KEY: "{{ lookup('env', 'CLOUDFLARE_API_KEY') }}"
       register: octodns_sync
       changed_when: no # Don't care, we'll see the results below
+      become: yes
+      become_user: awx
 
     - name: show the results of the sync
       pause:
@@ -46,3 +52,5 @@
           {% for line in octodns_sync.stderr_lines %}
           {{ line }}
           {% endfor %}
+      become: yes
+      become_user: awx
