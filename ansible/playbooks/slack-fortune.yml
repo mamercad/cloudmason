@@ -5,6 +5,13 @@
 
   tasks:
 
+    - name: Install prereqs
+      apt:
+        name:
+          - fortune
+          - fortunes
+          - fortunes-bofh-excuses
+
     - shell: fortune bofh-excuses linuxcookie computers linux
       register: fortune
 
