@@ -76,10 +76,12 @@
         group: root
         mode: 0640
         content: |
-          api-key=hunter2
+          api-key={{ powerdns_api_key }}
           webserver=yes
           webserver-address=0.0.0.0
           webserver-port=8082
+          webserver-allow-from=0.0.0.0/0
+          webserver-password={{ powerdns_web_password }}
           local-address=0.0.0.0:53
           serve-rfc1918=no
           forward-zones=cloudmason.org=127.0.0.1:5353,1.168.192.in-addr.arpa=127.0.0.1:5353
@@ -108,7 +110,7 @@
       community.mysql.mysql_user:
         state: present
         name: pdns
-        password: hunter2
+        password: "{{ powerdns_mysql_password }}"
         priv: 'pdns.*:ALL'
         check_implicit_admin: yes
         login_unix_socket: /var/run/mysqld/mysqld.sock
@@ -199,15 +201,16 @@
         content: |
           local-address=0.0.0.0:5353
           api=yes
-          api-key=hunter2
+          api-key={{ powerdns_api_key }}
           webserver=yes
           webserver-address=0.0.0.0
           webserver-allow-from=0.0.0.0/0
+          webserver-password={{ powerdns_web_password }}
           launch=gmysql
           gmysql-socket=/var/run/mysqld/mysqld.sock
           gmysql-dbname=pdns
           gmysql-user=pdns
-          gmysql-password=hunter2
+          gmysql-password={{ powerdns_mysql_password }}
       notify: Restart pdns
 
     - name: Start and enable pdns
@@ -215,6 +218,16 @@
         name: pdns
         state: started
         enabled: yes
+
+    - name: Deploy /etc/resolv.conf
+      copy:
+        dest: /etc/resolv.conf
+        owner: root
+        group: root
+        mode: 0644
+        content: |
+          search cloudmason.org
+          nameserver 127.0.0.1
 
   when:
     - ansible_architecture == 'armv7l'

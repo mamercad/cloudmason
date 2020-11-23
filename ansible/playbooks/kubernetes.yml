@@ -12,6 +12,6 @@
     - name: Include Kubernetes role
       include_role:
         name: kubernetes
-        # tasks_from: additional_scrape_config.yml
+        tasks_from: additional_scrape_config.yml
         # tasks_from: sense-exporter.yml
-        tasks_from: ambient-weather-exporter.yml
+        # tasks_from: ambient-weather-exporter.yml
