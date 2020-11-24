@@ -56,6 +56,9 @@
 56:
   type: PTR
   value: alexa5.cloudmason.org.
+57:
+  type: PTR
+  value: sunfire.cloudmason.org.
 60:
   type: PTR
   value: dehumidifier.cloudmason.org.
