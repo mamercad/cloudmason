@@ -15,6 +15,7 @@ all:
     gateway:
     traefik1:
     sunfire:
+      bridge: enp6s4f0
   children:
     centos:
       hosts:

@@ -1,4 +1,5 @@
 ---
+
 - name: Ensure mark group exists
   group:
     state: present

@@ -1,0 +1,59 @@
+---
+
+- name: Remove /etc/netplan/01-network-manager-all.yaml
+  file:
+    state: absent
+    path: /etc/netplan/01-network-manager-all.yaml
+  when: bridge is defined
+  become: yes
+
+- name: Disable NetworkManager.service
+  systemd:
+    name: NetworkManager.service
+    state: stopped
+    enabled: no
+  when: bridge is defined
+  become: yes
+
+- name: Check if bridge exists
+  command:
+    ip link show {{ bridge }}
+  ignore_errors: yes # Might not exists
+  register: bridge_exists
+
+- name: Bridge the primary interface
+  copy:
+    dest: /etc/netplan/br0.yaml
+    owner: root
+    group: root
+    mode: 0644
+    content: |
+      network:
+        version: 2
+        renderer: networkd
+        ethernets:
+          {{ bridge }}:
+            dhcp4: false
+            dhcp6: false
+        bridges:
+          br0:
+            interfaces: [{{ bridge }}]
+            mtu: 1500
+            parameters:
+              stp: true
+              forward-delay: 4
+            dhcp4: true
+            dhcp6: false
+  when:
+    - bridge is defined
+    - bridge_exists.rc != 0
+  become: yes
+
+- name: Apply the netplan
+  command: netplan apply
+  async: 60
+  poll: 5
+  when:
+    - bridge is defined
+    - bridge_exists.rc != 0
+  become: yes

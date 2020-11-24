@@ -1,33 +1,20 @@
 ---
 
-- name: Install common packages
-  package:
-    name: "{{ item }}"
-    state: present
-  loop:
-    - bash-completion
-    - git
-    - glances
-    - htop
-    - screen
-    - speedtest-cli
-    - vim
-  become: yes
+- name: Include packages play
+  include_tasks:
+    file: packages.yml
+  tags:
+    - apt
+    - package
+    - packages
 
-# - name: Include postfix
-#   include_tasks: postfix.yml
+- name: Include mark vars
+  include_vars:
+    file: mark.yml
+    name: mark
+  tags: mark
 
-# - name: Include fail2ban
-#   include_tasks: fail2ban.yml
-
-# - name: Include Prometheus
-#   include_tasks: prometheus.yml
-
-# - name: Include Netdata
-#   include_tasks: netdata.yml
-
-# - name: Include FireMotD
-#   include_tasks: firemotd.yml
-
-# - name: Include neofetch
-#   include_tasks: neofetch.yml
+- name: Include mark play
+  include_tasks:
+    file: mark.yml
+  tags: mark
