@@ -191,6 +191,9 @@
 162:
   type: PTR
   value: marymacbook.cloudmason.org.
+180:
+  type: PTR
+  value: judeipad.cloudmason.org.
 187:
   type: PTR
   value: ringbasestation.cloudmason.org.
