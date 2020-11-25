@@ -12,6 +12,8 @@
 - name: Deploy /etc/postfix/gmail_sasl
   copy:
     dest: /etc/postfix/gmail_sasl
+    owner: root
+    group: root
     mode: 0600
     content: "{{ postfix.gmail_sasl }}"
   become: yes
@@ -19,12 +21,14 @@
 
 - name: Call postmap /etc/postfix/gmail_sasl
   shell:
-    postmap /etc/postfix/gmail_sasl
+    postmap /etc/postfix/gmail_sasl;
+    chown root:root /etc/postfix/gmail_sasl.db;
   become: yes
   notify: Restart postfix
 
 - name: Set up postfix for relay
   blockinfile:
+    marker: "# ANSIBLE MANAGED BLOCK RELAY"
     path: /etc/postfix/main.cf
     block: |
       relayhost = [smtp.gmail.com]:587
@@ -32,7 +36,6 @@
       smtp_sasl_security_options = noanonymous
       smtp_sasl_password_maps = hash:/etc/postfix/gmail_sasl
       smtp_tls_security_level = encrypt
-      smtp_tls_security_level = verify
       smtp_tls_CAfile = /etc/ssl/certs/ca-certificates.crt
   become: yes
   notify: Restart postfix
@@ -54,6 +57,7 @@
 
 - name: Update /etc/aliases
   blockinfile:
+    state: present
     path: /etc/aliases
     block: |
       root: "{{ postfix.root_to }}"
@@ -72,6 +76,19 @@
     state: present
     path: /etc/postfix/master.cf
     line: submission inet n - y - - smtpd
+    backup: yes
+  become: yes
+  notify: Restart postfix
+
+- name: Configure $myhostname, $mydomain and $myorigin
+  blockinfile:
+    marker: "# ANSIBLE MANAGED BLOCK HOSTNAME"
+    state: present
+    path: /etc/postfix/main.cf
+    block: |
+      myhostname = {{ ansible_ssh_host }}.cloudmason.org
+      mydomain = cloudmason.org
+      myorigin = $mydomain
     backup: yes
   become: yes
   notify: Restart postfix
