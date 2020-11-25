@@ -19,6 +19,6 @@
     - include_role:
         name: slack
       vars:
-        slack_channel: "#testing"
+        slack_channel: "#general"
         slack_message: "```{{ inventory_hostname }} has {{ updates.stdout }} updates available // {{ansible_distribution}} {{ansible_distribution_release}} {{ansible_kernel}} {{ansible_machine}} {{needs_reboot}}```"
       when: updates.stdout != '0'
