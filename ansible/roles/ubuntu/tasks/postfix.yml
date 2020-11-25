@@ -1,27 +1,19 @@
 ---
 
 - name: Install postfix stuff
-  package:
-    name: "{{ item }}"
+  apt:
     state: present
+    name: "{{ item }}"
   loop:
     - mailutils
     - postfix
+  become: yes
 
 - name: Deploy /etc/postfix/gmail_sasl
   copy:
     dest: /etc/postfix/gmail_sasl
     mode: 0600
-    content:
-      !vault |
-      $ANSIBLE_VAULT;1.1;AES256
-      39316133316539343231343435343363666633643563336661323633616630316639646534656436
-      6130633766323763353439306365663531393734643137390a636238376563396461343962343163
-      36363361653032346134643666353035666639376465393432313439323939616263353066353665
-      6135323338383034650a623930353763366535336164653736303538633638396130393366306233
-      63333737303639396230396331353161623539653266636637316165666365336136383662343266
-      34626564613638336465373563643536646563613566306337353463666138643630626362353735
-      343536353463343431363534356639373665
+    content: "{{ postfix.gmail_sasl }}"
   become: yes
 
 - name: Call postmap /etc/postfix/gmail_sasl
@@ -47,7 +39,7 @@
     dest: /etc/postfix/access
     mode: 0644
     content: |
-      192.168/16 OK
+      {{ postfix.access }} OK
   become: yes
 
 - name: Call postmap /etc/postfix/access
@@ -59,8 +51,8 @@
   blockinfile:
     path: /etc/aliases
     block: |
-      root: mark
-      mark: mamercad@gmail.com
+      root: "{{ postfix.root_to }}"
+      mark: "{{ postfix.mark_to }}"
     backup: yes
   become: yes
 

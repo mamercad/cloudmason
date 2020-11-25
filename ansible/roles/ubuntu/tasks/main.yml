@@ -3,6 +3,11 @@
 - name: Include packages play
   include_tasks:
     file: packages.yml
+    apply:
+      tags:
+        - apt
+        - package
+        - packages
   tags:
     - apt
     - package
@@ -17,4 +22,19 @@
 - name: Include mark play
   include_tasks:
     file: mark.yml
+    apply:
+      tags: mark
   tags: mark
+
+- name: Include postfix vars
+  include_vars:
+    file: postfix.yml
+    name: postfix
+  tags: postfix
+
+- name: Include postfix play
+  include_tasks:
+    file: postfix.yml
+    apply:
+      tags: postfix
+  tags: postfix

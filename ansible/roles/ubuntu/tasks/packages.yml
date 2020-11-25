@@ -11,8 +11,15 @@
     - glances
     - htop
     - neofetch
+    - prometheus-node-exporter
     - screen
     - speedtest-cli
     - vim
   become: yes
-  tags: apt
+
+- name: Start and enable node_exporter
+  systemd:
+    name: prometheus-node-exporter
+    state: started
+    enabled: yes
+  become: yes
