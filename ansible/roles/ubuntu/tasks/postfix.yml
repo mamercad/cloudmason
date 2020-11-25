@@ -75,3 +75,10 @@
     backup: yes
   become: yes
   notify: Restart postfix
+
+- name: Start and enable postfix
+  systemd:
+    name: postfix
+    state: started
+    enabled: yes
+  become: yes
