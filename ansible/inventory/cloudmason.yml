@@ -24,11 +24,11 @@ all:
       hosts:
         net1:
         net2:
-        lenovo:
+        # lenovo:
         jonagold:
         powerdns1:
         powerdns2:
-        traefik1:
+        # traefik1:
         sunfire:
     net:
       hosts:
