@@ -1,0 +1,8 @@
+---
+- name: metronome
+  hosts: localhost
+  connection: local
+  gather_facts: no
+
+  tasks:
+    - action: ping
