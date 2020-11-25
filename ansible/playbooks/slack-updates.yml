@@ -1,0 +1,24 @@
+---
+- name: Slack
+  hosts: all
+  gather_facts: yes
+
+  tasks:
+
+    - shell: apt list --upgradeable 2>/dev/null | wc -l
+      register: updates
+
+    - stat:
+        path: /var/run/reboot-required
+      register: reboot
+      ignore_errors: yes # Might not
+
+    - set_fact:
+        needs_reboot: "{{ reboot.stat.exists | ternary('// it needs a reboot too', '') }}"
+
+    - include_role:
+        name: slack
+      vars:
+        slack_channel: "#general"
+        slack_message: "```{{ inventory_hostname }} has {{ updates.stdout }} updates available // {{ansible_distribution}} {{ansible_distribution_release}} {{ansible_kernel}} {{ansible_machine}} {{needs_reboot}}```"
+      when: updates.stdout != '0'
