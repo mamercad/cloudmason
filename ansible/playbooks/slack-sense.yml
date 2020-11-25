@@ -8,7 +8,7 @@
     - uri:
         url: http://prometheus.cloudmason.org:9090/api/v1/query
         method: POST
-        body: 'query=sense_daily_usage'
+        body: 'query=sum(increase(sense_daily_usage[1d]))'
         body_format: form-urlencoded
         return_content: yes
       register: energy
