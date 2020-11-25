@@ -1,34 +1,30 @@
 all:
   hosts:
-    net1:
-      healthchecks_io: https://hc-ping.com/ae55147f-0aff-4b0e-b0f9-1f55c81c5a1a
-    net2:
-      healthchecks_io: https://hc-ping.com/b4576296-81ee-4cf5-a239-4286af184cf3
+    gateway:
     jonagold:
       healthchecks_io: https://hc-ping.com/177cb674-b199-4fbb-8879-5f83ba901fa5
     lenovo:
       healthchecks_io: https://hc-ping.com/c8bd3c9c-9d8b-445b-bdf0-75935b4e6db4
+    net1:
+      healthchecks_io: https://hc-ping.com/ae55147f-0aff-4b0e-b0f9-1f55c81c5a1a
+    net2:
+      healthchecks_io: https://hc-ping.com/b4576296-81ee-4cf5-a239-4286af184cf3
     powerdns1:
       healthchecks_io: https://hc-ping.com/19217f13-73b5-493e-9a00-a22796f47fee
     powerdns2:
       healthchecks_io: https://hc-ping.com/5970d9fb-08be-4110-88fd-55e47c2efab8
-    gateway:
-    traefik1:
     sunfire:
       bridge: enp6s4f0
+      healthchecks_io: https://hc-ping.com/9f49a4b2-0af7-4259-8392-a6dabdccaa87
   children:
-    centos:
-      hosts:
-        lenovo:
     linux:
       hosts:
         net1:
         net2:
-        # lenovo:
+        lenovo:
         jonagold:
         powerdns1:
         powerdns2:
-        # traefik1:
         sunfire:
     net:
       hosts:
@@ -53,9 +49,9 @@ all:
     ubuntu:
       hosts:
         jonagold:
+        lenovo:
         net1:
         net2:
         powerdns1:
         powerdns2:
-        traefik1:
         sunfire:

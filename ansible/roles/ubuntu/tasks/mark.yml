@@ -59,3 +59,13 @@
     group: "{{ mark.group }}"
     backup: yes
   become: yes
+
+- name: Ensure set -o vi
+  blockinfile:
+    state: present
+    path: "{{ mark.home }}/.bashrc"
+    block: |
+      alias c=clear
+      set -o vi
+    backup: yes
+  become: yes

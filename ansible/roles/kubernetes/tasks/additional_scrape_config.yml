@@ -6,9 +6,11 @@
     content: |
       - job_name: "prometheus"
         static_configs:
-          - targets: ["qnap.cloudmason.org:9100"]
+          - targets: ["lenovo.cloudmason.org:9100"]
           - targets: ["net1.cloudmason.org:9100"]
           - targets: ["net2.cloudmason.org:9100"]
+          - targets: ["qnap.cloudmason.org:9100"]
+          - targets: ["sunfire.cloudmason.org:9100"]
       - job_name: "powerdns"
         static_configs:
           - targets: ["net1.cloudmason.org:8082"]

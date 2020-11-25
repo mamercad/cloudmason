@@ -12,6 +12,8 @@
     - htop
     - neofetch
     - prometheus-node-exporter
+    - python3
+    - python3-pip
     - screen
     - speedtest-cli
     - vim

@@ -1,5 +1,20 @@
 ---
 
+- name: Include awx vars
+  include_vars:
+    file: awx.yml
+    name: awx
+  tags: awx
+
+- name: Include awx play
+  include_tasks:
+    file: awx.yml
+    apply:
+      tags:
+        - awx
+  tags:
+    - awx
+
 - name: Include packages play
   include_tasks:
     file: packages.yml
@@ -38,3 +53,14 @@
     apply:
       tags: postfix
   tags: postfix
+
+- name: Include Healthchecks.io play
+  include_tasks:
+    file: healthchecks.io.yml
+    apply:
+      tags:
+        - healthchecks
+        - healthchecks.io
+  tags:
+    - healthchecks
+    - healthchecks.io
