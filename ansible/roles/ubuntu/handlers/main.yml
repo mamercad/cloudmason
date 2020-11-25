@@ -1,4 +1,6 @@
-- name: Restart netdata
-  service:
-    name: netdata
+---
+
+- name: Restart postfix
+  systemd:
+    name: postfix
     state: restarted

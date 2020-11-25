@@ -15,11 +15,13 @@
     mode: 0600
     content: "{{ postfix.gmail_sasl }}"
   become: yes
+  notify: Restart postfix
 
 - name: Call postmap /etc/postfix/gmail_sasl
   shell:
     postmap /etc/postfix/gmail_sasl
   become: yes
+  notify: Restart postfix
 
 - name: Set up postfix for relay
   blockinfile:
@@ -33,6 +35,7 @@
       smtp_tls_security_level = verify
       smtp_tls_CAfile = /etc/ssl/certs/ca-certificates.crt
   become: yes
+  notify: Restart postfix
 
 - name: Deploy /etc/postfix/access
   copy:
@@ -41,11 +44,13 @@
     content: |
       {{ postfix.access }} OK
   become: yes
+  notify: Restart postfix
 
 - name: Call postmap /etc/postfix/access
   shell:
     postmap /etc/postfix/access
   become: yes
+  notify: Restart postfix
 
 - name: Update /etc/aliases
   blockinfile:
@@ -60,3 +65,13 @@
   shell: |
     newaliases
   become: yes
+  notify: Restart postfix
+
+- name: Enable 587/tcp (submission)
+  lineinfile:
+    state: present
+    path: /etc/postfix/master.cf
+    line: submission inet n - y - - smtpd
+    backup: yes
+  become: yes
+  notify: Restart postfix

@@ -1,13 +1,22 @@
 ---
 '':
-  type: A
-  value: {{eth0}}
-  ttl: 3600
+  - type: A
+    value: {{eth0}}
+    ttl: 3600
+  - type: MX
+    values:
+      - exchange: smtp.cloudmason.org.
+        preference: 10
+    ttl: 3600
 att:
   type: A
   value: {{eth2}}
   ttl: 3600
 xfinity:
+  type: A
+  value: {{eth0}}
+  ttl: 3600
+smtp:
   type: A
   value: {{eth0}}
   ttl: 3600
