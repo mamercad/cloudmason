@@ -69,3 +69,12 @@
       set -o vi
     backup: yes
   become: yes
+
+- name: Create /var/mail/mark
+  file:
+    state: touch
+    path: /var/mail/mark
+    owner: "{{ mark.user }}"
+    group: "{{ mark.group }}"
+    mode: 0600
+  become: yes
