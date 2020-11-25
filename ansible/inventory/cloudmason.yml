@@ -53,6 +53,8 @@ all:
     ubuntu:
       hosts:
         jonagold:
+        net1:
+        net2:
         powerdns1:
         powerdns2:
         traefik1:
