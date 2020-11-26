@@ -167,9 +167,15 @@
 127:
   type: PTR
   value: pws.cloudmason.org.
+128:
+  type: PTR
+  value: node1.cloudmason.org.
 129:
   type: PTR
   value: maryiphone.cloudmason.org.
+130:
+  type: PTR
+  value: node2.cloudmason.org.
 135:
   type: PTR
   value: ambrosia.cloudmason.org.
