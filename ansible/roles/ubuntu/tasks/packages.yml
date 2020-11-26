@@ -5,11 +5,13 @@
     state: present
     name: "{{ item }}"
   loop:
+    - apt-transport-https
     - bash-completion
     - bridge-utils
     - curl
     - git
     - glances
+    - gnupg
     - htop
     - neofetch
     - prometheus-node-exporter
