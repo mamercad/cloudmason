@@ -1,0 +1,8 @@
+---
+
+kubernetes:
+  context: node0
+  metallb:
+    dhcp:
+      start: 192.168.1.170
+      end: 192.168.1.199

@@ -1,0 +1,7 @@
+---
+
+- name: Include metallb tasks
+  include_tasks: metallb.yml
+
+- name: Include hello-world tasks
+  include_tasks: hello-world.yml
