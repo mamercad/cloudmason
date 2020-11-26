@@ -13,8 +13,8 @@
     group: root
     mode: 0644
     content: |
-      deb https://packagecloud.io/netdata/netdata/ubuntu/ {{ ansible_distribution_release }} main
-      deb-src https://packagecloud.io/netdata/netdata/ubuntu/ {{ ansible_distribution_release }} main
+      deb https://packagecloud.io/netdata/netdata/{{ ansible_distribution | lower }}/ {{ ansible_distribution_release }} main
+      deb-src https://packagecloud.io/netdata/netdata/{{ ansible_distribution | lower }}/ {{ ansible_distribution_release }} main
   become: yes
 
 - name: Install netdata
@@ -32,6 +32,6 @@
   become: yes
 
 - name: Claim node to the cloud
-  shell: /usr/sbin/netdata-claim.sh -token=iYKPYz_qbHCwUm8Nf4qtInYWo7rHDU3EsRlAmGR-tmRON-6wJeP6eVguTEy6dBZ_4Wv7DigICkGEhc1M8K76dUE8YKJ2u15jB_iq2xsyjigpY3dIGPhkYK9luPitMz8i1Fx-PYM -rooms=f4f6285d-b7b5-4365-ac5d-3197a9b3831b -url=https://app.netdata.cloud
+  shell: /usr/sbin/netdata-claim.sh -token={{ netdata.netdata_claim_token }} -rooms=f4f6285d-b7b5-4365-ac5d-3197a9b3831b -url=https://app.netdata.cloud
   become: yes
   ignore_errors: yes # Might be claimed already

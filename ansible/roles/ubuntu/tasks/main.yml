@@ -65,6 +65,12 @@
     - healthchecks
     - healthchecks.io
 
+- name: Include netdata vars
+  include_vars:
+    file: netdata.yml
+    name: netdata
+  tags: netdata
+
 - name: Include netdata play
   include_tasks:
     file: netdata.yml
