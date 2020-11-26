@@ -158,6 +158,9 @@
 124:
   type: PTR
   value: alexashow1.cloudmason.org.
+125:
+  type: PTR
+  value: node0.cloudmason.org.
 126:
   type: PTR
   value: switch2.cloudmason.org.
