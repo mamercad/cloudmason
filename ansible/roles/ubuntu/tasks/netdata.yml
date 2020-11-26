@@ -53,7 +53,7 @@
           web files owner = root
           web files group = netdata
           # by default do not expose the netdata port
-          bind to = localhost
+          bind to = *
     backup: yes
   become: yes
   notify: Restart netdata
