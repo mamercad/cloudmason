@@ -199,7 +199,7 @@ maryiphone:
   value: 192.168.1.129
 node2:
   type: A
-  value: 192.168.1.130
+  value: 192.168.1.131
 ambrosia:
   type: A
   value: 192.168.1.135
