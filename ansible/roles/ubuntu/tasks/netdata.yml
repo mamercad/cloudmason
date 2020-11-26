@@ -1,59 +1,37 @@
 ---
 
-- name: Install netdata
-  package:
-    name: "{{ item }}"
+- name: Deploy netdata apt-key
+  apt_key:
     state: present
-  loop:
-    - netdata
-
-- name: Punch a hole for netdata
-  iptables:
-    chain: INPUT
-    protocol: tcp
-    destination_port: "{{ item.0 }}"
-    ctstate: NEW
-    syn: match
-    jump: ACCEPT
-    comment: "{{ item.1 }}"
-  with_together:
-    - ['19999']
-    - ['netdata']
+    url: https://packagecloud.io/netdata/netdata/gpgkey
   become: yes
 
-- name: Fixup /etc/netdata/netdata.conf
+- name: Deploy /etc/apt/sources.list.d/netdata_netdata.list
   copy:
-    dest: /etc/netdata/netdata.conf
-    content: |
-      # NetData Configuration
-      # The current full configuration can be retrieved from the running
-      # server at the URL
-      #
-      #   http://localhost:19999/netdata.conf
-      #
-      # for example:
-      #
-      #   wget -O /etc/netdata/netdata.conf http://localhost:19999/netdata.conf
-      #
-      [global]
-        hostname = {{ inventory_hostname }}.cloudmason.org
-        run as user = netdata
-        web files owner = root
-        web files group = root
-        # Netdata is not designed to be exposed to potentially hostile
-        # networks. See https://github.com/netdata/netdata/issues/164
-        bind socket to IP = 0.0.0.0
-    backup: yes
-  notify: Restart netdata
-  become: yes
-
-- name: Deploy /etc/netdata/health_alarm_notify.conf
-  copy:
-    src: files/netdata/health_alarm_notify.conf
-    dest: /etc/netdata/health_alarm_notify.conf
+    dest: /etc/apt/sources.list.d/netdata_netdata.list
     owner: root
     group: root
     mode: 0644
-    backup: yes
-  notify: Restart netdata
+    content: |
+      deb https://packagecloud.io/netdata/netdata/ubuntu/ {{ ansible_distribution_release }} main
+      deb-src https://packagecloud.io/netdata/netdata/ubuntu/ {{ ansible_distribution_release }} main
   become: yes
+
+- name: Install netdata
+  apt:
+    state: present
+    name: netdata
+    update_cache: yes
+  become: yes
+
+- name: Start and enable netdata
+  systemd:
+    name: netdata
+    state: started
+    enabled: yes
+  become: yes
+
+- name: Claim node to the cloud
+  shell: /usr/sbin/netdata-claim.sh -token=iYKPYz_qbHCwUm8Nf4qtInYWo7rHDU3EsRlAmGR-tmRON-6wJeP6eVguTEy6dBZ_4Wv7DigICkGEhc1M8K76dUE8YKJ2u15jB_iq2xsyjigpY3dIGPhkYK9luPitMz8i1Fx-PYM -rooms=f4f6285d-b7b5-4365-ac5d-3197a9b3831b -url=https://app.netdata.cloud
+  become: yes
+  ignore_errors: yes # Might be claimed already
