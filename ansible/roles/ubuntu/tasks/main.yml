@@ -64,3 +64,24 @@
   tags:
     - healthchecks
     - healthchecks.io
+
+- name: Include netdata play
+  include_tasks:
+    file: netdata.yml
+    apply:
+      tags:
+        - netdata
+  tags:
+    - netdata
+
+- name: Include additional plays
+  include_tasks:
+    file: "{{ item }}.yml"
+    apply:
+      tags:
+        - plays
+  tags:
+    - plays
+  loop: "{{ plays }}"
+  when:
+    - plays is defined
