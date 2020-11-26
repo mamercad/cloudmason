@@ -25,11 +25,11 @@ all:
     node1:
       plays:
         - serial
-        - netdata
+        - microk8s
     node2:
       plays:
         - serial
-        - netdata
+        - microk8s
   children:
     linux:
       hosts:
@@ -57,9 +57,6 @@ all:
       hosts:
         powerdns1:
         powerdns2:
-    prometheus:
-      hosts:
-        lenovo:
     ubuntu:
       hosts:
         jonagold:
