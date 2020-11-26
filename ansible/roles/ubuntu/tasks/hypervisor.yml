@@ -1,0 +1,30 @@
+---
+
+- name: Install hypervisor packages
+  apt:
+    state: present
+    name:
+      - qemu-kvm
+      - libvirt-clients
+      - libvirt-daemon-system
+      - bridge-utils
+      - virt-manager
+      - libguestfs-tools
+  become: yes
+
+- name: Start and enable libvirtd
+  systemd:
+    name: libvirtd
+    state: started
+    enabled: yes
+  become: yes
+
+- name: Add mark to libvirt groups
+  user:
+    name: mark
+    groups:
+      - libvirt
+      - libvirt-qemu
+      - libvirt-dnsmasq
+    append: yes
+  become: yes
