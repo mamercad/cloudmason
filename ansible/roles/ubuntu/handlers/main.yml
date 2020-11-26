@@ -5,3 +5,7 @@
     name: postfix
     state: restarted
   become: yes
+
+- name: Rebuild /boot/grub/grub.cfg
+  shell: grub-mkconfig -o /boot/grub/grub.cfg
+  become: yes
