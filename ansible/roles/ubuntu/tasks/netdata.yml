@@ -26,6 +26,7 @@
 
 - name: Deploy /etc/netdata/netdata.conf
   copy:
+    dest: /etc/netdata/netdata.conf
     owner: root
     group: root
     mode: 0644
