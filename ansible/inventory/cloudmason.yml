@@ -16,6 +16,20 @@ all:
     sunfire:
       bridge: enp6s4f0
       healthchecks_io: https://hc-ping.com/9f49a4b2-0af7-4259-8392-a6dabdccaa87
+      plays:
+        - hypervisor
+    node0:
+      plays:
+        - serial
+        - microk8s
+    node1:
+      plays:
+        - serial
+        - netdata
+    node2:
+      plays:
+        - serial
+        - netdata
   children:
     linux:
       hosts:
@@ -55,3 +69,6 @@ all:
         powerdns1:
         powerdns2:
         sunfire:
+        node0:
+        node1:
+        node2:
