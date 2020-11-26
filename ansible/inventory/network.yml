@@ -1,0 +1,17 @@
+---
+cloudmason:
+  unifi:
+    cidr: 192.168.1.0/24
+    dhcp:
+      start: 192.168.1.50
+      end:   192.168.1.149
+  sunfire:
+    metallb:
+      dhcp:
+        start: 192.168.1.170
+        end:   192.168.1.199
+  jonagold:
+    metallb:
+      dhcp:
+        start: 192.168.1.200
+        end:   192.168.1.219
