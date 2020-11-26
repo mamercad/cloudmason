@@ -117,7 +117,7 @@
       alias_maps = hash:/etc/aliases
       alias_database = hash:/etc/aliases
       mydestination = $myhostname, sunfire, localhost.localdomain, , localhost
-      mynetworks = 127.0.0.0/8 [::ffff:127.0.0.0]/104 [::1]/128
+      mynetworks = 127.0.0.0/8 [::ffff:127.0.0.0]/104 [::1]/128 192.168.1.0/24
       mailbox_size_limit = 0
       recipient_delimiter = +
       inet_interfaces = all
