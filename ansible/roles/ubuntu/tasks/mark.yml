@@ -47,7 +47,7 @@
     dest: "{{ mark.home }}/.ssh/personal.key.pub"
     owner: "{{ mark.user }}"
     group: "{{ mark.group }}"
-    mode: 0444
+    mode: 0644
     backup: yes
   become: yes
 
@@ -57,6 +57,7 @@
     dest: "{{ mark.home }}/.ssh/personal.key"
     owner: "{{ mark.user }}"
     group: "{{ mark.group }}"
+    mode: 0600
     backup: yes
   become: yes
 
