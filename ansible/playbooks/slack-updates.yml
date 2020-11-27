@@ -36,10 +36,10 @@
         var: needing_upgrades
 
     - set_fact:
-        needing_reboots_list: "{{ needing_reboots | map('regex_replace', '^', '* ') }}"
+        needing_reboots_list: "{{ needing_reboots | map('regex_replace', '^', '  ') }}"
 
     - set_fact:
-        needing_upgrades_list: "{{ needing_upgrades | map('regex_replace', '^', '* ') }}"
+        needing_upgrades_list: "{{ needing_upgrades | map('regex_replace', '^', '  ') }}"
 
     - set_fact:
         slack_reboots: "{{ needing_reboots_list | sort | join('\n') }}"
@@ -58,10 +58,10 @@
               type: mrkdwn
               text: |-
                 ```
-                *Needing reboot*
+                Needing reboot
                 {{ slack_reboots }}
 
-                *Upgrades pending*
+                Upgrades pending
                 {{ slack_updates }}
                 ```
       vars:
