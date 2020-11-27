@@ -83,7 +83,7 @@
   blockinfile:
     path: /etc/aliases
     block: |
-      root: mark
+      root: mamercad@gmail.com
       mark: mamercad@gmail.com
     backup: yes
   become: yes
