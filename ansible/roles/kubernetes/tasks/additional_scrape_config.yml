@@ -20,6 +20,10 @@
         basic_auth:
           username: unused
           password: {{ powerdns_web_password }}
+      - job_name: "healthchecks"
+        metrics_path: /projects/a85def6b-f0e4-4420-9692-ed4349288144/metrics/Kj8TBLPT9PZ6p80YgoxifkEQjJr_eSsC
+        static_configs:
+          - targets: ["healthchecks.io"]
   vars:
     powerdns_web_password: !vault |
       $ANSIBLE_VAULT;1.1;AES256
