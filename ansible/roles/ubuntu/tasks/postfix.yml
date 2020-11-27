@@ -102,7 +102,7 @@
     content: |
       smtpd_banner = $myhostname ESMTP $mail_name (Ubuntu)
       biff = no
-      append_dot_mydomain = no
+      append_dot_mydomain = yes
       readme_directory = no
       compatibility_level = 2
       smtpd_tls_cert_file=/etc/ssl/certs/ssl-cert-snakeoil.pem
@@ -116,7 +116,7 @@
       myorigin = $mydomain
       alias_maps = hash:/etc/aliases
       alias_database = hash:/etc/aliases
-      mydestination = $myhostname, sunfire, localhost.localdomain, , localhost
+      mydestination = $myhostname $mydomain localhost.localdomain localhost
       mynetworks = 127.0.0.0/8 [::ffff:127.0.0.0]/104 [::1]/128 192.168.1.0/24
       mailbox_size_limit = 0
       recipient_delimiter = +
@@ -128,6 +128,7 @@
       smtp_sasl_password_maps = hash:/etc/postfix/gmail_sasl
       smtp_tls_security_level = encrypt
       smtp_tls_CAfile = /etc/ssl/certs/ca-certificates.crt
+      masquerade_domains = $mydomain
     backup: yes
   become: yes
   notify: Restart postfix
