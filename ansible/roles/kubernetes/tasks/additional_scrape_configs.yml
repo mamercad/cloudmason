@@ -1,9 +1,19 @@
 ---
 
-- name: Create additional Prometheus scrape_config
-  copy:
-    dest: /tmp/prometheus-additional.yaml
-    content: |
+- name: Create additional Prometheus scrape_configs
+  community.kubernetes.k8s:
+    state: present
+    context: "{{ kubernetes.context }}"
+    definition:
+      apiVersion: v1
+      kind: Secret
+      metadata:
+        name: additional-scrape-configs
+        namespace: monitoring
+      data:
+        prometheus-additional.yaml: "{{ secret | b64encode }}"
+  vars:
+    secret: |
       - job_name: "prometheus"
         static_configs:
           - targets: ["lenovo.cloudmason.org:9100"]
@@ -13,6 +23,9 @@
           - targets: ["powerdns2.cloudmason.org:9100"]
           - targets: ["qnap.cloudmason.org:9100"]
           - targets: ["sunfire.cloudmason.org:9100"]
+          - targets: ["node0.cloudmason.org:9100"]
+          - targets: ["node1.cloudmason.org:9100"]
+          - targets: ["node2.cloudmason.org:9100"]
       - job_name: "powerdns"
         static_configs:
           - targets: ["net1.cloudmason.org:8082"]
@@ -24,7 +37,6 @@
         metrics_path: /projects/a85def6b-f0e4-4420-9692-ed4349288144/metrics/Kj8TBLPT9PZ6p80YgoxifkEQjJr_eSsC
         static_configs:
           - targets: ["healthchecks.io"]
-  vars:
     powerdns_web_password: !vault |
       $ANSIBLE_VAULT;1.1;AES256
       38323861346364316265643131373331363461363137316336613264643231333531633936343366
@@ -32,12 +44,3 @@
       30393966326461323733323331656665363735336165643661313864323432366664343836616133
       3536333966373238330a636461366137363336643134336330663938326333643064386131323464
       3638
-# TODO: This is terrible
-- name: Create a Kube secret out of ^
-  shell: |
-    kubectl -n monitoring delete secret additional-scrape-configs;
-    kubectl -n monitoring create secret generic additional-scrape-configs --from-file=/tmp/prometheus-additional.yaml -o yaml;
-  register: additional_scrape_config
-
-- debug:
-    var: additional_scrape_config

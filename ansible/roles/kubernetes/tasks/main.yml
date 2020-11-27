@@ -2,6 +2,22 @@
 
 - name: Include metallb tasks
   include_tasks: metallb.yml
+  vars:
+    kubernetes:
+      context: node0
+      metallb:
+        dhcp:
+          start: 192.168.1.170
+          end: 192.168.1.199
 
 - name: Include hello-world tasks
   include_tasks: hello-world.yml
+  vars:
+    kubernetes:
+      context: node0
+
+- name: Include additional_scrape_configs
+  include_tasks: additional_scrape_configs.yml
+  vars:
+    kubernetes:
+      context: jonagold

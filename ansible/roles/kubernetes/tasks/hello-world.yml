@@ -7,8 +7,6 @@
       kind: Namespace
       metadata:
         name: hello-world
-        # labels:
-        #   app: hello-world
 
 - name: Create hello-world Deployment
   community.kubernetes.k8s:
