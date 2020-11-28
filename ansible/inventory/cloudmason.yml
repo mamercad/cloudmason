@@ -72,6 +72,10 @@ all:
         node1:
         node2:
   vars:
+    exclude:
+      ubuntu:
+        node_exporter:
+          - jonagold
     network:
       domain: cloudmason.org
       cidr: 192.168.1.0/24
