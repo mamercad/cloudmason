@@ -1,7 +1,6 @@
 all:
   hosts:
     localhost:
-      connection: local
       ansible_connection: local
     gateway:
     jonagold:
@@ -27,7 +26,7 @@ all:
         - serial
         - microk8s
     node1:
-      healthchecks_io: https://hc-ping.com/d8dcb78d-865f-4a15-86dc-6e0e9ce9643a
+      healthchecks_io: https://hc-ping.com/726988d0-f15a-477c-9ebd-219dad3bf395
       plays:
         - serial
         - microk8s
@@ -53,8 +52,6 @@ all:
         net2:
         lenovo:
         jonagold:
-        # powerdns1:
-        # powerdns2:
         sunfire:
     net:
       hosts:
@@ -76,18 +73,12 @@ all:
         net2:
       vars:
         ansible_python_interpreter: /usr/bin/python3
-    # powerdns:
-    #   hosts:
-    #     powerdns1:
-    #     powerdns2:
     ubuntu:
       hosts:
         jonagold:
         lenovo:
         net1:
         net2:
-        # powerdns1:
-        # powerdns2:
         sunfire:
         node0:
         node1:
