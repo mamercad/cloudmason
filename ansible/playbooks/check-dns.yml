@@ -4,11 +4,6 @@
   gather_facts: no
 
   vars:
-    nameservers:
-      - 192.168.1.8
-      - 192.168.1.9
-      - 192.168.1.10
-      - 192.168.1.11
     records:
       - facebook.com.
       - google.com.
@@ -32,7 +27,7 @@
         dig @{{ item.0 }} +short {{ item.1 }}
       register: foo
       with_nested:
-        - "{{ nameservers }}"
+        - "{{ network.dns.nameservers }}"
         - "{{ records }}"
       changed_when: no # Don't care
 

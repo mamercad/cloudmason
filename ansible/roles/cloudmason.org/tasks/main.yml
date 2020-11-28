@@ -320,7 +320,7 @@
     name: Cloudmason ping sweep cron
     user: nginx
     minute: '*/20'
-    job: /usr/sbin/fping -a -d -q -g 192.168.1.0/24 2>/dev/null | sed -E 's,.cloudmason.org$,,' | paste -sd' ' >/usr/share/nginx/html/cloudmason.org/cloudmason
+    job: /usr/sbin/fping -a -d -q -g {{ network.cidr }} 2>/dev/null | sed -E 's,.{{ network.domain }}$,,' | paste -sd' ' >/usr/share/nginx/html/{{ network.domain }}/cloudmason
   become: yes
 
 - name: fail2ban wall of shame cron

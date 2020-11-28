@@ -15,7 +15,7 @@
     owner: root
     group: root
     mode: 0600
-    content: "{{ postfix.gmail_sasl }}"
+    content: "{{ mail.gmail_sasl_auth }}"
   become: yes
   notify: Restart postfix
 
@@ -45,7 +45,7 @@
     dest: /etc/postfix/access
     mode: 0644
     content: |
-      {{ postfix.access }} OK
+      {{ network.dns.cidr }} OK
   become: yes
   notify: Restart postfix
 
@@ -60,8 +60,8 @@
     state: present
     path: /etc/aliases
     block: |
-      root: "{{ postfix.root_to }}"
-      mark: "{{ postfix.mark_to }}"
+      root: "{{ mail.root }}"
+      mark: "{{ mail.mark }}"
     backup: yes
   become: yes
 
