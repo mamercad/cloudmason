@@ -52,21 +52,21 @@ zones:
     targets:
       - net1
       - net2
-      - powerdns1
-      - powerdns2
+      # - powerdns1
+      # - powerdns2
   1.168.192.in-addr.arpa.:
     sources:
       - internal
     targets:
       - net1
       - net2
-      - powerdns1
-      - powerdns2
+      # - powerdns1
+      # - powerdns2
   letsbuildthe.cloud.:
     sources:
       - internal
     targets:
       - net1
       - net2
-      - powerdns1
-      - powerdns2
+      # - powerdns1
+      # - powerdns2
