@@ -16,9 +16,12 @@
     - set_fact:
         daily_wan_traffic: "{{ wan.json.data.result.0.value.1 | filesizeformat(True) }}"
 
-    - include_role:
-        name: slack
-      vars:
-        slack:
-          channel: "#general"
-          message: "```Today's WAN traffic was {{ daily_wan_traffic }}```"
+    - name: Send notification message via Slack
+      community.general.slack:
+        token: "{{ slack.token }}"
+        channel: "#general"
+        blocks:
+          - type: section
+            text:
+              type: mrkdwn
+              text: "```Today's WAN traffic was {{ daily_wan_traffic }}```"

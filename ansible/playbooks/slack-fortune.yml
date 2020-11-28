@@ -15,9 +15,12 @@
     - shell: fortune bofh-excuses linuxcookie computers linux
       register: fortune
 
-    - include_role:
-        name: slack
-      vars:
-        slack:
-          channel: "#general"
-          message: "```{{ fortune.stdout_lines | join('\n') }}```"
+    - name: Send notification message via Slack
+      community.general.slack:
+        token: "{{ slack.token }}"
+        channel: "#general"
+        blocks:
+          - type: section
+            text:
+              type: mrkdwn
+              text: "```{{ fortune.stdout_lines | join('\n') }}```"
