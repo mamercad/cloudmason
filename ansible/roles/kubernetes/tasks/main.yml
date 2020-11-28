@@ -16,6 +16,12 @@
     kubernetes:
       context: node0
 
+- name: Include hubot tasks
+  include_tasks: hubot.yml
+  vars:
+    kubernetes:
+      context: node0
+
 - name: Include additional_scrape_configs
   include_tasks: additional_scrape_configs.yml
   vars:

@@ -1,0 +1,62 @@
+- name: Create hubot Namespace
+  community.kubernetes.k8s:
+    state: present
+    context: "{{ kubernetes.context }}"
+    definition:
+      apiVersion: v1
+      kind: Namespace
+      metadata:
+        name: hubot
+
+- name: Create hubot Secret (Slack bot token)
+  community.kubernetes.k8s:
+    state: present
+    context: "{{ kubernetes.context }}"
+    definition:
+      apiVersion: v1
+      metadata:
+        name: hubot-slack-token
+        namespace: hubot
+      kind: Secret
+      type: Opaque
+      data:
+        HUBOT_SLACK_TOKEN: !vault |
+          $ANSIBLE_VAULT;1.1;AES256
+          31646138643036623761326535343133383034346165636439346439386532346437353866326362
+          3363343134636465646637636439386165376164636566310a653832643332653161633663653535
+          63636433666463323535353637636439663131383863636565333536653434623162323630353930
+          3130636131636632610a396136633634663062316633373131663734383364366439396237613033
+          37626337633837653666636233383037313733626236346539306330306131323264353939383731
+          35313339326238643631323061373164363436353065656262663730613366393332323662633936
+          66393830636263383839373663626162316237386336373662383139363939323034326165623765
+          63633239313164366365
+
+- name: Create hubot Deployment
+  community.kubernetes.k8s:
+    state: present
+    context: "{{ kubernetes.context }}"
+    definition:
+      apiVersion: apps/v1
+      kind: Deployment
+      metadata:
+        name: hubot
+        namespace: hubot
+      spec:
+        selector:
+          matchLabels:
+            app: hubot
+        replicas: 1
+        template:
+          metadata:
+            labels:
+              app: hubot
+          spec:
+            containers:
+              - name: app
+                image: mamercad/hubot:latest
+                env:
+                  - name: HUBOT_SLACK_TOKEN
+                    valueFrom:
+                      secretKeyRef:
+                        name: hubot-slack-token
+                        key: HUBOT_SLACK_TOKEN
