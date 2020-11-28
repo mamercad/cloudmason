@@ -16,7 +16,6 @@
     secret: |
       - job_name: "prometheus"
         static_configs:
-          - targets: ["jonagold.cloudmason.org:9100"]
           - targets: ["lenovo.cloudmason.org:9100"]
           - targets: ["net1.cloudmason.org:9100"]
           - targets: ["net2.cloudmason.org:9100"]
