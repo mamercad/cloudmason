@@ -3,7 +3,7 @@ build:
 	docker image build -t mamercad/hubot .
 
 .PHONY: push
-push:
+push: build
 	docker push mamercad/hubot
 
 .PHONY: run
