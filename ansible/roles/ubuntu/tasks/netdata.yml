@@ -52,6 +52,6 @@
   become: yes
 
 - name: Claim node to the cloud
-  shell: /usr/sbin/netdata-claim.sh -token={{ netdata.netdata_claim_token }} -rooms=f4f6285d-b7b5-4365-ac5d-3197a9b3831b -url=https://app.netdata.cloud
+  shell: /usr/sbin/netdata-claim.sh -token={{ netdata.netdata_claim_token }} -rooms={{ netdata.netdata_claim_room }} -url=https://app.netdata.cloud
   become: yes
   ignore_errors: yes # Might be claimed already
