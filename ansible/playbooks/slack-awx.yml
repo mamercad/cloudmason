@@ -1,0 +1,38 @@
+---
+- name: Slack
+  hosts: all
+  gather_facts: no
+
+  tasks:
+
+    - uri:
+        url: http://prometheus.cloudmason.org:9090/api/v1/query
+        method: POST
+        body: 'query=sum(increase(awx_instance_status_total{status="failed"}[1d]))'
+        body_format: form-urlencoded
+        return_content: yes
+      register: failed
+
+    - set_fact:
+        failed_jobs: "{{ (failed.json.data.result.0.value.1 | default(0)) | float | round(1, 'ceil') | int }}"
+
+    - uri:
+        url: http://prometheus.cloudmason.org:9090/api/v1/query
+        method: POST
+        body: 'query=sum(increase(awx_instance_status_total{status="successful"}[1d]))'
+        body_format: form-urlencoded
+        return_content: yes
+      register: successful
+
+    - set_fact:
+        successful_jobs: "{{ (successful.json.data.result.0.value.1 | default(0)) | float | round(1, 'ceil') | int }}"
+
+    - name: Send notification message via Slack
+      community.general.slack:
+        token: "{{ slack.token }}"
+        channel: "#general"
+        blocks:
+          - type: section
+            text:
+              type: mrkdwn
+              text: "```There were {{ failed_jobs }} failed and {{ successful_jobs }} successful AWX jobs today```"
