@@ -19,5 +19,6 @@
     - include_role:
         name: slack
       vars:
-        slack_channel: "#general"
-        slack_message: "```Today's energy use was {{ daily_energy_use }} kWh```"
+        slack:
+          channel: "#general"
+          message: "```Today's energy use was {{ daily_energy_use }} kWh```"

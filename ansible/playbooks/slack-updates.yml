@@ -8,7 +8,7 @@
     - uri:
         url: http://prometheus.cloudmason.org:9090/api/v1/query
         method: POST
-        body: 'query=node_reboot_required'
+        body: 'query=node_reboot_required>0'
         body_format: form-urlencoded
         return_content: yes
       register: reboot
@@ -16,80 +16,73 @@
     - set_fact:
         needing_reboots: "{{ needing_reboots|default([]) + [ item.metric.instance | replace('.cloudmason.org:9100', '') ] }}"
       loop: "{{ reboot.json.data.result }}"
+      when: reboot is defined
 
-    - debug:
-        var: needing_reboots
+    - set_fact:
+        needing_reboots_list: "{{ needing_reboots | map('regex_replace', '^', '  ') }}"
+      when:
+        - reboot is defined
+        - needing_reboots is defined
+
+    - set_fact:
+        slack_reboots: "Systems needing reboot\n{{ needing_reboots_list | sort | join('\n') }}"
+      when:
+        - reboot is defined
+        - needing_reboots is defined
+        - needing_reboots_list is defined
 
     - uri:
         url: http://prometheus.cloudmason.org:9090/api/v1/query
         method: POST
-        body: 'query=apt_upgrades_pending'
+        body: 'query=apt_upgrades_pending>0'
         body_format: form-urlencoded
         return_content: yes
       register: upgrades
 
     - set_fact:
-        needing_upgrades: "{{ needing_upgrades|default([]) + [ (item.metric.instance + ' / ' + item.metric.origin + ' (' + item.value.1 + ')') | replace('.cloudmason.org:9100', '') ] }}"
+        needing_upgrades: "{{ needing_upgrades|default([]) + [ (item.metric.instance + ' / ' + item.metric.origin|default('') + ' (' + item.value.1 + ')') | replace('.cloudmason.org:9100', '') ] }}"
       loop: "{{ upgrades.json.data.result }}"
-
-    - debug:
-        var: needing_upgrades
-
-    - set_fact:
-        needing_reboots_list: "{{ needing_reboots | map('regex_replace', '^', '  ') }}"
+      when: upgrades is defined
 
     - set_fact:
         needing_upgrades_list: "{{ needing_upgrades | map('regex_replace', '^', '  ') }}"
+      when:
+        - upgrades is defined
+        - needing_upgrades is defined
 
     - set_fact:
-        slack_reboots: "{{ needing_reboots_list | sort | join('\n') }}"
+        slack_upgrades: "Systems needing upgrades\n{{ needing_upgrades_list | sort | join('\n') }}"
+      when:
+        - upgrades is defined
+        - needing_upgrades is defined
+        - needing_upgrades_list is defined
 
     - set_fact:
-        slack_updates: "{{ needing_upgrades_list | sort | join('\n') }}"
+        slack_reboots: No systems need rebooting
+      when: slack_reboots is not defined
+
+    - set_fact:
+        slack_upgrades: No systems need upgrading
+      when: slack_upgrades is not defined
 
     - name: Send notification message via Slack
       community.general.slack:
-        token: "{{ slack_token }}"
-        channel: "{{ slack_channel }}"
-        parse: full
+        token: "{{ slack.token }}"
+        channel: "#general"
         blocks:
           - type: section
             text:
               type: mrkdwn
-              text: |-
-                ```
-                Needing reboot
-                {{ slack_reboots }}
+              text: "```{{ slack_reboots }}```"
+      when: slack_reboots is defined
 
-                Upgrades pending
-                {{ slack_updates }}
-                ```
-      vars:
-        slack_token: !vault |
-          $ANSIBLE_VAULT;1.1;AES256
-          33383362356136306531386334353535306465643363343733633931373230373761316334353837
-          3536306566303535313934643865656635316532376462640a373032653434633239336531323161
-          65643164646538303464373839356464656662323361643366333864316632326234383733383238
-          3963323562346230300a643562363938663730316332633736383130373937326534373066366465
-          62616336373165626564313666656632623239363234623330326239613566333432393031333038
-          35396339393536306366646363323631393737383865663130623165633566653132626664383564
-          633430333133626630386461346337323430
-        slack_channel: '#general'
-
-    # - shell: apt list --upgradeable 2>/dev/null | wc -l
-    #   register: updates
-
-    # - stat:
-    #     path: /var/run/reboot-required
-    #   register: reboot
-    #   ignore_errors: yes # Might not
-
-    # - set_fact:
-    #     needs_reboot: "{{ reboot.stat.exists | ternary('// it needs a reboot too', '') }}"
-
-    # - include_role:
-    #     name: slack
-    #   vars:
-    #     slack_channel: "#general"
-    #     slack_message: "```{{ inventory_hostname }} has {{ updates.stdout }} updates available // {{ansible_distribution}} {{ansible_distribution_release}} {{ansible_kernel}} {{ansible_machine}} {{needs_reboot}}```"
-    #   when: updates.stdout != '0'
+    - name: Send notification message via Slack
+      community.general.slack:
+        token: "{{ slack.token }}"
+        channel: "#general"
+        blocks:
+          - type: section
+            text:
+              type: mrkdwn
+              text: "```{{ slack_upgrades }}```"
+      when: slack_upgrades is defined

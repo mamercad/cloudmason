@@ -18,5 +18,6 @@
     - include_role:
         name: slack
       vars:
-        slack_channel: "#general"
-        slack_message: "```{{ fortune.stdout_lines | join('\n') }}```"
+        slack:
+          channel: "#general"
+          message: "```{{ fortune.stdout_lines | join('\n') }}```"

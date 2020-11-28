@@ -19,5 +19,6 @@
     - include_role:
         name: slack
       vars:
-        slack_channel: "#general"
-        slack_message: "```Today's WAN traffic was {{ daily_wan_traffic }}```"
+        slack:
+          channel: "#general"
+          message: "```Today's WAN traffic was {{ daily_wan_traffic }}```"
