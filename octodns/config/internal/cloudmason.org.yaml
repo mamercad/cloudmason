@@ -215,6 +215,9 @@ bedroom:
 basementlamp2:
   type: A
   value: 192.168.1.144
+node3:
+  type: A
+  value: 192.168.1.145
 fuji:
   type: A
   value: 192.168.1.148
