@@ -68,7 +68,7 @@
     - name: Send notification message via Slack
       community.general.slack:
         token: "{{ slack.ansible.token }}"
-        channel: "#general"
+        channel: "#testing"
         blocks:
           - type: section
             text:
@@ -79,7 +79,7 @@
     - name: Send notification message via Slack
       community.general.slack:
         token: "{{ slack.ansible.token }}"
-        channel: "#general"
+        channel: "#testing"
         blocks:
           - type: section
             text:
