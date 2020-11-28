@@ -2,6 +2,7 @@ all:
   hosts:
     localhost:
       connection: local
+      ansible_connection: local
     gateway:
     jonagold:
       healthchecks_io: https://hc-ping.com/177cb674-b199-4fbb-8879-5f83ba901fa5
