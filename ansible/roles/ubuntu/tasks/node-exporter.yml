@@ -1,0 +1,16 @@
+---
+
+- name: Install node_exporter
+  apt:
+    state: present
+    name: "{{ item }}"
+  loop:
+    - prometheus-node-exporter
+  become: yes
+
+- name: Start and enable node_exporter
+  systemd:
+    name: prometheus-node-exporter
+    state: started
+    enabled: yes
+  become: yes

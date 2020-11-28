@@ -14,17 +14,9 @@
     - gnupg
     - htop
     - neofetch
-    - prometheus-node-exporter
     - python3
     - python3-pip
     - screen
     - speedtest-cli
     - vim
-  become: yes
-
-- name: Start and enable node_exporter
-  systemd:
-    name: prometheus-node-exporter
-    state: started
-    enabled: yes
   become: yes
