@@ -163,9 +163,9 @@ sendsms=""
 # You can append |critical to limit the notifications to be sent.
 #
 # In these examples, the first recipient receives all the alarms
-# while the second one receives only notifications for alarms that 
+# while the second one receives only notifications for alarms that
 # have at some point become critical. The second user may still receive
-# warning and clear notifications, but only for the event that previously 
+# warning and clear notifications, but only for the event that previously
 # caused a critical alarm.
 #
 #  email      : "user1@example.com user2@example.com|critical"
@@ -243,7 +243,7 @@ SEND_DYNATRACE="YES"
 DYNATRACE_SERVER=""
 
 # Generate a Dynatrace API authentication token
-# Read https://www.dynatrace.com/support/help/extend-dynatrace/dynatrace-api/basics/dynatrace-api-authentication/ 
+# Read https://www.dynatrace.com/support/help/extend-dynatrace/dynatrace-api/basics/dynatrace-api-authentication/
 # On Dynatrace server goto Settings --> Integration --> Dynatrace API --> Generate token
 # Required
 DYNATRACE_TOKEN=""
@@ -253,7 +253,7 @@ DYNATRACE_TOKEN=""
 DYNATRACE_SPACE=""
 
 # Generate a Server Tag. On the Dynatrace Server go to Settings --> Tags --> Manually applied tags create the Tag
-# The NetData alarm will be sent as a Dynatrace Event to be correlated with all those hosts tagged with this Tag 
+# The NetData alarm will be sent as a Dynatrace Event to be correlated with all those hosts tagged with this Tag
 # you created.
 # Required
 DYNATRACE_TAG_VALUE=""
@@ -268,6 +268,15 @@ DYNATRACE_EVENT="CUSTOM_INFO"
 
 
 DEFAULT_RECIPIENT_DYNATRACE=""
+
+#------------------------------------------------------------------------------
+# Stackpulse global notification options
+SEND_STACKPULSE="YES"
+
+# Webhook
+STACKPULSE_WEBHOOK=""
+
+DEFAULT_RECIPIENT_STACKPULSE=""
 
 #------------------------------------------------------------------------------
 # hangouts (google hangouts chat) global notification options
@@ -435,14 +444,14 @@ SEND_SLACK="YES"
 # Do not use the instructions in https://api.slack.com/incoming-webhooks#enable_webhooks, as those webhooks work only for a single channel.
 # You need only one for all your netdata servers (or you can have one for each of your netdata).
 # Without the app and a webhook, netdata cannot send slack notifications.
-SLACK_WEBHOOK_URL="https://hooks.slack.com/services/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"
+SLACK_WEBHOOK_URL="{{ slack.netdata.webhook }}"
 
 # if a role's recipients are not configured, a notification will be send to:
 # - A slack channel (syntax: '#channel' or 'channel')
 # - A slack user (syntax: '@user')
 # - The channel or user defined in slack for the webhook (syntax: '#')
 # empty = do not send a notification for unconfigured roles
-DEFAULT_RECIPIENT_SLACK="netdata"
+DEFAULT_RECIPIENT_SLACK=""
 
 #------------------------------------------------------------------------------
 # Microsoft Team (office.com) global notification options
@@ -937,6 +946,8 @@ role_recipients_dynatrace[sysadmin]="${DEFAULT_RECIPIENT_DYNATRACE}"
 
 role_recipients_matrix[sysadmin]="${DEFAULT_RECIPIENT_MATRIX}"
 
+role_recipients_stackpulse[sysadmin]="${DEFAULT_RECIPIENT_STACKPULSE}"
+
 # -----------------------------------------------------------------------------
 # DNS related alarms
 
@@ -989,6 +1000,8 @@ role_recipients_sms[domainadmin]="${DEFAULT_RECIPIENT_SMS}"
 role_recipients_dynatrace[domainadmin]="${DEFAULT_RECIPIENT_DYNATRACE}"
 
 role_recipients_matrix[domainadmin]="${DEFAULT_RECIPIENT_MATRIX}"
+
+role_recipients_stackpulse[domainadmin]="${DEFAULT_RECIPIENT_STACKPULSE}"
 
 # -----------------------------------------------------------------------------
 # database servers alarms
@@ -1044,6 +1057,8 @@ role_recipients_dynatrace[dba]="${DEFAULT_RECIPIENT_DYNATRACE}"
 
 role_recipients_matrix[dba]="${DEFAULT_RECIPIENT_MATRIX}"
 
+role_recipients_stackpulse[dba]="${DEFAULT_RECIPIENT_STACKPULSE}"
+
 # -----------------------------------------------------------------------------
 # web servers alarms
 # apache, nginx, lighttpd, etc
@@ -1097,6 +1112,8 @@ role_recipients_sms[webmaster]="${DEFAULT_RECIPIENT_SMS}"
 role_recipients_dynatrace[webmaster]="${DEFAULT_RECIPIENT_DYNATRACE}"
 
 role_recipients_matrix[webmaster]="${DEFAULT_RECIPIENT_MATRIX}"
+
+role_recipients_stackpulse[webmaster]="${DEFAULT_RECIPIENT_STACKPULSE}"
 
 # -----------------------------------------------------------------------------
 # proxy servers alarms
@@ -1152,6 +1169,8 @@ role_recipients_dynatrace[proxyadmin]="${DEFAULT_RECIPIENT_DYNATRACE}"
 
 role_recipients_matrix[proxyadmin]="${DEFAULT_RECIPIENT_MATRIX}"
 
+role_recipients_stackpulse[proxyadmin]="${DEFAULT_RECIPIENT_STACKPULSE}"
+
 # -----------------------------------------------------------------------------
 # peripheral devices
 # UPS, photovoltaics, etc
@@ -1203,3 +1222,5 @@ role_recipients_sms[sitemgr]="${DEFAULT_RECIPIENT_SMS}"
 role_recipients_dynatrace[sitemgr]="${DEFAULT_RECIPIENT_DYNATRACE}"
 
 role_recipients_matrix[sitemgr]="${DEFAULT_RECIPIENT_MATRIX}"
+
+role_recipients_stackpulse[sitemgr]="${DEFAULT_RECIPIENT_STACKPULSE}"

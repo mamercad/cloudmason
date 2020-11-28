@@ -44,6 +44,16 @@
   become: yes
   notify: Restart netdata
 
+- name: Deploy health_alarm_notify.conf
+  template:
+    src: netdata/health_alarm_notify.conf.j2
+    dest: /etc/netdata/health_alarm_notify.conf
+    owner: root
+    group: root
+    mode: 0644
+  become: yes
+  notify: Restart netdata
+
 - name: Start and enable netdata
   systemd:
     name: netdata
