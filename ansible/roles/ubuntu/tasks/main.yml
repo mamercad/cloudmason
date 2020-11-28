@@ -41,12 +41,6 @@
       tags: mark
   tags: mark
 
-- name: Include postfix vars
-  include_vars:
-    file: postfix.yml
-    name: postfix
-  tags: postfix
-
 - name: Include postfix play
   include_tasks:
     file: postfix.yml
@@ -79,6 +73,17 @@
         - netdata
   tags:
     - netdata
+
+- name: Include node_exporter play
+  include_tasks:
+    file: node_exporter.yml
+    apply:
+      tags:
+        - node_exporter
+  tags:
+    - node_exporter
+  when:
+    - "'{{ inventory_hostname }}' not in exclude.ubuntu.node_exporter"
 
 - name: Include additional plays
   include_tasks:

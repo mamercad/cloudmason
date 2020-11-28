@@ -26,26 +26,12 @@
   become: yes
   notify: Restart postfix
 
-# - name: Set up postfix for relay
-#   blockinfile:
-#     marker: "# ANSIBLE MANAGED BLOCK RELAY"
-#     path: /etc/postfix/main.cf
-#     block: |
-#       relayhost = [smtp.gmail.com]:587
-#       smtp_sasl_auth_enable = yes
-#       smtp_sasl_security_options = noanonymous
-#       smtp_sasl_password_maps = hash:/etc/postfix/gmail_sasl
-#       smtp_tls_security_level = encrypt
-#       smtp_tls_CAfile = /etc/ssl/certs/ca-certificates.crt
-#   become: yes
-#   notify: Restart postfix
-
 - name: Deploy /etc/postfix/access
   copy:
     dest: /etc/postfix/access
     mode: 0644
     content: |
-      {{ network.dns.cidr }} OK
+      {{ network.cidr }} OK
   become: yes
   notify: Restart postfix
 
@@ -79,19 +65,6 @@
     backup: yes
   become: yes
   notify: Restart postfix
-
-# - name: Configure $myhostname, $mydomain and $myorigin
-#   blockinfile:
-#     marker: "# ANSIBLE MANAGED BLOCK HOSTNAME"
-#     state: present
-#     path: /etc/postfix/main.cf
-#     block: |
-#       myhostname = {{ ansible_ssh_host }}.cloudmason.org
-#       mydomain = cloudmason.org
-#       myorigin = $mydomain
-#     backup: yes
-#   become: yes
-#   notify: Restart postfix
 
 - name: Deploy /etc/postfix/main.cf
   copy:
