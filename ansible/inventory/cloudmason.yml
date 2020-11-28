@@ -21,22 +21,27 @@ all:
       plays:
         - hypervisor
     node0:
+      healthchecks_io: https://hc-ping.com/d8dcb78d-865f-4a15-86dc-6e0e9ce9643a
       plays:
         - serial
         - microk8s
     node1:
+      healthchecks_io: https://hc-ping.com/d8dcb78d-865f-4a15-86dc-6e0e9ce9643a
       plays:
         - serial
         - microk8s
     node2:
+      healthchecks_io: https://hc-ping.com/f925b643-2aa1-4702-bc6b-43a2028940d6
       plays:
         - serial
         - microk8s
     node3:
+      healthchecks_io: https://hc-ping.com/f346a62b-336d-41ff-8ef8-a8b482957074
       plays:
         - serial
         - microk8s
     node4:
+      healthchecks_io: https://hc-ping.com/491f2f65-9148-42a4-9827-c31368ab55bc
       plays:
         - serial
         - microk8s
