@@ -16,6 +16,7 @@
     secret: |
       - job_name: "prometheus"
         static_configs:
+          - targets: ["jonagold.cloudmason.org:9100"]
           - targets: ["lenovo.cloudmason.org:9100"]
           - targets: ["net1.cloudmason.org:9100"]
           - targets: ["net2.cloudmason.org:9100"]
@@ -37,6 +38,14 @@
         metrics_path: /projects/a85def6b-f0e4-4420-9692-ed4349288144/metrics/Kj8TBLPT9PZ6p80YgoxifkEQjJr_eSsC
         static_configs:
           - targets: ["healthchecks.io"]
+      - job_name: "awx"
+        metrics_path: /api/v2/metrics/
+        scheme: http
+        static_configs:
+          - targets: ["awx.cloudmason.org"]
+        basic_auth:
+          username: prometheus
+          password: {{ awx_web_password }}
     powerdns_web_password: !vault |
       $ANSIBLE_VAULT;1.1;AES256
       38323861346364316265643131373331363461363137316336613264643231333531633936343366
@@ -44,3 +53,10 @@
       30393966326461323733323331656665363735336165643661313864323432366664343836616133
       3536333966373238330a636461366137363336643134336330663938326333643064386131323464
       3638
+    awx_web_password: !vault |
+      $ANSIBLE_VAULT;1.1;AES256
+      39313764396235333666623439363734383064626362333234316333636634643839333263306561
+      3237313338363264333465396337643039383739333166610a396230393833616630346431626539
+      64616131666639383433666336653964343665313735316164333132643864333465356139613231
+      3263393233643438650a373832396337373364656666316635343531316638663333633339646338
+      6632
