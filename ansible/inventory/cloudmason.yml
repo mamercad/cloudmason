@@ -32,6 +32,14 @@ all:
       plays:
         - serial
         - microk8s
+    node3:
+      plays:
+        - serial
+        - microk8s
+    node4:
+      plays:
+        - serial
+        - microk8s
   children:
     linux:
       hosts:
@@ -71,6 +79,8 @@ all:
         node0:
         node1:
         node2:
+        node3:
+        node4:
   vars:
     exclude:
       ubuntu:
