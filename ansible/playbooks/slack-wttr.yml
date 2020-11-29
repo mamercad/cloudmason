@@ -1,0 +1,28 @@
+---
+- name: Slack
+  hosts: all
+  gather_facts: no
+
+  tasks:
+
+    - uri:
+        url: 'http://wttr.in/?format=_%l_:+%C+%c+%t+//+hu+%h+wi+%w+pr+%p+ri+%S+st+%s'
+        http_agent: curl
+        return_content: yes
+      register: weather
+
+    - debug:
+        msg: "{{ weather.content }}"
+
+    - set_fact:
+        weather2: "{{ weather.content | replace(', United States', '') }}"
+
+    - name: Send notification message via Slack
+      community.general.slack:
+        token: "{{ slack.ansible.token }}"
+        channel: "{{ slack.channel }}"
+        blocks:
+          - type: section
+            text:
+              type: mrkdwn
+              text: "> {{ weather2 }}"
