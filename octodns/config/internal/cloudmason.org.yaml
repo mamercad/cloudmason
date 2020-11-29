@@ -188,12 +188,10 @@ qnap:
     - 192.168.1.119
 qnap1:
   type: A
-  value:
-    - 192.168.1.118
+  value: 192.168.1.118
 qnap2:
   type: A
-  value:
-    - 192.168.1.119
+  value: 192.168.1.119
 familyroom:
   type: A
   value: 192.168.1.120
