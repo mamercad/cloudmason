@@ -1,0 +1,7 @@
+---
+- name: Healthchecks.io ping
+  hosts: all
+  gather_facts: no
+  tasks:
+    - uri:
+        url: "{{ healthchecks_io }}"
