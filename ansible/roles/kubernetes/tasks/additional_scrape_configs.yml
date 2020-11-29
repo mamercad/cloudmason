@@ -19,13 +19,14 @@
           - targets: ["lenovo.cloudmason.org:9100"]
           - targets: ["net1.cloudmason.org:9100"]
           - targets: ["net2.cloudmason.org:9100"]
-          - targets: ["powerdns1.cloudmason.org:9100"]
-          - targets: ["powerdns2.cloudmason.org:9100"]
           - targets: ["qnap.cloudmason.org:9100"]
           - targets: ["sunfire.cloudmason.org:9100"]
           - targets: ["node0.cloudmason.org:9100"]
           - targets: ["node1.cloudmason.org:9100"]
           - targets: ["node2.cloudmason.org:9100"]
+          - targets: ["node3.cloudmason.org:9100"]
+          - targets: ["node4.cloudmason.org:9100"]
+          - targets: ["node5.cloudmason.org:9100"]
       - job_name: "powerdns"
         static_configs:
           - targets: ["net1.cloudmason.org:8082"]
