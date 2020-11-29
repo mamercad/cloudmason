@@ -7,5 +7,6 @@
   "hubot-maps",
   "hubot-rules",
   "hubot-shipit",
-  "hubot-shell"
+  "hubot-shell",
+  "hubot-redis-brain"
 ]
