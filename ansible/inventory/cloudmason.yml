@@ -45,7 +45,13 @@ all:
       plays:
         - serial
         - microk8s
+    node5:
+      healthchecks_io: https://hc-ping.com/46fdfdfd-ca82-4f55-beaf-93f3edad47ac
+      plays:
+        - serial
+        - microk8s
     cloudkey2:
+      healthchecks_io: https://hc-ping.com/69ea1324-e142-4bb6-8ff0-f552f1566633
       plays:
         - serial
   children:
@@ -67,6 +73,7 @@ all:
         node2:
         node3:
         node4:
+        node5:
     unifi:
       hosts:
         gateway:
@@ -88,6 +95,7 @@ all:
         node2:
         node3:
         node4:
+        node5:
         cloudkey2:
   vars:
     exclude:
