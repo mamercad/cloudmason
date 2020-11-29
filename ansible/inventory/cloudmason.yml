@@ -77,6 +77,8 @@ all:
         node3:
         node4:
         node5:
+      vars:
+        ansible_python_interpreter: /usr/bin/python3
     unifi:
       hosts:
         gateway:
