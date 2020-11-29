@@ -30,7 +30,7 @@
     - name: Send notification message via Slack
       community.general.slack:
         token: "{{ slack.ansible.token }}"
-        channel: "#general"
+        channel: "{{ slack.channel }}"
         blocks:
           - type: section
             text:
