@@ -47,6 +47,9 @@
 50:
   type: PTR
   value: buddyxboxone.cloudmason.org.
+51:
+  type: PTR
+  value: node5.cloudmason.org.
 52:
   type: PTR
   value: basementlamp1.cloudmason.org.
@@ -131,9 +134,6 @@
 103:
   type: PTR
   value: marymercado.cloudmason.org.
-108:
-  type: PTR
-  value: node4.cloudmason.org.
 112:
   type: PTR
   value: smartthings.cloudmason.org.
@@ -199,13 +199,16 @@
   value: basementlamp2.cloudmason.org.
 145:
   type: PTR
-  value: node3.cloudmason.org.
+  value: node4.cloudmason.org.
 148:
   type: PTR
   value: fuji.cloudmason.org.
 149:
   type: PTR
   value: biaslighting.cloudmason.org.
+150:
+  type: PTR
+  value: node3.cloudmason.org.
 162:
   type: PTR
   value: marymacbook.cloudmason.org.
