@@ -45,6 +45,9 @@ all:
       plays:
         - serial
         - microk8s
+    cloudkey2:
+      plays:
+        - serial
   children:
     linux:
       hosts:
@@ -85,6 +88,7 @@ all:
         node2:
         node3:
         node4:
+        cloudkey2:
   vars:
     exclude:
       ubuntu:

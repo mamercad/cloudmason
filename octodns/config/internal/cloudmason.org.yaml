@@ -15,6 +15,9 @@ gateway:
 cloudkey:
   type: A
   value: 192.168.1.2
+cloudkey2:
+  type: A
+  value: 192.168.1.3
 powerdns1:
   type: A
   value: 192.168.1.8
