@@ -4,7 +4,7 @@
   include_tasks: metallb.yml
   vars:
     kubernetes:
-      context: node0
+      context: node1
       metallb:
         dhcp:
           start: 192.168.1.170
@@ -14,13 +14,13 @@
   include_tasks: hello-world.yml
   vars:
     kubernetes:
-      context: node0
+      context: node1
 
 - name: Include hubot tasks
   include_tasks: hubot.yml
   vars:
     kubernetes:
-      context: node0
+      context: node1
 
 - name: Include additional_scrape_configs
   include_tasks: additional_scrape_configs.yml
