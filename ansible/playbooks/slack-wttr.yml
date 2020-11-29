@@ -11,8 +11,8 @@
         return_content: yes
       register: weather
 
-    - debug:
-        msg: "{{ weather.content }}"
+    # - debug:
+    #     msg: "{{ weather.content }}"
 
     - set_fact:
         weather2: "{{ weather.content | replace(', United States', '') }}"
