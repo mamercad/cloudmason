@@ -10,6 +10,8 @@
       - bridge-utils
       - virt-manager
       - libguestfs-tools
+      - cloud-init
+      - cloud-image-utils
   become: yes
 
 - name: Start and enable libvirtd
