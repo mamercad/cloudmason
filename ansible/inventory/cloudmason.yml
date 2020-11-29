@@ -54,7 +54,7 @@ all:
       healthchecks_io: https://hc-ping.com/69ea1324-e142-4bb6-8ff0-f552f1566633
       plays:
         - serial
-    qnap:
+    qnap1:
       healthchecks_io: https://hc-ping.com/9ae9b6af-f144-46a9-aad6-cd59bf811acd
       ansible_python_interpreter: /share/CACHEDEV1_DATA/.qpkg/Python3/python3/bin/python3
   children:

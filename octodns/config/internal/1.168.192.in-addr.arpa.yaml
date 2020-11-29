@@ -148,10 +148,10 @@
   value: ooma.cloudmason.org.
 118:
   type: PTR
-  value: qnap.cloudmason.org.
+  value: qnap1.cloudmason.org.
 119:
   type: PTR
-  value: qnap.cloudmason.org.
+  value: qnap2.cloudmason.org.
 120:
   type: PTR
   value: familyroom.cloudmason.org.
