@@ -1,0 +1,5 @@
+---
+
+- name: Run the join command
+  shell: "{{ join.stdout }}"
+  delegate_to: "{{ item }}"
