@@ -11,17 +11,30 @@
         body: 'query=sum(increase(unifipoller_device_wan_receive_bytes_total{port="wan"}[1d]))'
         body_format: form-urlencoded
         return_content: yes
-      register: wan
+      register: xfinity
 
     - set_fact:
-        daily_wan_traffic: "{{ wan.json.data.result.0.value.1 | filesizeformat(True) }}"
+        daily_xfinity_traffic: "{{ xfinity.json.data.result.0.value.1 | filesizeformat(True) }}"
+
+    - uri:
+        url: http://prometheus.cloudmason.org:9090/api/v1/query
+        method: POST
+        body: 'query=sum(increase(unifipoller_device_wan_receive_bytes_total{port="lan2"}[1d]))'
+        body_format: form-urlencoded
+        return_content: yes
+      register: att
+
+    - set_fact:
+        daily_att_traffic: "{{ att.json.data.result.0.value.1 | filesizeformat(True) }}"
 
     - name: Send notification message via Slack
       community.general.slack:
         token: "{{ slack.ansible.token }}"
         channel: "{{ slack.channel }}"
+        username: "{{ slack.username }}"
+        icon_url: "{{ slack.icon_url }}"
         blocks:
           - type: section
             text:
               type: mrkdwn
-              text: "```Today's WAN traffic was {{ daily_wan_traffic }}```"
+              text: "```Today's Xfinity traffic was {{ daily_xfinity_traffic }}, AT&T traffic was {{ daily_att_traffic }}```"
