@@ -71,7 +71,7 @@
           # controller here and delete the following section. The internal defaults are
           # shown below. Any missing values will assume these displayed defaults.
           [unifi.defaults]
-          url        = "https://cloudkey.cloudmason.org:8443"
+          url        = "{{ unifi_poller.endpoint }}"
           user       = "{{ unifi_poller.username }}"
           pass       = "{{ unifi_poller.password }}"
           sites      = ["all"]
