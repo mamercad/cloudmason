@@ -252,6 +252,9 @@ node3:
 marymacbook:
   type: A
   value: 192.168.1.162
+hello-world.sunfire:
+  type: A
+  value: 192.168.1.170
 judeipad:
   type: A
   value: 192.168.1.180
