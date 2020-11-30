@@ -1,0 +1,95 @@
+---
+- name: k3s
+  hosts: "{{ ansible_limit | default(omit) }}"
+  gather_facts: no
+
+  tasks:
+
+    - name: Fetch k3s
+      uri:
+        url: https://github.com/rancher/k3s/releases/download/v1.19.4%2Bk3s1/k3s
+        dest: /tmp/k3s
+        status_code:
+          - 200
+          - 304
+
+    - name: Fetch k3s sums
+      uri:
+        url: https://github.com/rancher/k3s/releases/download/v1.19.4%2Bk3s1/sha256sum-amd64.txt
+        dest: /tmp/k3s.sums
+        status_code:
+          - 200
+          - 304
+
+    - name: Just grab k3s line
+      shell: grep -E 'k3s$' k3s.sums | tee k3s.sums.k3s
+      args:
+        chdir: /tmp
+      changed_when: no # Don't care
+
+    - name: Verify k3s sums
+      command: sha256sum -c k3s.sums.k3s
+      args:
+        chdir: /tmp
+      changed_when: no # Don't care
+
+    - name: Copy k3s to /usr/local/bin
+      copy:
+        src: /tmp/k3s
+        remote_src: yes
+        dest: /usr/local/bin/k3s
+        owner: root
+        group: root
+        mode: 0755
+      become: yes
+
+    - name: Deploy k3s unit file
+      copy:
+        dest: /etc/systemd/system/k3s.service
+        owner: root
+        group: root
+        mode: 0755
+        content: |
+          [Unit]
+          Description=k3s
+          [Service]
+          ExecStart=/usr/local/bin/k3s server
+          [Install]
+          WantedBy=multi-user.target
+      become: yes
+      when: leader | default(False)
+
+    - name: Fetch the agent token
+      slurp:
+        src: /var/lib/rancher/k3s/server/node-token
+      register: token
+      become: yes
+      when: leader | default(False)
+
+    - set_fact:
+        agent_token: "{{ token.content | b64decode }}"
+      when: leader | default(False)
+
+    - name: Deploy k3s unit file
+      copy:
+        dest: /etc/systemd/system/k3s.service
+        owner: root
+        group: root
+        mode: 0755
+        content: |
+          [Unit]
+          Description=k3s
+          [Service]
+          ExecStart=/usr/local/bin/k3s agent --server https://node0.cloudmason.org:6443 --token {{ hostvars['node0']['agent_token'] }}
+          [Install]
+          WantedBy=multi-user.target
+      become: yes
+      when: follower | default(False)
+
+    - name: Start and enable k3s
+      systemd:
+        name: k3s
+        state: started
+        enabled: yes
+        daemon_reload: yes
+      become: yes
