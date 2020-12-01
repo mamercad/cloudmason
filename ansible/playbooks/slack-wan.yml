@@ -27,12 +27,15 @@
     - set_fact:
         daily_att_traffic: "{{ att.json.data.result.0.value.1 | filesizeformat(True) }}"
 
+    - set_fact:
+        slack_merged: "{{ slack | combine(slack_override|default({})) }}"
+
     - name: Send notification message via Slack
       community.general.slack:
-        token: "{{ slack.ansible.token }}"
-        channel: "{{ slack.channel }}"
-        username: "{{ slack.username }}"
-        icon_url: "{{ slack.icon_url }}"
+        token: "{{ slack_merged.ansible.token }}"
+        channel: "{{ slack_merged.channel }}"
+        username: "{{ slack_merged.username }}"
+        icon_url: "{{ slack_merged.icon_url }}"
         blocks:
           - type: section
             text:

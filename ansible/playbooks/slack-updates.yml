@@ -66,12 +66,15 @@
         slack_upgrades: No systems need upgrading
       when: slack_upgrades is not defined
 
+    - set_fact:
+        slack_merged: "{{ slack | combine(slack_override|default({})) }}"
+
     - name: Send notification message via Slack
       community.general.slack:
-        token: "{{ slack.ansible.token }}"
-        channel: "{{ slack.channel }}"
-        username: "{{ slack.username }}"
-        icon_url: "{{ slack.icon_url }}"
+        token: "{{ slack_merged.ansible.token }}"
+        channel: "{{ slack_merged.channel }}"
+        username: "{{ slack_merged.username }}"
+        icon_url: "{{ slack_merged.icon_url }}"
         blocks:
           - type: section
             text:
@@ -81,10 +84,10 @@
 
     - name: Send notification message via Slack
       community.general.slack:
-        token: "{{ slack.ansible.token }}"
-        channel: "{{ slack.channel }}"
-        username: "{{ slack.username }}"
-        icon_url: "{{ slack.icon_url }}"
+        token: "{{ slack_merged.ansible.token }}"
+        channel: "{{ slack_merged.channel }}"
+        username: "{{ slack_merged.username }}"
+        icon_url: "{{ slack_merged.icon_url }}"
         blocks:
           - type: section
             text:
