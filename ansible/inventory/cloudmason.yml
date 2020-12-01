@@ -66,7 +66,7 @@ all:
         ansible_python_interpreter: /usr/bin/python3
         plays:
           - serial
-          - microk8s
+          # - microk8s
     unifi:
       hosts:
         gateway:
