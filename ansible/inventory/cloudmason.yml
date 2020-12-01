@@ -67,6 +67,7 @@ all:
         plays:
           - serial
           # - microk8s
+        leader: node0.cloudmason.org
     unifi:
       hosts:
         gateway:

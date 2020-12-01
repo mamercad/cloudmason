@@ -80,7 +80,7 @@
           [Unit]
           Description=k3s
           [Service]
-          ExecStart=/usr/local/bin/k3s agent --server https://node0.cloudmason.org:6443 --token {{ hostvars['node0']['agent_token'] }}
+          ExecStart=/usr/local/bin/k3s agent --server https://{{ leader }}:6443 --token {{ hostvars['node0']['agent_token'] }}
           [Install]
           WantedBy=multi-user.target
       become: yes
