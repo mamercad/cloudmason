@@ -66,7 +66,6 @@ all:
         ansible_python_interpreter: /usr/bin/python3
         plays:
           - serial
-          # - microk8s
         leader: node0.cloudmason.org
     unifi:
       hosts:
