@@ -30,8 +30,10 @@ all:
       follower: yes
     node4:
       healthchecks_io: https://hc-ping.com/491f2f65-9148-42a4-9827-c31368ab55bc
+      follower: yes
     node5:
       healthchecks_io: https://hc-ping.com/46fdfdfd-ca82-4f55-beaf-93f3edad47ac
+      follower: yes
     cloudkey2:
       healthchecks_io: https://hc-ping.com/69ea1324-e142-4bb6-8ff0-f552f1566633
       plays:
