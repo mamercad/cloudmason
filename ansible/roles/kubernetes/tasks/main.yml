@@ -1,26 +1,26 @@
 ---
 
-# - name: Include metallb tasks
-#   include_tasks: metallb.yml
-#   vars:
-#     kubernetes:
-#       context: sunfire
-#       metallb:
-#         dhcp:
-#           start: 192.168.1.170
-#           end: 192.168.1.199
+- name: Include metallb tasks
+  include_tasks: metallb.yml
+  vars:
+    kubernetes:
+      context: sunfire
+      metallb:
+        dhcp:
+          start: 192.168.1.170
+          end: 192.168.1.199
 
-# - name: Include hello-world tasks
-#   include_tasks: hello-world.yml
-#   vars:
-#     kubernetes:
-#       context: sunfire
+- name: Include hello-world tasks
+  include_tasks: hello-world.yml
+  vars:
+    kubernetes:
+      context: sunfire
 
-# - name: Include hubot tasks
-#   include_tasks: hubot.yml
-#   vars:
-#     kubernetes:
-#       context: sunfire
+- name: Include hubot tasks
+  include_tasks: hubot.yml
+  vars:
+    kubernetes:
+      context: sunfire
 
 # - name: Include traefik tasks
 #   include_tasks: traefik.yml
