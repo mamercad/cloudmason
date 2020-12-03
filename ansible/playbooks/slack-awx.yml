@@ -30,6 +30,9 @@
     - set_fact:
         slack_merged: "{{ slack | combine(slack_override|default({})) }}"
 
+    - set_fact:
+        success_rate: "{{ ( 100.0 * successful_jobs|float / ( successful_jobs|int + failed_jobs|int) ) | round(2) }}"
+
     - name: Send notification message via Slack
       community.general.slack:
         token: "{{ slack_merged.ansible.token }}"
@@ -40,4 +43,4 @@
           - type: section
             text:
               type: mrkdwn
-              text: "```There were {{ failed_jobs }} failed and {{ successful_jobs }} successful AWX jobs today```"
+              text: "```There were {{ failed_jobs }} failed and {{ successful_jobs }} successful AWX jobs today ({{ success_rate }}%)```"
