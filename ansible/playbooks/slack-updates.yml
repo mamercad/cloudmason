@@ -42,7 +42,7 @@
       register: upgrades
 
     - set_fact:
-        needing_upgrades: "{{ needing_upgrades|default([]) + [ (item.metric.instance + ' / ' + item.metric.origin|default('') + ' (' + item.value.1 + ')') | replace('.cloudmason.org:9100', '') ] }}"
+        needing_upgrades: "{{ needing_upgrades|default([]) + [ (item.metric.instance + ': ' + item.metric.origin|default('') + '/' + item.metric.arch|default('') + ' (' + item.value.1 + ')') | replace('.cloudmason.org:9100', '') ] }}"
       loop: "{{ upgrades.json.data.result }}"
       when: upgrades is defined
 
@@ -76,6 +76,8 @@
 
     - set_fact:
         slack_merged: "{{ slack | combine(slack_override|default({})) }}"
+
+    # - meta: end_play
 
     - name: Send notification message via Slack
       community.general.slack:
