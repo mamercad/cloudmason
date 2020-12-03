@@ -1,0 +1,9 @@
+---
+- name: debug
+  hosts: all
+  gather_facts: no
+  become: no
+  tasks:
+    - action: ping
+    - debug:
+        var: ansible_play_hosts
