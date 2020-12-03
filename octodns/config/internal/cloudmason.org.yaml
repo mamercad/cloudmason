@@ -254,7 +254,7 @@ marymacbook:
   value: 192.168.1.162
 hello-world.sunfire:
   type: A
-  value: 192.168.1.170
+  value: 192.168.1.171
 judeipad:
   type: A
   value: 192.168.1.180
