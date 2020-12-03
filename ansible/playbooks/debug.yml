@@ -1,6 +1,7 @@
 ---
 - name: debug
-  hosts: all
+  hosts: "{{ ansible_limit | default('localhost') }}"
+  connection: "{{ ansible_connection | default('local') }}"
   gather_facts: no
   become: no
   tasks:
