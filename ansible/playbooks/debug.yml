@@ -4,6 +4,6 @@
   gather_facts: no
   become: no
   tasks:
-    - action: ping
     - debug:
         var: ansible_play_hosts
+      run_once: yes
