@@ -27,7 +27,7 @@
 
     - set_fact:
         # slack_reboots: "Systems needing reboot\n{{ needing_reboots_list | sort | join('\n') }}"
-        slack_reboots: "Systems needing reboot\n  {{ needing_reboots | sort | join('  \n') }}"
+        slack_reboots: "Systems needing reboot\n  {{ needing_reboots | sort | join('\n  ') }}"
       when:
         - reboot is defined
         - needing_reboots is defined
