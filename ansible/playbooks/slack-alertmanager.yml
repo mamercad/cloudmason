@@ -1,0 +1,32 @@
+---
+- name: Slack
+  hosts: all
+  gather_facts: no
+
+  tasks:
+
+    - uri:
+        url: http://prometheus.cloudmason.org:9090/api/v1/query
+        method: POST
+        body: 'query=changes(alertmanager_alerts{state="active"}[1d])'
+        body_format: form-urlencoded
+        return_content: yes
+      register: alerts
+
+    - set_fact:
+        alert_changes: "{{ alerts.json.data.result.0.value.1 }}"
+
+    - set_fact:
+        slack_merged: "{{ slack | combine(slack_override|default({})) }}"
+
+    - name: Send notification message via Slack
+      community.general.slack:
+        token: "{{ slack_merged.ansible.token }}"
+        channel: "{{ slack_merged.channel }}"
+        username: "{{ slack_merged.username }}"
+        icon_url: "{{ slack_merged.icon_url }}"
+        blocks:
+          - type: section
+            text:
+              type: mrkdwn
+              text: "```There were a total of {{ alert_changes }} alert changes today```"
