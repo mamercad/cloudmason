@@ -42,7 +42,7 @@
         total_queries: "{{ (queries.json.data.result.0.value.1 | default(0)) | float | round(1, 'ceil') | int }}"
 
     - set_fact:
-        slack_message: "```PowerDNS served up {{ total_queries }} queries today, cache efficiency is {{ cache_efficiency }}```"
+        slack_message: "```Served up {{ total_queries }} queries today, cache efficiency is {{ cache_efficiency }}```"
 
     - set_fact:
         slack_merged: "{{ slack | combine(slack_override|default({})) }}"
