@@ -34,7 +34,7 @@
         var: check_total
 
     - set_fact:
-        slack_message: "```Service health is at {{ check_up }} / {{ check_total }} ({{ 100.0 * (check_up|float / check_total|float) }}%)```"
+        slack_message: "Service health is at {{ 100.0 * (check_up|float / check_total|float) }}% ({{ check_up }}/{{ check_total }})"
 
     - debug:
         var: slack_message
@@ -52,4 +52,4 @@
           - type: section
             text:
               type: mrkdwn
-              text: "{{ slack_message }}"
+              text: "```{{ slack_message }}```"
