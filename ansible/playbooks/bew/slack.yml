@@ -1,0 +1,14 @@
+---
+- name: bew/slack
+  hosts: "{{ ansible_limit | default('localhost') }}"
+  connection: "{{ ansible_connection | default('local') }}"
+  gather_facts: no
+  become: no
+
+  vars:
+
+  tasks:
+
+    - name: Send Slack message
+      debug:
+        msg: "Hello, Slack"
