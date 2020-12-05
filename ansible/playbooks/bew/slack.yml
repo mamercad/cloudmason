@@ -15,6 +15,6 @@
 
     - name: Send Slack message (mmid_router)
       debug:
-        msg: "Hello, Slack {{ mmid_router }}"
+        msg: "{{ mmid_router }}"
       when:
         - mmid_router is defined
