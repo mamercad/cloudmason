@@ -1,0 +1,20 @@
+---
+- name: bew/router
+  hosts: "{{ ansible_limit | default('localhost') }}"
+  connection: "{{ ansible_connection | default('local') }}"
+  gather_facts: no
+  become: no
+
+  vars:
+
+    test_mmids:
+      - '0'
+
+  tasks:
+
+    - name: Switch between stable/test trains
+      assert:
+        that:
+          - mmid|default('0') in test_mmids
+        fail_msg: Using stable train
+        sucess_msg: Using test train
