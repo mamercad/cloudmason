@@ -17,7 +17,7 @@
         that:
           - mmid|default('0') in test_mmids
         fail_msg: Using stable train
-        sucess_msg: Using test train
+        success_msg: Using test train
       register: assertion
 
     - set_stats:
