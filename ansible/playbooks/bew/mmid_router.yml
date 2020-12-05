@@ -1,5 +1,5 @@
 ---
-- name: bew/router
+- name: bew/mmid_router
   hosts: "{{ ansible_limit | default('localhost') }}"
   connection: "{{ ansible_connection | default('local') }}"
   gather_facts: no
