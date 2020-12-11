@@ -65,6 +65,9 @@
 57:
   type: PTR
   value: sunfire.cloudmason.org.
+58:
+  type: PTR
+  value: indyiphone.cloudmason.org.
 60:
   type: PTR
   value: dehumidifier.cloudmason.org.
@@ -182,6 +185,9 @@
 131:
   type: PTR
   value: node2.cloudmason.org.
+134:
+  type: PTR
+  value: indyipod.cloudmason.org.
 135:
   type: PTR
   value: ambrosia.cloudmason.org.

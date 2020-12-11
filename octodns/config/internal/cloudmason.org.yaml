@@ -100,6 +100,9 @@ alexa5:
 sunfire:
   type: A
   value: 192.168.1.57
+indiphone:
+  type: A
+  value: 192.168.1.58
 dehumidifier:
   type: A
   value: 192.168.1.60
@@ -222,6 +225,9 @@ maryiphone:
 node2:
   type: A
   value: 192.168.1.131
+indyipod:
+  type: A
+  value: 192.168.1.134
 ambrosia:
   type: A
   value: 192.168.1.135
