@@ -19,7 +19,7 @@
       register: history
 
     - set_fact:
-        slack_message: "{{ history.stdout_lines | join('\n') }}"
+        slack_message: "{{ history.stdout_lines | join('\n') | from_json }}"
 
     - set_fact:
         slack_merged: "{{ slack | combine(slack_override|default({})) }}"
