@@ -35,4 +35,4 @@
           - type: section
             text:
               type: mrkdwn
-              text: "```Downloads in the last 6h:\n{{ slack_message | join('\n') }}```"
+              text: "```Downloads in the last {{ hours | default(3) }}h:\n{{ slack_message | join('\n') }}```"
