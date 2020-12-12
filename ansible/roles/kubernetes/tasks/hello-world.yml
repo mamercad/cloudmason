@@ -55,3 +55,25 @@
             targetPort: web
             name: http
         type: LoadBalancer
+
+- name: Create hello-world Ingress
+  community.kubernetes.k8s:
+    state: present
+    context: "{{ kubernetes.context }}"
+    definition:
+      apiVersion: extensions/v1beta1
+      kind: Ingress
+      metadata:
+        name: hello-world
+        namespace: hello-world
+        annotations:
+          kubernetes.io/ingress.class: traefik
+      spec:
+        rules:
+        - host: hello-world.{{ kubernetes.context }}.cloudmason.org
+          http:
+            paths:
+            - path: /
+              backend:
+                serviceName: hello-world
+                servicePort: http
