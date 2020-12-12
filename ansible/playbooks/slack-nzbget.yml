@@ -18,21 +18,25 @@
         /tmp/nzbget_history.py "{{ hours | default(3) }}"
       register: history
 
-    - set_fact:
-        slack_message: "{{ slack_message|default([]) + [item.name] }}"
-      loop: "{{ history.stdout }}"
+    - block:
 
-    - set_fact:
-        slack_merged: "{{ slack | combine(slack_override|default({})) }}"
+        - set_fact:
+            slack_message: "{{ slack_message|default([]) + [item.name] }}"
+          loop: "{{ history.stdout }}"
 
-    - name: Send notification message via Slack
-      community.general.slack:
-        token: "{{ slack_merged.ansible.token }}"
-        channel: "{{ slack_merged.channel }}"
-        username: "{{ slack_merged.username }}"
-        icon_url: "{{ slack_merged.icon_url }}"
-        blocks:
-          - type: section
-            text:
-              type: mrkdwn
-              text: "```Downloads in the last {{ hours | default(3) }}h:\n{{ slack_message | join('\n') }}```"
+        - set_fact:
+            slack_merged: "{{ slack | combine(slack_override|default({})) }}"
+
+        - name: Send notification message via Slack
+          community.general.slack:
+            token: "{{ slack_merged.ansible.token }}"
+            channel: "{{ slack_merged.channel }}"
+            username: "{{ slack_merged.username }}"
+            icon_url: "{{ slack_merged.icon_url }}"
+            blocks:
+              - type: section
+                text:
+                  type: mrkdwn
+                  text: "```Downloads in the last {{ hours | default(3) }}h:\n{{ slack_message | join('\n') }}```"
+
+      when: history.stdout != '[]'
