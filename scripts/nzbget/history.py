@@ -25,10 +25,11 @@ d = []
 for h in server.history():
 	age = int(now-h['HistoryTime'])
 	if age < last:
-		d.append({
-			'id': h['ID'],
-			'name': h['Name'],
-			'status': h['Status'],
-			'age': int(now-h['HistoryTime'])
-		})
+		if h['Status'] == 'SUCCESS/UNPACK':
+			d.append({
+				'id': h['ID'],
+				'name': h['Name'],
+				'status': h['Status'],
+				'age': int(now-h['HistoryTime'])
+			})
 print(d)

@@ -19,7 +19,8 @@
       register: history
 
     - set_fact:
-        slack_message: "{{ history.stdout_lines | join('\n') | from_json }}"
+        slack_message: "{{ slack_message|default([]) + [item.name] }}"
+      loop: "{{ history.stdout }}"
 
     - set_fact:
         slack_merged: "{{ slack | combine(slack_override|default({})) }}"
@@ -34,4 +35,4 @@
           - type: section
             text:
               type: mrkdwn
-              text: "```{{ slack_message }}```"
+              text: "```Downloads in the last 6h:\n{{ slack_message }}```"
