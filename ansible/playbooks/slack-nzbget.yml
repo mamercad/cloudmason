@@ -9,7 +9,7 @@
 
     - name: Deploy the script
       copy:
-        src: scripts/../../nzbget/history.py
+        src: ../../scripts/nzbget/history.py
         dest: /tmp/nzbget_history.py
 
     - name: Run nzbget / history
