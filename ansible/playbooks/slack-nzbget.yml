@@ -15,24 +15,23 @@
 
     - name: Run nzbget / history
       shell: |
-        /tmp/nzbget_history.py
+        /tmp/nzbget_history.py "{{ hours | default(3) }}"
       register: history
 
-    - debug:
-        msg: "{{ item.id }}"
-      loop: "{{ history.stdout }}"
+    - set_fact:
+        slack_message: "{{ history.stdout_lines | join('\n') }}"
 
-    # - set_fact:
-    #     slack_merged: "{{ slack | combine(slack_override|default({})) }}"
+    - set_fact:
+        slack_merged: "{{ slack | combine(slack_override|default({})) }}"
 
-    # - name: Send notification message via Slack
-    #   community.general.slack:
-    #     token: "{{ slack_merged.ansible.token }}"
-    #     channel: "{{ slack_merged.channel }}"
-    #     username: "{{ slack_merged.username }}"
-    #     icon_url: "{{ slack_merged.icon_url }}"
-    #     blocks:
-    #       - type: section
-    #         text:
-    #           type: mrkdwn
-    #           text: "```{{ slack_message }}```"
+    - name: Send notification message via Slack
+      community.general.slack:
+        token: "{{ slack_merged.ansible.token }}"
+        channel: "{{ slack_merged.channel }}"
+        username: "{{ slack_merged.username }}"
+        icon_url: "{{ slack_merged.icon_url }}"
+        blocks:
+          - type: section
+            text:
+              type: mrkdwn
+              text: "```{{ slack_message }}```"

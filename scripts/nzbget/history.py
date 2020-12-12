@@ -6,9 +6,11 @@ import time
 import xmlrpc.client
 
 try:
-	last = int(60*60*sys.argv[1])
+	last = int(60*60*int(sys.argv[1]))
 except Exception as e:
   last = 3600 # last 1h
+
+# last = 3600 # last 1h
 
 host = os.getenv('NZBOP_CONTROLIP')
 port = os.getenv('NZBOP_CONTROLPORT')
