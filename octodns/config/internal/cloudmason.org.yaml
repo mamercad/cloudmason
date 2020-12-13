@@ -26,7 +26,18 @@ powerdns2:
   value: 192.168.1.9
 nzbget:
   type: CNAME
-  value: net2.cloudmason.org.
+  value: net.cloudmason.org.
+sonarr:
+  type: CNAME
+  value: net.cloudmason.org.
+radarr:
+  type: CNAME
+  value: net.cloudmason.org.
+net:
+  type: A
+  values:
+    - 192.168.1.10
+    - 192.168.1.11
 dns:
   type: A
   values:
