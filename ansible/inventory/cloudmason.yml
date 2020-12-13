@@ -54,6 +54,8 @@ all:
       hosts:
         net1:
         net2:
+      plays:
+        - traefik
     nodes:
       hosts:
         node0:
