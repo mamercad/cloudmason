@@ -1,0 +1,36 @@
+- hosts: net
+
+  tasks:
+
+    - name: Create the traefik group
+      group:
+        name: traefik
+      become: yes
+
+    - name: Create the traefik user
+      user:
+        name: traefik
+        group: traefik
+        create_home: yes
+        shell: /bin/bash
+      become: yes
+
+    - name: Pull down the traefik binary tarball
+      get_url:
+        url: https://github.com/traefik/traefik/releases/download/v2.3.5/traefik_v2.3.5_linux_armv7.tar.gz
+        checksum: sha256:853af73c985b32bcc17f7292b111ced0e93882362f819f1e3a65ef22f4fd5f51
+        dest: /home/traefik/traefik_v2.3.5_linux_armv7.tar.gz
+        owner: traefik
+        group: traefik
+        mode: 0644
+      become: yes
+
+    - name: Extract the traefik tarball
+      unarchive:
+        src: /home/traefik/traefik_v2.3.5_linux_armv7.tar.gz
+        dest: /home/traefik
+        remote_src: yes
+        owner: traefik
+        group: traefik
+        creates: /home/traefik/traefik
+      become: yes

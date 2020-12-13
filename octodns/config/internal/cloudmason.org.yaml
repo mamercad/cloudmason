@@ -24,6 +24,9 @@ powerdns1:
 powerdns2:
   type: A
   value: 192.168.1.9
+nzbget:
+  type: CNAME
+  value: net2.cloudmason.org.
 dns:
   type: A
   values:
