@@ -72,6 +72,14 @@
             rule = "Host(`nzbget.cloudmason.org`)"
             middlewares = ["admin-user"]
             service = "nzbget"
+          [http.routers.sonarr]
+            rule = "Host(`sonarr.cloudmason.org`)"
+            middlewares = ["admin-user"]
+            service = "sonarr"
+          [http.routers.radarr]
+            rule = "Host(`radarr.cloudmason.org`)"
+            middlewares = ["admin-user"]
+            service = "radarr"
 
         [http.middlewares]
           [http.middlewares.admin-user.basicAuth]
@@ -87,6 +95,12 @@
           [http.services.nzbget.loadBalancer]
             [[http.services.nzbget.loadBalancer.servers]]
               url = "http://qnap.cloudmason.org:11000/"
+          [http.services.sonarr.loadBalancer]
+            [[http.services.sonarr.loadBalancer.servers]]
+              url = "http://qnap.cloudmason.org:11001/"
+          [http.services.radarr.loadBalancer]
+            [[http.services.radarr.loadBalancer.servers]]
+              url = "http://qnap.cloudmason.org:11002/"
 
       [[tls.certificates]]
         certFile = "/home/traefik/cloudmason.org.crt"
