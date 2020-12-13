@@ -15,3 +15,9 @@
     name: netdata
     state: restarted
   become: yes
+
+- name: Restart traefik
+  systemd:
+    name: traefik
+    state: restarted
+  become: yes
