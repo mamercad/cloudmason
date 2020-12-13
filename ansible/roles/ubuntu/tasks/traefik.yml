@@ -1,5 +1,13 @@
 - hosts: net
 
+  handlers:
+
+    - name: Restart traefik
+      systemd:
+        name: traefik
+        state: restarted
+      become: yes
+
   tasks:
 
     - name: Create the traefik group
@@ -42,10 +50,12 @@
         group: traefik
         mode: 0644
         content: |
+          defaultEntryPoints = ["http", "https"]
+
           [entryPoints]
-            [entryPoints.web]
+            [entryPoints.http]
               address = ":80"
-            [entryPoints.websecure]
+            [entryPoints.https]
               address = ":443"
 
           [providers]
@@ -66,6 +76,7 @@
               [http.routers.apex]
                 rule = "Host(`cloudmason.org`)"
                 service = "apex"
+                [http.routers.apex.tls]
               [http.routers.web]
                 rule = "Host(`web.cloudmason.org`)"
                 service = "web"
