@@ -176,9 +176,6 @@ plugoutside2:
 ringbridge:
   type: A
   value: 192.168.1.99
-maryipad:
-  type: A
-  value: 192.168.1.100
 marymercado:
   type: A
   value: 192.168.1.103
@@ -256,6 +253,9 @@ basementlamp2:
 node4:
   type: A
   value: 192.168.1.145
+maryipad:
+  type: A
+  value: 192.168.1.146
 fuji:
   type: A
   value: 192.168.1.148

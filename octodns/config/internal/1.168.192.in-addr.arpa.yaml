@@ -131,9 +131,6 @@
 99:
   type: PTR
   value: ringbridge.cloudmason.org.
-100:
-  type: PTR
-  value: maryipad.cloudmason.org.
 103:
   type: PTR
   value: marymercado.cloudmason.org.
@@ -203,6 +200,9 @@
 144:
   type: PTR
   value: basementlamp2.cloudmason.org.
+146:
+  type: PTR
+  value: maryipad.cloudmason.org.
 145:
   type: PTR
   value: node4.cloudmason.org.
