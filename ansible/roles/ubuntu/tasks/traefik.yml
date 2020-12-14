@@ -84,16 +84,19 @@
             service = "web"
           [http.routers.nzbget]
             rule = "Host(`nzbget.cloudmason.org`)"
-            middlewares = ["admin-user"]
+            # middlewares = ["admin-user"]
             service = "nzbget"
+            [http.routers.nzbget.tls]
           [http.routers.sonarr]
             rule = "Host(`sonarr.cloudmason.org`)"
-            middlewares = ["admin-user"]
+            # middlewares = ["admin-user"]
             service = "sonarr"
+            [http.routers.sonarr.tls]
           [http.routers.radarr]
             rule = "Host(`radarr.cloudmason.org`)"
-            middlewares = ["admin-user"]
+            # middlewares = ["admin-user"]
             service = "radarr"
+            [http.routers.radarr.tls]
 
         [http.middlewares]
           [http.middlewares.admin-user.basicAuth]
