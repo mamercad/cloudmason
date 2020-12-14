@@ -49,6 +49,16 @@
       [providers]
         [providers.file]
           filename = "/home/traefik/traefik_dynamic.toml"
+
+      [certificatesResolvers.myresolver.acme]
+        email = "{{ traefik.cloudflare.api_email }}"
+        storage = "/home/traefik/acme.json"
+        # caServer = "https://acme-staging-v02.api.letsencrypt.org/directory"
+        caServer = "https://acme-v02.api.letsencrypt.org/directory"
+        [certificatesResolvers.myresolver.acme.dnsChallenge]
+          provider = "cloudflare"
+          delayBeforeCheck = 0
+          resolvers = ["1.1.1.1:53", "8.8.8.8:53"]
   notify: Restart traefik
   become: yes
 
@@ -65,6 +75,10 @@
             rule = "Host(`cloudmason.org`)"
             service = "apex"
             [http.routers.apex.tls]
+              certResolver = "myresolver"
+              [[http.routers.apex.tls.domains]]
+                main = "cloudmason.org"
+                sans = ["*.cloudmason.org"]
           [http.routers.web]
             rule = "Host(`web.cloudmason.org`)"
             service = "web"
@@ -83,7 +97,7 @@
 
         [http.middlewares]
           [http.middlewares.admin-user.basicAuth]
-            users = ["admin:$apr1$kZuW.Qak$S.FteyLe6hHscBpOS1xJf."]
+            users = ["admin:{{ traefik.admin.password }}"]
 
         [http.services]
           [http.services.apex.loadBalancer]
@@ -102,15 +116,15 @@
             [[http.services.radarr.loadBalancer.servers]]
               url = "http://qnap.cloudmason.org:11002/"
 
-      [[tls.certificates]]
-        certFile = "/home/traefik/cloudmason.org.crt"
-        keyFile = "/home/traefik/cloudmason.org.key"
+      # [[tls.certificates]]
+      #   certFile = "/home/traefik/cloudmason.org.crt"
+      #   keyFile = "/home/traefik/cloudmason.org.key"
 
-      [tls.stores]
-        [tls.stores.default]
-          [tls.stores.default.defaultCertificate]
-            certFile = "/home/traefik/cloudmason.org.crt"
-            keyFile = "/home/traefik/cloudmason.org.key"
+      # [tls.stores]
+      #   [tls.stores.default]
+      #     [tls.stores.default.defaultCertificate]
+      #       certFile = "/home/traefik/cloudmason.org.crt"
+      #       keyFile = "/home/traefik/cloudmason.org.key"
   notify: Restart traefik
   become: yes
 
@@ -299,6 +313,7 @@
       User=traefik
       AmbientCapabilities=CAP_NET_BIND_SERVICE
       Type=notify
+      Environment=CF_DNS_API_TOKEN={{ traefik.cloudflare.api_key }}
       ExecStart=/home/traefik/traefik --configFile=/home/traefik/traefik.toml
       Restart=always
       WatchdogSec=1s
