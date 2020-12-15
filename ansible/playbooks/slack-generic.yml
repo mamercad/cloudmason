@@ -1,0 +1,21 @@
+---
+- name: slack-generic
+  hosts: "{{ ansible_limit | default('localhost') }}"
+  connection: "{{ ansible_connection | default('local') }}"
+  gather_facts: no
+  become: no
+
+  tasks:
+
+    - set_fact:
+        slack_merged: "{{ slack | combine(slack_override|default({})) }}"
+
+    - name: Send notification message via Slack
+      community.general.slack:
+        token: "{{ slack_merged.ansible.token }}"
+        channel: "{{ slack_merged.channel }}"
+        username: "{{ slack_merged.username }}"
+        icon_url: "{{ slack_merged.icon_url }}"
+        msg: "{{ msg | default(omit) }}"
+        attachments: "{{ attachments | default(omit) }}"
+        blocks: "{{ blocks | default(omit) }}"
