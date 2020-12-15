@@ -235,7 +235,7 @@
   value: alexa3.cloudmason.org.
 221:
   type: PTR
-  value: awx.cloudmason.org.
+  value: awx-web-svc.jonagold.cloudmason.org.
 222:
   type: PTR
   value: prometheus.cloudmason.org.
