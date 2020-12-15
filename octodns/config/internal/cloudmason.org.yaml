@@ -36,6 +36,9 @@ sonarr:
 radarr:
   type: CNAME
   value: net.cloudmason.org.
+unifi:
+  type: CNAME
+  value: net.cloudmason.org.
 net:
   type: A
   values:
