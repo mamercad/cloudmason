@@ -86,9 +86,15 @@
           [http.routers.awx]
             rule = "Host(`awx.cloudmason.org`)"
             service = "awx"
+            [http.routers.awx.tls]
           [http.routers.web]
             rule = "Host(`web.cloudmason.org`)"
             service = "web"
+            [http.routers.web.tls]
+          [http.routers.www]
+            rule = "Host(`www.cloudmason.org`)"
+            service = "www"
+            [http.routers.www.tls]
           [http.routers.nzbget]
             rule = "Host(`nzbget.cloudmason.org`)"
             # middlewares = ["admin-user"]
@@ -115,9 +121,12 @@
               url = "http://cloudmason.org:8000/"
           [http.services.awx.loadBalancer]
             [[http.services.awx.loadBalancer.servers]]
-              url = "http://192.168.1.221:80/"
+              url = "http://awx-web-svc.jonagold.cloudmason.org:80/"
           [http.services.web.loadBalancer]
             [[http.services.web.loadBalancer.servers]]
+              url = "http://web.cloudmason.org:8000/"
+          [http.services.www.loadBalancer]
+            [[http.services.www.loadBalancer.servers]]
               url = "http://web.cloudmason.org:8000/"
           [http.services.nzbget.loadBalancer]
             [[http.services.nzbget.loadBalancer.servers]]
