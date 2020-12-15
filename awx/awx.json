@@ -209,7 +209,7 @@
                                         "name": "Cloudmason",
                                         "type": "organization"
                                    },
-                                   "name": "Slack (updates)",
+                                   "name": "Slack (Updates)",
                                    "type": "job_template"
                               }
                          },
@@ -487,6 +487,18 @@
                "is_system_auditor": false,
                "related": {
                     "roles": [
+                         {
+                              "name": "Admin",
+                              "type": "role",
+                              "content_object": {
+                                   "organization": {
+                                        "name": "Cloudmason",
+                                        "type": "organization"
+                                   },
+                                   "name": "Slack (Generic)",
+                                   "type": "job_template"
+                              }
+                         },
                          {
                               "name": "Member",
                               "type": "role",
@@ -4873,6 +4885,102 @@
                }
           },
           {
+               "name": "Slack (Generic)",
+               "description": "",
+               "job_type": "run",
+               "playbook": "ansible/playbooks/slack-generic.yml",
+               "scm_branch": "",
+               "forks": 0,
+               "limit": "localhost",
+               "verbosity": 1,
+               "extra_vars": "",
+               "job_tags": "",
+               "force_handlers": false,
+               "skip_tags": "",
+               "start_at_task": "",
+               "timeout": 0,
+               "use_fact_cache": false,
+               "host_config_key": "hunter2",
+               "ask_scm_branch_on_launch": false,
+               "ask_diff_mode_on_launch": false,
+               "ask_variables_on_launch": true,
+               "ask_limit_on_launch": false,
+               "ask_tags_on_launch": false,
+               "ask_skip_tags_on_launch": false,
+               "ask_job_type_on_launch": false,
+               "ask_verbosity_on_launch": false,
+               "ask_inventory_on_launch": false,
+               "ask_credential_on_launch": false,
+               "survey_enabled": false,
+               "become_enabled": false,
+               "diff_mode": false,
+               "allow_simultaneous": false,
+               "custom_virtualenv": null,
+               "job_slice_count": 1,
+               "webhook_service": "",
+               "webhook_credential": null,
+               "inventory": {
+                    "organization": {
+                         "name": "Cloudmason",
+                         "type": "organization"
+                    },
+                    "name": "Cloudmason",
+                    "type": "inventory"
+               },
+               "project": {
+                    "organization": {
+                         "name": "Cloudmason",
+                         "type": "organization"
+                    },
+                    "name": "Cloudmason",
+                    "type": "project"
+               },
+               "related": {
+                    "labels": [],
+                    "credentials": [
+                         {
+                              "organization": {
+                                   "name": "Cloudmason",
+                                   "type": "organization"
+                              },
+                              "name": "Cloudmason Machine",
+                              "credential_type": {
+                                   "name": "Machine",
+                                   "kind": "ssh",
+                                   "type": "credential_type"
+                              },
+                              "type": "credential"
+                         },
+                         {
+                              "organization": {
+                                   "name": "Cloudmason",
+                                   "type": "organization"
+                              },
+                              "name": "Cloudmason Vault",
+                              "credential_type": {
+                                   "name": "Vault",
+                                   "kind": "vault",
+                                   "type": "credential_type"
+                              },
+                              "type": "credential"
+                         }
+                    ],
+                    "schedules": [],
+                    "notification_templates_started": [],
+                    "notification_templates_success": [],
+                    "notification_templates_error": [],
+                    "survey_spec": {}
+               },
+               "natural_key": {
+                    "organization": {
+                         "name": "Cloudmason",
+                         "type": "organization"
+                    },
+                    "name": "Slack (Generic)",
+                    "type": "job_template"
+               }
+          },
+          {
                "name": "Slack (Healthchecks.io)",
                "description": "",
                "job_type": "run",
@@ -5531,7 +5639,7 @@
                }
           },
           {
-               "name": "Slack (updates)",
+               "name": "Slack (Updates)",
                "description": "",
                "job_type": "run",
                "playbook": "ansible/playbooks/slack-updates.yml",
@@ -5625,7 +5733,7 @@
                                         "name": "Cloudmason",
                                         "type": "organization"
                                    },
-                                   "name": "Slack (updates)",
+                                   "name": "Slack (Updates)",
                                    "type": "job_template"
                               },
                               "related": {
@@ -5637,7 +5745,7 @@
                                              "name": "Cloudmason",
                                              "type": "organization"
                                         },
-                                        "name": "Slack (updates)",
+                                        "name": "Slack (Updates)",
                                         "type": "job_template"
                                    },
                                    "name": "Weekly",
@@ -5655,7 +5763,7 @@
                          "name": "Cloudmason",
                          "type": "organization"
                     },
-                    "name": "Slack (updates)",
+                    "name": "Slack (Updates)",
                     "type": "job_template"
                }
           },
