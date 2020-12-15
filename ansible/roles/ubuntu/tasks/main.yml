@@ -74,6 +74,15 @@
   tags:
     - netdata
 
+- name: Include lifecycle play
+  include_tasks:
+    file: lifecycle.yml
+    apply:
+      tags:
+        - lifecycle
+  tags:
+    - lifecycle
+
 - name: Include node_exporter play
   include_tasks:
     file: node_exporter.yml
