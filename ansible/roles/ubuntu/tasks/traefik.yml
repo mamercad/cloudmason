@@ -78,12 +78,14 @@
           [http.routers.apex]
             rule = "Host(`cloudmason.org`)"
             service = "apex"
-            # middlewares = ["http-to-https"]
             [http.routers.apex.tls]
               certResolver = "myresolver"
               [[http.routers.apex.tls.domains]]
                 main = "cloudmason.org"
                 sans = ["*.cloudmason.org"]
+          [http.routers.awx]
+            rule = "Host(`awx.cloudmason.org`)"
+            service = "awx"
           [http.routers.web]
             rule = "Host(`web.cloudmason.org`)"
             service = "web"
@@ -106,14 +108,14 @@
         [http.middlewares]
           [http.middlewares.admin-user.basicAuth]
             users = ["admin:{{ traefik.admin.password }}"]
-          [http.middlewares.http-to-https.redirectScheme]
-            scheme = "https"
-            permanent = true
 
         [http.services]
           [http.services.apex.loadBalancer]
             [[http.services.apex.loadBalancer.servers]]
               url = "http://cloudmason.org:8000/"
+          [http.services.awx.loadBalancer]
+            [[http.services.awx.loadBalancer.servers]]
+              url = "http://192.168.1.221:80/"
           [http.services.web.loadBalancer]
             [[http.services.web.loadBalancer.servers]]
               url = "http://web.cloudmason.org:8000/"
