@@ -43,6 +43,10 @@
       [entryPoints]
         [entryPoints.http]
           address = ":80"
+          [entryPoints.http.http.redirections]
+            [entryPoints.http.http.redirections.entryPoint]
+              to = "https"
+              scheme = "https"
         [entryPoints.https]
           address = ":443"
 
@@ -74,6 +78,7 @@
           [http.routers.apex]
             rule = "Host(`cloudmason.org`)"
             service = "apex"
+            # middlewares = ["http-to-https"]
             [http.routers.apex.tls]
               certResolver = "myresolver"
               [[http.routers.apex.tls.domains]]
@@ -101,6 +106,9 @@
         [http.middlewares]
           [http.middlewares.admin-user.basicAuth]
             users = ["admin:{{ traefik.admin.password }}"]
+          [http.middlewares.http-to-https.redirectScheme]
+            scheme = "https"
+            permanent = true
 
         [http.services]
           [http.services.apex.loadBalancer]
