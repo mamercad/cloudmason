@@ -32,10 +32,10 @@
     mode: 0644
     content: |
       {
-        "host_config_key": "{{ awx.lifecycle.host_config_key }}",
+        "host_config_key": "{{ lifecycle.host_config_key }}",
         "extra_vars": {
           "slack_override": {
-            "channel": "{{ awx.lifecycle.slack_channel }}",
+            "channel": "{{ lifecycle.slack_channel }}",
             "msg": "> {{ inventory_hostname }} rides the :gun: again",
             "username": "Ubuntu",
             "icon_url": "https://assets.ubuntu.com/v1/29985a98-ubuntu-logo32.png"
@@ -60,10 +60,10 @@
     mode: 0644
     content: |
       {
-        "host_config_key": "{{ awx.lifecycle.host_config_key }}",
+        "host_config_key": "{{ lifecycle.host_config_key }}",
         "extra_vars": {
           "slack_override": {
-            "channel": "{{ awx.lifecycle.slack_channel }}",
+            "channel": "{{ lifecycle.slack_channel }}",
             "msg": "> {{ inventory_hostname }} rebooting :crossed_fingers:",
             "username": "Ubuntu",
             "icon_url": "https://assets.ubuntu.com/v1/29985a98-ubuntu-logo32.png"
