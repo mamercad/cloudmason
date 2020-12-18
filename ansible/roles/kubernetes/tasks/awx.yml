@@ -93,7 +93,7 @@
       subjects:
         - kind: ServiceAccount
           name: awx-operator
-          namespace: default
+          namespace: awx
       roleRef:
         kind: ClusterRole
         name: awx-operator
@@ -107,7 +107,7 @@
       kind: ServiceAccount
       metadata:
         name: awx-operator
-        namespace: default
+        namespace: awx
 
 - community.kubernetes.k8s:
     state: present
@@ -219,3 +219,36 @@
                       type: Opaque
                 required:
                   - deployment_type
+
+- community.kubernetes.k8s:
+    state: present
+    context: "{{ kubernetes.context }}"
+    definition:
+      apiVersion: awx.ansible.com/v1beta1
+      kind: AWX
+      metadata:
+        name: awx
+        namespace: awx
+      spec:
+        deployment_type: awx
+        tower_admin_user: "{{ tower_admin_user }}"
+        tower_admin_email: "{{ tower_admin_email }}"
+        tower_admin_password: "{{ tower_admin_password }}"
+        tower_broadcast_websocket_secret: "{{ tower_broadcast_websocket_secret }}"
+  vars:
+    tower_admin_user: admin
+    tower_admin_email: root@cloudmason.org
+    tower_admin_password: !vault |
+      $ANSIBLE_VAULT;1.1;AES256
+      33376261383636303039343836343865313961643435353837343265393331643233366264313735
+      6161363863666666316463643166333033346165656661360a306661383465323566366239376138
+      37313865623533376264373139613233373233346533633266633730343134383933313063633032
+      3966623162323638340a306531363236333465656266646236616463356164333136633132383061
+      3235
+    tower_broadcast_websocket_secret: !vault |
+      $ANSIBLE_VAULT;1.1;AES256
+      66613437363636626234646136353231353039343864366261393936346430323639643362663866
+      3530313734316638313262383039616339626233366537390a636139653335303666613733323635
+      33336364336630376263333934316331653735383336376136396232366163363637333963316432
+      3739303039343466300a323265363031626264353630353335336231386465313862383437633663
+      3033
