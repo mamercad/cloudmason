@@ -34,8 +34,8 @@
     kubernetes:
       context: jonagold
 
-- name: Include awx-operator
-  include_tasks: awx-operator.yml
+- name: Include awx
+  include_tasks: awx.yml
   vars:
     kubernetes:
       context: sunfire
