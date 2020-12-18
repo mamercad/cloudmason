@@ -28,8 +28,14 @@
 #     kubernetes:
 #       context: sunfire
 
-- name: Include additional_scrape_configs
-  include_tasks: additional_scrape_configs.yml
+- name: Include additional-scrape-configs
+  include_tasks: additional-scrape-configs.yml
   vars:
     kubernetes:
       context: jonagold
+
+- name: Include awx-operator
+  include_tasks: awx-operator.yml
+  vars:
+    kubernetes:
+      context: sunfire
