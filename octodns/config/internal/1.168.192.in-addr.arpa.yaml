@@ -244,7 +244,7 @@
   value: prometheus.cloudmason.org.
 223:
   type: PTR
-  value: grafana.cloudmason.org.
+  value: grafana.jonagold.cloudmason.org.
 224:
   type: PTR
   value: kiali.cloudmason.org.

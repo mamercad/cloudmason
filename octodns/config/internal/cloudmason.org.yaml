@@ -27,6 +27,9 @@ powerdns2:
 awx:
   type: CNAME
   value: net.cloudmason.org.
+grafana:
+  type: CNAME
+  value: net.cloudmason.org.
 nzbget:
   type: CNAME
   value: net.cloudmason.org.
@@ -298,7 +301,7 @@ awx-web-svc.jonagold:
 prometheus:
   type: A
   value: 192.168.1.222
-grafana:
+grafana.jonagold:
   type: A
   value: 192.168.1.223
 kiali:

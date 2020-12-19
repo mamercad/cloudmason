@@ -87,6 +87,10 @@
             rule = "Host(`awx.cloudmason.org`)"
             service = "awx"
             [http.routers.awx.tls]
+          [http.routers.grafana]
+            rule = "Host(`grafana.cloudmason.org`)"
+            service = "grafana"
+            [http.routers.grafana.tls]
           [http.routers.web]
             rule = "Host(`web.cloudmason.org`)"
             service = "web"
@@ -126,6 +130,9 @@
           [http.services.awx.loadBalancer]
             [[http.services.awx.loadBalancer.servers]]
               url = "http://awx-web-svc.jonagold.cloudmason.org:80/"
+          [http.services.grafana.loadBalancer]
+            [[http.services.grafana.loadBalancer.servers]]
+              url = "http://grafana.jonagold.cloudmason.org:3000/"
           [http.services.web.loadBalancer]
             [[http.services.web.loadBalancer.servers]]
               url = "http://web.cloudmason.org:8000/"
