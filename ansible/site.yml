@@ -3,15 +3,17 @@
 
 - name: common
   hosts: all
+  gather_facts: no
+  become: no
   roles:
     - common
 
-- name: mark
-  hosts:
-    - jonagold
-    - lenovo
-  roles:
-    - mark
+# - name: mark
+#   hosts:
+#     - jonagold
+#     - lenovo
+#   roles:
+#     - mark
 
 # - name: centos
 #   hosts: centos

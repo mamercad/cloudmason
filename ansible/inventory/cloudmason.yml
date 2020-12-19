@@ -2,7 +2,9 @@ all:
   hosts:
     localhost:
       ansible_connection: local
+      ansible_python_interpreter: /usr/bin/python3
     gateway:
+      ansible_python_interpreter: /usr/bin/python
     jonagold:
       healthchecks_io: https://hc-ping.com/177cb674-b199-4fbb-8879-5f83ba901fa5
     lenovo:
@@ -57,6 +59,7 @@ all:
         net1:
         net2:
       vars:
+        ansible_python_interpreter: /usr/bin/python3
         plays:
           - traefik
     nodes:
@@ -75,12 +78,12 @@ all:
     unifi:
       hosts:
         gateway:
-    pihole:
-      hosts:
-        net1:
-        net2:
-      vars:
-        ansible_python_interpreter: /usr/bin/python3
+    # pihole:
+    #   hosts:
+    #     net1:
+    #     net2:
+    #   vars:
+    #     ansible_python_interpreter: /usr/bin/python3
     ubuntu:
       hosts:
         jonagold:
