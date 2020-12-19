@@ -2,7 +2,7 @@
 ---
 
 - name: common
-  hosts: all
+  hosts: '!cloudkey2:!gateway:!localhost:!qnap1'
   gather_facts: no
   become: no
   roles:
