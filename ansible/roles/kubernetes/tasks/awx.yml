@@ -237,3 +237,4 @@
         tower_broadcast_websocket_secret: "{{ awx.tower_broadcast_websocket_secret }}"
         tower_ingress_type: Ingress
         tower_hostname: "awx.{{ kubernetes.context }}.{{ network.domain }}"
+        tower_replicas: "3"
