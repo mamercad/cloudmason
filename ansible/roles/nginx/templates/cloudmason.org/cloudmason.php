@@ -112,6 +112,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 <br/>
 <p class="lead"><?= shell_exec("cat /usr/share/nginx/html/cloudmason.org/cloudmason"); ?></p>
 <br/>
+<b>$ hostname</b> <?= shell_exec('hostname'); ?><br/>
+<br/>
 <b>$ date</b> <?= shell_exec('date'); ?><br/>
 <b>$ date -u</b> <?= shell_exec('date -u'); ?><br/>
 <b>$ uptime</b> <?= shell_exec('uptime'); ?><br/>
@@ -125,7 +127,11 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 <br/>
 -->
 <b>$ fortune bofh-excuses linuxcookie computers linux</b><br/><pre><?= shell_exec('/usr/games/fortune bofh-excuses linuxcookie computers linux'); ?></pre>
+<!--
+<? if ($_SERVER['HTTP_X_FORWARDED_SERVER'] == 'net1') { ?>
 <b>$ sshbrutes.sh</b><br/><pre><?= shell_exec('cat /usr/share/nginx/html/cloudmason.org/sshbrutes'); ?></pre>
+<? } ?>
+-->
 <br/>
 <!--
 <b>$ git log -1</b><br/><pre><?= shell_exec('git log -1'); ?></pre>
