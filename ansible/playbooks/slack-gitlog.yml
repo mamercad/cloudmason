@@ -38,4 +38,4 @@
         channel: "{{ slack_merged.channel }}"
         username: "{{ slack_merged.username }}"
         icon_url: "{{ slack_merged.icon_url }}"
-        msg: "```{{ slack_message }}```"
+        msg: "```Infrastructure changegs since {{ gitlog_since | default('1 hour ago') }}:\n{{ slack_message }}```"
