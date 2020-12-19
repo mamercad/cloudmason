@@ -1,0 +1,29 @@
+---
+- name: gitlog
+  hosts: localhost
+  connection: local
+  gather_facts: no
+  become: no
+
+  tasks:
+
+    - shell: git log --pretty=format:"%h %s" --since="0am" --shortstat
+      register: gitlog
+
+    - set_fact:
+        slack_message: "```{{ gitlog.stdout }}```"
+
+    - set_fact:
+        slack_merged: "{{ slack | combine(slack_override|default({})) }}"
+
+    - name: Send notification message via Slack
+      community.general.slack:
+        token: "{{ slack_merged.ansible.token }}"
+        channel: "{{ slack_merged.channel }}"
+        username: "{{ slack_merged.username }}"
+        icon_url: "{{ slack_merged.icon_url }}"
+        blocks:
+          - type: section
+            text:
+              type: mrkdwn
+              text: "```{{ slack_message }}```"
