@@ -277,6 +277,9 @@ node3:
 marymacbook:
   type: A
   value: 192.168.1.162
+awx.sunfire:
+  type: A
+  value: 192.168.1.170
 hello-world.sunfire:
   type: A
   value: 192.168.1.171

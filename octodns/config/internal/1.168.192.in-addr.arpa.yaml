@@ -221,6 +221,9 @@
 162:
   type: PTR
   value: marymacbook.cloudmason.org.
+170:
+  type: PTR
+  value: awx.sunfire.cloudmason.org.
 171:
   type: PTR
   value: hello-world.sunfire.cloudmason.org.
