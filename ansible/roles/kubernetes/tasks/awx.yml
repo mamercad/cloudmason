@@ -235,7 +235,7 @@
         tower_admin_email: "{{ tower_admin_email }}"
         tower_admin_password: "{{ tower_admin_password }}"
         tower_broadcast_websocket_secret: "{{ tower_broadcast_websocket_secret }}"
-        tower_ingress_type: LoadBalancer
+        tower_ingress_type: Ingress
         tower_hostname: awx.sunfire.cloudmason.org
   vars:
     tower_admin_user: admin
