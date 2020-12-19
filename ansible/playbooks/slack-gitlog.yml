@@ -11,7 +11,7 @@
       register: gitlog
 
     - set_fact:
-        slack_message: "```{{ gitlog.stdout }}```"
+        slack_message: "{{ gitlog.stdout }}"
 
     - set_fact:
         slack_merged: "{{ slack | combine(slack_override|default({})) }}"
