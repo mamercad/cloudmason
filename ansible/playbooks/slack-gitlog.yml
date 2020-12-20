@@ -7,11 +7,22 @@
 
   tasks:
 
-    - shell: |
-        git pull;
-        git log --pretty=format:"%h [ %<(60)%s ]" --since="{{ gitlog_since | default('1 hour ago') }}" --shortstat | paste -sd'_' - | sed 's/__/\n/g' | tr -d '_';
+    - name: Checkout and pull
+      git:
+        repo: git@github.com:mamercad/cloudmason.git
+        dest: /home/awx/src/github.com/mamercad/cloudmason
+        key_file: /home/awx/.ssh/id_rsa
+        version: main
+        update: yes
+      become: yes
+      become_user: awx
+
+    - name: Get the git log
+      shell: git log --pretty=format:"%h [ %<(60)%s ]" --since="{{ gitlog_since | default('1 hour ago') }}" --shortstat | paste -sd'_' - | sed 's/__/\n/g' | tr -d '_'
       args:
-        chdir: /home/mark/src/github.com/mamercad/cloudmason
+        chdir: /home/awx/src/github.com/mamercad/cloudmason
+      become: yes
+      become_user: awx
       register: gitlog
 
     - set_fact:
