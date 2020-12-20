@@ -335,8 +335,14 @@
       31653937653063663064633637376234623934356664373134653432353663643533
   become: yes
 
+# - name: Give net priv ports to the traefik binary
+#   shell: setcap 'cap_net_bind_service=+ep' /home/traefik/traefik
+
 - name: Give net priv ports to the traefik binary
-  shell: setcap 'cap_net_bind_service=+ep' /home/traefik/traefik
+  community.general.capabilities:
+    path: /home/traefik/traefik
+    capability: cap_net_bind_service=+ep
+    state: present
   become: yes
 
 - name: Deploy the traefik systemd unit file
