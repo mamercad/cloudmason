@@ -28,14 +28,20 @@
 #     kubernetes:
 #       context: sunfire
 
+- name: Include awx
+  include_tasks: awx.yml
+  vars:
+    kubernetes:
+      context: sunfire
+
 - name: Include additional-scrape-configs
   include_tasks: additional-scrape-configs.yml
   vars:
     kubernetes:
       context: jonagold
 
-- name: Include awx
-  include_tasks: awx.yml
+- name: Include grafana-image-renderer
+  include_tasks: grafana-image-renderer.yml
   vars:
     kubernetes:
-      context: sunfire
+      context: jonagold
