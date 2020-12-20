@@ -12,8 +12,6 @@
         git log --pretty=format:"%h [ %<(60)%s ]" --since="{{ gitlog_since | default('1 hour ago') }}" --shortstat | paste -sd'_' - | sed 's/__/\n/g' | tr -d '_';
       args:
         chdir: /home/mark/src/github.com/mamercad/cloudmason
-      become: yes
-      become_user: mark
       register: gitlog
 
     - set_fact:
