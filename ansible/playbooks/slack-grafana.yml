@@ -1,48 +1,73 @@
 ---
 - name: Slack
-  hosts: all
+  hosts: net
   gather_facts: no
+  serial: 1
+
+  vars:
+
+    ago: 10800
+    width: 1000
+    height: 350
+    imgdir: /usr/share/nginx/html/cloudmason.org/grafana
+    org: 4KC9HzbGz
+    grafana: https://grafana.cloudmason.org/render/d-solo/{{ org }}/{{ item }}?orgId=1&from={{f.stdout}}000&to={{t.stdout}}000&panelId=2&width={{ width }}&height={{ height }}&tz=America%2FDetroit
 
   tasks:
 
-    - shell: expr $(date +%s) - 10800
+    - name: Ensure imgdir exists
+      file:
+        state: directory
+        path: "{{ imgdir }}"
+        owner: root
+        group: root
+        mode: 0755
+      become: yes
+
+    - shell: expr $(date +%s) - {{ ago }}
       register: f
 
     - shell: expr $(date +%s)
       register: t
 
-    - set_fact:
-        load_image_url: https://grafana.cloudmason.org/render/d-solo/4KC9HzbGz/load-average?orgId=1&from={{f.stdout}}000&to={{t.stdout}}000&panelId=2&width=500&height=250&tz=America%2FDetroit
-
-    # - name: Send notification message via Slack
-    #   community.general.slack:
-    #     token: !vault |
-    #       $ANSIBLE_VAULT;1.1;AES256
-    #       33383362356136306531386334353535306465643363343733633931373230373761316334353837
-    #       3536306566303535313934643865656635316532376462640a373032653434633239336531323161
-    #       65643164646538303464373839356464656662323361643366333864316632326234383733383238
-    #       3963323562346230300a643562363938663730316332633736383130373937326534373066366465
-    #       62616336373165626564313666656632623239363234623330326239613566333432393031333038
-    #       35396339393536306366646363323631393737383865663130623165633566653132626664383564
-    #       633430333133626630386461346337323430
-    #     channel: '#testing'
-    #     icon_url: https://logodix.com/logo/1736776.png
-    #     username: Grafana
-    #     blocks:
-    #       - type: image
-    #         image_url: https://grafana.cloudmason.org/render/d-solo/4KC9HzbGz/load-average?orgId=1&from={{f.stdout}}000&to={{t.stdout}}000&panelId=2&width=500&height=250&tz=America%2FDetroit
-    #         alt_text: foo
-
-    - set_fact:
-        slack_merged: "{{ slack | combine(slack_override|default({})) }}"
+    - get_url:
+        url: "{{ grafana }}"
+        dest: "/usr/share/nginx/html/cloudmason.org/grafana/{{ item }}.png"
+        timeout: 120
+      become: yes
+      loop:
+        - load-average
 
     - name: Send notification message via Slack
       community.general.slack:
-        token: "{{ slack_merged.ansible.token }}"
-        channel: "{{ slack_merged.channel }}"
-        username: "{{ slack_merged.username }}"
-        icon_url: "{{ slack_merged.icon_url }}"
+        token: !vault |
+          $ANSIBLE_VAULT;1.1;AES256
+          33383362356136306531386334353535306465643363343733633931373230373761316334353837
+          3536306566303535313934643865656635316532376462640a373032653434633239336531323161
+          65643164646538303464373839356464656662323361643366333864316632326234383733383238
+          3963323562346230300a643562363938663730316332633736383130373937326534373066366465
+          62616336373165626564313666656632623239363234623330326239613566333432393031333038
+          35396339393536306366646363323631393737383865663130623165633566653132626664383564
+          633430333133626630386461346337323430
+        channel: '#testing'
+        icon_url: https://logodix.com/logo/1736776.png
+        username: Grafana
         blocks:
           - type: image
-            image_url: "{{ load_image_url }}"
-            alt_text: "Load Average"
+            image_url: https://cloudmason.org/grafana/load-average.png
+            alt_text: foo
+      when: inventory_hostname == 'net2'
+
+    # - set_fact:
+    #     slack_merged: "{{ slack | combine(slack_override|default({})) }}"
+
+    # - name: Send notification message via Slack
+    #   community.general.slack:
+    #     token: "{{ slack_merged.ansible.token }}"
+    #     channel: "{{ slack_merged.channel }}"
+    #     username: "{{ slack_merged.username }}"
+    #     icon_url: "{{ slack_merged.icon_url }}"
+    #     blocks:
+    #       - type: image
+    #         image_url: "{{ load_image_url }}"
+    #         alt_text: "Load Average"
