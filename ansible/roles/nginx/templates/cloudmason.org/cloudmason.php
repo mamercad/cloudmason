@@ -113,10 +113,10 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 <p class="lead"><?= shell_exec("cat /usr/share/nginx/html/cloudmason.org/cloudmason"); ?></p>
 <br/>
 <b>$ hostname</b> <?= shell_exec('hostname'); ?><br/>
+<b>$ uptime</b> <?= shell_exec('uptime'); ?><br/>
 <br/>
 <b>$ date</b> <?= shell_exec('date'); ?><br/>
 <b>$ date -u</b> <?= shell_exec('date -u'); ?><br/>
-<b>$ uptime</b> <?= shell_exec('uptime'); ?><br/>
 <br/>
 <b>$ rand</b> <?= rand(); ?><br/>
 <b>$ openssl rand -hex 20</b> <?= shell_exec('openssl rand -hex 20'); ?><br/>
