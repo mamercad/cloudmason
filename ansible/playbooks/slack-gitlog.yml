@@ -7,7 +7,10 @@
 
   tasks:
 
-    - shell: git log --pretty=format:"%h [ %<(60)%s ]" --since="{{ gitlog_since | default('1 hour ago') }}" --shortstat | paste -sd'_' - | sed 's/__/\n/g' | tr -d '_'
+    # - shell: git log --pretty=format:"%h [ %<(60)%s ]" --since="{{ gitlog_since | default('1 hour ago') }}" --shortstat | paste -sd'_' - | sed 's/__/\n/g' | tr -d '_'
+    #   register: gitlog
+
+    - shell: git log --pretty=format:"%h %s" --since="{{ gitlog_since | default('1 hour ago') }}"
       register: gitlog
 
     - set_fact:
@@ -28,6 +31,7 @@
     #     icon_url: 'https://avatars3.githubusercontent.com/u/18133?s=200&v=4'
     #     username: git-log
     #     msg: "```{{ slack_message }}```"
+    #   when: slack_message != ''
 
     - set_fact:
         slack_merged: "{{ slack | combine(slack_override|default({})) }}"
@@ -39,3 +43,4 @@
         username: "{{ slack_merged.username }}"
         icon_url: "{{ slack_merged.icon_url }}"
         msg: "```Infrastructure changes since {{ gitlog_since | default('1 hour ago') }}:\n{{ slack_message }}```"
+      when: slack_message != ''
