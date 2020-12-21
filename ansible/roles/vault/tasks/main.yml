@@ -53,15 +53,16 @@
       }
 
       listener "tcp" {
-        address     = "127.0.0.1:8200"
+        address     = "0.0.0.0:8200"
         tls_disable = 1
       }
 
       disable_mlock = true
-      api_addr = "http://127.0.0.1:8200"
-      cluster_addr = "https://127.0.0.1:8201"
+      api_addr = "http://0.0.0.0:8200"
+      cluster_addr = "https://0.0.0.0:8201"
       ui = true
   become: yes
+  notify: Restart vault
 
 - name: Deploy Vault systemd unit
   copy:
@@ -91,7 +92,7 @@
       Capabilities=CAP_IPC_LOCK+ep
       CapabilityBoundingSet=CAP_SYSLOG CAP_IPC_LOCK
       NoNewPrivileges=yes
-      ExecStart=/usr/local/bin/vault server -config=/opt/vault/vault.hcl
+      ExecStart=/usr/bin/vault server -config=/opt/vault/vault.hcl
       ExecReload=/bin/kill --signal HUP $MAINPID
       KillMode=process
       KillSignal=SIGINT
