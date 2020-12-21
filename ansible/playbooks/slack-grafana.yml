@@ -10,6 +10,7 @@
     width: 1000
     height: 350
     imgdir: /usr/share/nginx/html/cloudmason.org/grafana
+    imgurl: https://cloudmason.org/grafana
     org: 4KC9HzbGz
     grafana: https://grafana.cloudmason.org/render/d-solo/{{ org }}/{{ item }}?orgId=1&from={{f.stdout}}000&to={{t.stdout}}000&panelId=2&width={{ width }}&height={{ height }}&tz=America%2FDetroit
 
@@ -49,7 +50,7 @@
         icon_url: "{{ slack_merged.icon_url }}"
         blocks:
           - type: image
-            image_url: "https://cloudmason.org/grafana/{{ item }}.png"
+            image_url: "{{ imgurl }}/{{ item }}.png"
             alt_text: "{{ item }}"
       loop:
         - load-average
