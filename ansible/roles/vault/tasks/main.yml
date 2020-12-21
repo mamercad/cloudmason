@@ -9,6 +9,7 @@
     state: present
     name: vault
     group: vault
+    shell: /bin/bash
   become: yes
 
 - name: Install Hashicorp GPG key
@@ -33,7 +34,7 @@
 - name: Create the Vault directories
   file:
     state: directory
-    path: /opt/vault/data
+    path: /home/vault/data
     owner: vault
     group: vault
     mode: 0755
@@ -42,13 +43,13 @@
 
 - name: Deploy Vault config vault.hcl
   copy:
-    dest: /opt/vault/vault.hcl
+    dest: /home/vault/vault.hcl
     owner: vault
     group: vault
     mode: 0644
     content: |
       storage "raft" {
-        path    = "/opt/vault/data"
+        path    = "/home/vault/data"
         node_id = "sunfire"
       }
 
@@ -59,7 +60,7 @@
 
       disable_mlock = true
       api_addr = "http://0.0.0.0:8200"
-      cluster_addr = "https://0.0.0.0:8201"
+      cluster_addr = "http://127.0.0.1:8201"
       ui = true
   become: yes
   notify: Restart vault
@@ -76,7 +77,7 @@
       Documentation=https://www.vaultproject.io/docs/
       Requires=network-online.target
       After=network-online.target
-      ConditionFileNotEmpty=/opt/vault/vault.hcl
+      ConditionFileNotEmpty=/home/vault/vault.hcl
       StartLimitIntervalSec=60
       StartLimitBurst=3
 
@@ -84,7 +85,7 @@
       User=vault
       Group=vault
       ProtectSystem=full
-      ProtectHome=read-only
+      # ProtectHome=read-only
       PrivateTmp=yes
       PrivateDevices=yes
       SecureBits=keep-caps
@@ -92,7 +93,7 @@
       Capabilities=CAP_IPC_LOCK+ep
       CapabilityBoundingSet=CAP_SYSLOG CAP_IPC_LOCK
       NoNewPrivileges=yes
-      ExecStart=/usr/bin/vault server -config=/opt/vault/vault.hcl
+      ExecStart=/usr/bin/vault server -config=/home/vault/vault.hcl
       ExecReload=/bin/kill --signal HUP $MAINPID
       KillMode=process
       KillSignal=SIGINT
@@ -114,4 +115,5 @@
     name: vault
     state: started
     enabled: yes
+    daemon_reload: yes
   become: yes
