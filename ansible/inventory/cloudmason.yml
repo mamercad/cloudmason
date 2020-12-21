@@ -77,12 +77,6 @@ all:
     unifi:
       hosts:
         gateway:
-    # pihole:
-    #   hosts:
-    #     net1:
-    #     net2:
-    #   vars:
-    #     ansible_python_interpreter: /usr/bin/python3
     ubuntu:
       hosts:
         jonagold:
