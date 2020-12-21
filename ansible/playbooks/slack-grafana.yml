@@ -1,20 +1,20 @@
 ---
 - name: Slack
-  hosts: net
+  hosts: "{{ ansible_limit | default(omit) }}"
   gather_facts: no
   serial: 1
 
-  vars:
+  # vars:
 
-    ago: 10800
-    width: 1000
-    height: 350
-    imgdir: /usr/share/nginx/html/cloudmason.org/grafana
-    imgurl: https://cloudmason.org/grafana
-    org: 4KC9HzbGz
-    grafana: https://grafana.cloudmason.org/render/d-solo/{{ org }}/{{ item }}?orgId=1&from={{f.stdout}}000&to={{t.stdout}}000&panelId=2&width={{ width }}&height={{ height }}&tz=America%2FDetroit
-    graphs:
-      - load-average
+  #   ago: 10800
+  #   width: 1000
+  #   height: 350
+  #   imgdir: /usr/share/nginx/html/cloudmason.org/grafana
+  #   imgurl: https://cloudmason.org/grafana
+  #   org: 4KC9HzbGz
+  #   grafana: https://grafana.cloudmason.org/render/d-solo/{{ org }}/{{ item }}?orgId=1&from={{f.stdout}}000&to={{t.stdout}}000&panelId=2&width={{ width }}&height={{ height }}&tz=America%2FDetroit
+  #   graphs:
+  #     - load-average
 
   tasks:
 
