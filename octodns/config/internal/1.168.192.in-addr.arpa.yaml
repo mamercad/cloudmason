@@ -241,7 +241,7 @@
   value: awx-web-svc.jonagold.cloudmason.org.
 222:
   type: PTR
-  value: prometheus.cloudmason.org.
+  value: prometheus.jonagold.cloudmason.org.
 223:
   type: PTR
   value: grafana.jonagold.cloudmason.org.
