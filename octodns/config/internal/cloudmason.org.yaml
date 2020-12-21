@@ -30,6 +30,9 @@ awx:
 grafana:
   type: CNAME
   value: net.cloudmason.org.
+prometheus:
+  type: CNAME
+  value: net.cloudmason.org.
 nzbget:
   type: CNAME
   value: net.cloudmason.org.
