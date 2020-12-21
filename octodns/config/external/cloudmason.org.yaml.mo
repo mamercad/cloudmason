@@ -25,3 +25,7 @@ smtp:
   type: A
   value: {{eth0}}
   ttl: 3600
+adarobin:
+  type: CNAME
+  value: adarobin.net.
+  ttl: 300
