@@ -6,7 +6,7 @@
   tasks:
 
     - uri:
-        url: http://prometheus.cloudmason.org:9090/api/v1/query
+        url: http://prometheus.jonagold.cloudmason.org:9090/api/v1/query
         method: POST
         body: "query=pdns_recursor_cache_hits"
         body_format: form-urlencoded
@@ -17,7 +17,7 @@
         cache_hits: "{{ hits.json.data.result.0.value.1 }}"
 
     - uri:
-        url: http://prometheus.cloudmason.org:9090/api/v1/query
+        url: http://prometheus.jonagold.cloudmason.org:9090/api/v1/query
         method: POST
         body: "query=pdns_recursor_cache_misses"
         body_format: form-urlencoded
@@ -31,7 +31,7 @@
         cache_efficiency: "{{ (100.0 * cache_hits|float / (cache_hits|float + cache_misses|float)) | float | round(1) }}% ({{ cache_hits }} hits, {{ cache_misses }} misses)"
 
     - uri:
-        url: http://prometheus.cloudmason.org:9090/api/v1/query
+        url: http://prometheus.jonagold.cloudmason.org:9090/api/v1/query
         method: POST
         body: 'query=sum(increase(pdns_recursor_all_outqueries[1d]))'
         body_format: form-urlencoded

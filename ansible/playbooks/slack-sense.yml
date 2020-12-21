@@ -6,7 +6,7 @@
   tasks:
 
     - uri:
-        url: http://prometheus.cloudmason.org:9090/api/v1/query
+        url: http://prometheus.jonagold.cloudmason.org:9090/api/v1/query
         method: POST
         body: 'query=sum(increase(sense_daily_usage[1d]))'
         body_format: form-urlencoded

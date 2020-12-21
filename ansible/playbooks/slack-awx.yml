@@ -6,7 +6,7 @@
   tasks:
 
     - uri:
-        url: http://prometheus.cloudmason.org:9090/api/v1/query
+        url: http://prometheus.jonagold.cloudmason.org:9090/api/v1/query
         method: POST
         body: 'query=sum(increase(awx_status_total{status="failed"}[1d]))'
         body_format: form-urlencoded
@@ -17,7 +17,7 @@
         failed_jobs: "{{ (failed.json.data.result.0.value.1 | default(0)) | float | round(1, 'ceil') | int }}"
 
     - uri:
-        url: http://prometheus.cloudmason.org:9090/api/v1/query
+        url: http://prometheus.jonagold.cloudmason.org:9090/api/v1/query
         method: POST
         body: 'query=sum(increase(awx_status_total{status="successful"}[1d]))'
         body_format: form-urlencoded

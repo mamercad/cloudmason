@@ -6,7 +6,7 @@
   tasks:
 
     - uri:
-        url: http://prometheus.cloudmason.org:9090/api/v1/query
+        url: http://prometheus.jonagold.cloudmason.org:9090/api/v1/query
         method: POST
         body: 'query=sum(increase(unifipoller_device_wan_receive_bytes_total{port="wan"}[1d]))'
         body_format: form-urlencoded
@@ -17,7 +17,7 @@
         daily_xfinity_traffic: "{{ xfinity.json.data.result.0.value.1 | filesizeformat(True) }}"
 
     - uri:
-        url: http://prometheus.cloudmason.org:9090/api/v1/query
+        url: http://prometheus.jonagold.cloudmason.org:9090/api/v1/query
         method: POST
         body: 'query=sum(increase(unifipoller_device_wan_receive_bytes_total{port="lan2"}[1d]))'
         body_format: form-urlencoded

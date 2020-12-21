@@ -6,7 +6,7 @@
   tasks:
 
     - uri:
-        url: http://prometheus.cloudmason.org:9090/api/v1/query
+        url: http://prometheus.jonagold.cloudmason.org:9090/api/v1/query
         method: POST
         body: 'query=sum(hc_check_up)'
         body_format: form-urlencoded
@@ -20,7 +20,7 @@
         var: check_up
 
     - uri:
-        url: http://prometheus.cloudmason.org:9090/api/v1/query
+        url: http://prometheus.jonagold.cloudmason.org:9090/api/v1/query
         method: POST
         body: 'query=sum(hc_check_total)'
         body_format: form-urlencoded

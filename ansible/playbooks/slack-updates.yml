@@ -7,7 +7,7 @@
   tasks:
 
     - uri:
-        url: http://prometheus.cloudmason.org:9090/api/v1/query
+        url: http://prometheus.jonagold.cloudmason.org:9090/api/v1/query
         method: POST
         body: 'query=node_reboot_required>0'
         body_format: form-urlencoded
@@ -34,7 +34,7 @@
         # - needing_reboots_list is defined
 
     - uri:
-        url: http://prometheus.cloudmason.org:9090/api/v1/query
+        url: http://prometheus.jonagold.cloudmason.org:9090/api/v1/query
         method: POST
         body: 'query=apt_upgrades_pending>0'
         body_format: form-urlencoded
