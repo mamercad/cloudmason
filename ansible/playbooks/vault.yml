@@ -1,0 +1,9 @@
+---
+- name: Ubuntu
+  hosts: sunfire
+  gather_facts: yes
+
+  tasks:
+    - name: Include Vault role
+      include_role:
+        name: vault
