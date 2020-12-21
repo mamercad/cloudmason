@@ -25,7 +25,3 @@ smtp:
   type: A
   value: {{eth0}}
   ttl: 3600
-grafana:
-  type: A
-  value: {{eth0}}
-  ttl: 3600
