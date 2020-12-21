@@ -91,6 +91,10 @@
             rule = "Host(`grafana.cloudmason.org`)"
             service = "grafana"
             [http.routers.grafana.tls]
+          [http.routers.prometheus]
+            rule = "Host(`prometheus.cloudmason.org`)"
+            service = "prometheus"
+            [http.routers.prometheus.tls]
           [http.routers.web]
             rule = "Host(`web.cloudmason.org`)"
             service = "web"
@@ -133,6 +137,9 @@
           [http.services.grafana.loadBalancer]
             [[http.services.grafana.loadBalancer.servers]]
               url = "http://grafana.jonagold.cloudmason.org:3000/"
+          [http.services.prometheus.loadBalancer]
+            [[http.services.prometheus.loadBalancer.servers]]
+              url = "http://prometheus.jonagold.cloudmason.org:9090/"
           [http.services.web.loadBalancer]
             [[http.services.web.loadBalancer.servers]]
               url = "http://web.cloudmason.org:8000/"
