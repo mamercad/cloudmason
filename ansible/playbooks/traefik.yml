@@ -2,6 +2,7 @@
 - name: traefik
   hosts: net
   gather_facts: no
+  become: no
 
   tasks:
 

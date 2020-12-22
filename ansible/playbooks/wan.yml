@@ -2,6 +2,8 @@
 - name: wan
   hosts: gateway
   gather_facts: no
+  become: no
+
   tasks:
 
     - shell: /opt/vyatta/bin/vyatta-show-interfaces | grep 'inet ' | grep eth0 | awk '{print $2}' | sed 's/\/.*$//'

@@ -1,6 +1,9 @@
 ---
 - name: Postfix
   hosts: net
+  gather_facts: no
+  become: no
+
   tasks:
     - name: Include Postfix role
       include_role:

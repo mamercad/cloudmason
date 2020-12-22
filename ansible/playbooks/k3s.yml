@@ -2,6 +2,7 @@
 - name: k3s
   hosts: "{{ ansible_limit | default(omit) }}"
   gather_facts: no
+  become: no
 
   tasks:
 

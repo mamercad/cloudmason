@@ -1,7 +1,9 @@
 ---
-
 - name: mark
   hosts: linux
+  gather_facts: no
+  become: no
+
   tasks:
     - name: mark
       include_role:

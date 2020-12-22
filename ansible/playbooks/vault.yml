@@ -2,6 +2,7 @@
 - name: Ubuntu
   hosts: sunfire
   gather_facts: yes
+  become: no
 
   tasks:
     - name: Include Vault role
