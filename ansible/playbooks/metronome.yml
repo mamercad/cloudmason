@@ -3,7 +3,12 @@
   hosts: localhost
   connection: local
   gather_facts: no
+  become: no
+
   tasks:
-    - action: ping
-    - uri:
-        url: https://hc-ping.com/0ebdc1e9-2b4b-44eb-aec5-62ee86a5ca32
+    - name: Simple ping
+      action: ping
+
+    - name: Ping Healthchecks.io
+      uri:
+        url: "{{ metronome.healthchecks_io }}"

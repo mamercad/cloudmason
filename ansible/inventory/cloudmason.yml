@@ -92,6 +92,23 @@ all:
         node5:
         cloudkey2:
   vars:
+    dns_checks:
+      - facebook.com.
+      - google.com.
+      - reddit.com.
+      - twitter.com.
+      - mamercad.myqnapcloud.com
+      - letsbuildthe.cloud.
+      - cloudmason.org.
+      - gateway.cloudmason.org.
+      - cloudkey.cloudmason.org.
+      - net1.cloudmason.org.
+      - net2.cloudmason.org.
+      - powerdns1.cloudmason.org.
+      - powerdns2.cloudmason.org.
+      - -t ptr 1.1.168.192.in-addr.arpa.
+    metronome:
+      healthchecks_io: https://hc-ping.com/0ebdc1e9-2b4b-44eb-aec5-62ee86a5ca32
     lifecycle:
       slack_channel: '#general'
       host_config_key: !vault |

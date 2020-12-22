@@ -4,21 +4,7 @@
   gather_facts: no
 
   vars:
-    records:
-      - facebook.com.
-      - google.com.
-      - reddit.com.
-      - twitter.com.
-      - mamercad.myqnapcloud.com
-      - letsbuildthe.cloud.
-      - cloudmason.org.
-      - gateway.cloudmason.org.
-      - cloudkey.cloudmason.org.
-      - net1.cloudmason.org.
-      - net2.cloudmason.org.
-      - powerdns1.cloudmason.org.
-      - powerdns2.cloudmason.org.
-      - -t ptr 1.1.168.192.in-addr.arpa.
+    records: "{{ dns_checks }}"
 
   tasks:
 
