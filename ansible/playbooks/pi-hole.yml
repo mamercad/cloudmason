@@ -1,7 +1,0 @@
----
-- name: Pi-hole
-  hosts: pihole
-  tasks:
-    - name: Include Pi-hole role
-      include_role:
-        name: pihole
