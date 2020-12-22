@@ -2,6 +2,7 @@
 - name: Healthchecks.io ping
   hosts: all
   gather_facts: no
+  become: no
 
   tasks:
     - name: Ping Healthchecks.io

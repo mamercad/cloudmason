@@ -1,6 +1,9 @@
 ---
 - name: Net
   hosts: net
+  gather_facts: no
+  become: no
+
   tasks:
     - name: Include Net role
       include_role:

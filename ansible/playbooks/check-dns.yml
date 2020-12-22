@@ -2,6 +2,7 @@
 - name: Check DNS
   hosts: all
   gather_facts: no
+  become: no
 
   vars:
     records: "{{ dns_checks }}"

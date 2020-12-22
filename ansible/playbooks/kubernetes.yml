@@ -3,9 +3,7 @@
   hosts: localhost
   connection: local
   gather_facts: no
-
-  # vars:
-  #   ansible_python_interpreter: /Users/mark/.pyenv/versions/ansible/bin/python3
+  become: no
 
   tasks:
 
