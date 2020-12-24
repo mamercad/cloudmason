@@ -22,17 +22,22 @@
     kubernetes:
       context: sunfire
 
-# - name: Include traefik tasks
-#   include_tasks: traefik.yml
-#   vars:
-#     kubernetes:
-#       context: sunfire
-
 - name: Include awx
   include_tasks: awx.yml
   vars:
     kubernetes:
       context: sunfire
+
+- name: Include argocd
+  include_tasks:
+    file: argocd.yml
+    apply:
+      tags:
+        - argocd
+  vars:
+    kubernetes:
+      context: sunfire
+  tags: argocd
 
 - name: Include additional-scrape-configs
   include_tasks: additional-scrape-configs.yml
