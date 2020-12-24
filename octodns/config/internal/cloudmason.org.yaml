@@ -161,6 +161,9 @@ streamlabs:
 plugoutside1:
   type: A
   value: 192.168.1.87
+wyzeback:
+  type: A
+  value: 192.168.1.88
 lenovo:
   type: A
   value: 192.168.1.89
@@ -194,6 +197,9 @@ maryipad1:
 marymercado:
   type: A
   value: 192.168.1.103
+wyzefront:
+  type: A
+  value: 192.168.1.104
 smartthings:
   type: A
   value: 192.168.1.112

@@ -104,6 +104,9 @@
 87:
   type: PTR
   value: plugoutside1.cloudmason.org.
+88:
+  type: PTR
+  value: wyzeback.cloudmason.org.
 89:
   type: PTR
   value: lenovo.cloudmason.org.
@@ -137,6 +140,9 @@
 103:
   type: PTR
   value: marymercado.cloudmason.org.
+104:
+  type: PTR
+  value: wyzefront.cloudmason.org.
 112:
   type: PTR
   value: smartthings.cloudmason.org.
