@@ -86,6 +86,9 @@
 73:
   type: PTR
   value: honeycrisp.cloudmason.org.
+74:
+  type: PTR
+  value: switch4.cloudmason.org.
 76:
   type: PTR
   value: nest.cloudmason.org.
