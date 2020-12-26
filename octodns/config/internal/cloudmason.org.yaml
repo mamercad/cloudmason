@@ -137,6 +137,9 @@ roomba:
 switch3:
   type: A
   value: 192.168.1.70
+juderokutv:
+  type: A
+  value: 192.168.1.72
 honeycrisp:
   type: A
   value: 192.168.1.73

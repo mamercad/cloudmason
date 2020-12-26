@@ -80,6 +80,9 @@
 70:
   type: PTR
   value: switch3.cloudmason.org.
+72:
+  type: PTR
+  value: juderokutv.cloudmason.org.
 73:
   type: PTR
   value: honeycrisp.cloudmason.org.
