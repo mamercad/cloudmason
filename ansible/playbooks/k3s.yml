@@ -25,6 +25,7 @@
       args:
         chdir: /tmp
       changed_when: no # Don't care
+      failed_when: no # Have to be able to continue
       register: check_downloads
 
     - name: Delete /tmp/k3s ...
@@ -42,11 +43,12 @@
     - name: Fetch k3s
       uri:
         url: "{{ releases[ansible_architecture]['binary']['url'] }}"
-        dest: "/tmp/{{ releases[ansible_architecture]['binary']['name'] }}"
+        dest: /tmp/{{ releases[ansible_architecture]['binary']['name'] }}
         status_code:
           - 200
           - 304
       become: yes
+      when: check_downloads.rc != 0
 
     - name: Fetch k3s sums
       uri:
@@ -56,6 +58,7 @@
           - 200
           - 304
       become: yes
+      when: check_downloads.rc != 0
 
     - name: Just grab k3s line
       shell: grep -E '{{ releases[ansible_architecture]['binary']['name'] }}$' k3s.sums | tee k3s.sums.k3s
@@ -63,70 +66,73 @@
         chdir: /tmp
       changed_when: no # Don't care
       become: yes
+      when: check_downloads.rc != 0
 
     - name: Verify k3s sums
       command: sha256sum -c k3s.sums.k3s
       args:
         chdir: /tmp
       changed_when: no # Don't care
+      when: check_downloads.rc != 0
 
     - name: Copy k3s to /usr/local/bin
       copy:
         src: "/tmp/{{ releases[ansible_architecture]['binary']['name'] }}"
         remote_src: yes
-        dest: /usr/local/bin/{{ releases[ansible_architecture]['binary']['name'] }}"
+        dest: /usr/local/bin/{{ releases[ansible_architecture]['binary']['name'] }}
         owner: root
         group: root
         mode: 0755
       become: yes
+      when: check_downloads.rc != 0
 
-    # - name: Deploy k3s unit file
-    #   copy:
-    #     dest: /etc/systemd/system/k3s.service
-    #     owner: root
-    #     group: root
-    #     mode: 0755
-    #     content: |
-    #       [Unit]
-    #       Description=k3s
-    #       [Service]
-    #       ExecStart=/usr/local/bin/k3s server
-    #       [Install]
-    #       WantedBy=multi-user.target
-    #   become: yes
-    #   when: k3s.leader | default(False)
+    - name: Deploy k3s unit file
+      copy:
+        dest: /etc/systemd/system/k3s.service
+        owner: root
+        group: root
+        mode: 0755
+        content: |
+          [Unit]
+          Description=k3s
+          [Service]
+          ExecStart=/usr/local/bin/{{ releases[ansible_architecture]['binary']['name'] }} server
+          [Install]
+          WantedBy=multi-user.target
+      become: yes
+      when: k3s.leader | default(False)
 
-    # - name: Fetch the agent token
-    #   slurp:
-    #     src: /var/lib/rancher/k3s/server/node-token
-    #   register: token
-    #   become: yes
-    #   when: k3s.leader | default(False)
+    - name: Fetch the agent token
+      slurp:
+        src: /var/lib/rancher/k3s/server/node-token
+      register: token
+      become: yes
+      when: k3s.leader | default(False)
 
-    # - set_fact:
-    #     agent_token: "{{ token.content | b64decode }}"
-    #   when: k3s.leader | default(False)
+    - set_fact:
+        agent_token: "{{ token.content | b64decode }}"
+      when: k3s.leader | default(False)
 
-    # - name: Deploy k3s unit file
-    #   copy:
-    #     dest: /etc/systemd/system/k3s.service
-    #     owner: root
-    #     group: root
-    #     mode: 0755
-    #     content: |
-    #       [Unit]
-    #       Description=k3s
-    #       [Service]
-    #       ExecStart=/usr/local/bin/k3s agent --server https://{{ k3s.leader_fqdn }}:6443 --token {{ hostvars[k3s.leader_fqdn]['agent_token'] }}
-    #       [Install]
-    #       WantedBy=multi-user.target
-    #   become: yes
-    #   when: follower | default(False)
+    - name: Deploy k3s unit file
+      copy:
+        dest: /etc/systemd/system/k3s.service
+        owner: root
+        group: root
+        mode: 0755
+        content: |
+          [Unit]
+          Description=k3s
+          [Service]
+          ExecStart=/usr/local/bin/{{ releases[ansible_architecture]['binary']['name'] }} agent --server https://{{ k3s.leader_fqdn }}:6443 --token {{ hostvars[k3s.leader_hostname]['agent_token'] }}
+          [Install]
+          WantedBy=multi-user.target
+      become: yes
+      when: k3s.follower | default(False)
 
-    # - name: Start and enable k3s
-    #   systemd:
-    #     name: k3s
-    #     state: started
-    #     enabled: yes
-    #     daemon_reload: yes
-    #   become: yes
+    - name: Start and enable k3s
+      systemd:
+        name: k3s
+        state: started
+        enabled: yes
+        daemon_reload: yes
+      become: yes
