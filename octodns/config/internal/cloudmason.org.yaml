@@ -197,6 +197,9 @@ buddyiphone:
 rokulivingroom:
   type: A
   value: 192.168.1.93
+judeswitch:
+  type: A
+  value: 192.168.1.94
 switch1:
   type: A
   value: 192.168.1.95
