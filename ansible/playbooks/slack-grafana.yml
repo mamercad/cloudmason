@@ -42,7 +42,7 @@
 
     - get_url:
         url: "https://grafana.cloudmason.org/render/d-solo/{{ org }}/{{ item }}?orgId=1&from={{f.stdout}}000&to={{t.stdout}}000&panelId=2&width={{ width }}&height={{ height }}&tz=America%2FDetroit"
-        dest: "{{ imgdir }}/{{ item }}.png"
+        dest: "{{ imgdir }}/{{ item }}.{{ t.stdout }}.png"
         timeout: 120
       become: yes
       loop: "{{ graphs }}"
@@ -58,7 +58,7 @@
         icon_url: "{{ slack_merged.icon_url }}"
         blocks:
           - type: image
-            image_url: "{{ imgurl }}/{{ item }}.png"
-            alt_text: "{{ item }}"
+            image_url: "{{ imgurl }}/{{ item }}.{{ t.stdout }}.png"
+            alt_text: "{{ item }}.{{ t.stdout }}"
       loop: "{{ graphs }}"
       when: inventory_hostname == ansible_play_hosts_all[-1]
