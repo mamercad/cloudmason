@@ -58,18 +58,18 @@
           [Install]
           WantedBy=multi-user.target
       become: yes
-      when: leader | default(False)
+      when: k3s.leader | default(False)
 
     - name: Fetch the agent token
       slurp:
         src: /var/lib/rancher/k3s/server/node-token
       register: token
       become: yes
-      when: leader | default(False)
+      when: k3s.leader | default(False)
 
     - set_fact:
         agent_token: "{{ token.content | b64decode }}"
-      when: leader | default(False)
+      when: k3s.leader | default(False)
 
     - name: Deploy k3s unit file
       copy:
@@ -81,7 +81,7 @@
           [Unit]
           Description=k3s
           [Service]
-          ExecStart=/usr/local/bin/k3s agent --server https://{{ leader }}:6443 --token {{ hostvars['node0']['agent_token'] }}
+          ExecStart=/usr/local/bin/k3s agent --server https://{{ k3s.leader_fqdn }}:6443 --token {{ hostvars[k3s.leader_fqdn]['agent_token'] }}
           [Install]
           WantedBy=multi-user.target
       become: yes
