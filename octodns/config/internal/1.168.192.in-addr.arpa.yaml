@@ -74,6 +74,9 @@
 63:
   type: PTR
   value: basement.cloudmason.org.
+64:
+  type: PTR
+  value: clusterpi2.cloudmason.org.
 69:
   type: PTR
   value: roomba.cloudmason.org.
