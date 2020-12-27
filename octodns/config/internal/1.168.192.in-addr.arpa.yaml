@@ -98,6 +98,9 @@
 80:
   type: PTR
   value: alexa1.cloudmason.org.
+81:
+  type: PTR
+  value: clusterpi1.cloudmason.org.
 84:
   type: PTR
   value: nintendoswitch.cloudmason.org.
