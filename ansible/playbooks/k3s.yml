@@ -1,32 +1,68 @@
 ---
 - name: k3s
   hosts: "{{ ansible_limit | default(omit) }}"
-  gather_facts: no
+  gather_facts: yes
   become: no
+
+  vars:
+
+    releases:
+      x86_64:
+        binary:
+          url: https://github.com/rancher/k3s/releases/download/v1.19.4%2Bk3s1/k3s
+          name: k3s
+        sums: https://github.com/rancher/k3s/releases/download/v1.19.4%2Bk3s1/sha256sum-amd64.txt
+      armv7l:
+        binary:
+          url: https://github.com/k3s-io/k3s/releases/download/v1.20.0%2Bk3s2/k3s-armhf
+          name: k3s-armhf
+        sums: https://github.com/k3s-io/k3s/releases/download/v1.20.0%2Bk3s2/sha256sum-arm.txt
 
   tasks:
 
+    - name: Verify k3s sums
+      command: sha256sum -c k3s.sums.k3s
+      args:
+        chdir: /tmp
+      changed_when: no # Don't care
+      register: check_downloads
+
+    - name: Delete /tmp/k3s ...
+      file:
+        state: absent
+        path: "{{ item }}"
+      loop:
+        - /tmp/k3s
+        - /tmp/k3s-armhf
+        - /tmp/k3s.sums
+        - /tmp/k3s.sums.k3s
+      become: yes
+      when: check_downloads.rc != 0
+
     - name: Fetch k3s
       uri:
-        url: https://github.com/rancher/k3s/releases/download/v1.19.4%2Bk3s1/k3s
-        dest: /tmp/k3s
+        url: "{{ releases[ansible_architecture]['binary']['url'] }}"
+        dest: "/tmp/{{ releases[ansible_architecture]['binary']['name'] }}"
         status_code:
           - 200
           - 304
+      become: yes
 
     - name: Fetch k3s sums
       uri:
-        url: https://github.com/rancher/k3s/releases/download/v1.19.4%2Bk3s1/sha256sum-amd64.txt
+        url: "{{ releases[ansible_architecture]['sums'] }}"
         dest: /tmp/k3s.sums
         status_code:
           - 200
           - 304
+      become: yes
 
     - name: Just grab k3s line
-      shell: grep -E 'k3s$' k3s.sums | tee k3s.sums.k3s
+      shell: grep -E '{{ releases[ansible_architecture]['binary']['name'] }}$' k3s.sums | tee k3s.sums.k3s
       args:
         chdir: /tmp
       changed_when: no # Don't care
+      become: yes
 
     - name: Verify k3s sums
       command: sha256sum -c k3s.sums.k3s
@@ -36,61 +72,61 @@
 
     - name: Copy k3s to /usr/local/bin
       copy:
-        src: /tmp/k3s
+        src: "/tmp/{{ releases[ansible_architecture]['binary']['name'] }}"
         remote_src: yes
-        dest: /usr/local/bin/k3s
+        dest: /usr/local/bin/{{ releases[ansible_architecture]['binary']['name'] }}"
         owner: root
         group: root
         mode: 0755
       become: yes
 
-    - name: Deploy k3s unit file
-      copy:
-        dest: /etc/systemd/system/k3s.service
-        owner: root
-        group: root
-        mode: 0755
-        content: |
-          [Unit]
-          Description=k3s
-          [Service]
-          ExecStart=/usr/local/bin/k3s server
-          [Install]
-          WantedBy=multi-user.target
-      become: yes
-      when: k3s.leader | default(False)
+    # - name: Deploy k3s unit file
+    #   copy:
+    #     dest: /etc/systemd/system/k3s.service
+    #     owner: root
+    #     group: root
+    #     mode: 0755
+    #     content: |
+    #       [Unit]
+    #       Description=k3s
+    #       [Service]
+    #       ExecStart=/usr/local/bin/k3s server
+    #       [Install]
+    #       WantedBy=multi-user.target
+    #   become: yes
+    #   when: k3s.leader | default(False)
 
-    - name: Fetch the agent token
-      slurp:
-        src: /var/lib/rancher/k3s/server/node-token
-      register: token
-      become: yes
-      when: k3s.leader | default(False)
+    # - name: Fetch the agent token
+    #   slurp:
+    #     src: /var/lib/rancher/k3s/server/node-token
+    #   register: token
+    #   become: yes
+    #   when: k3s.leader | default(False)
 
-    - set_fact:
-        agent_token: "{{ token.content | b64decode }}"
-      when: k3s.leader | default(False)
+    # - set_fact:
+    #     agent_token: "{{ token.content | b64decode }}"
+    #   when: k3s.leader | default(False)
 
-    - name: Deploy k3s unit file
-      copy:
-        dest: /etc/systemd/system/k3s.service
-        owner: root
-        group: root
-        mode: 0755
-        content: |
-          [Unit]
-          Description=k3s
-          [Service]
-          ExecStart=/usr/local/bin/k3s agent --server https://{{ k3s.leader_fqdn }}:6443 --token {{ hostvars[k3s.leader_fqdn]['agent_token'] }}
-          [Install]
-          WantedBy=multi-user.target
-      become: yes
-      when: follower | default(False)
+    # - name: Deploy k3s unit file
+    #   copy:
+    #     dest: /etc/systemd/system/k3s.service
+    #     owner: root
+    #     group: root
+    #     mode: 0755
+    #     content: |
+    #       [Unit]
+    #       Description=k3s
+    #       [Service]
+    #       ExecStart=/usr/local/bin/k3s agent --server https://{{ k3s.leader_fqdn }}:6443 --token {{ hostvars[k3s.leader_fqdn]['agent_token'] }}
+    #       [Install]
+    #       WantedBy=multi-user.target
+    #   become: yes
+    #   when: follower | default(False)
 
-    - name: Start and enable k3s
-      systemd:
-        name: k3s
-        state: started
-        enabled: yes
-        daemon_reload: yes
-      become: yes
+    # - name: Start and enable k3s
+    #   systemd:
+    #     name: k3s
+    #     state: started
+    #     enabled: yes
+    #     daemon_reload: yes
+    #   become: yes
