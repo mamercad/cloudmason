@@ -105,6 +105,8 @@ all:
         clusterpi0:
         clusterpi1:
         clusterpi2:
+      vars:
+        ansible_python_interpreter: /usr/bin/python3
   vars:
     dns_checks:
       - facebook.com.
