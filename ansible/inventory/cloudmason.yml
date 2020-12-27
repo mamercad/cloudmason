@@ -56,6 +56,9 @@ all:
         lenovo:
         jonagold:
         sunfire:
+        clusterpi0:
+        clusterpi1:
+        clusterpi2:
     net:
       hosts:
         net1:
@@ -94,6 +97,11 @@ all:
         node4:
         node5:
         cloudkey2:
+        clusterpi0:
+        clusterpi1:
+        clusterpi2:
+    clusterpi:
+      hosts:
         clusterpi0:
         clusterpi1:
         clusterpi2:
