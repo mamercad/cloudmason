@@ -167,6 +167,9 @@
 104:
   type: PTR
   value: wyzefront.cloudmason.org.
+105:
+  type: PTR
+  value: retroarcade.cloudmason.org.
 112:
   type: PTR
   value: smartthings.cloudmason.org.
