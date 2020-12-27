@@ -71,6 +71,9 @@
 60:
   type: PTR
   value: dehumidifier.cloudmason.org.
+62:
+  type: PTR
+  value: clusterpi0.cloudmason.org.
 63:
   type: PTR
   value: basement.cloudmason.org.

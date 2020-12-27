@@ -128,6 +128,9 @@ indiphone:
 dehumidifier:
   type: A
   value: 192.168.1.60
+clusterpi0:
+  type: A
+  value: 192.168.1.62
 basement:
   type: A
   value: 192.168.1.63
@@ -159,7 +162,7 @@ alexa1:
   type: A
   value: 192.168.1.80
 clusterpi1:
-  tgpe: A
+  type: A
   value: 192.168.1.81
 nintendoswitch:
   type: A
