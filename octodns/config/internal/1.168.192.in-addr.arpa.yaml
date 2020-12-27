@@ -131,6 +131,9 @@
 90:
   type: PTR
   value: marypc.cloudmason.org.
+91:
+  type: PTR
+  value: ambrosia.cloudmason.org.
 92:
   type: PTR
   value: buddyiphone.cloudmason.org.
@@ -215,9 +218,6 @@
 134:
   type: PTR
   value: indyipod.cloudmason.org.
-135:
-  type: PTR
-  value: ambrosia.cloudmason.org.
 136:
   type: PTR
   value: rog.cloudmason.org.

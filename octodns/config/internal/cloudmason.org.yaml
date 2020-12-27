@@ -188,6 +188,9 @@ lenovo:
 marypc:
   type: A
   value: 192.168.1.90
+ambrosia:
+  type: A
+  value: 192.168.1.91
 buddyiphone:
   type: A
   value: 192.168.1.92
@@ -277,9 +280,6 @@ node2:
 indyipod:
   type: A
   value: 192.168.1.134
-ambrosia:
-  type: A
-  value: 192.168.1.135
 rog:
   type: A
   value: 192.168.1.136
