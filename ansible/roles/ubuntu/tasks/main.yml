@@ -15,6 +15,15 @@
   tags:
     - awx
 
+- name: Include common play
+  include_tasks:
+    file: common.yml
+    apply:
+      tags:
+        - common
+  tags:
+    - common
+
 - name: Include packages play
   include_tasks:
     file: packages.yml
