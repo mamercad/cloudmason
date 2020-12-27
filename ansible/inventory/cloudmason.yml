@@ -50,11 +50,13 @@ all:
       healthchecks_io: https://hc-ping.com/29c8d430-9375-46a3-ab62-dcdeef183faf
       k3s:
         follower: yes
+        leader_hostname: clusterpi0
         leader_fqdn: clusterpi0.cloudmason.org
     clusterpi2:
       healthchecks_io: https://hc-ping.com/e1ae9db1-b39a-4af2-9c6b-149a05f1784e
       k3s:
         follower: yes
+        leader_hostname: clusterpi0
         leader_fqdn: clusterpi0.cloudmason.org
     qnap1:
       healthchecks_io: https://hc-ping.com/9ae9b6af-f144-46a9-aad6-cd59bf811acd
