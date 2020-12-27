@@ -86,6 +86,18 @@
       become: yes
       when: check_downloads.rc != 0
 
+    - name: Symlink /usr/local/bin/k3s-armhf to k3s
+      file:
+        src: "/usr/local/bin/{{ releases[ansible_architecture]['binary']['name'] }}"
+        dest: "/usr/local/bin/k3s"
+        state: link
+        owner: root
+        group: root
+        mode: 0755
+      become: yes
+      when:
+        - ansible_architecture == 'armv7l'
+
     - name: Deploy k3s unit file
       copy:
         dest: /etc/systemd/system/k3s.service
@@ -96,11 +108,33 @@
           [Unit]
           Description=k3s
           [Service]
-          ExecStart=/usr/local/bin/{{ releases[ansible_architecture]['binary']['name'] }} server
+          ExecStart=/usr/local/bin/{{ releases[ansible_architecture]['binary']['name'] }} server --tls-san {{ inventory_hostname }} --tls-san {{ inventory_hostname }}.{{ network.domain }} --cluster-domain {{ network.domain }}
           [Install]
           WantedBy=multi-user.target
       become: yes
       when: k3s.leader | default(False)
+
+    - name: Start and enable k3s
+      systemd:
+        name: k3s
+        state: started
+        enabled: yes
+        daemon_reload: yes
+      become: yes
+      when: k3s.leader | default(False)
+
+    - name: Wait for leader to start
+      stat:
+        path: /var/lib/rancher/k3s/server/node-token
+      register: token_exists
+      become: yes
+      async: 300
+      poll: 10
+      when: k3s.leader | default(False)
+
+    - name: Zzz ffs
+      pause:
+        minutes: 1
 
     - name: Fetch the agent token
       slurp:
@@ -108,6 +142,8 @@
       register: token
       become: yes
       when: k3s.leader | default(False)
+      async: 300
+      poll: 10
 
     - set_fact:
         agent_token: "{{ token.content | b64decode }}"
