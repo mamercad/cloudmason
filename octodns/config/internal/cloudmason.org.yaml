@@ -143,6 +143,9 @@ roomba:
 switch3:
   type: A
   value: 192.168.1.70
+judexboxx:
+  type: A
+  value: 192.168.1.71
 juderokutv:
   type: A
   value: 192.168.1.72
@@ -209,6 +212,9 @@ ringbridge:
 maryipad1:
   type: A
   value: 192.168.1.100
+buddyxboxx:
+  type: A
+  value: 192.168.1.101
 marymercado:
   type: A
   value: 192.168.1.103
