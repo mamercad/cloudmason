@@ -9,6 +9,7 @@
     - bash-completion
     - bridge-utils
     - curl
+    - dnsutils
     - git
     - glances
     - gnupg
