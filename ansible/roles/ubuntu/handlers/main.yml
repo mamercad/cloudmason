@@ -21,3 +21,8 @@
     name: traefik
     state: restarted
   become: yes
+
+- name: Reload systemd
+  systemd:
+    daemon_reexec: yes
+  become: yes
