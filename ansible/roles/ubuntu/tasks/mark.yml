@@ -78,4 +78,5 @@
     owner: "{{ mark.user }}"
     group: "{{ mark.group }}"
     mode: 0600
+  change_when: no
   become: yes
