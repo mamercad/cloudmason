@@ -86,4 +86,5 @@
   shell: |
     newaliases
   become: yes
+  changed_when: no
   notify: Reload postfix

@@ -57,6 +57,7 @@
   shell: |
     newaliases
   become: yes
+  changed_when: no
   notify: Restart postfix
 
 - name: Enable 587/tcp (submission)
