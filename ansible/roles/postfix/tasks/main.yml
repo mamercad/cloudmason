@@ -23,6 +23,7 @@
   shell:
     postmap /etc/postfix/gmail_sasl
   become: yes
+  changed_when: no
   notify: Reload postfix
 
 - name: Remove empty relayhost
@@ -68,6 +69,7 @@
   shell:
     postmap /etc/postfix/access
   become: yes
+  changed_when: no
   notify: Reload postfix
 
 - name: Update /etc/aliases
