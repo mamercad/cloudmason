@@ -16,3 +16,13 @@
     autoremove: yes
   become: yes
   register: removes
+
+- name: Stat /var/run/reboot-required
+  stat:
+    path: /var/run/reboot-required
+  register: reboot
+
+- name: Reboot if we need to
+  command: reboot
+  when: reboot.stat.exists
+  become: yes
