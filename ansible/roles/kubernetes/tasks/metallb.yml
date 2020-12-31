@@ -477,15 +477,18 @@
             serviceAccountName: controller
             terminationGracePeriodSeconds: 0
 
-- name: Check if metallb memberlist secret exists
-  command: kubectl get secret -n metallb-system memberlist
-  register: memberlist
-  changed_when: no # Don't care
-  failed_when: no # Might not exist
-
-- name: Create mettallb memberlist secret if we need to
-  command: kubectl create secret generic -n metallb-system memberlist --from-literal=secretkey="{{ lookup('password', '/dev/null length=64 chars=ascii_letters,digits,hexdigits') }}"
-  when: memberlist.rc != 0
+- name: Create the metallb memberlist Secret
+  community.kubernetes.k8s:
+    state: present
+    context: "{{ kubernetes.context }}"
+    definition:
+      apiVersion: v1
+      kind: Secret
+      metadata:
+        namespace: metallb-system
+        name: memberlist
+        data:
+          secretKey: "{{ kube[kubernetes.context]['metallb']['memberlist'] | b64encode }}"
 
 - name: Create metallb ConfigMap (L2 bridging)
   community.kubernetes.k8s:
