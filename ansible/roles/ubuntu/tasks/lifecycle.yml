@@ -36,7 +36,7 @@
         "extra_vars": {
           "slack_override": {
             "channel": "{{ lifecycle.slack_channel }}",
-            "msg": "> {{ inventory_hostname }} rides the :gun: again",
+            "msg": "> `{{ inventory_hostname }}` rides the :gun: again",
             "username": "Ubuntu",
             "icon_url": "https://assets.ubuntu.com/v1/29985a98-ubuntu-logo32.png"
           }
@@ -64,7 +64,7 @@
         "extra_vars": {
           "slack_override": {
             "channel": "{{ lifecycle.slack_channel }}",
-            "msg": "> {{ inventory_hostname }} rebooting :crossed_fingers:",
+            "msg": "> `{{ inventory_hostname }}` rebooting :crossed_fingers:",
             "username": "Ubuntu",
             "icon_url": "https://assets.ubuntu.com/v1/29985a98-ubuntu-logo32.png"
           }
@@ -72,26 +72,64 @@
       }
   become: yes
 
-- name: Deploy goodbye world into /etc/init.d/goodbye
+- name: Deploy goodbye world into /etc/systemd/system/goodbye.sh
   copy:
-    dest: /etc/init.d/goodbye
+    dest: /etc/systemd/system/goodbye.sh
     owner: root
     group: root
     mode: 0755
     content: |
-      #!/bin/sh
+      #!/bin/bash
+      # Provides:          goodbye
+      # Required-Start:
+      # Required-Stop:
+      # Default-Start:     0 6
+      # Default-Stop:
+      # Short-Description: Goodbye cruel world
+      ### END INIT INFO
       /usr/bin/curl -f -H 'Content-Type: application/json' -XPOST -d@/var/tmp/goodbye-world.json \
         https://awx.cloudmason.org:443/api/v2/job_templates/52/callback/
       exit 0
   become: yes
 
-- name: Symlink goodbye into /etc/rc0.d/K99goodbye
-  file:
-    state: link
-    force: yes
-    src: /etc/init.d/goodbye
-    dest: /etc/rc0.d/K99goodbye
+# - name: Symlink goodbye into /etc/rcX.d/K99goodbye
+#   file:
+#     state: link
+#     force: yes
+#     src: /etc/init.d/goodbye
+#     dest: "{{ item }}"
+#     owner: root
+#     group: root
+#     mode: 0755
+#   loop:
+#     - /etc/rc0.d/K99goodbye
+#     - /etc/rc6.d/K99goodbye
+#   become: yes
+
+- name: Deploy goodbye systemd unit
+  copy:
+    dest: /etc/systemd/system/goodbye.service
     owner: root
     group: root
     mode: 0755
+    content: |
+      [Unit]
+      Description=Run goodbye at shutdown
+      DefaultDependencies=no
+      Before=shutdown.target
+
+      [Service]
+      Type=oneshot
+      ExecStart=/etc/systemd/system/goodbye.sh
+      RemainAfterExit=yes
+
+      [Install]
+      WantedBy=shutdown.target
+  notify: Reload systemd
+  become: yes
+
+- name: Start and enable goodbye service
+  systemd:
+    enabled: yes
+    name: goodbye
   become: yes
