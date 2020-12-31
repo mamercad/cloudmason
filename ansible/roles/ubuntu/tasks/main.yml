@@ -37,6 +37,21 @@
     - package
     - packages
 
+- name: Include updates play
+  include_tasks:
+    file: updates.yml
+    apply:
+      tags:
+        - apt
+        - package
+        - packages
+        - updates
+  tags:
+    - apt
+    - package
+    - packages
+    - updates
+
 - name: Include mark vars
   include_vars:
     file: mark.yml
