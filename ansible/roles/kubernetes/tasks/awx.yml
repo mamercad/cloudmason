@@ -238,3 +238,5 @@
         tower_ingress_type: Ingress
         tower_hostname: "awx.{{ kubernetes.context }}.{{ network.domain }}"
         tower_replicas: "3"
+        tower_web_image: "ansible/awx:16.0.0"
+        tower_task_image: "ansible/awx:16.0.0"
