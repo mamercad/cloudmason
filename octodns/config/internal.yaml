@@ -34,8 +34,8 @@ providers:
     nameserver_values:
       - net1.cloudmason.org.
       # - net2.cloudmason.org.
-      # - net3.cloudmason.org.
-      # - net4.cloudmason.org.
+      - net3.cloudmason.org.
+      - net4.cloudmason.org.
     nameserver_ttl: 3600
   net2:
     class: octodns.provider.powerdns.PowerDnsProvider
@@ -45,8 +45,8 @@ providers:
     nameserver_values:
       - net1.cloudmason.org.
       # - net2.cloudmason.org.
-      # - net3.cloudmason.org.
-      # - net4.cloudmason.org.
+      - net3.cloudmason.org.
+      - net4.cloudmason.org.
     nameserver_ttl: 3600
   net3:
     class: octodns.provider.powerdns.PowerDnsProvider
@@ -56,8 +56,8 @@ providers:
     nameserver_values:
       - net1.cloudmason.org.
       # - net2.cloudmason.org.
-      # - net3.cloudmason.org.
-      # - net4.cloudmason.org.
+      - net3.cloudmason.org.
+      - net4.cloudmason.org.
     nameserver_ttl: 3600
   net4:
     class: octodns.provider.powerdns.PowerDnsProvider
@@ -67,8 +67,8 @@ providers:
     nameserver_values:
       - net1.cloudmason.org.
       # - net2.cloudmason.org.
-      # - net3.cloudmason.org.
-      # - net4.cloudmason.org.
+      - net3.cloudmason.org.
+      - net4.cloudmason.org.
     nameserver_ttl: 3600
 
 zones:
@@ -78,19 +78,21 @@ zones:
     targets:
       - net1
       # - net2
+      - net3
+      - net4
   1.168.192.in-addr.arpa.:
     sources:
       - internal
     targets:
       - net1
       # - net2
-      # - net3
-      # - net4
+      - net3
+      - net4
   letsbuildthe.cloud.:
     sources:
       - internal
     targets:
       - net1
       # - net2
-      # - net3
-      # - net4
+      - net3
+      - net4

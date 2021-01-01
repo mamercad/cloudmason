@@ -19,3 +19,7 @@ read ans
 ssh -v net1 "sudo systemctl restart pdns; sudo systemctl restart pdns-recursor"
 # sleep 2
 # ssh -v net2 "sudo systemctl restart pdns; sudo systemctl restart pdns-recursor"
+sleep 2
+ssh -v net3 "sudo systemctl restart pdns; sudo systemctl restart pdns-recursor"
+sleep 2
+ssh -v net4 "sudo systemctl restart pdns; sudo systemctl restart pdns-recursor"
