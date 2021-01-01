@@ -15,6 +15,7 @@ all:
         - hypervisor
         - bridge
         - updates
+        - minecraft
     net1:
       healthchecks_io: https://hc-ping.com/ae55147f-0aff-4b0e-b0f9-1f55c81c5a1a
     net2:
