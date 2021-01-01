@@ -170,6 +170,9 @@
 101:
   type: PTR
   value: buddyxboxx.cloudmason.org.
+102:
+  type: PTR
+  value: rog-wifi.cloudmason.org.
 103:
   type: PTR
   value: marymercado.cloudmason.org.
