@@ -26,7 +26,7 @@
 - name: Pull down the traefik binary tarball
   get_url:
     url: https://github.com/traefik/traefik/releases/download/v2.3.6/traefik_v2.3.6_linux_amd64.tar.gz
-    checksum: sha256:853af73c985b32bcc17f7292b111ced0e93882362f819f1e3a65ef22f4fd5f51
+    checksum: sha256:f9067f9c82d1d7aa0b5234265c3cb197f08c7823e49da02ad68be6df2d090534
     dest: /home/traefik/traefik_v2.3.6_linux_amd64.tar.gz
     owner: traefik
     group: traefik
