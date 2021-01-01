@@ -20,6 +20,12 @@
 11:
   type: PTR
   value: net2.cloudmason.org.
+12:
+  type: PTR
+  value: net3.cloudmason.org.
+13:
+  type: PTR
+  value: net4.cloudmason.org.
 14:
   type: PTR
   value: printer.cloudmason.org.

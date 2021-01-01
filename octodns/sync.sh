@@ -17,5 +17,5 @@ octodns-sync --config-file config/internal.yaml $*
 echo -n "Restart PowerDNS? "
 read ans
 ssh -v net1 "sudo systemctl restart pdns; sudo systemctl restart pdns-recursor"
-sleep 2
-ssh -v net2 "sudo systemctl restart pdns; sudo systemctl restart pdns-recursor"
+# sleep 2
+# ssh -v net2 "sudo systemctl restart pdns; sudo systemctl restart pdns-recursor"
