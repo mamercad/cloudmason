@@ -66,6 +66,8 @@ all:
       hosts:
         net1:
         net2:
+        net3:
+        net4:
         lenovo:
         jonagold:
         sunfire:
@@ -76,6 +78,8 @@ all:
       hosts:
         net1:
         net2:
+        net3:
+        net4:
       vars:
         ansible_python_interpreter: /usr/bin/python3
         plays:
@@ -102,6 +106,8 @@ all:
         lenovo:
         net1:
         net2:
+        net3:
+        net4:
         sunfire:
         node0:
         node1:
@@ -146,6 +152,8 @@ all:
       - cloudkey.cloudmason.org.
       - net1.cloudmason.org.
       - net2.cloudmason.org.
+      - net3.cloudmason.org.
+      - net4.cloudmason.org.
       - powerdns1.cloudmason.org.
       - powerdns2.cloudmason.org.
       - -t ptr 1.1.168.192.in-addr.arpa.
@@ -171,6 +179,8 @@ all:
         nameservers:
           - 192.168.1.10
           - 192.168.1.11
+          - 192.168.1.12
+          - 192.168.1.13
     mail:
       root: mamercad@gmail.com
       mark: mamercad@gmail.com
