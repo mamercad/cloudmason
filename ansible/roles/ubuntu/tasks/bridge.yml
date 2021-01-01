@@ -17,13 +17,13 @@
 
 - name: Check if bridge exists
   command:
-    ip link show {{ bridge }}
+    ip link show {{ bridge.name }}
   ignore_errors: yes # Might not exists
   register: bridge_exists
 
 - name: Bridge the primary interface
   copy:
-    dest: /etc/netplan/br0.yaml
+    dest: /etc/netplan/{{ bridge.name }}.yaml
     owner: root
     group: root
     mode: 0644
@@ -32,12 +32,12 @@
         version: 2
         renderer: networkd
         ethernets:
-          {{ bridge }}:
+          {{ bridge.interface }}:
             dhcp4: false
             dhcp6: false
         bridges:
-          br0:
-            interfaces: [{{ bridge }}]
+          {{ bridge.name }}:
+            interfaces: [{{ bridge.interface }}]
             mtu: 1500
             parameters:
               stp: true
