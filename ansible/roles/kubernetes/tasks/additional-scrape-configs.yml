@@ -19,6 +19,8 @@
           - targets: ["lenovo.cloudmason.org:9100"]
           - targets: ["net1.cloudmason.org:9100"]
           - targets: ["net2.cloudmason.org:9100"]
+          - targets: ["net3.cloudmason.org:9100"]
+          - targets: ["net4.cloudmason.org:9100"]
           - targets: ["qnap.cloudmason.org:9100"]
           - targets: ["sunfire.cloudmason.org:9100"]
           - targets: ["node0.cloudmason.org:9100"]
@@ -27,10 +29,15 @@
           - targets: ["node3.cloudmason.org:9100"]
           - targets: ["node4.cloudmason.org:9100"]
           - targets: ["node5.cloudmason.org:9100"]
+          - targets: ["clusterpi0.cloudmason.org:9100"]
+          - targets: ["clusterpi1.cloudmason.org:9100"]
+          - targets: ["clusterpi2.cloudmason.org:9100"]
       - job_name: "powerdns"
         static_configs:
           - targets: ["net1.cloudmason.org:8082"]
           - targets: ["net2.cloudmason.org:8082"]
+          - targets: ["net3.cloudmason.org:8082"]
+          - targets: ["net4.cloudmason.org:8082"]
         basic_auth:
           username: unused
           password: {{ powerdns_web_password }}
