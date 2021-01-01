@@ -16,8 +16,12 @@ all:
       healthchecks_io: https://hc-ping.com/b4576296-81ee-4cf5-a239-4286af184cf3
     net3:
       healthchecks_io: https://hc-ping.com/19217f13-73b5-493e-9a00-a22796f47fee
+      plays:
+        - serial
     net4:
       healthchecks_io: https://hc-ping.com/5970d9fb-08be-4110-88fd-55e47c2efab8
+      plays:
+        - serial
     sunfire:
       bridge: enp6s4f0
       healthchecks_io: https://hc-ping.com/9f49a4b2-0af7-4259-8392-a6dabdccaa87
