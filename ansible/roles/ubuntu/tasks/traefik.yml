@@ -91,6 +91,9 @@
           provider = "cloudflare"
           delayBeforeCheck = 0
           resolvers = ["1.1.1.1:53", "8.8.8.8:53"]
+
+      [log]
+        filePath = "/home/traefik/traefik.log"
   notify: Restart traefik
   become: yes
 
