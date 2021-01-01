@@ -272,6 +272,9 @@
 172:
   type: PTR
   value: consul.sunfire.cloudmason.org.
+173:
+  type: PTR
+  value: awx-service.sunfire.cloudmason.org.
 180:
   type: PTR
   value: judeipad.cloudmason.org.
