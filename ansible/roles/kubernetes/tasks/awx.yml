@@ -1,4 +1,5 @@
-- community.kubernetes.k8s:
+- name: Create the awx Namespace
+  community.kubernetes.k8s:
     state: present
     context: "{{ kubernetes.context }}"
     definition:
@@ -7,7 +8,8 @@
       metadata:
         name: awx
 
-- community.kubernetes.k8s:
+- name: Create the awx ClusterRole
+  community.kubernetes.k8s:
     state: present
     context: "{{ kubernetes.context }}"
     definition:
@@ -82,7 +84,8 @@
           verbs:
             - '*'
 
-- community.kubernetes.k8s:
+- name: Create the awx ClusterRolebinding
+  community.kubernetes.k8s:
     state: present
     context: "{{ kubernetes.context }}"
     definition:
@@ -99,7 +102,8 @@
         name: awx-operator
         apiGroup: rbac.authorization.k8s.io
 
-- community.kubernetes.k8s:
+- name: Create the awx ServiceAccount
+  community.kubernetes.k8s:
     state: present
     context: "{{ kubernetes.context }}"
     definition:
@@ -109,7 +113,8 @@
         name: awx-operator
         namespace: awx
 
-- community.kubernetes.k8s:
+- name: Create the awx Deployment
+  community.kubernetes.k8s:
     state: present
     context: "{{ kubernetes.context }}"
     definition:
@@ -161,7 +166,8 @@
               - name: runner
                 emptyDir: {}
 
-- community.kubernetes.k8s:
+- name: Create the awx CustomResourceDefinition
+  community.kubernetes.k8s:
     state: present
     context: "{{ kubernetes.context }}"
     definition:
@@ -220,7 +226,8 @@
                 required:
                   - deployment_type
 
-- community.kubernetes.k8s:
+- name: Create the awx Instance
+  community.kubernetes.k8s:
     state: present
     context: "{{ kubernetes.context }}"
     definition:
@@ -240,3 +247,16 @@
         tower_replicas: "3"
         tower_web_image: "ansible/awx:16.0.0"
         tower_task_image: "ansible/awx:16.0.0"
+
+- name: Patch the awx Service
+  community.kubernetes.k8s:
+    state: present
+    context: "{{ kubernetes.context }}"
+    definition:
+      apiVersion: v1
+      kind: Service
+      metadata:
+        name: awx-service
+        namespace: awx
+      spec:
+        type: LoadBalancer
