@@ -8,6 +8,16 @@
       - php-fpm
   become: yes
 
+- name: Set php-fpm version for x86_64
+  set_fact:
+    php_fpm_version: 7.2
+  when: ansible_architecture == 'x86_64'
+
+- name: Set php-fpm version for x86_64
+  set_fact:
+    php_fpm_version: 7.3
+  when: ansible_architecture == 'armv7l'
+
 - name: Check if /etc/nginx/sites-enabled/default exists
   stat:
     path: /etc/nginx/sites-enabled/default
@@ -39,7 +49,7 @@
         }
         location ~ \.php$ {
           try_files $uri =404;
-          fastcgi_pass unix:/run/php/php7.3-fpm.sock;
+          fastcgi_pass unix:/run/php/php{{ php_fpm_version }}-fpm.sock;
           include /etc/nginx/fastcgi_params;
           fastcgi_index index.php;
           fastcgi_param SCRIPT_FILENAME $document_root$fastcgi_script_name;
@@ -48,14 +58,14 @@
   become: yes
   notify: Reload nginx
 
-- name: Start and enable nginx and php7.3-fpm
+- name: Start and enable nginx and phpX-fpm
   systemd:
     name: "{{ item }}"
     state: started
     enabled: yes
   loop:
     - nginx
-    - php7.3-fpm
+    - php{{ php_fpm_version }}-fpm
   become: yes
 
 - name: Create cloudmason.org base directory

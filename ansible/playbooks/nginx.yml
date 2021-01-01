@@ -1,7 +1,7 @@
 ---
 - name: nginx
   hosts: net
-  gather_facts: no
+  gather_facts: yes
   become: no
 
   tasks:
