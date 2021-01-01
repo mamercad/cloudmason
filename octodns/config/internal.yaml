@@ -61,7 +61,7 @@ providers:
     nameserver_ttl: 3600
   net4:
     class: octodns.provider.powerdns.PowerDnsProvider
-    host: 192.168.1.12
+    host: 192.168.1.13
     api_key: env/POWERDNS_API_KEY
     port: 8081
     nameserver_values:
