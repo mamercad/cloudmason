@@ -10,6 +10,7 @@
     - bridge-utils
     - curl
     - dnsutils
+    - dstat
     - git
     - glances
     - gnupg
