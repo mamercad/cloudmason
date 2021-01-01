@@ -1,0 +1,80 @@
+- name: Install default-jdk
+  apt:
+    state: present
+    name: default-jdk
+  become: yes
+
+- name: Create the minecraft group
+  group:
+    state: present
+    name: minecraft
+  become: yes
+
+- name: Create the minecraft user
+  user:
+    state: present
+    name: minecraft
+    group: minecraft
+    shell: /bin/bash
+  become: yes
+
+- name: Fetch the minecraft server jar
+  get_url:
+    url: https://launcher.mojang.com/v1/objects/35139deedbd5182953cf1caa23835da59ca3d7cd/server.jar
+    dest: /home/minecraft/minecraft_server.1.16.4.jar
+    owner: minecraft
+    group: minecraft
+    mode: 0644
+  become: yes
+
+- name: Accept the minecraft eula
+  copy:
+    dest: /home/minecraft/eula.txt
+    owner: minecraft
+    group: minecraft
+    mode: 0644
+    content: |
+      eula=true
+  become: yes
+
+- name: Deploy the minecraft systemd unit
+  copy:
+    dest: /etc/systemd/system/minecraft.service
+    owner: root
+    group: root
+    mode: 0644
+    content: |
+      [Unit]
+      Description=Minecraft Server
+      After=network.target
+
+      [Service]
+      WorkingDirectory=/home/minecraft
+
+      User=minecraft
+      Group=minecraft
+
+      Restart=always
+
+      ExecStart=/usr/bin/screen -DmS minecraft /usr/bin/java -Xmx2G -jar minecraft_server.1.16.4.jar nogui
+
+      # ExecStop=/usr/bin/screen -p 0 -S mc-%i -X eval 'stuff "say SERVER SHUTTING DOWN IN 15 SECONDS..."\015'
+      # ExecStop=/bin/sleep 5
+      # ExecStop=/usr/bin/screen -p 0 -S mc-%i -X eval 'stuff "say SERVER SHUTTING DOWN IN 10 SECONDS..."\015'
+      # ExecStop=/bin/sleep 5
+      # ExecStop=/usr/bin/screen -p 0 -S mc-%i -X eval 'stuff "say SERVER SHUTTING DOWN IN 5 SECONDS..."\015'
+      # ExecStop=/bin/sleep 5
+      # ExecStop=/usr/bin/screen -p 0 -S mc-%i -X eval 'stuff "save-all"\015'
+      # ExecStop=/usr/bin/screen -p 0 -S mc-%i -X eval 'stuff "stop"\015'
+
+      [Install]
+      WantedBy=multi-user.target
+  become: yes
+
+- name: Start and enable minecraft
+  systemd:
+    name: minecraft
+    state: started
+    enabled: yes
+    daemon_reload: yes
+  become: yes
