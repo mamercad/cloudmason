@@ -341,6 +341,9 @@ awx.sunfire:
 hello-world.sunfire:
   type: A
   value: 192.168.1.171
+consul.sunfire:
+  type: A
+  value: 192.168.1.172
 judeipad:
   type: A
   value: 192.168.1.180

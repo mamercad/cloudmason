@@ -269,6 +269,9 @@
 171:
   type: PTR
   value: hello-world.sunfire.cloudmason.org.
+172:
+  type: PTR
+  value: consul.sunfire.cloudmason.org.
 180:
   type: PTR
   value: judeipad.cloudmason.org.
