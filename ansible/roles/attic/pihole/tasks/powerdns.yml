@@ -43,6 +43,7 @@
         state: stopped
         enabled: no
         name: avahi-daemon
+      ignore_errors: yes
 
     - name: Disable systemd-resolved
       systemd:
