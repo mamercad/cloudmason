@@ -1,7 +1,13 @@
 ---
 
 - name: Include metallb tasks
-  include_tasks: metallb.yml
+  include_tasks:
+    file: metallb.yml
+    apply:
+      tags:
+        - kubernetes
+        - metallb
+        - sunfire
   vars:
     kubernetes:
       context: sunfire
@@ -9,44 +15,119 @@
         dhcp:
           start: 192.168.1.170
           end: 192.168.1.199
+  tags:
+    - kubernetes
+    - metallb
+    - sunfire
 
 - name: Include hello-world tasks
-  include_tasks: hello-world.yml
+  include_tasks:
+    file: hello-world.yml
+    apply:
+      tags:
+        - kubernetes
+        - hello-world
+        - sunfire
   vars:
     kubernetes:
       context: sunfire
+  tags:
+    - kubernetes
+    - hello-world
+    - sunfire
 
 - name: Include hubot tasks
-  include_tasks: hubot.yml
+  include_tasks:
+    file: hubot.yml
+    apply:
+      tags:
+        - kubernetes
+        - hubot
+        - sunfire
   vars:
     kubernetes:
       context: sunfire
+  tags:
+    - kubernetes
+    - hubot
+    - sunfire
 
 - name: Include awx
-  include_tasks: awx.yml
+  include_tasks:
+    file: awx.yml
+    apply:
+      tags:
+        - kubernetes
+        - awx
+        - sunfire
   vars:
     kubernetes:
       context: sunfire
+  tags:
+    - kubernetes
+    - awx
+    - sunfire
 
 - name: Include argocd
   include_tasks:
     file: argocd.yml
     apply:
       tags:
+        - kubernetes
         - argocd
+        - sunfire
   vars:
     kubernetes:
       context: sunfire
-  tags: argocd
+  tags:
+    - kubernetes
+    - argocd
+    - sunfire
 
 - name: Include additional-scrape-configs
-  include_tasks: additional-scrape-configs.yml
+  include_tasks:
+    file: additional-scrape-configs.yml
+    apply:
+      tags:
+        - kubernetes
+        - scrape
+        - jonagold
   vars:
     kubernetes:
       context: jonagold
+  tags:
+    - kubernetes
+    - scrape
+    - jonagold
 
 - name: Include grafana-image-renderer
-  include_tasks: grafana-image-renderer.yml
+  include_tasks:
+    file: grafana-image-renderer.yml
+    apply:
+      tags:
+        - kubernetes
+        - grafana
+        - jonagold
   vars:
     kubernetes:
       context: jonagold
+  tags:
+    - kubernetes
+    - grafana
+    - jonagold
+
+- name: Include consul
+  include_tasks:
+    file: consul.yml
+    apply:
+      tags:
+        - kubernetes
+        - consul
+        - sunfire
+  vars:
+    kubernetes:
+      context: sunfire
+  tags:
+    - kubernetes
+    - consul
+    - sunfire

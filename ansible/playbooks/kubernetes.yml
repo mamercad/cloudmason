@@ -10,3 +10,5 @@
     - name: Include Kubernetes role
       include_role:
         name: kubernetes
+      tags:
+        - always
