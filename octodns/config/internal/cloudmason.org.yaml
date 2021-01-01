@@ -29,6 +29,9 @@ powerdns2:
 awx:
   type: CNAME
   value: net.cloudmason.org.
+awx-dev:
+  type: CNAME
+  value: net.cloudmason.org.
 grafana:
   type: CNAME
   value: net.cloudmason.org.
