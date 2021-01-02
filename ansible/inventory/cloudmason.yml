@@ -91,6 +91,8 @@ all:
         clusterpi0:
         clusterpi1:
         clusterpi2:
+        clusterpi3:
+        clusterpi4:
     net:
       hosts:
         net1:
@@ -101,14 +103,65 @@ all:
         ansible_python_interpreter: /usr/bin/python3
         plays:
           - traefik
+    clusterpis:
+      hosts:
+        clusterpi0:
+          k3s:
+            follower: yes
+            leader_hostname: node0
+            leader_fqdn: node0.cloudmason.org
+        clusterpi1:
+          k3s:
+            follower: yes
+            leader_hostname: node0
+            leader_fqdn: node0.cloudmason.org
+        clusterpi2:
+          k3s:
+            follower: yes
+            leader_hostname: node0
+            leader_fqdn: node0.cloudmason.org
+        clusterpi3:
+          k3s:
+            follower: yes
+            leader_hostname: node0
+            leader_fqdn: node0.cloudmason.org
+        clusterpi4:
+          k3s:
+            follower: yes
+            leader_hostname: node0
+            leader_fqdn: node0.cloudmason.org
     nodes:
       hosts:
         node0:
+          k3s:
+            leader: yes
+            leader_hostname: node0
+            leader_fqdn: node0.cloudmason.org
         node1:
+          k3s:
+            follower: yes
+            leader_hostname: node0
+            leader_fqdn: node0.cloudmason.org
         node2:
+          k3s:
+            follower: yes
+            leader_hostname: node0
+            leader_fqdn: node0.cloudmason.org
         node3:
+          k3s:
+            follower: yes
+            leader_hostname: node0
+            leader_fqdn: node0.cloudmason.org
         node4:
+          k3s:
+            follower: yes
+            leader_hostname: node0
+            leader_fqdn: node0.cloudmason.org
         node5:
+          k3s:
+            follower: yes
+            leader_hostname: node0
+            leader_fqdn: node0.cloudmason.org
       vars:
         ansible_python_interpreter: /usr/bin/python3
         plays:
@@ -136,11 +189,15 @@ all:
         clusterpi0:
         clusterpi1:
         clusterpi2:
+        clusterpi3:
+        clusterpi4:
     clusterpi:
       hosts:
         clusterpi0:
         clusterpi1:
         clusterpi2:
+        clusterpi3:
+        clusterpi4:
       vars:
         ansible_python_interpreter: /usr/bin/python3
   vars:
