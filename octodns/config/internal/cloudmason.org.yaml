@@ -159,6 +159,9 @@ basement:
 clusterpi2:
   type: A
   value: 192.168.1.64
+clusterpi4:
+  type: A
+  value: 192.168.1.66
 roomba:
   type: A
   value: 192.168.1.69
@@ -308,6 +311,9 @@ maryiphone:
 node2:
   type: A
   value: 192.168.1.131
+clusterpi3:
+  type: A
+  value: 192.168.1.132
 indyipod:
   type: A
   value: 192.168.1.134
