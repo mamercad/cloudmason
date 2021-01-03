@@ -1,10 +1,10 @@
 ---
-- name: Net
+- name: net
   hosts: net
   gather_facts: yes
   become: no
 
   tasks:
-    - name: Include Net role
+    - name: Include ubuntu/net role
       include_role:
         name: net

@@ -6,7 +6,7 @@
 
   tasks:
 
-    - name: Include Ubuntu/traefik role
+    - name: Include ubuntu/traefik role
       include_role:
         name: ubuntu
         tasks_from: traefik.yml
