@@ -365,6 +365,9 @@ prometheus.sunfire:
 grafana.sunfire:
   type: A
   value: 192.168.1.175
+alertmanager.sunfire:
+  type: A
+  value: 192.168.1.176
 judeipad:
   type: A
   value: 192.168.1.180

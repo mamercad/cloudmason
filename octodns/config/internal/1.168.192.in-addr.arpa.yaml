@@ -287,6 +287,9 @@
 175:
   type: PTR
   value: grafana.sunfire.cloudmason.org.
+176:
+  type: PTR
+  value: alertmanager.sunfire.cloudmason.org.
 180:
   type: PTR
   value: judeipad.cloudmason.org.
