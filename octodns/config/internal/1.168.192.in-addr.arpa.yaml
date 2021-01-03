@@ -281,6 +281,12 @@
 173:
   type: PTR
   value: awx-service.sunfire.cloudmason.org.
+174:
+  type: PTR
+  value: prometheus.sunfire.cloudmason.org.
+175:
+  type: PTR
+  value: grafana.sunfire.cloudmason.org.
 180:
   type: PTR
   value: judeipad.cloudmason.org.
