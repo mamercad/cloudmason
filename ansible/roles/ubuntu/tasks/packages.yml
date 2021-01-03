@@ -4,6 +4,7 @@
   apt:
     state: present
     name: "{{ item }}"
+    update_cache: yes
   loop:
     - apt-transport-https
     - bash-completion
