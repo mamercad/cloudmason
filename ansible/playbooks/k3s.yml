@@ -9,9 +9,9 @@
     releases:
       x86_64:
         binary:
-          url: https://github.com/rancher/k3s/releases/download/v1.19.4%2Bk3s1/k3s
+          url: https://github.com/k3s-io/k3s/releases/download/v1.20.0%2Bk3s2/k3s
           name: k3s
-        sums: https://github.com/rancher/k3s/releases/download/v1.19.4%2Bk3s1/sha256sum-amd64.txt
+        sums: https://github.com/k3s-io/k3s/releases/download/v1.20.0%2Bk3s2/sha256sum-amd64.txt
       armv7l:
         binary:
           url: https://github.com/k3s-io/k3s/releases/download/v1.20.0%2Bk3s2/k3s-armhf
