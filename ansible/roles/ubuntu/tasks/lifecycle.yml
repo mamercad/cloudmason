@@ -1,28 +1,41 @@
-- name: Create /etc/rc.local
-  file:
-    state: touch
-    path: /etc/rc.local
+- name: Deploy hello world into /etc/rc.local
+  copy:
+    dest: /etc/rc.local
     owner: root
     group: root
     mode: 0755
-  become: yes
-  changed_when: no
-
-- name: Put shebang in /etc/rc.local
-  lineinfile:
-    state: present
-    path: /etc/rc.local
-    insertbefore: BOF
-    line: '#!/usr/bin/env bash'
+    content: |
+      #!/usr/bin/env bash
+      /usr/bin/curl -f -H 'Content-Type: application/json' -XPOST -d@/var/tmp/hello-world.json \
+        https://awx.cloudmason.org:443/api/v2/job_templates/52/callback/
+      exit 0
   become: yes
 
-- name: Put exit 0 in /etc/rc.local
-  lineinfile:
-    state: present
-    path: /etc/rc.local
-    insertbefore: EOF
-    line: 'exit 0'
-  become: yes
+# - name: Create /etc/rc.local
+#   file:
+#     state: touch
+#     path: /etc/rc.local
+#     owner: root
+#     group: root
+#     mode: 0755
+#   become: yes
+#   changed_when: no
+
+# - name: Put shebang in /etc/rc.local
+#   lineinfile:
+#     state: present
+#     path: /etc/rc.local
+#     insertbefore: BOF
+#     line: '#!/usr/bin/env bash'
+#   become: yes
+
+# - name: Put exit 0 in /etc/rc.local
+#   lineinfile:
+#     state: present
+#     path: /etc/rc.local
+#     insertbefore: EOF
+#     line: 'exit 0'
+#   become: yes
 
 - name: Deploy hello world json
   copy:
