@@ -162,7 +162,7 @@
       webserver-port=8082
       webserver-allow-from=0.0.0.0/0
       webserver-password={{ powerdns_web_password }}
-      local-address=0.0.0.0:55
+      local-address=0.0.0.0:53
       serve-rfc1918=no
       forward-zones=cloudmason.org=127.0.0.1:5353,1.168.192.in-addr.arpa=127.0.0.1:5353
       # forward-zones+=another.example.com=127.0.0.1:5300
