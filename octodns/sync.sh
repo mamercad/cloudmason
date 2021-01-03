@@ -14,7 +14,9 @@ fi
 octodns-sync --config-file config/external.yaml $*
 octodns-sync --config-file config/internal.yaml $*
 
-ssh net1 "sudo systemctl restart pdns; sudo systemctl restart pdns-recursor"
-ssh net2 "sudo systemctl restart pdns; sudo systemctl restart pdns-recursor"
-ssh net3 "sudo systemctl restart pdns; sudo systemctl restart pdns-recursor"
-ssh net4 "sudo systemctl restart pdns; sudo systemctl restart pdns-recursor"
+if [[ "$1" == "--doit" ]]; then
+  ssh net1 "sudo systemctl restart pdns; sudo systemctl restart pdns-recursor"; sleep 3
+  ssh net2 "sudo systemctl restart pdns; sudo systemctl restart pdns-recursor"; sleep 3
+  ssh net3 "sudo systemctl restart pdns; sudo systemctl restart pdns-recursor"; sleep 3
+  ssh net4 "sudo systemctl restart pdns; sudo systemctl restart pdns-recursor"; sleep 3
+fi

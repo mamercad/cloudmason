@@ -33,7 +33,7 @@ providers:
     port: 8081
     nameserver_values:
       - net1.cloudmason.org.
-      # - net2.cloudmason.org.
+      - net2.cloudmason.org.
       - net3.cloudmason.org.
       - net4.cloudmason.org.
     nameserver_ttl: 3600
@@ -44,7 +44,7 @@ providers:
     port: 8081
     nameserver_values:
       - net1.cloudmason.org.
-      # - net2.cloudmason.org.
+      - net2.cloudmason.org.
       - net3.cloudmason.org.
       - net4.cloudmason.org.
     nameserver_ttl: 3600
@@ -55,7 +55,7 @@ providers:
     port: 8081
     nameserver_values:
       - net1.cloudmason.org.
-      # - net2.cloudmason.org.
+      - net2.cloudmason.org.
       - net3.cloudmason.org.
       - net4.cloudmason.org.
     nameserver_ttl: 3600
@@ -66,7 +66,7 @@ providers:
     port: 8081
     nameserver_values:
       - net1.cloudmason.org.
-      # - net2.cloudmason.org.
+      - net2.cloudmason.org.
       - net3.cloudmason.org.
       - net4.cloudmason.org.
     nameserver_ttl: 3600
@@ -77,7 +77,7 @@ zones:
       - internal
     targets:
       - net1
-      # - net2
+      - net2
       - net3
       - net4
   1.168.192.in-addr.arpa.:
@@ -85,7 +85,7 @@ zones:
       - internal
     targets:
       - net1
-      # - net2
+      - net2
       - net3
       - net4
   letsbuildthe.cloud.:
@@ -93,6 +93,6 @@ zones:
       - internal
     targets:
       - net1
-      # - net2
+      - net2
       - net3
       - net4
