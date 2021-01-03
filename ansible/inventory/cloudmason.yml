@@ -6,6 +6,7 @@ all:
       ansible_python_interpreter: /usr/bin/python
     jonagold:
       healthchecks_io: https://hc-ping.com/177cb674-b199-4fbb-8879-5f83ba901fa5
+      ansible_python_interpreter: /usr/bin/python3
     lenovo:
       bridge:
         interface: enp1s0
@@ -16,6 +17,7 @@ all:
         - bridge
         - updates
         - minecraft
+      ansible_python_interpreter: /usr/bin/python3
     net1:
       healthchecks_io: https://hc-ping.com/ae55147f-0aff-4b0e-b0f9-1f55c81c5a1a
     net2:
@@ -36,6 +38,7 @@ all:
       plays:
         - hypervisor
         - bridge
+      ansible_python_interpreter: /usr/bin/python3
     node0:
       healthchecks_io: https://hc-ping.com/d8dcb78d-865f-4a15-86dc-6e0e9ce9643a
       leader: yes
