@@ -7,4 +7,5 @@
   tasks:
     - name: Include ubuntu/net role
       include_role:
-        name: net
+        name: ubuntu
+        tasks_from: net.yml
