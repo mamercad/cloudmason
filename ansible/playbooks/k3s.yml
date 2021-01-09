@@ -1,6 +1,8 @@
 ---
 - name: k3s
-  hosts: "{{ ansible_limit | default(omit) }}"
+  hosts:
+    - nodes
+    - clusterpis
   gather_facts: yes
   become: no
 
