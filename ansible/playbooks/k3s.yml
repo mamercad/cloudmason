@@ -4,217 +4,269 @@
   gather_facts: yes
   become: no
 
-  vars:
+  pre_tasks:
 
-    releases:
-      x86_64:
-        binary:
-          url: https://github.com/k3s-io/k3s/releases/download/v1.20.0%2Bk3s2/k3s
-          name: k3s
-        sums: https://github.com/k3s-io/k3s/releases/download/v1.20.0%2Bk3s2/sha256sum-amd64.txt
-      armv7l:
-        binary:
-          url: https://github.com/k3s-io/k3s/releases/download/v1.20.0%2Bk3s2/k3s-armhf
-          name: k3s-armhf
-        sums: https://github.com/k3s-io/k3s/releases/download/v1.20.0%2Bk3s2/sha256sum-arm.txt
+    - name: Set each node to be a control node
+      ansible.builtin.set_fact:
+        k3s_control_node: true
+        k3s_control_node_address: node0
+        k3s_primary_control_node: true
+        k3s_etcd_datastore: true
+        k3s_release_version: v1.20.0+k3s2
+        k3s_become_for_all: yes
+      when: inventory_hostname in ['node0']
 
-  tasks:
+    - name: Set each node to be a control node
+      ansible.builtin.set_fact:
+        k3s_control_node: true
+        k3s_control_node_address: node0
+        k3s_primary_control_node: false
+        k3s_etcd_datastore: true
+        k3s_release_version: v1.20.0+k3s2
+        k3s_become_for_all: yes
+      when: inventory_hostname in ['node1', 'node2']
 
-    - name: Verify k3s sums
-      command: sha256sum -c k3s.sums.k3s
-      args:
-        chdir: /tmp
-      changed_when: no # Don't care
-      failed_when: no # Have to be able to continue
-      register: check_downloads
+    - name: Set each node to be a control node
+      ansible.builtin.set_fact:
+        k3s_control_node: false
+        k3s_control_node_address: node0
+        k3s_release_version: v1.20.0+k3s2
+        k3s_become_for_all: yes
+      when: inventory_hostname in ['node3', 'node4' 'node5']
 
-    - name: Delete /tmp/k3s ...
-      file:
-        state: absent
-        path: "{{ item }}"
-      loop:
-        - /tmp/k3s
-        - /tmp/k3s-armhf
-        - /tmp/k3s.sums
-        - /tmp/k3s.sums.k3s
-      become: yes
-      when: check_downloads.rc != 0
+    - name: Set each node to be a control node
+      ansible.builtin.set_fact:
+        k3s_control_node: false
+        k3s_control_node_address: node0
+        k3s_release_version: v1.20.0+k3s2
+        k3s_become_for_all: yes
+      when: inventory_hostname in ['clusterpi0', 'clusterpi1', 'clusterpi2', 'clusterpi3', 'clusterpi4']
 
-    - name: Fetch k3s
-      uri:
-        url: "{{ releases[ansible_architecture]['binary']['url'] }}"
-        dest: /tmp/{{ releases[ansible_architecture]['binary']['name'] }}
-        status_code:
-          - 200
-          - 304
-      become: yes
-      when: check_downloads.rc != 0
+  roles:
+    - { role: xanmanning.k3s }
 
-    - name: Fetch k3s sums
-      uri:
-        url: "{{ releases[ansible_architecture]['sums'] }}"
-        dest: /tmp/k3s.sums
-        status_code:
-          - 200
-          - 304
-      become: yes
-      when: check_downloads.rc != 0
 
-    - name: Just grab k3s line
-      shell: grep -E '{{ releases[ansible_architecture]['binary']['name'] }}$' k3s.sums | tee k3s.sums.k3s
-      args:
-        chdir: /tmp
-      changed_when: no # Don't care
-      become: yes
-      when: check_downloads.rc != 0
 
-    - name: Verify k3s sums
-      command: sha256sum -c k3s.sums.k3s
-      args:
-        chdir: /tmp
-      changed_when: no # Don't care
-      when: check_downloads.rc != 0
 
-    - name: Copy k3s to /usr/local/bin
-      copy:
-        src: "/tmp/{{ releases[ansible_architecture]['binary']['name'] }}"
-        remote_src: yes
-        dest: /usr/local/bin/{{ releases[ansible_architecture]['binary']['name'] }}
-        owner: root
-        group: root
-        mode: 0755
-      become: yes
-      when: check_downloads.rc != 0
+  # vars:
 
-    - name: Symlink /usr/local/bin/k3s-armhf to k3s
-      file:
-        src: "/usr/local/bin/{{ releases[ansible_architecture]['binary']['name'] }}"
-        dest: "/usr/local/bin/k3s"
-        state: link
-        owner: root
-        group: root
-        mode: 0755
-      become: yes
-      when:
-        - ansible_architecture == 'armv7l'
+  #   token: !vault |
+  #     $ANSIBLE_VAULT;1.1;AES256
+  #     66356262376561376232366236626166323534653437336330303733343662343830396561616363
+  #     3234383038653739393165393237343430366430383133390a363531333561303663613338303862
+  #     33663565633737383562316364636434303136383131373131653563643038323265616638663636
+  #     3734396138336131370a653731353331613866663137373962643161663531353533373861633462
+  #     3435
 
-    - name: Deploy k3s unit file
-      copy:
-        dest: /etc/systemd/system/k3s.service
-        owner: root
-        group: root
-        mode: 0755
-        content: |
-          [Unit]
-          Description=k3s
-          [Service]
-          ExecStart=/usr/local/bin/{{ releases[ansible_architecture]['binary']['name'] }} server --tls-san {{ inventory_hostname }} --tls-san {{ inventory_hostname }}.{{ network.domain }} --cluster-domain {{ network.domain }}
-          [Install]
-          WantedBy=multi-user.target
-      become: yes
-      when: k3s.leader | default(False)
+  #   releases:
+  #     x86_64:
+  #       binary:
+  #         url: https://github.com/k3s-io/k3s/releases/download/v1.20.0%2Bk3s2/k3s
+  #         name: k3s
+  #       sums: https://github.com/k3s-io/k3s/releases/download/v1.20.0%2Bk3s2/sha256sum-amd64.txt
+  #     armv7l:
+  #       binary:
+  #         url: https://github.com/k3s-io/k3s/releases/download/v1.20.0%2Bk3s2/k3s-armhf
+  #         name: k3s-armhf
+  #       sums: https://github.com/k3s-io/k3s/releases/download/v1.20.0%2Bk3s2/sha256sum-arm.txt
 
-    - name: Start and enable k3s
-      systemd:
-        name: k3s
-        state: started
-        enabled: yes
-        daemon_reload: yes
-      become: yes
-      when: k3s.leader | default(False)
+  # tasks:
 
-    - name: Wait for leader to start
-      stat:
-        path: /var/lib/rancher/k3s/server/node-token
-      register: token_exists
-      become: yes
-      async: 300
-      poll: 10
-      when: k3s.leader | default(False)
+  #   - name: Verify k3s sums
+  #     command: sha256sum -c k3s.sums.k3s
+  #     args:
+  #       chdir: /tmp
+  #     changed_when: no # Don't care
+  #     failed_when: no # Have to be able to continue
+  #     register: check_downloads
 
-    - name: Zzz ffs
-      pause:
-        minutes: 1
+  #   - name: Delete /tmp/k3s ...
+  #     file:
+  #       state: absent
+  #       path: "{{ item }}"
+  #     loop:
+  #       - /tmp/k3s
+  #       - /tmp/k3s-armhf
+  #       - /tmp/k3s.sums
+  #       - /tmp/k3s.sums.k3s
+  #     become: yes
+  #     when: check_downloads.rc != 0
 
-    - name: Fetch the agent token
-      slurp:
-        src: /var/lib/rancher/k3s/server/node-token
-      register: token
-      become: yes
-      when: k3s.leader | default(False)
-      async: 300
-      poll: 10
+  #   - name: Fetch k3s
+  #     uri:
+  #       url: "{{ releases[ansible_architecture]['binary']['url'] }}"
+  #       dest: /tmp/{{ releases[ansible_architecture]['binary']['name'] }}
+  #       status_code:
+  #         - 200
+  #         - 304
+  #     become: yes
+  #     when: check_downloads.rc != 0
 
-    - set_fact:
-        agent_token: "{{ token.content | b64decode }}"
-      when: k3s.leader | default(False)
+  #   - name: Fetch k3s sums
+  #     uri:
+  #       url: "{{ releases[ansible_architecture]['sums'] }}"
+  #       dest: /tmp/k3s.sums
+  #       status_code:
+  #         - 200
+  #         - 304
+  #     become: yes
+  #     when: check_downloads.rc != 0
 
-    - name: Deploy k3s unit file
-      copy:
-        dest: /etc/systemd/system/k3s.service
-        owner: root
-        group: root
-        mode: 0755
-        content: |
-          [Unit]
-          Description=k3s
-          [Service]
-          ExecStart=/usr/local/bin/{{ releases[ansible_architecture]['binary']['name'] }} agent --server https://{{ k3s.leader_fqdn }}:6443 --token {{ hostvars[k3s.leader_hostname]['agent_token'] }}
-          [Install]
-          WantedBy=multi-user.target
-      become: yes
-      when: k3s.follower | default(False)
+  #   - name: Just grab k3s line
+  #     shell: grep -E '{{ releases[ansible_architecture]['binary']['name'] }}$' k3s.sums | tee k3s.sums.k3s
+  #     args:
+  #       chdir: /tmp
+  #     changed_when: no # Don't care
+  #     become: yes
+  #     when: check_downloads.rc != 0
 
-    - name: Check if /boot/cmdline.txt has the cgroup stuff
-      command: grep 'cgroup_memory=1 cgroup_enable=memory' /boot/cmdline.txt
-      register: cgroup_memory
-      failed_when: no # Need to continue
-      changed_when: no # Don't care
+  #   - name: Verify k3s sums
+  #     command: sha256sum -c k3s.sums.k3s
+  #     args:
+  #       chdir: /tmp
+  #     changed_when: no # Don't care
+  #     when: check_downloads.rc != 0
 
-    - name: Manually backup /boot/cmdline.txt
-      command: cp /boot/cmdline.txt /boot/cmdline.txt.bak
-      become: yes
-      when:
-        - cgroup_memory.rc != 0
-        - ansible_architecture == 'armv7l'
+  #   - name: Copy k3s to /usr/local/bin
+  #     copy:
+  #       src: "/tmp/{{ releases[ansible_architecture]['binary']['name'] }}"
+  #       remote_src: yes
+  #       dest: /usr/local/bin/{{ releases[ansible_architecture]['binary']['name'] }}
+  #       owner: root
+  #       group: root
+  #       mode: 0755
+  #     become: yes
+  #     when: check_downloads.rc != 0
 
-    - name: Add cgroup_memory=1 cgroup_enable=memory to /boot/cmdline.txt on armv7l
-      lineinfile:
-        path: /boot/cmdline.txt
-        regexp: 'console=serial0,115200 console=tty1 root=PARTUUID=(\w+)-(\w+) rootfstype=ext4 elevator=deadline fsck.repair=yes rootwait'
-        line: 'console=serial0,115200 console=tty1 root=PARTUUID=\1-\2 rootfstype=ext4 elevator=deadline fsck.repair=yes rootwait cgroup_memory=1 cgroup_enable=memory'
-        backrefs: yes
-        # backup: yes # Doesn't work ... maybe because vfat?
-      become: yes
-      when:
-        - cgroup_memory.rc != 0
-        - ansible_architecture == 'armv7l'
+  #   - name: Symlink /usr/local/bin/k3s-armhf to k3s
+  #     file:
+  #       src: "/usr/local/bin/{{ releases[ansible_architecture]['binary']['name'] }}"
+  #       dest: "/usr/local/bin/k3s"
+  #       state: link
+  #       owner: root
+  #       group: root
+  #       mode: 0755
+  #     become: yes
+  #     when:
+  #       - ansible_architecture == 'armv7l'
 
-    - name: Reboot if we've updated /boot/cmdline.txt
-      command: reboot
-      become: yes
-      when:
-        - cgroup_memory.rc != 0
-        - ansible_architecture == 'armv7l'
-      register: rebooting
-      async: 1
-      poll: 0
+  #   - name: Deploy k3s unit file
+  #     copy:
+  #       dest: /etc/systemd/system/k3s.service
+  #       owner: root
+  #       group: root
+  #       mode: 0755
+  #       content: |
+  #         [Unit]
+  #         Description=k3s
+  #         [Service]
+  #         ExecStart=/usr/local/bin/{{ releases[ansible_architecture]['binary']['name'] }} server --tls-san {{ inventory_hostname }} --tls-san {{ inventory_hostname }}.{{ network.domain }} --cluster-domain {{ network.domain }}
+  #         [Install]
+  #         WantedBy=multi-user.target
+  #     become: yes
+  #     when: k3s.leader | default(False)
 
-    - name: Wait for the reboot to complete if necessary
-      wait_for_connection:
-        connect_timeout: 30
-        sleep: 5
-        delay: 5
-        timeout: 300
-      when:
-        - rebooting is changed
-        - cgroup_memory.rc != 0
-        - ansible_architecture == 'armv7l'
+  #   - name: Start and enable k3s
+  #     systemd:
+  #       name: k3s
+  #       state: started
+  #       enabled: yes
+  #       daemon_reload: yes
+  #     become: yes
+  #     when: k3s.leader | default(False)
 
-    - name: Start and enable k3s
-      systemd:
-        name: k3s
-        state: started
-        enabled: yes
-        daemon_reload: yes
-      become: yes
+  #   - name: Wait for leader to start
+  #     stat:
+  #       path: /var/lib/rancher/k3s/server/node-token
+  #     register: token_exists
+  #     become: yes
+  #     async: 300
+  #     poll: 10
+  #     when: k3s.leader | default(False)
+
+  #   - name: Zzz ffs
+  #     pause:
+  #       minutes: 1
+
+  #   - name: Fetch the agent token
+  #     slurp:
+  #       src: /var/lib/rancher/k3s/server/node-token
+  #     register: token
+  #     become: yes
+  #     when: k3s.leader | default(False)
+  #     async: 300
+  #     poll: 10
+
+  #   - set_fact:
+  #       agent_token: "{{ token.content | b64decode }}"
+  #     when: k3s.leader | default(False)
+
+  #   - name: Deploy k3s unit file
+  #     copy:
+  #       dest: /etc/systemd/system/k3s.service
+  #       owner: root
+  #       group: root
+  #       mode: 0755
+  #       content: |
+  #         [Unit]
+  #         Description=k3s
+  #         [Service]
+  #         ExecStart=/usr/local/bin/{{ releases[ansible_architecture]['binary']['name'] }} agent --server https://{{ k3s.leader_fqdn }}:6443 --token {{ hostvars[k3s.leader_hostname]['agent_token'] }}
+  #         [Install]
+  #         WantedBy=multi-user.target
+  #     become: yes
+  #     when: k3s.follower | default(False)
+
+  #   - name: Check if /boot/cmdline.txt has the cgroup stuff
+  #     command: grep 'cgroup_memory=1 cgroup_enable=memory' /boot/cmdline.txt
+  #     register: cgroup_memory
+  #     failed_when: no # Need to continue
+  #     changed_when: no # Don't care
+
+  #   - name: Manually backup /boot/cmdline.txt
+  #     command: cp /boot/cmdline.txt /boot/cmdline.txt.bak
+  #     become: yes
+  #     when:
+  #       - cgroup_memory.rc != 0
+  #       - ansible_architecture == 'armv7l'
+
+  #   - name: Add cgroup_memory=1 cgroup_enable=memory to /boot/cmdline.txt on armv7l
+  #     lineinfile:
+  #       path: /boot/cmdline.txt
+  #       regexp: 'console=serial0,115200 console=tty1 root=PARTUUID=(\w+)-(\w+) rootfstype=ext4 elevator=deadline fsck.repair=yes rootwait'
+  #       line: 'console=serial0,115200 console=tty1 root=PARTUUID=\1-\2 rootfstype=ext4 elevator=deadline fsck.repair=yes rootwait cgroup_memory=1 cgroup_enable=memory'
+  #       backrefs: yes
+  #       # backup: yes # Doesn't work ... maybe because vfat?
+  #     become: yes
+  #     when:
+  #       - cgroup_memory.rc != 0
+  #       - ansible_architecture == 'armv7l'
+
+  #   - name: Reboot if we've updated /boot/cmdline.txt
+  #     command: reboot
+  #     become: yes
+  #     when:
+  #       - cgroup_memory.rc != 0
+  #       - ansible_architecture == 'armv7l'
+  #     register: rebooting
+  #     async: 1
+  #     poll: 0
+
+  #   - name: Wait for the reboot to complete if necessary
+  #     wait_for_connection:
+  #       connect_timeout: 30
+  #       sleep: 5
+  #       delay: 5
+  #       timeout: 300
+  #     when:
+  #       - rebooting is changed
+  #       - cgroup_memory.rc != 0
+  #       - ansible_architecture == 'armv7l'
+
+  #   - name: Start and enable k3s
+  #     systemd:
+  #       name: k3s
+  #       state: started
+  #       enabled: yes
+  #       daemon_reload: yes
+  #     become: yes
