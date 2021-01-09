@@ -1,7 +1,5 @@
 all:
   hosts:
-    # localhost:
-    #   ansible_connection: local
     gateway:
       ansible_python_interpreter: /usr/bin/python
     jonagold:
