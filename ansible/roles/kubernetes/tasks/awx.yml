@@ -245,8 +245,8 @@
         tower_ingress_type: Ingress
         tower_hostname: "awx.{{ kubernetes.context }}.{{ network.domain }}"
         tower_replicas: "3"
-        tower_web_image: "ansible/awx:15.0.1"
-        tower_task_image: "ansible/awx:15.0.1"
+        tower_web_image: "ansible/awx:16.0.0"
+        tower_task_image: "ansible/awx:16.0.0"
 
 - name: Block on the awx-service existing
   command: kubectl -n awx get service/awx-service
