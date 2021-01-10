@@ -242,6 +242,9 @@
 136:
   type: PTR
   value: rog.cloudmason.org.
+138:
+  type: PTR
+  value: alexa3.cloudmason.org.
 140:
   type: PTR
   value: livingroomtv.cloudmason.org.
@@ -296,9 +299,6 @@
 187:
   type: PTR
   value: ringbasestation.cloudmason.org.
-188:
-  type: PTR
-  value: alexa3.cloudmason.org.
 221:
   type: PTR
   value: awx-web-svc.jonagold.cloudmason.org.
