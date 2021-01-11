@@ -165,6 +165,9 @@ clusterpi2:
 clusterpi4:
   type: A
   value: 192.168.1.66
+clusterpi5:
+  type: A
+  value: 192.168.1.68
 roomba:
   type: A
   value: 192.168.1.69
@@ -261,6 +264,40 @@ wyzefront:
 retroarcade:
   type: A
   value: 192.168.1.105
+clusterpi6:
+  type: A
+  value: 192.168.1.111
+livingroomlamp:
+  type: A
+  value: 192.168.1.115
+C02D6D7BMD6M:
+  type: A
+  value: 192.168.1.116
+ooma:
+  type: A
+  value: 192.168.1.117
+qnap:
+  type: A
+  values:
+    - 192.168.1.118
+    - 192.168.1.119
+qnap1:
+  type: A
+  value: 192.168.1.118
+qnap2:
+  type: A
+  value: 192.168.1.119
+familyroom:
+  type: A
+  value: 192.168.1.120
+garagedoor:
+  type: A
+  value: 192.168.1.121
+traefik1:
+  type: A
+  value: 192.168.1.122
+alexashow1:
+  type: A
 smartthings:
   type: A
   value: 192.168.1.112
