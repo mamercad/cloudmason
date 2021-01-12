@@ -92,6 +92,9 @@
 66:
   type: PTR
   value: clusterpi4.cloudmason.org.
+68:
+  type: PTR
+  value: clusterpi5.cloudmason.org.
 69:
   type: PTR
   value: roomba.cloudmason.org.
@@ -188,6 +191,9 @@
 105:
   type: PTR
   value: retroarcade.cloudmason.org.
+111:
+  type: PTR
+  value: clusterpi6.cloudmason.org.
 112:
   type: PTR
   value: smartthings.cloudmason.org.

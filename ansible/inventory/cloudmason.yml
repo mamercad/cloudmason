@@ -70,6 +70,9 @@ all:
       healthchecks_io: https://hc-ping.com/e1ae9db1-b39a-4af2-9c6b-149a05f1784e
     clusterpi3:
       healthchecks_io: https://hc-ping.com/9a5cc3d5-63ab-4021-b5c6-e5c6efb5534b
+    clusterpi4:
+    clusterpi5:
+    clusterpi6:
     qnap1:
       healthchecks_io: https://hc-ping.com/9ae9b6af-f144-46a9-aad6-cd59bf811acd
       ansible_python_interpreter: /share/CACHEDEV1_DATA/.qpkg/Python3/python3/bin/python3
@@ -88,6 +91,8 @@ all:
         clusterpi2:
         clusterpi3:
         clusterpi4:
+        clusterpi5:
+        clusterpi6:
     net:
       hosts:
         net1:
@@ -121,6 +126,16 @@ all:
             leader_hostname: node0
             leader_fqdn: node0.cloudmason.org
         clusterpi4:
+          k3s:
+            follower: yes
+            leader_hostname: node0
+            leader_fqdn: node0.cloudmason.org
+        clusterpi5:
+          k3s:
+            follower: yes
+            leader_hostname: node0
+            leader_fqdn: node0.cloudmason.org
+        clusterpi6:
           k3s:
             follower: yes
             leader_hostname: node0
@@ -186,6 +201,8 @@ all:
         clusterpi2:
         clusterpi3:
         clusterpi4:
+        clusterpi5:
+        clusterpi6:
     clusterpi:
       hosts:
         clusterpi0:
@@ -193,6 +210,8 @@ all:
         clusterpi2:
         clusterpi3:
         clusterpi4:
+        clusterpi5:
+        clusterpi6:
       vars:
         ansible_python_interpreter: /usr/bin/python3
   vars:

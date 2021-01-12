@@ -64,7 +64,7 @@
         k3s_control_node_address: node0
         k3s_release_version: v1.20.0+k3s2
         k3s_become_for_all: yes
-      when: inventory_hostname in ['clusterpi0', 'clusterpi1', 'clusterpi2', 'clusterpi3', 'clusterpi4']
+      when: inventory_hostname in ['clusterpi0', 'clusterpi1', 'clusterpi2', 'clusterpi3', 'clusterpi4', 'clusterpi5', 'clusterpi6']
 
   tasks:
 
