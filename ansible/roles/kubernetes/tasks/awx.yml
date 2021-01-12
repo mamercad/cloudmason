@@ -268,3 +268,17 @@
         namespace: awx
       spec:
         type: LoadBalancer
+
+- name: Patch the awx Deployment
+  community.kubernetes.k8s:
+    state: present
+    context: "{{ kubernetes.context }}"
+    definition:
+      apiVersion: apps/v1
+      kind: Deployment
+      metadata:
+        name: awx
+        namespace: awx
+      spec:
+        nodeSelector:
+          kubernetes.io/arch: amd64
