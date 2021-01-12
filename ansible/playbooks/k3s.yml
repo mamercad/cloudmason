@@ -30,25 +30,34 @@
 
   pre_tasks:
 
-    - name: Set each node to be a control node
-      ansible.builtin.set_fact:
-        k3s_control_node: true
-        k3s_control_node_address: node0
-        k3s_primary_control_node: true
-        k3s_etcd_datastore: true
-        k3s_release_version: v1.20.0+k3s2
-        k3s_become_for_all: yes
-      when: inventory_hostname in ['node0']
+    # - name: Set each node to be a control node
+    #   ansible.builtin.set_fact:
+    #     k3s_control_node: true
+    #     k3s_control_node_address: node0
+    #     k3s_primary_control_node: true
+    #     k3s_etcd_datastore: true
+    #     k3s_release_version: v1.20.0+k3s2
+    #     k3s_become_for_all: yes
+    #   when: inventory_hostname in ['node0']
+
+    # - name: Set each node to be a control node
+    #   ansible.builtin.set_fact:
+    #     k3s_control_node: true
+    #     k3s_control_node_address: node0
+    #     k3s_primary_control_node: false
+    #     k3s_etcd_datastore: true
+    #     k3s_release_version: v1.20.0+k3s2
+    #     k3s_become_for_all: yes
+    #   when: inventory_hostname in ['node1', 'node2']
 
     - name: Set each node to be a control node
       ansible.builtin.set_fact:
         k3s_control_node: true
-        k3s_control_node_address: node0
-        k3s_primary_control_node: false
-        k3s_etcd_datastore: true
+        # k3s_control_node_address: node0
+        # k3s_primary_control_node: true
+        # k3s_etcd_datastore: true
         k3s_release_version: v1.20.0+k3s2
         k3s_become_for_all: yes
-      when: inventory_hostname in ['node1', 'node2']
 
     - name: Set each node to be a control node
       ansible.builtin.set_fact:
@@ -56,7 +65,7 @@
         k3s_control_node_address: node0
         k3s_release_version: v1.20.0+k3s2
         k3s_become_for_all: yes
-      when: inventory_hostname in ['node3', 'node4', 'node5']
+      when: inventory_hostname in ['node1', 'node2', 'node3', 'node4', 'node5']
 
     - name: Set each node to be a control node
       ansible.builtin.set_fact:
@@ -65,6 +74,11 @@
         k3s_release_version: v1.20.0+k3s2
         k3s_become_for_all: yes
       when: inventory_hostname in ['clusterpi0', 'clusterpi1', 'clusterpi2', 'clusterpi3', 'clusterpi4', 'clusterpi5', 'clusterpi6']
+
+    # - name: Set each node to be a control node
+    #   ansible.builtin.set_fact:
+    #     k3s_state: uninstalled
+    #     k3s_become_for_all: yes
 
   tasks:
 
