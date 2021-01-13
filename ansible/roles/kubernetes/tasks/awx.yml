@@ -281,5 +281,7 @@
         name: awx
         namespace: awx
       spec:
-        nodeSelector:
-          kubernetes.io/arch: amd64
+        template:
+          spec:
+            nodeSelector:
+              kubernetes.io/arch: amd64
