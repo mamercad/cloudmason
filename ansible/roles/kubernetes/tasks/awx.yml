@@ -36,6 +36,7 @@
             - events
             - configmaps
             - secrets
+            - namespaces
           verbs:
             - '*'
         - apiGroups:
