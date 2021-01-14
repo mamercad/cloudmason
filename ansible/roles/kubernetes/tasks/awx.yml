@@ -270,6 +270,14 @@
       spec:
         type: LoadBalancer
 
+- name: Block on the awx existing
+  command: kubectl -n awx get deploy/awx
+  ignore_errors: yes
+  register: awx_deploy_exists
+  until: awx_deploy_exists.rc == 0
+  retries: 30
+  delay: 10
+
 - name: Patch the awx Deployment
   community.kubernetes.k8s:
     state: present
