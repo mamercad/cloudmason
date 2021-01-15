@@ -394,8 +394,8 @@ traefik.sunfire:
   type: A
   value: 192.168.1.170
 awx.sunfire:
-  type: A
-  value: 192.168.1.171
+  type: CNAME
+  value: traefik.sunfire.cloudmason.org.
 consul.sunfire:
   type: A
   value: 192.168.1.172

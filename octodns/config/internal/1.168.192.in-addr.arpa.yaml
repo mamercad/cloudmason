@@ -284,9 +284,6 @@
 170:
   type: PTR
   value: traefik.sunfire.cloudmason.org.
-171:
-  type: PTR
-  value: awx.sunfire.cloudmason.org.
 172:
   type: PTR
   value: consul.sunfire.cloudmason.org.
