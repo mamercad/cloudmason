@@ -488,7 +488,7 @@
         namespace: metallb-system
         name: memberlist
       data:
-        secretKey: "{{ kubernetes.metallb.memberlist | b64encode }}"
+        secretkey: "{{ kubernetes.metallb.memberlist | b64encode }}"
 
 - name: Create metallb ConfigMap (L2 bridging)
   community.kubernetes.k8s:
