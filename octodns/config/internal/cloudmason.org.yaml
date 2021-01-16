@@ -186,6 +186,9 @@ honeycrisp:
 switch4:
   type: A
   value: 192.168.1.74
+judeair:
+  type: A
+  value: 192.168.1.75
 nest:
   type: A
   value: 192.168.1.76

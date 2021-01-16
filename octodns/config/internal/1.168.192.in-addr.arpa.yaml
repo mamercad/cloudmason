@@ -113,6 +113,9 @@
 74:
   type: PTR
   value: switch4.cloudmason.org.
+75:
+  type: PTR
+  value: judeair.cloudmason.org.
 76:
   type: PTR
   value: nest.cloudmason.org.
