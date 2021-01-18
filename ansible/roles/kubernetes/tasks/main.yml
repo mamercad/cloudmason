@@ -173,3 +173,19 @@
     - kubernetes
     - sunfire
     - openldap
+
+- name: Include cert-manager
+  include_tasks:
+    file: cert-manager.yml
+    apply:
+      tags:
+        - kubernetes
+        - sunfire
+        - cert-manager
+  vars:
+    kubernetes:
+      context: sunfire
+  tags:
+    - kubernetes
+    - sunfire
+    - cert-manager
