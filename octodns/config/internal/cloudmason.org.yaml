@@ -219,9 +219,6 @@ wyzeback:
 lenovo:
   type: A
   value: 192.168.1.89
-marypc:
-  type: A
-  value: 192.168.1.90
 ambrosia:
   type: A
   value: 192.168.1.91
@@ -267,6 +264,9 @@ wyzefront:
 retroarcade:
   type: A
   value: 192.168.1.105
+marypc:
+  type: A
+  value: 192.168.1.106
 clusterpi6:
   type: A
   value: 192.168.1.111

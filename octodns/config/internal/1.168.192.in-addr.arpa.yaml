@@ -146,9 +146,6 @@
 89:
   type: PTR
   value: lenovo.cloudmason.org.
-90:
-  type: PTR
-  value: marypc.cloudmason.org.
 91:
   type: PTR
   value: ambrosia.cloudmason.org.
@@ -194,6 +191,9 @@
 105:
   type: PTR
   value: retroarcade.cloudmason.org.
+106:
+  type: PTR
+  value: marypc.cloudmason.org.
 111:
   type: PTR
   value: clusterpi6.cloudmason.org.
