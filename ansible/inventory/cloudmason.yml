@@ -79,6 +79,9 @@ all:
   children:
     linux:
       hosts:
+        db1:
+        db2:
+        db3:
         net1:
         net2:
         net3:
@@ -182,6 +185,9 @@ all:
         gateway:
     ubuntu:
       hosts:
+        db1:
+        db2:
+        db3:
         jonagold:
         lenovo:
         net1:
