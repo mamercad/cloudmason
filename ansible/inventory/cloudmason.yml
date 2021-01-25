@@ -143,6 +143,14 @@ all:
             follower: yes
             leader_hostname: node0
             leader_fqdn: node0.cloudmason.org
+    db:
+      hosts:
+        db1:
+          leader: yes
+        db2:
+          leader: no
+        db3:
+          leader: no
     nodes:
       hosts:
         node0:
