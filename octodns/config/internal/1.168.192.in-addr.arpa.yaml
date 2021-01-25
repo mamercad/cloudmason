@@ -64,7 +64,7 @@
   value: basementlamp1.cloudmason.org.
 53:
   type: PTR
-  value: familyroomlamp.cloudmason.org.
+  value: db1.cloudmason.org.
 55:
   type: PTR
   value: buddyrokutv.cloudmason.org.
@@ -194,6 +194,9 @@
 106:
   type: PTR
   value: marypc.cloudmason.org.
+107:
+  type: PTR
+  value: db2.cloudmason.org.
 111:
   type: PTR
   value: clusterpi6.cloudmason.org.
@@ -254,6 +257,9 @@
 136:
   type: PTR
   value: rog.cloudmason.org.
+137:
+  type: PTR
+  value: db3.cloudmason.org.
 138:
   type: PTR
   value: alexa3.cloudmason.org.

@@ -135,7 +135,7 @@ node5:
 basementlamp1:
   type: A
   value: 192.168.1.52
-familyroomlamp:
+db1:
   type: A
   value: 192.168.1.53
 buddyrokutv:
@@ -267,6 +267,9 @@ retroarcade:
 marypc:
   type: A
   value: 192.168.1.106
+db2:
+  type: A
+  value: 192.168.1.107
 clusterpi6:
   type: A
   value: 192.168.1.111
@@ -363,6 +366,9 @@ indyipod:
 rog:
   type: A
   value: 192.168.1.136
+db3:
+  type: A
+  value: 192.168.1.137
 alexa3:
   type: A
   value: 192.168.1.138
