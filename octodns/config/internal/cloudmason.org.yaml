@@ -219,6 +219,9 @@ wyzeback:
 lenovo:
   type: A
   value: 192.168.1.89
+marypcwifi:
+  type: A
+  value: 192.168.1.90
 ambrosia:
   type: A
   value: 192.168.1.91
