@@ -77,7 +77,7 @@ zones:
       - internal
     targets:
       - net1
-      - net2
+      # - net2
       - net3
       - net4
   1.168.192.in-addr.arpa.:
@@ -85,7 +85,7 @@ zones:
       - internal
     targets:
       - net1
-      - net2
+      # - net2
       - net3
       - net4
   letsbuildthe.cloud.:
@@ -93,6 +93,6 @@ zones:
       - internal
     targets:
       - net1
-      - net2
+      # - net2
       - net3
       - net4
