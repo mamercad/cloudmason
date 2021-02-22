@@ -273,6 +273,9 @@ marypc:
 db2:
   type: A
   value: 192.168.1.107
+gala:
+  type: A
+  value: 192.168.1.109
 clusterpi6:
   type: A
   value: 192.168.1.111

@@ -200,6 +200,9 @@
 107:
   type: PTR
   value: db2.cloudmason.org.
+109:
+  type: PTR
+  value: gala.cloudmason.org.
 111:
   type: PTR
   value: clusterpi6.cloudmason.org.
