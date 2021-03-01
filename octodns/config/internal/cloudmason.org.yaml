@@ -381,6 +381,9 @@ db3:
 alexa3:
   type: A
   value: 192.168.1.138
+thinkpad:
+  type: A
+  value: 192.168.1.139
 livingroomtv:
   type: A
   value: 192.168.1.140

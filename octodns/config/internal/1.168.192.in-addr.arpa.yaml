@@ -272,6 +272,9 @@
 138:
   type: PTR
   value: alexa3.cloudmason.org.
+139:
+  type: PTR
+  value: thinkpad.cloudmason.org.
 140:
   type: PTR
   value: livingroomtv.cloudmason.org.
