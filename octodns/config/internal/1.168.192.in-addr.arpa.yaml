@@ -323,9 +323,6 @@
 180:
   type: PTR
   value: judeipad.cloudmason.org.
-220:
-  type: PTR
-  value: concourse.cloudmason.org.
 221:
   type: PTR
   value: awx-web-svc.jonagold.cloudmason.org.
@@ -338,3 +335,9 @@
 224:
   type: PTR
   value: kiali.cloudmason.org.
+240:
+  type: PTR
+  value: docker.lenovo.cloudmason.org.
+241:
+  type: PTR
+  value: concourse.lenovo.cloudmason.org.

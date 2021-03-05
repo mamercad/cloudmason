@@ -435,9 +435,6 @@ alertmanager.sunfire:
 judeipad:
   type: A
   value: 192.168.1.180
-concourse:
-  type: A
-  value: 192.168.1.220
 awx-web-svc.jonagold:
   type: A
   value: 192.168.1.221
@@ -450,3 +447,9 @@ grafana.jonagold:
 kiali:
   type: A
   value: 192.168.1.224
+docker.lenovo:
+  type: A
+  value: 192.168.1.240
+concourse.lenovo:
+  type: A
+  value: 192.168.1.241
