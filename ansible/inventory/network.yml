@@ -15,3 +15,8 @@ cloudmason:
       dhcp:
         start: 192.168.1.200
         end:   192.168.1.219
+  lenovo:
+    metallb:
+      dhcp:
+        start: 192.168.1.220
+        end:   192.168.1.229
