@@ -123,6 +123,10 @@
             rule = "Host(`awx-dev.cloudmason.org`)"
             service = "awx-dev"
             [http.routers.awx-dev.tls]
+          [http.routers.concourse]
+            rule = "Host(`concourse.cloudmason.org`)"
+            service = "concourse"
+            [http.routers.concourse.tls]
           [http.routers.grafana]
             rule = "Host(`grafana.cloudmason.org`)"
             service = "grafana"
@@ -173,6 +177,9 @@
           [http.services.awx-dev.loadBalancer]
             [[http.services.awx-dev.loadBalancer.servers]]
               url = "http://awx-service.sunfire.cloudmason.org:80/"
+          [http.services.concourse.loadBalancer]
+            [[http.services.concourse.loadBalancer.servers]]
+              url = "http://concourse.lenovo.cloudmason.org:8080/"
           [http.services.grafana.loadBalancer]
             [[http.services.grafana.loadBalancer.servers]]
               url = "http://grafana.jonagold.cloudmason.org:3000/"
