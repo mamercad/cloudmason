@@ -35,6 +35,9 @@ awx:
 awx-dev:
   type: CNAME
   value: net.cloudmason.org.
+concourse:
+  type: CNAME
+  value: net.cloudmason.org.
 grafana:
   type: CNAME
   value: net.cloudmason.org.
