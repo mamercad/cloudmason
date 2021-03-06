@@ -8,24 +8,6 @@ providers:
     directory: ./config/internal
     default_ttl: 3600
     enforce_order: False # I'd rather order by IP
-  powerdns1:
-    class: octodns.provider.powerdns.PowerDnsProvider
-    host: 192.168.1.8
-    api_key: env/POWERDNS_API_KEY
-    port: 8081
-    nameserver_values:
-      - powerdns1.cloudmason.org.
-      - powerdns2.cloudmason.org.
-    nameserver_ttl: 3600
-  powerdns2:
-    class: octodns.provider.powerdns.PowerDnsProvider
-    host: 192.168.1.9
-    api_key: env/POWERDNS_API_KEY
-    port: 8081
-    nameserver_values:
-      - powerdns1.cloudmason.org.
-      - powerdns2.cloudmason.org.
-    nameserver_ttl: 3600
   net1:
     class: octodns.provider.powerdns.PowerDnsProvider
     host: 192.168.1.10
@@ -36,6 +18,8 @@ providers:
       - net2.cloudmason.org.
       - net3.cloudmason.org.
       - net4.cloudmason.org.
+      - net5.cloudmason.org.
+      - net6.cloudmason.org.
     nameserver_ttl: 3600
   net2:
     class: octodns.provider.powerdns.PowerDnsProvider
@@ -47,6 +31,8 @@ providers:
       - net2.cloudmason.org.
       - net3.cloudmason.org.
       - net4.cloudmason.org.
+      - net5.cloudmason.org.
+      - net6.cloudmason.org.
     nameserver_ttl: 3600
   net3:
     class: octodns.provider.powerdns.PowerDnsProvider
@@ -58,6 +44,8 @@ providers:
       - net2.cloudmason.org.
       - net3.cloudmason.org.
       - net4.cloudmason.org.
+      - net5.cloudmason.org.
+      - net6.cloudmason.org.
     nameserver_ttl: 3600
   net4:
     class: octodns.provider.powerdns.PowerDnsProvider
@@ -69,6 +57,34 @@ providers:
       - net2.cloudmason.org.
       - net3.cloudmason.org.
       - net4.cloudmason.org.
+      - net5.cloudmason.org.
+      - net6.cloudmason.org.
+    nameserver_ttl: 3600
+  net5:
+    class: octodns.provider.powerdns.PowerDnsProvider
+    host: 192.168.1.8
+    api_key: env/POWERDNS_API_KEY
+    port: 8081
+    nameserver_values:
+      - net1.cloudmason.org.
+      - net2.cloudmason.org.
+      - net3.cloudmason.org.
+      - net4.cloudmason.org.
+      - net5.cloudmason.org.
+      - net6.cloudmason.org.
+    nameserver_ttl: 3600
+  net6:
+    class: octodns.provider.powerdns.PowerDnsProvider
+    host: 192.168.1.9
+    api_key: env/POWERDNS_API_KEY
+    port: 8081
+    nameserver_values:
+      - net1.cloudmason.org.
+      - net2.cloudmason.org.
+      - net3.cloudmason.org.
+      - net4.cloudmason.org.
+      - net5.cloudmason.org.
+      - net6.cloudmason.org.
     nameserver_ttl: 3600
 
 zones:
@@ -80,6 +96,8 @@ zones:
       - net2
       - net3
       - net4
+      - net5
+      - net6
   1.168.192.in-addr.arpa.:
     sources:
       - internal
@@ -88,6 +106,8 @@ zones:
       - net2
       - net3
       - net4
+      - net5
+      - net6
   letsbuildthe.cloud.:
     sources:
       - internal
@@ -96,3 +116,5 @@ zones:
       - net2
       - net3
       - net4
+      - net5
+      - net6
