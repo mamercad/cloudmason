@@ -30,6 +30,12 @@ all:
       healthchecks_io: https://hc-ping.com/5970d9fb-08be-4110-88fd-55e47c2efab8
       plays:
         - serial
+    net5:
+      plays:
+        - serial
+    net6:
+      plays:
+        - serial
     sunfire:
       bridge:
         interface: enp6s4f0
@@ -86,6 +92,8 @@ all:
         net2:
         net3:
         net4:
+        net5:
+        net6:
         lenovo:
         jonagold:
         sunfire:
@@ -102,6 +110,8 @@ all:
         net2:
         net3:
         net4:
+        net5:
+        net6:
       vars:
         ansible_python_interpreter: /usr/bin/python3
         plays:
@@ -202,6 +212,8 @@ all:
         net2:
         net3:
         net4:
+        net5:
+        net6:
         sunfire:
         node0:
         node1:
