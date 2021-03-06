@@ -29,3 +29,11 @@ adarobin:
   type: CNAME
   value: adarobin.net.
   ttl: 300
+jonagold:
+  type: A
+  value: 192.168.1.26
+  ttl: 3600
+lenovo:
+  type: A
+  value: 192.168.1.89
+  ttl: 3600
