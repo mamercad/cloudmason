@@ -6,12 +6,22 @@
     name:
       - nginx
       - php-fpm
+    update_cache: yes
   become: yes
 
-- name: Set php-fpm version for x86_64
+- name: Set php-fpm version for x86_64 (bionic)
   set_fact:
     php_fpm_version: 7.2
-  when: ansible_architecture == 'x86_64'
+  when:
+    - ansible_architecture == 'x86_64'
+    - ansible_distribution_release == 'bionic'
+
+- name: Set php-fpm version for x86_64 (focal)
+  set_fact:
+    php_fpm_version: 7.4
+  when:
+    - ansible_architecture == 'x86_64'
+    - ansible_distribution_release == 'focal'
 
 - name: Set php-fpm version for x86_64
   set_fact:
