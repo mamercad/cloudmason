@@ -337,7 +337,4 @@
   value: kiali.cloudmason.org.
 240:
   type: PTR
-  value: docker.lenovo.cloudmason.org.
-241:
-  type: PTR
   value: concourse.lenovo.cloudmason.org.

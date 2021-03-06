@@ -450,9 +450,6 @@ grafana.jonagold:
 kiali:
   type: A
   value: 192.168.1.224
-docker.lenovo:
-  type: A
-  value: 192.168.1.240
 concourse.lenovo:
   type: A
-  value: 192.168.1.241
+  value: 192.168.1.240
