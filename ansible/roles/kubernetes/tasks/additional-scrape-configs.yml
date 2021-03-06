@@ -21,6 +21,8 @@
           - targets: ["net2.cloudmason.org:9100"]
           - targets: ["net3.cloudmason.org:9100"]
           - targets: ["net4.cloudmason.org:9100"]
+          - targets: ["net5.cloudmason.org:9100"]
+          - targets: ["net6.cloudmason.org:9100"]
           - targets: ["qnap.cloudmason.org:9100"]
           - targets: ["sunfire.cloudmason.org:9100"]
           - targets: ["node0.cloudmason.org:9100"]
@@ -38,6 +40,8 @@
           - targets: ["net2.cloudmason.org:8082"]
           - targets: ["net3.cloudmason.org:8082"]
           - targets: ["net4.cloudmason.org:8082"]
+          - targets: ["net5.cloudmason.org:8082"]
+          - targets: ["net6.cloudmason.org:8082"]
         basic_auth:
           username: unused
           password: {{ powerdns_web_password }}
