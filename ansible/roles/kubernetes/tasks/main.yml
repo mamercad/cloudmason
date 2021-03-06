@@ -189,3 +189,19 @@
     - kubernetes
     - sunfire
     - cert-manager
+
+- name: Include concourse
+  include_tasks:
+    file: concourse.yml
+    apply:
+      tags:
+        - kubernetes
+        - lenovo
+        - concourse
+  vars:
+    kubernetes:
+      context: lenovo
+  tags:
+    - kubernetes
+    - lenovo
+    - concourse
