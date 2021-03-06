@@ -10,10 +10,10 @@
   value: cloudkey2.cloudmason.org.
 8:
   type: PTR
-  value: powerdns1.cloudmason.org.
+  value: net5.cloudmason.org.
 9:
   type: PTR
-  value: powerdns2.cloudmason.org.
+  value: net6.cloudmason.org.
 10:
   type: PTR
   value: net1.cloudmason.org.
