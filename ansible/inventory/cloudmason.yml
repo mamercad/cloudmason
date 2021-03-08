@@ -253,8 +253,8 @@ all:
       - cloudkey.cloudmason.org.
       - net1.cloudmason.org.
       - net2.cloudmason.org.
-      - net3.cloudmason.org.
-      - net4.cloudmason.org.
+      - net5.cloudmason.org.
+      - net6.cloudmason.org.
       - -t ptr 1.1.168.192.in-addr.arpa.
     metronome:
       healthchecks_io: https://hc-ping.com/0ebdc1e9-2b4b-44eb-aec5-62ee86a5ca32
