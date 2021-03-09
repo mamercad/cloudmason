@@ -277,9 +277,9 @@ all:
       dns:
         nameservers:
           - 192.168.1.10
-          # - 192.168.1.11
-          - 192.168.1.12
-          - 192.168.1.13
+          - 192.168.1.11
+          - 192.168.1.8
+          - 192.168.1.9
     mail:
       root: mamercad@gmail.com
       mark: mamercad@gmail.com
