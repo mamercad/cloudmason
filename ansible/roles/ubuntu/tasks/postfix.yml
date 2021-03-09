@@ -7,6 +7,7 @@
   loop:
     - mailutils
     - postfix
+    - libsasl2-modules
   become: yes
 
 - name: Deploy /etc/postfix/gmail_sasl
