@@ -3,6 +3,7 @@
   hosts: powerdns
   gather_facts: no
   become: no
+  serial: 1
 
   tasks:
     - name: Restart PowerDNS Recursor
