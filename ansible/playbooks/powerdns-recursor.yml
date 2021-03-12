@@ -1,0 +1,12 @@
+---
+- name: PowerDNS Recursor
+  hosts: powerdns
+  gather_facts: no
+  become: no
+
+  tasks:
+    - name: Restart PowerDNS Recursor
+      systemd:
+        state: restarted
+        name: pdns-recursor
+      beocome: yes
