@@ -9,4 +9,4 @@
       systemd:
         state: restarted
         name: pdns-recursor
-      beocome: yes
+      become: yes
