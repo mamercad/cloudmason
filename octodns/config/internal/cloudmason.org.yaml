@@ -38,6 +38,9 @@ awx-dev:
 concourse:
   type: CNAME
   value: net.cloudmason.org.
+docker:
+  type: CNAME
+  value: net.cloudmason.org.
 grafana:
   type: CNAME
   value: net.cloudmason.org.
@@ -453,3 +456,6 @@ kiali:
 concourse.lenovo:
   type: A
   value: 192.168.1.240
+docker.lenovo:
+  type: A
+  value: 192.168.1.241
