@@ -105,6 +105,14 @@ all:
         clusterpi4:
         clusterpi5:
         clusterpi6:
+    powerdns:
+      hosts:
+        net1:
+        net2:
+        net5:
+        net6:
+      vars:
+        ansible_python_interpreter: /usr/bin/python3
     net:
       hosts:
         net1:
