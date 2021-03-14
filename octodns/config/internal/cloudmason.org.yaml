@@ -459,3 +459,6 @@ concourse.lenovo:
 docker.lenovo:
   type: A
   value: 192.168.1.241
+awx.lenovo:
+  type: A
+  value: 192.168.1.242
