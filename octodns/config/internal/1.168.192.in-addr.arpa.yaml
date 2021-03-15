@@ -344,3 +344,6 @@
 242:
   type: PTR
   value: awx.lenovo.cloudmason.org.
+243:
+  type: PTR
+  value: vault.lenovo.cloudmason.org.
