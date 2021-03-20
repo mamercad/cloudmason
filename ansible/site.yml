@@ -1,15 +1,23 @@
 ---
 
-- name: ubuntu
-  hosts: ubuntu
-  gather_facts: yes
+- name: awx
+  hosts: localhost
+  connection: local
+  gather_facts: no
   become: no
   roles:
-    - ubuntu
+    - awx
 
-- name: pi
-  hosts: pi
-  gather_facts: yes
-  become: no
-  roles:
-    - pi
+#- name: ubuntu
+#  hosts: ubuntu
+#  gather_facts: yes
+#  become: no
+#  roles:
+#    - ubuntu
+#
+#- name: pi
+#  hosts: pi
+#  gather_facts: yes
+#  become: no
+#  roles:
+#    - pi
