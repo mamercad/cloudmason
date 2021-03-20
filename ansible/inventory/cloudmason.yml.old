@@ -1,0 +1,379 @@
+all:
+  hosts:
+    localhost:
+      ansible_connection: local
+    gateway:
+      ansible_python_interpreter: /usr/bin/python
+    jonagold:
+      healthchecks_io: https://hc-ping.com/177cb674-b199-4fbb-8879-5f83ba901fa5
+      ansible_python_interpreter: /usr/bin/python3
+    lenovo:
+      bridge:
+        interface: enp1s0
+        name: br0
+      healthchecks_io: https://hc-ping.com/c8bd3c9c-9d8b-445b-bdf0-75935b4e6db4
+      plays:
+        - hypervisor
+        - bridge
+        - updates
+        - minecraft
+      ansible_python_interpreter: /usr/bin/python3
+    net1:
+      healthchecks_io: https://hc-ping.com/ae55147f-0aff-4b0e-b0f9-1f55c81c5a1a
+    net2:
+      healthchecks_io: https://hc-ping.com/b4576296-81ee-4cf5-a239-4286af184cf3
+    net3:
+      healthchecks_io: https://hc-ping.com/19217f13-73b5-493e-9a00-a22796f47fee
+      plays:
+        - serial
+    net4:
+      healthchecks_io: https://hc-ping.com/5970d9fb-08be-4110-88fd-55e47c2efab8
+      plays:
+        - serial
+    net5:
+      plays:
+        - serial
+    net6:
+      plays:
+        - serial
+    sunfire:
+      bridge:
+        interface: enp6s4f0
+        name: br0
+      healthchecks_io: https://hc-ping.com/9f49a4b2-0af7-4259-8392-a6dabdccaa87
+      plays:
+        - hypervisor
+        - bridge
+      ansible_python_interpreter: /usr/bin/python3
+    node0:
+      healthchecks_io: https://hc-ping.com/d8dcb78d-865f-4a15-86dc-6e0e9ce9643a
+      leader: yes
+    node1:
+      healthchecks_io: https://hc-ping.com/726988d0-f15a-477c-9ebd-219dad3bf395
+      follower: yes
+    node2:
+      healthchecks_io: https://hc-ping.com/f925b643-2aa1-4702-bc6b-43a2028940d6
+      follower: yes
+    node3:
+      healthchecks_io: https://hc-ping.com/f346a62b-336d-41ff-8ef8-a8b482957074
+      follower: yes
+    node4:
+      healthchecks_io: https://hc-ping.com/491f2f65-9148-42a4-9827-c31368ab55bc
+      follower: yes
+    node5:
+      healthchecks_io: https://hc-ping.com/46fdfdfd-ca82-4f55-beaf-93f3edad47ac
+      follower: yes
+    cloudkey2:
+      healthchecks_io: https://hc-ping.com/69ea1324-e142-4bb6-8ff0-f552f1566633
+      plays:
+        - serial
+      ansible_python_interpreter: /usr/bin/python3
+    clusterpi0:
+      healthchecks_io: https://hc-ping.com/9e4b7ec3-9590-4341-b1aa-d51ae4d45282
+    clusterpi1:
+      healthchecks_io: https://hc-ping.com/29c8d430-9375-46a3-ab62-dcdeef183faf
+    clusterpi2:
+      healthchecks_io: https://hc-ping.com/e1ae9db1-b39a-4af2-9c6b-149a05f1784e
+    clusterpi3:
+      healthchecks_io: https://hc-ping.com/9a5cc3d5-63ab-4021-b5c6-e5c6efb5534b
+    clusterpi4:
+    clusterpi5:
+    clusterpi6:
+    qnap1:
+      healthchecks_io: https://hc-ping.com/9ae9b6af-f144-46a9-aad6-cd59bf811acd
+      ansible_python_interpreter: /share/CACHEDEV1_DATA/.qpkg/Python3/python3/bin/python3
+    qnap2:
+  children:
+    linux:
+      hosts:
+        db1:
+        db2:
+        db3:
+        net1:
+        net2:
+        net3:
+        net4:
+        net5:
+        net6:
+        lenovo:
+        jonagold:
+        sunfire:
+        clusterpi0:
+        clusterpi1:
+        clusterpi2:
+        clusterpi3:
+        clusterpi4:
+        clusterpi5:
+        clusterpi6:
+    powerdns:
+      hosts:
+        net1:
+        net2:
+        net5:
+        net6:
+      vars:
+        ansible_python_interpreter: /usr/bin/python3
+    net:
+      hosts:
+        net1:
+        net2:
+        net3:
+        net4:
+        net5:
+        net6:
+      vars:
+        ansible_python_interpreter: /usr/bin/python3
+        plays:
+          - traefik
+    clusterpis:
+      hosts:
+        clusterpi0:
+          k3s:
+            follower: yes
+            leader_hostname: node0
+            leader_fqdn: node0.cloudmason.org
+        clusterpi1:
+          k3s:
+            follower: yes
+            leader_hostname: node0
+            leader_fqdn: node0.cloudmason.org
+        clusterpi2:
+          k3s:
+            follower: yes
+            leader_hostname: node0
+            leader_fqdn: node0.cloudmason.org
+        clusterpi3:
+          k3s:
+            follower: yes
+            leader_hostname: node0
+            leader_fqdn: node0.cloudmason.org
+        clusterpi4:
+          k3s:
+            follower: yes
+            leader_hostname: node0
+            leader_fqdn: node0.cloudmason.org
+        clusterpi5:
+          k3s:
+            follower: yes
+            leader_hostname: node0
+            leader_fqdn: node0.cloudmason.org
+        clusterpi6:
+          k3s:
+            follower: yes
+            leader_hostname: node0
+            leader_fqdn: node0.cloudmason.org
+    db:
+      hosts:
+        db1:
+          leader: yes
+        db2:
+          leader: no
+        db3:
+          leader: no
+    nodes:
+      hosts:
+        node0:
+          k3s:
+            leader: yes
+            leader_hostname: node0
+            leader_fqdn: node0.cloudmason.org
+        node1:
+          k3s:
+            follower: yes
+            leader_hostname: node0
+            leader_fqdn: node0.cloudmason.org
+        node2:
+          k3s:
+            follower: yes
+            leader_hostname: node0
+            leader_fqdn: node0.cloudmason.org
+        node3:
+          k3s:
+            follower: yes
+            leader_hostname: node0
+            leader_fqdn: node0.cloudmason.org
+        node4:
+          k3s:
+            follower: yes
+            leader_hostname: node0
+            leader_fqdn: node0.cloudmason.org
+        node5:
+          k3s:
+            follower: yes
+            leader_hostname: node0
+            leader_fqdn: node0.cloudmason.org
+      vars:
+        ansible_python_interpreter: /usr/bin/python3
+        plays:
+          - serial
+        leader: node0.cloudmason.org
+    unifi:
+      hosts:
+        gateway:
+    ubuntu:
+      hosts:
+        db1:
+        db2:
+        db3:
+        jonagold:
+        lenovo:
+        net1:
+        net2:
+        net3:
+        net4:
+        net5:
+        net6:
+        sunfire:
+        node0:
+        node1:
+        node2:
+        node3:
+        node4:
+        node5:
+        cloudkey2:
+        clusterpi0:
+        clusterpi1:
+        clusterpi2:
+        clusterpi3:
+        clusterpi4:
+        clusterpi5:
+        clusterpi6:
+    clusterpi:
+      hosts:
+        clusterpi0:
+        clusterpi1:
+        clusterpi2:
+        clusterpi3:
+        clusterpi4:
+        clusterpi5:
+        clusterpi6:
+      vars:
+        ansible_python_interpreter: /usr/bin/python3
+  vars:
+    dns_checks:
+      - facebook.com.
+      - google.com.
+      - reddit.com.
+      - twitter.com.
+      - mamercad.myqnapcloud.com
+      - letsbuildthe.cloud.
+      - cloudmason.org.
+      - gateway.cloudmason.org.
+      - cloudkey.cloudmason.org.
+      - net1.cloudmason.org.
+      - net2.cloudmason.org.
+      - net5.cloudmason.org.
+      - net6.cloudmason.org.
+      - -t ptr 1.1.168.192.in-addr.arpa.
+    metronome:
+      healthchecks_io: https://hc-ping.com/0ebdc1e9-2b4b-44eb-aec5-62ee86a5ca32
+    lifecycle:
+      slack_channel: '#bots'
+      host_config_key: !vault |
+        $ANSIBLE_VAULT;1.1;AES256
+        61323733323063356161313362363563663138373964636431303064616537666633323335326463
+        3338373333656362366332363138623962336165363661300a353035633263633633643533633031
+        32343738623638643936656532646235393461383433376330353230383830626133333536376565
+        3137633936643838380a303333633465636136663134643338363135386161323130303266303361
+        3036
+    exclude:
+      ubuntu:
+        node_exporter:
+          - jonagold
+    network:
+      domain: cloudmason.org
+      cidr: 192.168.1.0/24
+      dns:
+        nameservers:
+          - 192.168.1.10
+          - 192.168.1.11
+          - 192.168.1.8
+          - 192.168.1.9
+    mail:
+      root: mamercad@gmail.com
+      mark: mamercad@gmail.com
+      gmail_sasl_auth: !vault |
+        $ANSIBLE_VAULT;1.1;AES256
+        39316133316539343231343435343363666633643563336661323633616630316639646534656436
+        6130633766323763353439306365663531393734643137390a636238376563396461343962343163
+        36363361653032346134643666353035666639376465393432313439323939616263353066353665
+        6135323338383034650a623930353763366535336164653736303538633638396130393366306233
+        63333737303639396230396331353161623539653266636637316165666365336136383662343266
+        34626564613638336465373563643536646563613566306337353463666138643630626362353735
+        343536353463343431363534356639373665
+    slack:
+      awx:
+        token: !vault |
+          $ANSIBLE_VAULT;1.1;AES256
+          66366435356262303366386538633965333733663561303136326165626161636664393763313530
+          6434383062323366653233653464623966633835306161350a346562386161353439336261643835
+          36313534653464333233386430373265623065656230376634613130343663323232326230366232
+          3765653034316462350a633435306263363437653165316438383730333961373236316262353139
+          32663664636331383637333539336437313064353331653862613263663838353662656261646237
+          33346637646536643562323333636536303238623231323539336237363435353837333965623538
+          323635636566306331333736313538313636
+      ansible:
+        token: !vault |
+          $ANSIBLE_VAULT;1.1;AES256
+          33383362356136306531386334353535306465643363343733633931373230373761316334353837
+          3536306566303535313934643865656635316532376462640a373032653434633239336531323161
+          65643164646538303464373839356464656662323361643366333864316632326234383733383238
+          3963323562346230300a643562363938663730316332633736383130373937326534373066366465
+          62616336373165626564313666656632623239363234623330326239613566333432393031333038
+          35396339393536306366646363323631393737383865663130623165633566653132626664383564
+          633430333133626630386461346337323430
+      hubot:
+        token: !vault |
+          $ANSIBLE_VAULT;1.1;AES256
+          31646138643036623761326535343133383034346165636439346439386532346437353866326362
+          3363343134636465646637636439386165376164636566310a653832643332653161633663653535
+          63636433666463323535353637636439663131383863636565333536653434623162323630353930
+          3130636131636632610a396136633634663062316633373131663734383364366439396237613033
+          37626337633837653666636233383037313733626236346539306330306131323264353939383731
+          35313339326238643631323061373164363436353065656262663730613366393332323662633936
+          66393830636263383839373663626162316237386336373662383139363939323034326165623765
+          63633239313164366365
+      netdata:
+        webhook: !vault |
+          $ANSIBLE_VAULT;1.1;AES256
+          64316639333739373936343039363137613436323134616462386230353864363965313539663464
+          3131333338663132663562346364333463343532623363390a643236653764316263353964393332
+          38303535393565626232396639343139363839303332626630303665376132653138623630343133
+          3734653731376333630a353935346365346631636461653231663463323633363231663365313566
+          62356538663561646337306332306330323062316537323432643334326431653038373539643732
+          37373339653334653639326637343435663634383762343463663335306563323965616365363164
+          39373062653762333531353765336235323763376634653766316166326166343064313562373036
+          63336265356237633736
+        bew:
+          token: !vault |
+            $ANSIBLE_VAULT;1.1;AES256
+            31333461303163393939306662613235386336663363616465666461616231383130613961373064
+            3263366466653038303263366233336361666333666637340a323438393664356661353335636231
+            62623937306639313830353336353738336531346565393663313163346261353237613762386239
+            3335653663663434610a653537363564333663663730356238613564613232353736373932323834
+            34313465313037333039323566356561623930666664396365623937386363663539643738383935
+            3135363634333963326637396266663464346332336437626338
+      channel: "#testing"
+      username: AWX
+      icon_url: https://tower-mockups.testing.ansible.com/examples/images/branding/spud/awx-spud.gif
+      message: Hello, World
+    traefik:
+      admin:
+        password: !vault |
+          $ANSIBLE_VAULT;1.1;AES256
+          39343532633332366230663631663666643932383631643838363630333230633230343238393761
+          3365336435396135633463643334383539323939613539390a386361623436373030386665653535
+          39643036323962393935626463393439313764613564643266313566303263383930643631303039
+          3563616138646637300a626133326131306261393435343635313833323265353231333839373866
+          39643735663835373464363763386134313338663433666137303665353536356230313930363537
+          3364323466316437373339636531626330336639303461323332
+      cloudflare:
+        api_email: mamercad@gmail.com
+        api_key: !vault |
+          $ANSIBLE_VAULT;1.1;AES256
+          63383839646263386138663238633534333961626362383734663364633964613664653830336434
+          6432613735626362303232643738396363333235316532320a383262393031383365383238393935
+          63386664326133313130636166303461613063346665353633653639613461303235666433653166
+          6536663962353966370a626163373336386636383531393465613530646561663266363561393339
+          34346230376562656535626433333563356334363266633735663137313033363630626233383465
+          6662393539353135333263653837303835313266616135623162

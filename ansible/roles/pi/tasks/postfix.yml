@@ -16,7 +16,7 @@
     owner: root
     group: root
     mode: 0600
-    content: "{{ mail.gmail_sasl_auth }}"
+    content: "{{ postfix.gmail_sasl_auth }}"
   become: yes
   notify: Restart postfix
 
@@ -33,7 +33,7 @@
     dest: /etc/postfix/access
     mode: 0644
     content: |
-      {{ network.cidr }} OK
+      {{ network.prefix }} OK
   become: yes
   notify: Restart postfix
 
@@ -49,8 +49,8 @@
     state: present
     path: /etc/aliases
     block: |
-      root: "{{ mail.root }}"
-      mark: "{{ mail.mark }}"
+      root: "{{ postfix.root }}"
+      mark: "{{ postfix.mark }}"
     backup: yes
   become: yes
 
@@ -88,8 +88,8 @@
       smtp_tls_CApath=/etc/ssl/certs
       smtp_tls_session_cache_database = btree:${data_directory}/smtp_scache
       smtpd_relay_restrictions = permit_mynetworks permit_sasl_authenticated defer_unauth_destination
-      myhostname = {{ inventory_hostname }}.cloudmason.org
-      mydomain = cloudmason.org
+      myhostname = {{ ansible_fqdn }}
+      mydomain = {{ network.domain }}
       myorigin = $mydomain
       alias_maps = hash:/etc/aliases
       alias_database = hash:/etc/aliases

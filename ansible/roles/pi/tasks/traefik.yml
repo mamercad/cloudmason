@@ -175,7 +175,7 @@
               url = "http://cloudmason.org:8000/"
           [http.services.awx.loadBalancer]
             [[http.services.awx.loadBalancer.servers]]
-              url = "http://awx-web-svc.jonagold.cloudmason.org:80/"
+              url = "http://awx.lenovo.cloudmason.org:80/"
           [http.services.awx-dev.loadBalancer]
             [[http.services.awx-dev.loadBalancer.servers]]
               url = "http://awx.lenovo.cloudmason.org:80/"

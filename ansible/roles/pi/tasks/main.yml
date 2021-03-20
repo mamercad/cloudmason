@@ -12,3 +12,21 @@
         - traefik
   tags:
     - always
+
+- name: Include powerdns
+  include_tasks:
+    file: powerdns.yml
+    apply:
+      tags:
+        - powerdns
+  tags:
+    - always
+
+- name: Include postfix
+  include_tasks:
+    file: postfix.yml
+    apply:
+      tags:
+        - postfix
+  tags:
+    - always

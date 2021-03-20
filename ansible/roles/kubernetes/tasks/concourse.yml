@@ -1,7 +1,0 @@
-- name: Deploy latest version of Concourse chart inside concourse namespace (and create it)
-  community.kubernetes.helm:
-    name: my-concourse
-    chart_ref: concourse/concourse
-    release_namespace: concourse
-    create_namespace: true
-    context: "{{ kubernetes.context }}"

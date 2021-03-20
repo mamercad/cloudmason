@@ -1,3 +1,126 @@
+---
+
+- name: Disable PasswordAuthentication
+  lineinfile:
+    state: present
+    path: /etc/ssh/sshd_config
+    line: PasswordAuthentication no
+    backup: yes
+  become: yes
+  notify: Restart sshd
+
+- name: Install fail2ban
+  apt:
+    name: fail2ban
+    state: present
+  become: yes
+
+- name: Start and enable fail2ban
+  systemd:
+    name: fail2ban
+    state: started
+    enabled: yes
+  become: yes
+
+- name: Create /etc/fail2ban/jail.local
+  copy:
+    dest: /etc/fail2ban/jail.local
+    owner: root
+    group: root
+    mode: 0644
+    content: |
+      [sshd]
+      enabled = true
+      port = 22
+      filter = sshd
+      logpath = /var/log/auth.log
+      maxretry = 3
+    backup: yes
+  become: yes
+  notify: Restart fail2ban
+
+- name: Install node_exporter
+  apt:
+    state: present
+    name: prometheus-node-exporter
+  become: yes
+
+- name: Start and enable node_exporter
+  systemd:
+    name: prometheus-node-exporter
+    state: started
+    enabled: yes
+  become: yes
+
+- name: Install gnupg
+  apt:
+    state: present
+    name: gnupg
+  become: yes
+
+- name: Add PowerDNS apt GPG key
+  apt_key:
+    state: present
+    id: "{{ powerdns.gpg_key_id }}"
+    keyserver: keys.gnupg.net
+  become: yes
+
+- name: Add PowerDNS recursor repository
+  apt_repository:
+    state: present
+    repo: deb http://repo.powerdns.com/raspbian {{ ansible_distribution_release }}-rec-{{ powerdns.version | replace('.', '') }} main
+  when:
+    - ansible_architecture == 'armv7l'
+    - ansible_distribution_release == 'buster'
+  become: yes
+
+- name: Add PowerDNS authoritative server repository
+  apt_repository:
+    state: present
+    repo: deb http://repo.powerdns.com/raspbian {{ ansible_distribution_release }}-auth-{{ powerdns.version | replace('.', '') }} main
+  when:
+    - ansible_architecture == 'armv7l'
+    - ansible_distribution_release == 'buster'
+  become: yes
+
+- name: Add PowerDNS recursor repository
+  apt_repository:
+    state: present
+    repo: deb http://repo.powerdns.com/ubuntu {{ ansible_distribution_release }}-rec-{{ powerdns.version | replace('.', '') }} main
+  when:
+    - ansible_architecture == 'x86_64'
+    - ansible_distribution_release == 'bionic'
+  become: yes
+
+- name: Add PowerDNS authoritative server repository
+  apt_repository:
+    state: present
+    repo: deb http://repo.powerdns.com/ubuntu {{ ansible_distribution_release }}-auth-{{ powerdns.version | replace('.', '') }} main
+  when:
+    - ansible_architecture == 'x86_64'
+    - ansible_distribution_release == 'bionic'
+  become: yes
+
+- name: Add pin-priority for PowerDNS packages
+  copy:
+    dest: /etc/apt/preferences.d/pdns
+    owner: root
+    group: root
+    mode: 0644
+    content: |
+      Package: pdns-*
+      Pin: origin repo.powerdns.com
+      Pin-Priority: 600
+  become: yes
+
+- name: Disable avahi-daemon
+  systemd:
+    state: stopped
+    enabled: no
+    name: avahi-daemon
+  ignore_errors: yes # Might not exist
+  become: yes
+
 - name: Disable systemd-resolved
   systemd:
     state: stopped
@@ -12,18 +135,20 @@
     group: root
     mode: 0644
     content: |
+      domain cloudmason.org
       search cloudmason.org
-      nameserver 192.168.1.1
+      nameserver {{ ansible_default_ipv4.address | default(ansible_host) }}
+    backup: yes
   become: yes
 
-- name: Install pdns-server, pdns-backend-mysql, pdns-recursor, mysql-server
+- name: Install pdns-server, pdns-backend-mysql, pdns-recursor, default-mysql-server
   apt:
     state: present
     name:
       - pdns-server
       - pdns-backend-mysql
       - pdns-recursor
-      - mysql-server
+      - default-mysql-server
   become: yes
 
 - name: Deploy /etc/powerdns/recursor.conf
@@ -33,10 +158,12 @@
     group: root
     mode: 0640
     content: |
-      api-key=hunter2
+      api-key={{ powerdns.api_key }}
       webserver=yes
       webserver-address=0.0.0.0
       webserver-port=8082
+      webserver-allow-from=0.0.0.0/0
+      webserver-password={{ powerdns.web_password }}
       local-address=0.0.0.0:53
       serve-rfc1918=no
       forward-zones=cloudmason.org=127.0.0.1:5353,1.168.192.in-addr.arpa=127.0.0.1:5353
@@ -69,7 +196,7 @@
   community.mysql.mysql_user:
     state: present
     name: pdns
-    password: hunter2
+    password: "{{ powerdns.mysql_password }}"
     priv: 'pdns.*:ALL'
     check_implicit_admin: yes
     login_unix_socket: /var/run/mysqld/mysqld.sock
@@ -162,15 +289,16 @@
     content: |
       local-address=0.0.0.0:5353
       api=yes
-      api-key=hunter2
+      api-key={{ powerdns.api_key }}
       webserver=yes
       webserver-address=0.0.0.0
       webserver-allow-from=0.0.0.0/0
+      webserver-password={{ powerdns.web_password }}
       launch=gmysql
       gmysql-socket=/var/run/mysqld/mysqld.sock
       gmysql-dbname=pdns
       gmysql-user=pdns
-      gmysql-password=hunter2
+      gmysql-password={{ powerdns.mysql_password }}
   notify: Restart pdns
   become: yes
 
