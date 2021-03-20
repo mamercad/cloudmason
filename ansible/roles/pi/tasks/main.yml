@@ -19,12 +19,6 @@
     enabled: yes
   become: yes
 
-- debug:
-    msg: |
-      {{ ansible_host }}
-      {{ ansible_fqdn }}
-      {{ ansible_default_ipv4.address }}
-
 - name: deploy /etc/dhcpcd.conf
   copy:
     dest: /etc/dhcpcd.conf
