@@ -1,1 +1,3 @@
-ssh -q gateway /opt/vyatta/bin/vyatta-show-interfaces | grep 'inet ' | grep eth2 | awk '{print $2}' | sed 's/\/.*$//'
+#!/usr/bin/env bash
+
+ssh -q mamercad@192.168.1.1 /opt/vyatta/bin/vyatta-show-interfaces | grep 'inet ' | grep eth2 | awk '{print $2}' | sed 's/\/.*$//'
