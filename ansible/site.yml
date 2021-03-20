@@ -1,80 +1,15 @@
-#!/usr/bin/env -S ansible-playbook -i inventory/cloudmason.yml --vault-password-file .vault_pass
 ---
 
-- name: common
-  hosts: '!cloudkey2:!gateway:!localhost:!qnap1'
-  gather_facts: no
+- name: ubuntu
+  hosts: ubuntu
+  gather_facts: yes
   become: no
   roles:
-    - common
+    - ubuntu
 
-# - name: mark
-#   hosts:
-#     - jonagold
-#     - lenovo
-#   roles:
-#     - mark
-
-# - name: centos
-#   hosts: centos
-#   roles:
-#     - centos
-
-# - name: docker
-#   hosts: docker
-#   become: yes
-#   roles:
-#     - docker
-#   tags:
-#     - docker
-
-# - name: stackstorm
-#   hosts: all
-#   roles:
-#     - stackstorm
-#   tags:
-#     - stackstorm
-#   become: yes
-
-# - name: lenovo
-#   hosts: lenovo
-#   roles:
-#     - lenovo
-
-# - name: ubuntu
-#   hosts:
-#     - ubuntu
-#   roles:
-#     - ubuntu
-
-# - name: ubuntu-hypervisor
-#   hosts: ubuntu-hypervisor
-#   roles:
-#     - ubuntu-hypervisor
-
-# - name: user
-#   hosts: all
-#   roles:
-#     - user
-
-# - name: plex
-#   hosts: ambrosia
-#   roles:
-#     - plex
-
-# - name: cloudmason.org
-#   hosts: ambrosia
-#   roles:
-#     - cloudmason.org
-
-# - name: prometheus
-#   hosts:
-#     - prometheus
-#   roles:
-#     - prometheus
-
-# - name: awx
-#   hosts:
-#     - localhost
-#   roles:
-#     - awx
+- name: pi
+  hosts: pi
+  gather_facts: yes
+  become: no
+  roles:
+    - pi
