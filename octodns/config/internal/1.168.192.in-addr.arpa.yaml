@@ -43,6 +43,9 @@
   value: jonagold.cloudmason.org.
 30:
   type: PTR
+  value: cloudkeyfallback.cloudmason.org.
+31:
+  type: PTR
   value: coffeepot.cloudmason.org.
 32:
   type: PTR
