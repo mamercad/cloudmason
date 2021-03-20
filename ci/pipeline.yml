@@ -1,0 +1,60 @@
+---
+
+resource_types:
+
+- name: ansible-playbook
+  type: docker-image
+  source:
+    repository: troykinsella/concourse-ansible-playbook-resource
+    tag: latest
+
+resources:
+
+  - name: source-code
+    type: git
+    source:
+      uri: git@github.com:mamercad/cloudmason.git
+      branch: dev
+      private_key: ((github.private_key))
+
+  - name: ansible
+    type: ansible-playbook
+    source:
+      debug: true
+      user: ubuntu
+      ssh_private_key: foo
+      vault_password: bar
+      verbose: v
+
+jobs:
+
+  - name: do-it-to-it
+    plan:
+
+      - get: source-code
+
+      - put: ansible
+        params:
+          check: false
+          diff: true
+          inventory: cloudmason.yml
+          playbook: site.yml
+          path: source-code/awx
+
+#      - task: test-shit
+#        config:
+#          platform: linux
+#          image_resource:
+#            type: registry-image
+#            source: { repository: centos, tag: 8 }
+#          inputs:
+#            - name: source-code
+#          run:
+#            path: bash
+#            args:
+#              - -exc
+#              - |
+#                pwd
+#                ls
+#                ls source-code
+#            
