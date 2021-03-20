@@ -8,16 +8,16 @@
   roles:
     - awx
 
-#- name: ubuntu
-#  hosts: ubuntu
-#  gather_facts: yes
-#  become: no
-#  roles:
-#    - ubuntu
-#
-#- name: pi
-#  hosts: pi
-#  gather_facts: yes
-#  become: no
-#  roles:
-#    - pi
+- name: ubuntu
+  hosts: ubuntu
+  gather_facts: yes
+  become: no
+  roles:
+    - ubuntu
+
+- name: pi
+  hosts: pi
+  gather_facts: yes
+  become: no
+  roles:
+    - pi
