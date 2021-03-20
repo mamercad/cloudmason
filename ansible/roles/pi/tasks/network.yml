@@ -1,0 +1,36 @@
+---
+
+- name: Remove openresolv
+  apt:
+    state: absent
+    name: openresolv
+  become: yes
+
+- name: Add resolvconf
+  apt:
+    state: absent
+    name: resolvconf
+  become: yes
+
+- name: Enable resolvconf
+  systemd:
+    name: resolvconf
+    state: started
+    enabled: yes
+  become: yes
+
+- name: Deploy /etc/dhcpcd.conf
+  copy:
+    dest: /etc/dhcpcd.conf
+    owner: root
+    group: netdev
+    mode: 0664
+    content: |
+      interface {{ ansible_default_ipv4.interface | default(network.interface) }}
+      static ip_address={{ ansible_default_ipv4.address | default(ansible_host) }}/{{ ((ansible_default_ipv4.network|default(network.network)) + "/" + (ansible_default_ipv4.netmask|default(network.netmask))) | ansible.netcommon.ipaddr('prefix') }}
+      static routers={{ ansible_default_ipv4.gateway | default(network.gateway) }}
+      static domain_name_servers={{ ansible_default_ipv4.address | default(ansible_host) }}
+      static domain_name={{ network.domain | default('localdomain') }}
+      static domain_search={{ network.domain | default('localdomain') }}
+    backup: yes
+  become: yes
