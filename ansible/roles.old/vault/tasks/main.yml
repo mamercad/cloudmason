@@ -1,0 +1,119 @@
+- name: Create vault group
+  group:
+    state: present
+    name: vault
+  become: yes
+
+- name: Create vault user
+  user:
+    state: present
+    name: vault
+    group: vault
+    shell: /bin/bash
+  become: yes
+
+- name: Install Hashicorp GPG key
+  apt_key:
+    state: present
+    url: https://apt.releases.hashicorp.com/gpg
+  become: yes
+
+- name: Install Hashicorp repository
+  apt_repository:
+    state: present
+    repo: "deb [arch=amd64] https://apt.releases.hashicorp.com focal main"
+  become: yes
+
+- name: Install Hashicorp Vault
+  apt:
+    state: present
+    name: vault
+    update_cache: yes
+  become: yes
+
+- name: Create the Vault directories
+  file:
+    state: directory
+    path: /home/vault/data
+    owner: vault
+    group: vault
+    mode: 0755
+    recurse: yes
+  become: yes
+
+- name: Deploy Vault config vault.hcl
+  copy:
+    dest: /home/vault/vault.hcl
+    owner: vault
+    group: vault
+    mode: 0644
+    content: |
+      storage "raft" {
+        path    = "/home/vault/data"
+        node_id = "sunfire"
+      }
+
+      listener "tcp" {
+        address     = "0.0.0.0:8200"
+        tls_disable = 1
+      }
+
+      disable_mlock = true
+      api_addr = "http://0.0.0.0:8200"
+      cluster_addr = "http://127.0.0.1:8201"
+      ui = true
+  become: yes
+  notify: Restart vault
+
+- name: Deploy Vault systemd unit
+  copy:
+    dest: /etc/systemd/system/vault.service
+    owner: root
+    group: root
+    mode: 0644
+    content: |
+      [Unit]
+      Description="HashiCorp Vault - A tool for managing secrets"
+      Documentation=https://www.vaultproject.io/docs/
+      Requires=network-online.target
+      After=network-online.target
+      ConditionFileNotEmpty=/home/vault/vault.hcl
+      StartLimitIntervalSec=60
+      StartLimitBurst=3
+
+      [Service]
+      User=vault
+      Group=vault
+      ProtectSystem=full
+      # ProtectHome=read-only
+      PrivateTmp=yes
+      PrivateDevices=yes
+      SecureBits=keep-caps
+      AmbientCapabilities=CAP_IPC_LOCK
+      Capabilities=CAP_IPC_LOCK+ep
+      CapabilityBoundingSet=CAP_SYSLOG CAP_IPC_LOCK
+      NoNewPrivileges=yes
+      ExecStart=/usr/bin/vault server -config=/home/vault/vault.hcl
+      ExecReload=/bin/kill --signal HUP $MAINPID
+      KillMode=process
+      KillSignal=SIGINT
+      Restart=on-failure
+      RestartSec=5
+      TimeoutStopSec=30
+      StartLimitInterval=60
+      StartLimitIntervalSec=60
+      StartLimitBurst=3
+      LimitNOFILE=65536
+      LimitMEMLOCK=infinity
+
+      [Install]
+      WantedBy=multi-user.target
+  become: yes
+
+- name: Start and enable Vault
+  systemd:
+    name: vault
+    state: started
+    enabled: yes
+    daemon_reload: yes
+  become: yes

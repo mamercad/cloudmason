@@ -1,0 +1,86 @@
+---
+
+- name: Create sense-exporter Secret
+  community.kubernetes.k8s:
+    state: present
+    definition:
+      apiVersion: v1
+      data:
+        username: "{{ sense_username }}"
+        password: "{{ sense_password }}"
+      kind: Secret
+      metadata:
+        name: sense-exporter
+        namespace: monitoring
+      type: Opaque
+
+- name: Create sense-exporter Deployment
+  community.kubernetes.k8s:
+    state: present
+    definition:
+      apiVersion: apps/v1
+      kind: Deployment
+      metadata:
+        name: sense-exporter
+        namespace: monitoring
+      spec:
+        replicas: 1
+        selector:
+          matchLabels:
+            name: sense-exporter
+        template:
+          metadata:
+            labels:
+              name: sense-exporter
+          spec:
+            containers:
+            - name: sense-exporter
+              image: mamercad/sense_exporter
+              env:
+                - name: SENSE_USERNAME
+                  valueFrom:
+                    secretKeyRef:
+                      name: sense-exporter
+                      key: username
+                - name: SENSE_PASSWORD
+                  valueFrom:
+                    secretKeyRef:
+                      name: sense-exporter
+                      key: password
+
+- name: Create sense-exporter Service
+  community.kubernetes.k8s:
+    state: present
+    definition:
+      apiVersion: v1
+      kind: Service
+      metadata:
+        name: sense-exporter-service
+        namespace: monitoring
+        labels:
+          name: sense-exporter-service
+      spec:
+        type: ClusterIP
+        selector:
+          name: sense-exporter
+        ports:
+          - port: 10000
+            targetPort: 10000
+            name: sense-exporter-metrics
+
+- name: Create sense-exporter ServiceMonitor
+  community.kubernetes.k8s:
+    state: present
+    definition:
+      apiVersion: monitoring.coreos.com/v1
+      kind: ServiceMonitor
+      metadata:
+        name: sense-exporter
+        namespace: monitoring
+      spec:
+        selector:
+          matchLabels:
+            name: sense-exporter-service
+        endpoints:
+          - port: sense-exporter-metrics
+            path: /metrics/

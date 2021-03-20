@@ -1,0 +1,118 @@
+---
+
+- name: Install postfix stuff
+  apt:
+    state: present
+    name: "{{ item }}"
+  loop:
+    - mailutils
+    - postfix
+    - libsasl2-modules
+  become: yes
+
+- name: Deploy /etc/postfix/gmail_sasl
+  copy:
+    dest: /etc/postfix/gmail_sasl
+    owner: root
+    group: root
+    mode: 0600
+    content: "{{ mail.gmail_sasl_auth }}"
+  become: yes
+  notify: Restart postfix
+
+- name: Call postmap /etc/postfix/gmail_sasl
+  shell:
+    postmap /etc/postfix/gmail_sasl;
+    chown root:root /etc/postfix/gmail_sasl.db;
+  become: yes
+  changed_when: no
+  notify: Restart postfix
+
+- name: Deploy /etc/postfix/access
+  copy:
+    dest: /etc/postfix/access
+    mode: 0644
+    content: |
+      {{ network.cidr }} OK
+  become: yes
+  notify: Restart postfix
+
+- name: Call postmap /etc/postfix/access
+  shell:
+    postmap /etc/postfix/access
+  become: yes
+  changed_when: no
+  notify: Restart postfix
+
+- name: Update /etc/aliases
+  blockinfile:
+    state: present
+    path: /etc/aliases
+    block: |
+      root: "{{ mail.root }}"
+      mark: "{{ mail.mark }}"
+    backup: yes
+  become: yes
+
+- name: Call newaliases
+  shell: |
+    newaliases
+  become: yes
+  changed_when: no
+  notify: Restart postfix
+
+- name: Enable 587/tcp (submission)
+  lineinfile:
+    state: present
+    path: /etc/postfix/master.cf
+    line: submission inet n - y - - smtpd
+    backup: yes
+  become: yes
+  notify: Restart postfix
+
+- name: Deploy /etc/postfix/main.cf
+  copy:
+    dest: /etc/postfix/main.cf
+    owner: root
+    group: root
+    mode: 0644
+    content: |
+      smtpd_banner = $myhostname ESMTP $mail_name (Ubuntu)
+      biff = no
+      append_dot_mydomain = yes
+      readme_directory = no
+      compatibility_level = 2
+      smtpd_tls_cert_file=/etc/ssl/certs/ssl-cert-snakeoil.pem
+      smtpd_tls_key_file=/etc/ssl/private/ssl-cert-snakeoil.key
+      smtpd_tls_security_level=may
+      smtp_tls_CApath=/etc/ssl/certs
+      smtp_tls_session_cache_database = btree:${data_directory}/smtp_scache
+      smtpd_relay_restrictions = permit_mynetworks permit_sasl_authenticated defer_unauth_destination
+      myhostname = {{ inventory_hostname }}.cloudmason.org
+      mydomain = cloudmason.org
+      myorigin = $mydomain
+      alias_maps = hash:/etc/aliases
+      alias_database = hash:/etc/aliases
+      mydestination = $myhostname $mydomain localhost.localdomain localhost
+      mynetworks = 127.0.0.0/8 [::ffff:127.0.0.0]/104 [::1]/128 192.168.1.0/24
+      mailbox_size_limit = 0
+      recipient_delimiter = +
+      inet_interfaces = all
+      inet_protocols = all
+      relayhost = [smtp.gmail.com]:587
+      smtp_sasl_auth_enable = yes
+      smtp_sasl_security_options = noanonymous
+      smtp_sasl_password_maps = hash:/etc/postfix/gmail_sasl
+      smtp_tls_security_level = encrypt
+      smtp_tls_CAfile = /etc/ssl/certs/ca-certificates.crt
+      masquerade_domains = $mydomain
+    backup: yes
+  become: yes
+  notify: Restart postfix
+
+- name: Start and enable postfix
+  systemd:
+    name: postfix
+    state: started
+    enabled: yes
+  become: yes

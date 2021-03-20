@@ -1,0 +1,28 @@
+- name: Update all packages to their latest version
+  apt:
+    name: "*"
+    state: latest
+  become: yes
+  register: updates
+
+- name: Remove useless packages from the cache
+  apt:
+    autoclean: yes
+  become: yes
+  register: cleans
+
+- name: Remove dependencies that are no longer required
+  apt:
+    autoremove: yes
+  become: yes
+  register: removes
+
+- name: Stat /var/run/reboot-required
+  stat:
+    path: /var/run/reboot-required
+  register: reboot
+
+# - name: Reboot if we need to
+#   command: reboot
+#   when: reboot.stat.exists
+#   become: yes

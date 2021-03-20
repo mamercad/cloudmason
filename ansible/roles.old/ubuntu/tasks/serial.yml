@@ -1,0 +1,19 @@
+- name: Deploy /etc/default/grub
+  copy:
+    dest: /etc/default/grub
+    owner: root
+    group: root
+    mode: 0644
+    content: |
+      GRUB_DEFAULT=0
+      GRUB_TIMEOUT_STYLE=hidden
+      GRUB_TIMEOUT=0
+      GRUB_DISTRIBUTOR=`lsb_release -i -s 2> /dev/null || echo Debian`
+      GRUB_CMDLINE_LINUX_DEFAULT="quiet splash"
+      GRUB_CMDLINE_LINUX="console=tty1 console=ttyS0,115200"
+      GRUB_TERMINAL="console serial"
+      GRUB_TERMINAL=serial
+      GRUB_SERIAL_COMMAND="serial --unit=0 --speed=115200 --word=8 --parity=no --stop=1"
+    backup: yes
+  become: yes
+  notify: Rebuild /boot/grub/grub.cfg

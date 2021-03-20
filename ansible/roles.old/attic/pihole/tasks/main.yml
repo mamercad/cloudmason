@@ -1,0 +1,10 @@
+---
+
+- name: Install dnsutils
+  apt:
+    state: present
+    name: dnsutils
+  become: yes
+
+- name: Install PowerDNS
+  include_tasks: powerdns.yml

@@ -1,0 +1,71 @@
+---
+
+- name: Install hypervisor packages
+  apt:
+    state: present
+    name:
+      - qemu-kvm
+      - libvirt-clients
+      - libvirt-daemon-system
+      - bridge-utils
+      - virt-manager
+      - libguestfs-tools
+      - cloud-init
+      - cloud-image-utils
+  become: yes
+
+- name: Start and enable libvirtd
+  systemd:
+    name: libvirtd
+    state: started
+    enabled: yes
+  become: yes
+
+- name: Add mark to libvirt groups
+  user:
+    name: mark
+    groups:
+      - libvirt
+      - libvirt-qemu
+      - libvirt-dnsmasq
+    append: yes
+  become: yes
+
+# - name: Deploy /etc/sysctl.d/bridge.conf
+#   copy:
+#     dest: /etc/sysctl.d/bridge.conf
+#     mode: 0644
+#     content: |
+#       net.bridge.bridge-nf-call-ip6tables=0
+#       net.bridge.bridge-nf-call-iptables=0
+#       net.bridge.bridge-nf-call-arptables=0
+#     backup: yes
+#   become: yes
+
+# - name: Deploy /etc/udev/rules.d/99-bridge.rules
+#   copy:
+#     dest: /etc/udev/rules.d/99-bridge.rules
+#     mode: 0644
+#     content: |
+#       ACTION=="add", SUBSYSTEM=="module", KERNEL=="br_netfilter", RUN+="/sbin/sysctl -p /etc/sysctl.d/bridge.conf"
+#     backup: yes
+#   become: yes
+
+# - name: Deploy /etc/netplan/01-network-manager-all.yaml
+#   copy:
+#     dest: /etc/netplan/01-network-manager-all.yaml
+#     mode: 0644
+#     content: |
+#       network:
+#         version: 2
+#         renderer: networkd
+#         ethernets:
+#           enp2s0:
+#             dhcp4: yes
+#         bridges:
+#           br0:
+#             dhcp4: yes
+#             interfaces:
+#               - enp2s0
+#     backup: yes
+#   become: yes

@@ -1,0 +1,90 @@
+- name: Remove distro Docker stuff
+  apt:
+    name:
+      - docker
+      - docker-engine
+      - docker.io
+      - containerd
+      - runc
+    state: absent
+  tags: ubuntu-docker
+
+- name: Install Docker prereqs
+  apt:
+    name:
+      - apt-transport-https
+      - ca-certificates
+      - curl
+      - gnupg-agent
+      - software-properties-common
+    state: present
+  tags: ubuntu-docker
+
+- name: Install the Docker apt-key
+  apt_key:
+    url: https://download.docker.com/linux/ubuntu/gpg
+    id: 9DC858229FC7DD38854AE2D88D81803C0EBFCD88
+    state: present
+  tags: ubuntu-docker
+
+- name: Add the Docker repo
+  apt_repository:
+    repo: deb [arch=amd64] https://download.docker.com/linux/ubuntu focal stable
+    state: present
+  tags: ubuntu-docker
+
+- name: Install the Docker packages
+  apt:
+    name:
+      - docker-ce
+      - docker-ce-cli
+      - containerd.io
+    state: present
+  tags: ubuntu-docker
+
+- name: Add mark to the docker group
+  user:
+    name: "{{ user }}"
+    groups: docker
+    append: yes
+  tags: ubuntu-docker
+
+# - name: allow rancher tcp stuff
+#   iptables:
+#     chain: INPUT
+#     protocol: tcp
+#     match: tcp
+#     destination_port: "{{ item }}"
+#     syn: match
+#     jump: ACCEPT
+#     comment: allow rancher tcp stuff
+#   loop:
+#     - '80'
+#     - '443'
+#     - '2376'
+#     - '2379'
+#     - '2380'
+#     - '6443'
+#     - '6783'
+#     - '9099'
+#     - '10250'
+#     - '10254'
+#     - '10254'
+#     - '30000:32767'
+#   tags: ubuntu-docker
+
+# - name: allow rancher udp stuff
+#   iptables:
+#     chain: INPUT
+#     protocol: udp
+#     match: udp
+#     destination_port: "{{ item }}"
+#     jump: ACCEPT
+#     comment: allow rancher udp stuff
+#   loop:
+#     - '4789'
+#     - '6783'
+#     - '6784'
+#     - '8472'
+#     - '30000:32767'
+#   tags: ubuntu-docker

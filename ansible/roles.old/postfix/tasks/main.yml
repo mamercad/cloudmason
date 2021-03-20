@@ -1,0 +1,90 @@
+---
+
+- name: Install postfix stuff
+  package:
+    name: "{{ item }}"
+    state: present
+  loop:
+    - mailutils
+    - postfix
+    - libsasl2-modules
+  become: yes
+  notify: Reload postfix
+
+- name: Deploy /etc/postfix/gmail_sasl
+  copy:
+    dest: /etc/postfix/gmail_sasl
+    mode: 0600
+    content: "{{ mail.gmail_sasl_auth }}"
+  become: yes
+  notify: Reload postfix
+
+- name: Call postmap /etc/postfix/gmail_sasl
+  shell:
+    postmap /etc/postfix/gmail_sasl
+  become: yes
+  changed_when: no
+  notify: Reload postfix
+
+- name: Remove empty relayhost
+  lineinfile:
+    state: absent
+    path: /etc/postfix/main.cf
+    line: 'relayhost = '
+  become: yes
+  notify: Reload postfix
+
+- name: Remove stock mynetworks
+  lineinfile:
+    state: absent
+    path: /etc/postfix/main.cf
+    line: 'mynetworks = 127.0.0.0/8 [::ffff:127.0.0.0]/104 [::1]/128'
+  become: yes
+  notify: Reload postfix
+
+- name: Set up postfix for relay
+  blockinfile:
+    path: /etc/postfix/main.cf
+    block: |
+      mynetworks = 127.0.0.0/8 [::ffff:127.0.0.0]/104 [::1]/128 {{ network.cidr }}
+      relayhost = [smtp.gmail.com]:587
+      smtp_sasl_auth_enable = yes
+      smtp_sasl_security_options =
+      smtp_sasl_password_maps = hash:/etc/postfix/gmail_sasl
+      smtp_use_tls = yes
+      smtp_tls_CAfile = /etc/ssl/certs/ca-certificates.crt
+  become: yes
+  notify: Reload postfix
+
+- name: Deploy /etc/postfix/access
+  copy:
+    dest: /etc/postfix/access
+    mode: 0644
+    content: |
+      {{ network.cidr }} OK
+  become: yes
+  notify: Reload postfix
+
+- name: Call postmap /etc/postfix/access
+  shell:
+    postmap /etc/postfix/access
+  become: yes
+  changed_when: no
+  notify: Reload postfix
+
+- name: Update /etc/aliases
+  blockinfile:
+    path: /etc/aliases
+    block: |
+      root: mamercad@gmail.com
+      mark: mamercad@gmail.com
+    backup: yes
+  become: yes
+  notify: Reload postfix
+
+- name: Call newaliases
+  shell: |
+    newaliases
+  become: yes
+  changed_when: no
+  notify: Reload postfix

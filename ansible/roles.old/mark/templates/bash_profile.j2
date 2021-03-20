@@ -1,0 +1,41 @@
+export EDITOR="vim"
+export PAGER="less"
+
+if [[ "$(id -un)" = "root" ]]; then
+  export PS1="\u@\h:\w# "
+else
+  export PS1="\u@\h:\w$ "
+fi
+
+alias c="clear"
+alias ls="ls -F"
+
+set -o vi
+
+if [[ "{{ ansible_distribution }}" == "CentOS" ]]; then
+  if [ -f ~/.bashrc ]; then
+    . ~/.bashrc
+  fi
+  PATH=$PATH:$HOME/.local/bin:$HOME/bin
+  export PATH
+fi
+
+if [[ "{{ ansible_distribution }}" == "MacOSX" ]]; then
+  test -e "${HOME}/.iterm2_shell_integration.bash" && source "${HOME}/.iterm2_shell_integration.bash"
+  HOMEBREW_PREFIX=$(brew --prefix)
+  if type brew &>/dev/null; then
+    if [[ -r "${HOMEBREW_PREFIX}/etc/profile.d/bash_completion.sh" ]]; then
+      source "${HOMEBREW_PREFIX}/etc/profile.d/bash_completion.sh"
+    else
+      for COMPLETION in "${HOMEBREW_PREFIX}/etc/bash_completion.d/"*; do
+        [[ -r "$COMPLETION" ]] && source "$COMPLETION"
+      done
+    fi
+  fi
+fi
+
+if [[ -f /usr/share/bash-completion/bash_completion ]]; then
+  source /usr/share/bash-completion/bash_completion
+fi
+
+alias k="microk8s kubectl"

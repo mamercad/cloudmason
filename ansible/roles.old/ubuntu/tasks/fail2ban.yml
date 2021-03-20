@@ -1,0 +1,38 @@
+---
+
+- name: Install fail2ban
+  package:
+    name: "{{ item }}"
+    state: present
+  loop:
+    - fail2ban
+
+- name: Deploy /etc/fail2ban/jail.local
+  copy:
+    dest: /etc/fail2ban/jail.local
+    mode: 0644
+    content: |
+      [sshd]
+      enabled = true
+      port = 22
+      filter = sshd
+      logpath = /var/log/auth.log
+      maxretry = 3
+  become: yes
+
+- name: Check if /var/www/html exists
+  stat:
+    path: /var/www/html
+  register: var_www_html
+  failed_when: no
+  become: yes
+
+- name: Deploy fail2ban cron for nginx wall of shame
+  cron:
+    name: fail2-ban cron
+    minute: "*/5"
+    user: root
+    job: |
+      /sbin/iptables -L f2b-sshd 2>/dev/null | grep REJECT | awk '{print $4}' >/var/www/html/f2b-sshd 2>/dev/null
+  when: var_www_html.stat.exists
+  become: yes

@@ -1,0 +1,54 @@
+---
+
+- name: Restart postfix
+  systemd:
+    name: postfix
+    state: restarted
+  become: yes
+
+- name: Rebuild /boot/grub/grub.cfg
+  shell: grub-mkconfig -o /boot/grub/grub.cfg
+  become: yes
+
+- name: Restart netdata
+  systemd:
+    name: netdata
+    state: restarted
+  become: yes
+
+- name: Restart traefik
+  systemd:
+    name: traefik
+    state: restarted
+  become: yes
+
+- name: Reload systemd
+  systemd:
+    daemon_reexec: yes
+  become: yes
+
+- name: Restart sshd
+  systemd:
+    name: sshd
+    state: restarted
+  become: yes
+
+- name: Restart fail2ban
+  systemd:
+    name: fail2ban
+    state: restarted
+  become: yes
+
+- name: Restart pdns
+  systemd:
+    name: pdns
+    state: restarted
+    daemon_reload: yes
+  become: yes
+
+- name: Restart pdns-recursor
+  systemd:
+    name: pdns-recursor
+    state: restarted
+    daemon_reload: yes
+  become: yes

@@ -1,0 +1,73 @@
+- name: Create hubot Namespace
+  community.kubernetes.k8s:
+    state: present
+    context: "{{ kubernetes.context }}"
+    definition:
+      apiVersion: v1
+      kind: Namespace
+      metadata:
+        name: hubot
+
+- name: Create hubot Secret (Slack bot token)
+  community.kubernetes.k8s:
+    state: present
+    context: "{{ kubernetes.context }}"
+    definition:
+      apiVersion: v1
+      metadata:
+        name: hubot-slack-token
+        namespace: hubot
+      kind: Secret
+      type: Opaque
+      data:
+        HUBOT_SLACK_TOKEN: "{{ slack.hubot.token }}"
+
+- name: Create hubot Deployment
+  community.kubernetes.k8s:
+    state: present
+    context: "{{ kubernetes.context }}"
+    definition:
+      apiVersion: apps/v1
+      kind: Deployment
+      metadata:
+        name: hubot
+        namespace: hubot
+      spec:
+        selector:
+          matchLabels:
+            app: hubot
+        replicas: 1
+        template:
+          metadata:
+            labels:
+              app: hubot
+          spec:
+            nodeSelector:
+              kubernetes.io/arch: amd64
+            containers:
+              - name: app
+                image: mamercad/hubot:latest
+                resources:
+                  requests:
+                    memory: "128Mi"
+                    cpu: "250m"
+                  limits:
+                    memory: "256Mi"
+                    cpu: "500m"
+                env:
+                  - name: HUBOT_SLACK_TOKEN
+                    valueFrom:
+                      secretKeyRef:
+                        name: hubot-slack-token
+                        key: HUBOT_SLACK_TOKEN
+              - name: redis
+                image: redis:6.0.9-buster
+                ports:
+                  - containerPort: 6379
+                resources:
+                  requests:
+                    memory: "128Mi"
+                    cpu: "250m"
+                  limits:
+                    memory: "256Mi"
+                    cpu: "500m"

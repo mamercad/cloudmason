@@ -1,0 +1,79 @@
+- name: Create hello-world Namespace
+  community.kubernetes.k8s:
+    state: present
+    context: "{{ kubernetes.context }}"
+    definition:
+      apiVersion: v1
+      kind: Namespace
+      metadata:
+        name: hello-world
+
+- name: Create hello-world Deployment
+  community.kubernetes.k8s:
+    state: present
+    context: "{{ kubernetes.context }}"
+    definition:
+      apiVersion: apps/v1
+      kind: Deployment
+      metadata:
+        name: hello-world
+        namespace: hello-world
+      spec:
+        selector:
+          matchLabels:
+            app: hello-world
+        replicas: 2
+        template:
+          metadata:
+            labels:
+              app: hello-world
+          spec:
+            containers:
+              - name: app
+                image: gcr.io/google-samples/node-hello:1.0
+                ports:
+                  - containerPort: 8080
+                    protocol: TCP
+                    name: web
+
+- name: Create hello-world Service
+  community.kubernetes.k8s:
+    state: present
+    context: "{{ kubernetes.context }}"
+    definition:
+      apiVersion: v1
+      kind: Service
+      metadata:
+        name: hello-world
+        namespace: hello-world
+      spec:
+        selector:
+          app: hello-world
+        ports:
+          - protocol: TCP
+            port: 80
+            targetPort: web
+            name: http
+        type: LoadBalancer
+
+- name: Create hello-world Ingress
+  community.kubernetes.k8s:
+    state: present
+    context: "{{ kubernetes.context }}"
+    definition:
+      apiVersion: extensions/v1beta1
+      kind: Ingress
+      metadata:
+        name: hello-world
+        namespace: hello-world
+        annotations:
+          kubernetes.io/ingress.class: traefik
+      spec:
+        rules:
+        - host: hello-world.{{ kubernetes.context }}.cloudmason.org
+          http:
+            paths:
+            - path: /
+              backend:
+                serviceName: hello-world
+                servicePort: http
