@@ -336,8 +336,36 @@
   tags:
     - awx
 
+- name: Workflow Job Template
+  awx.awx.tower_workflow_job_template:
+    state: present
+    name: Cloudmason / OctoDNS Workflow 
+    description: Cloudmason / OctoDNS Workflow 
+    organization: Cloudmason
+  tags:
+    - awx
 
+- name: Workflow Job Template Node
+  awx.awx.tower_workflow_job_template_node:
+    state: present
+    identifier: octodns-sync
+    workflow: Cloudmason / OctoDNS Workflow
+    unified_job_template: Cloudmason / OctoDNS
+    organization: Cloudmason
+  tags:
+    - awx
 
+- name: Workflow Job Template Node
+  awx.awx.tower_workflow_job_template_node:
+    state: present
+    identifier: octodns-wan
+    workflow: Cloudmason / OctoDNS Workflow
+    unified_job_template: Cloudmason / WAN
+    organization: Cloudmason
+    success_nodes:
+      - octodns-sync
+  tags:
+    - awx
 
 
 
