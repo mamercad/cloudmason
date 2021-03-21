@@ -103,10 +103,12 @@
     job_type: run
     organization: Cloudmason
     inventory: Cloudmason
+    ask_inventory_on_launch: yes
     project: Cloudmason
     playbook: ansible/playbooks/ping.yml
     credentials:
       - Cloudmason Machine
+    ask_credential_on_launch: yes
     ask_limit_on_launch: yes
   tags:
     - awx
@@ -141,12 +143,139 @@
   tags:
     - awx
 
+- name: Job Template
+  awx.awx.tower_job_template:
+    state: present
+    name: Cloudmason / WAN
+    job_type: run
+    organization: Cloudmason
+    inventory: Cloudmason
+    ask_inventory_on_launch: no
+    project: Cloudmason
+    playbook: ansible/playbooks/wan.yml
+    credentials:
+      - Cloudmason Machine / mamercad
+    ask_credential_on_launch: no
+    limit: gateway
+    ask_limit_on_launch: no
+  tags:
+    - awx
 
+- name: Credential Type
+  awx.awx.tower_credential_type:
+    state: present
+    name: Cloudmason / PowerDNS API Key
+    description: Cloudmason / PowerDNS API Key
+    kind: net
+    inputs:
+      fields:
+        - type: string
+          id: POWERDNS_API_KEY
+          label: POWERDNS_API_KEY
+          secret: true
+      required:
+        - POWERDNS_API_KEY
+    injectors:
+      env:
+        POWERDNS_API_KEY: !unsafe '{{ POWERDNS_API_KEY }}'
+  tags:
+    - awx
 
+- name: PowerDNS API Key Credential
+  awx.awx.tower_credential:
+    state: present
+    name: Cloudmason PowerDNS API Key
+    description: Cloudmason PowerDNS API Key
+    organization: Cloudmason
+    credential_type: Cloudmason / PowerDNS API Key
+    inputs:
+      POWERDNS_API_KEY: !vault |
+        $ANSIBLE_VAULT;1.1;AES256
+        37306266393431646462663233353063356334353133383831396463393266363761636137393062
+        3664663033636632303032373664656535653866356338650a393765653439343361616564663736
+        30363038336163356564396162366135333431383961343730396662633539646239626332386336
+        6336633833633733640a353935643532306331626538623763626438343933333735366261313538
+        3832
+  tags:
+    - awx
 
+- name: Credential Type
+  awx.awx.tower_credential_type:
+    state: present
+    name: Cloudmason / CloudFlare API Key
+    description: Cloudmason / CloudFlare API Key
+    kind: net
+    inputs:
+      fields:
+        - type: string
+          id: CLOUDFLARE_API_KEY
+          label: CLOUDFLARE_API_KEY
+          secret: true
+      required:
+        - CLOUDFLARE_API_KEY
+    injectors:
+      env:
+        CLOUDFLARE_API_KEY: !unsafe '{{ CLOUDFLARE_API_KEY }}'
+  tags:
+    - awx
 
+- name: CloudFlare API Key Credential
+  awx.awx.tower_credential:
+    state: present
+    name: Cloudmason CloudFlare API Key
+    description: Cloudmason CloudFlare API Key
+    organization: Cloudmason
+    credential_type: Cloudmason / CloudFlare API Key
+    inputs:
+      CLOUDFLARE_API_KEY: !vault |
+        $ANSIBLE_VAULT;1.1;AES256
+        61383030636463633363663834663730393033386334653932346135376134643238386134616234
+        6636343065383764653433376431643737623762323332620a306134386164336138363863613739
+        35373761353634633434336537383132383263326666396537656664616161626161333330633062
+        3034316462346633300a323265313035616238336138666432373764656234353131396339383962
+        65613864343064356331396132636261353832366132343138316461333565643137373730643233
+        6132316336393732363439666561373531383065643731346532
+  tags:
+    - awx
 
+- name: Credential Type
+  awx.awx.tower_credential_type:
+    state: present
+    name: Cloudmason / CloudFlare API Token
+    description: Cloudmason / CloudFlare API Token
+    kind: net
+    inputs:
+      fields:
+        - type: string
+          id: CLOUDFLARE_API_TOKEN
+          label: CLOUDFLARE_API_TOKEN
+          secret: true
+      required:
+        - CLOUDFLARE_API_TOKEN
+    injectors:
+      env:
+        CLOUDFLARE_API_TOKEN: !unsafe '{{ CLOUDFLARE_API_TOKEN }}'
+  tags:
+    - awx
 
+- name: CloudFlare API Token Credential
+  awx.awx.tower_credential:
+    state: present
+    name: Cloudmason CloudFlare API Token
+    description: Cloudmason CloudFlare API Token
+    organization: Cloudmason
+    credential_type: Cloudmason / CloudFlare API Token
+    inputs:
+      CLOUDFLARE_API_TOKEN: !vault |
+        $ANSIBLE_VAULT;1.1;AES256
+        61383030636463633363663834663730393033386334653932346135376134643238386134616234
+        6636343065383764653433376431643737623762323332620a306134386164336138363863613739
+        35373761353634633434336537383132383263326666396537656664616161626161333330633062
+        3034316462346633300a323265313035616238336138666432373764656234353131396339383962
+        65613864343064356331396132636261353832366132343138316461333565643137373730643233
+        6132316336393732363439666561373531383065643731346532
+  tags:
+    - awx
 
 
 
