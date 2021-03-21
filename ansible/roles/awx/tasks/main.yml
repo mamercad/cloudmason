@@ -289,6 +289,8 @@
     playbook: ansible/playbooks/octodns.yml
     credentials:
       - Cloudmason Machine / awx
+      - Cloudmason PowerDNS API Key
+      - Cloudmason CloudFlare API Token
     ask_credential_on_launch: no
     limit: lenovo
     ask_limit_on_launch: no
