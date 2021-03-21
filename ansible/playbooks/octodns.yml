@@ -16,11 +16,11 @@
       git:
         repo: git@github.com:mamercad/cloudmason.git
         version: refactor
-        dest: /home/mark/src/github.com/mamercad/cloudmason
+        dest: /home/awx/src/github.com/mamercad/cloudmason
         key_file: /home/awx/.ssh/id_rsa
         accept_hostkey: yes
       become: yes
-      become_user: mark
+      become_user: awx
 
 #    - name: Do the mo templates
 #      shell: |
