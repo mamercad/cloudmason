@@ -96,6 +96,60 @@
   tags:
     - awx
 
+- name: Job Template
+  awx.awx.tower_job_template:
+    state: present
+    name: Cloudmason / Ping
+    job_type: run
+    organization: Cloudmason
+    inventory: Cloudmason
+    project: Cloudmason
+    playbook: ansible/playbooks/ping.yml
+    credentials:
+      - Cloudmason Machine
+    ask_limit_on_launch: yes
+  tags:
+    - awx
+
+- name: Machine Credential
+  awx.awx.tower_credential:
+    state: present
+    name: Cloudmason Machine / mamercad
+    description: Cloudmason
+    organization: Cloudmason
+    credential_type: Machine
+    inputs:
+      username: mamercad
+      password: "{{ awx.mark.password }}"
+      ssh_key_data: "{{ awx.mark.ssh_key_data }}"
+      ssh_key_unlock: "{{ awx.mark.ssh_key_unlock }}"
+  tags:
+    - awx
+
+- name: Machine Credential
+  awx.awx.tower_credential:
+    state: present
+    name: Cloudmason Machine / mark
+    description: Cloudmason
+    organization: Cloudmason
+    credential_type: Machine
+    inputs:
+      username: mark
+      password: "{{ awx.mark.password }}"
+      ssh_key_data: "{{ awx.mark.ssh_key_data }}"
+      ssh_key_unlock: "{{ awx.mark.ssh_key_unlock }}"
+  tags:
+    - awx
+
+
+
+
+
+
+
+
+
+
 #- name: Slack Notification Template
 #  awx.awx.tower_notification_template:
 #    name: Slack
@@ -113,21 +167,6 @@
 #      error:
 #        message: "{{ '{{ job_friendly_name }} {{ job.id }} failed, please look at {{ job.url }}' }}"
 #    state: present
-
-- name: Job Template
-  awx.awx.tower_job_template:
-    state: present
-    name: Cloudmason / Ping
-    job_type: run
-    organization: Cloudmason
-    inventory: Cloudmason
-    project: Cloudmason
-    playbook: ansible/playbooks/ping.yml
-    credentials:
-      - Cloudmason Machine
-    ask_limit_on_launch: yes
-  tags:
-    - awx
 
 #    notification_templates_started:
 #      - Slack
