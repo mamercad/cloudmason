@@ -1,0 +1,13 @@
+---
+- name: AWX
+  hosts: localhost
+  connection: local
+  gather_facts: no
+  become: no
+
+  tasks:
+
+    - name: Include awx role (config)
+      include_role:
+        name: awx
+        tasks_from: config.yml

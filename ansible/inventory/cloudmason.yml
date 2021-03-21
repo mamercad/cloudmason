@@ -24,7 +24,7 @@ all:
       cidr: 192.168.1.0/24
       gateway: 192.168.1.1
       domain: cloudmason.org
-    awx:
+    awx_secrets:
       awx:
         password: !vault |
           $ANSIBLE_VAULT;1.1;AES256

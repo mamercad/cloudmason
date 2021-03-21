@@ -1,0 +1,12 @@
+---
+- name: AWX
+  hosts: "{{ ansible_limit | default(omit) }}"
+  gather_facts: no
+  become: no
+
+  tasks:
+
+    - name: Include awx role (user)
+      include_role:
+        name: awx
+        tasks_from: user.yml
