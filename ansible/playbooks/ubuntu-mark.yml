@@ -1,0 +1,16 @@
+---
+- name: Ubuntu / mark
+  hosts: "{{ ansible_limit | default(omit) }}"
+  gather_facts: yes
+  become: no
+
+  tasks:
+
+    # - name: Include ubuntu vars (mark)
+    #   include_vars:
+    #     file: vars/mark.yml
+
+    - name: Include ubuntu role (mark)
+      include_role:
+        name: ubuntu
+        tasks_from: mark.yml

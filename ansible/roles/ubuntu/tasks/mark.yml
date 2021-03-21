@@ -1,0 +1,87 @@
+---
+
+- name: Include mark vars
+  include_vars:
+    file: mark.yml
+    name: mark
+
+- name: Ensure mark group exists
+  group:
+    state: present
+    name: "{{ mark.group }}"
+  become: yes
+
+- name: Ensure mark exists
+  user:
+    name: "{{ mark.user }}"
+    comment: "{{ mark.full_name }}"
+    group: "{{ mark.group }}"
+    password: "{{ mark.password }}"
+    create_home: yes
+  become: yes
+
+- name: Create ~mark/.ssh
+  file:
+    state: directory
+    path: "{{ mark.home }}/.ssh"
+    owner: "{{ mark.user }}"
+    group: "{{ mark.group }}"
+    mode: 0700
+  become: yes
+
+- name: Give mark passwordless sudo
+  copy:
+    content: "{{ mark.user }} ALL=(ALL:ALL) NOPASSWD:ALL"
+    dest: /etc/sudoers.d/{{ mark.user }}
+    mode: 0440
+  become: yes
+
+- name: Deploy ~mark/.ssh/authorized_keys
+  copy:
+    content: "{{ mark.ssh_authorized_keys }}"
+    dest: "{{ mark.home }}/.ssh/authorized_keys"
+    owner: "{{ mark.user }}"
+    group: "{{ mark.group }}"
+    mode: 0644
+    backup: yes
+  become: yes
+
+- name: Deploy ~mark/.ssh/personal.key.pub
+  copy:
+    content: "{{ mark.ssh_public_key }}"
+    dest: "{{ mark.home }}/.ssh/personal.key.pub"
+    owner: "{{ mark.user }}"
+    group: "{{ mark.group }}"
+    mode: 0644
+    backup: yes
+  become: yes
+
+- name: Deploy ~mark/.ssh/personal.key
+  copy:
+    content: "{{ mark.ssh_private_key }}"
+    dest: "{{ mark.home }}/.ssh/personal.key"
+    owner: "{{ mark.user }}"
+    group: "{{ mark.group }}"
+    mode: 0600
+    backup: yes
+  become: yes
+
+- name: Ensure set -o vi
+  blockinfile:
+    state: present
+    path: "{{ mark.home }}/.bashrc"
+    block: |
+      alias c=clear
+      set -o vi
+    backup: yes
+  become: yes
+
+- name: Create /var/mail/mark
+  file:
+    state: touch
+    path: /var/mail/mark
+    owner: "{{ mark.user }}"
+    group: "{{ mark.group }}"
+    mode: 0600
+  changed_when: no
+  become: yes
