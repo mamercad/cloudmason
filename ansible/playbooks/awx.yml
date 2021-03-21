@@ -37,7 +37,25 @@
         owner: awx
         group: awx
         mode: 0600
-        content: "{{ awx_ssh_pub_key }}"
+        content: "{{ awx.awx.ssh_pub_key }}"
+      become: yes
+
+    - name: Deploy ~awx/.ssh/id_rsa.pub
+      copy:
+        dest: /home/awx/.ssh/id_rsa.pub
+        owner: awx
+        group: awx
+        mode: 0600
+        content: "{{ awx.awx.ssh_pub_key }}"
+      become: yes
+
+    - name: Deploy ~awx/.ssh/id_rsa
+      copy:
+        dest: /home/awx/.ssh/id_rsa
+        owner: awx
+        group: awx
+        mode: 0600
+        content: "{{ awx.awx.ssh_key_data }}"
       become: yes
 
     - name: Give awx passwordless sudo
