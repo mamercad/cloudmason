@@ -1,0 +1,14 @@
+---
+- name: Kubernetes
+  hosts: localhost
+  connection: local
+  gather_facts: no
+  become: no
+
+  tasks:
+
+    - name: Include Kubernetes role
+      include_role:
+        name: kubernetes
+      tags:
+        - always

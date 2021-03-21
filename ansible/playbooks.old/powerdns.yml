@@ -1,0 +1,10 @@
+---
+- name: PowerDNS
+  hosts: powerdns
+  gather_facts: no
+  become: no
+
+  tasks:
+    - name: Include PowerDNS role
+      include_role:
+        name: powerdns

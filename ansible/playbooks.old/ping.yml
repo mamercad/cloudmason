@@ -1,0 +1,8 @@
+---
+- name: Ping
+  hosts: "{{ ansible_limit | default(omit) }}"
+  gather_facts: no
+  become: no
+  tasks:
+    - name: Ansible ping
+      action: ping

@@ -1,0 +1,60 @@
+---
+- name: Slack
+  hosts: all
+  gather_facts: no
+
+  tasks:
+
+    - uri:
+        url: http://prometheus.jonagold.cloudmason.org:9090/api/v1/query
+        method: POST
+        body: "query=pdns_recursor_cache_hits"
+        body_format: form-urlencoded
+        return_content: yes
+      register: hits
+
+    - set_fact:
+        cache_hits: "{{ hits.json.data.result.0.value.1 }}"
+
+    - uri:
+        url: http://prometheus.jonagold.cloudmason.org:9090/api/v1/query
+        method: POST
+        body: "query=pdns_recursor_cache_misses"
+        body_format: form-urlencoded
+        return_content: yes
+      register: misses
+
+    - set_fact:
+        cache_misses: "{{ misses.json.data.result.0.value.1 }}"
+
+    - set_fact:
+        cache_efficiency: "{{ (100.0 * cache_hits|float / (cache_hits|float + cache_misses|float)) | float | round(1) }}% ({{ cache_hits }} hits, {{ cache_misses }} misses)"
+
+    - uri:
+        url: http://prometheus.jonagold.cloudmason.org:9090/api/v1/query
+        method: POST
+        body: 'query=sum(increase(pdns_recursor_all_outqueries[1d]))'
+        body_format: form-urlencoded
+        return_content: yes
+      register: queries
+
+    - set_fact:
+        total_queries: "{{ (queries.json.data.result.0.value.1 | default(0)) | float | round(1, 'ceil') | int }}"
+
+    - set_fact:
+        slack_message: "```Served up {{ total_queries }} queries today, cache efficiency is {{ cache_efficiency }}```"
+
+    - set_fact:
+        slack_merged: "{{ slack | combine(slack_override|default({})) }}"
+
+    - name: Send notification message via Slack
+      community.general.slack:
+        token: "{{ slack_merged.ansible.token }}"
+        channel: "{{ slack_merged.channel }}"
+        username: "{{ slack_merged.username }}"
+        icon_url: "{{ slack_merged.icon_url }}"
+        blocks:
+          - type: section
+            text:
+              type: mrkdwn
+              text: "{{ slack_message }}"

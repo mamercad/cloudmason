@@ -1,0 +1,10 @@
+---
+- name: Postgres
+  hosts: db
+  gather_facts: no
+  become: no
+
+  tasks:
+    - name: Include Postgres role
+      include_role:
+        name: postgres

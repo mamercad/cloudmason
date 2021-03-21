@@ -1,0 +1,11 @@
+---
+- name: Ubuntu
+  hosts: ubuntu
+  gather_facts: yes
+  become: no
+
+  tasks:
+    - name: Include Ubuntu role
+      include_role:
+        name: ubuntu
+      tags: always

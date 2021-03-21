@@ -1,0 +1,58 @@
+---
+- name: gitlog
+  hosts: jonagold
+  # connection: local
+  gather_facts: no
+  become: no
+
+  tasks:
+
+    - name: Checkout and pull
+      git:
+        repo: git@github.com:mamercad/cloudmason.git
+        dest: /home/awx/src/github.com/mamercad/cloudmason
+        key_file: /home/awx/.ssh/id_rsa
+        version: main
+        update: yes
+      become: yes
+      become_user: awx
+
+    - name: Get the git log
+      shell: git log --pretty=format:"%h [ %<(60)%s ]" --since="{{ gitlog_since | default('1 hour ago') }}" --shortstat | paste -sd'_' - | sed 's/__/\n/g' | tr -d '_'
+      args:
+        chdir: /home/awx/src/github.com/mamercad/cloudmason
+      become: yes
+      become_user: awx
+      register: gitlog
+
+    - set_fact:
+        slack_message: "{{ gitlog.stdout_lines | join('\n') }}"
+
+    # - name: Send notification message via Slack
+    #   community.general.slack:
+    #     token: !vault |
+    #       $ANSIBLE_VAULT;1.1;AES256
+    #       33383362356136306531386334353535306465643363343733633931373230373761316334353837
+    #       3536306566303535313934643865656635316532376462640a373032653434633239336531323161
+    #       65643164646538303464373839356464656662323361643366333864316632326234383733383238
+    #       3963323562346230300a643562363938663730316332633736383130373937326534373066366465
+    #       62616336373165626564313666656632623239363234623330326239613566333432393031333038
+    #       35396339393536306366646363323631393737383865663130623165633566653132626664383564
+    #       633430333133626630386461346337323430
+    #     channel: '#testing'
+    #     icon_url: 'https://avatars3.githubusercontent.com/u/18133?s=200&v=4'
+    #     username: git-log
+    #     msg: "```{{ slack_message }}```"
+    #   when: slack_message != ''
+
+    - set_fact:
+        slack_merged: "{{ slack | combine(slack_override|default({})) }}"
+
+    - name: Send notification message via Slack
+      community.general.slack:
+        token: "{{ slack_merged.ansible.token }}"
+        channel: "{{ slack_merged.channel }}"
+        username: "{{ slack_merged.username }}"
+        icon_url: "{{ slack_merged.icon_url }}"
+        msg: "```Infrastructure changes since {{ gitlog_since | default('1 hour ago') }}:\n{{ slack_message }}```"
+      when: slack_message != ''

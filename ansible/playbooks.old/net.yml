@@ -1,0 +1,13 @@
+---
+- name: net
+  hosts: net
+  gather_facts: yes
+  become: no
+
+  tasks:
+
+    - name: Include ubuntu/net role
+      include_role:
+        name: ubuntu
+        tasks_from: net.yml
+        vars_from: net.yml

@@ -1,0 +1,42 @@
+---
+- name: nzbget / history
+  hosts: "{{ ansible_limit | default('localhost') }}"
+  connection: "{{ ansible_connection | default('local') }}"
+  gather_facts: no
+  become: no
+
+  tasks:
+
+    - name: Deploy the script
+      copy:
+        src: ../../scripts/nzbget/history.py
+        dest: /tmp/nzbget_history.py
+        mode: 0755
+
+    - name: Run nzbget / history
+      shell: |
+        /tmp/nzbget_history.py "{{ hours | default(3) }}"
+      register: history
+
+    - block:
+
+        - set_fact:
+            slack_message: "{{ slack_message|default([]) + [item.name] }}"
+          loop: "{{ history.stdout }}"
+
+        - set_fact:
+            slack_merged: "{{ slack | combine(slack_override|default({})) }}"
+
+        - name: Send notification message via Slack
+          community.general.slack:
+            token: "{{ slack_merged.ansible.token }}"
+            channel: "{{ slack_merged.channel }}"
+            username: "{{ slack_merged.username }}"
+            icon_url: "{{ slack_merged.icon_url }}"
+            blocks:
+              - type: section
+                text:
+                  type: mrkdwn
+                  text: "```Downloads in the last {{ hours | default(3) }}h:\n{{ slack_message | join('\n') }}```"
+
+      when: history.stdout != '[]'

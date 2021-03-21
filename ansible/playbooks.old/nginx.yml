@@ -1,0 +1,10 @@
+---
+- name: nginx
+  hosts: net
+  gather_facts: yes
+  become: no
+
+  tasks:
+    - name: Include Nginx/nginx role
+      include_role:
+        name: nginx

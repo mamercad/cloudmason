@@ -1,0 +1,21 @@
+---
+- name: wan
+  hosts: gateway
+  gather_facts: no
+  become: no
+
+  tasks:
+
+    - shell: /opt/vyatta/bin/vyatta-show-interfaces | grep 'inet ' | grep eth0 | awk '{print $2}' | sed 's/\/.*$//'
+      register: eth0
+
+    - set_stats:
+        data:
+          eth0: "{{ eth0.stdout }}"
+
+    - shell: /opt/vyatta/bin/vyatta-show-interfaces | grep 'inet ' | grep eth2 | awk '{print $2}' | sed 's/\/.*$//'
+      register: eth2
+
+    - set_stats:
+        data:
+          eth2: "{{ eth2.stdout }}"
