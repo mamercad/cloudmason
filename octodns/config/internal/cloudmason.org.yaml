@@ -281,7 +281,7 @@ clusterpi6:
 livingroomlamp:
   type: A
   value: 192.168.1.115
-C02D6D7BMD6M:
+clusterpi3:
   type: A
   value: 192.168.1.116
 ooma:
@@ -362,9 +362,6 @@ maryiphone:
 node2:
   type: A
   value: 192.168.1.131
-clusterpi3:
-  type: A
-  value: 192.168.1.132
 markapplewatch:
   type: A
   value: 192.168.1.133

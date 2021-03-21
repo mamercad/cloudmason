@@ -217,7 +217,7 @@
   value: livingroomlamp.cloudmason.org.
 116:
   type: PTR
-  value: C02D6D7BMD6M.cloudmason.org.
+  value: clusterpi3.cloudmason.org.
 117:
   type: PTR
   value: ooma.cloudmason.org.
@@ -257,9 +257,6 @@
 131:
   type: PTR
   value: node2.cloudmason.org.
-132:
-  type: PTR
-  value: clusterpi3.cloudmason.org.
 133:
   type: PTR
   value: markapplewatch.cloudmason.org.
