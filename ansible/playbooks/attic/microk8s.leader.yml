@@ -1,8 +1,0 @@
----
-
-- name: Get the join command
-  shell: microk8s add-node 2>&1 | grep ^microk8s
-  register: join
-
-- name: Run the join command
-  include_tasks: microk8s.follower.yml

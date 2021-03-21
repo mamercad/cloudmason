@@ -1,5 +1,5 @@
 ---
-- name: wan
+- name: WAN
   hosts: gateway
   gather_facts: no
   become: no
