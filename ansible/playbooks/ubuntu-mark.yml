@@ -6,10 +6,6 @@
 
   tasks:
 
-    # - name: Include ubuntu vars (mark)
-    #   include_vars:
-    #     file: vars/mark.yml
-
     - name: Include ubuntu role (mark)
       include_role:
         name: ubuntu
