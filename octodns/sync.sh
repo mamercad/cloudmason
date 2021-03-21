@@ -1,9 +1,8 @@
 #!/usr/bin/env bash
 
 echo "Figuring out WAN addresses"
-
-eth2="$(../scripts/wan/eth2)"
-eth0="$(../scripts/wan/eth0)"
+eth2="$(../scripts/wan/eth2)"; export eth2
+eth0="$(../scripts/wan/eth0)"; export eth0
 
 if [[ -z "$eth2" ]] || [[ -z "$eth0" ]]; then
   echo "$0 Either eth2 or eth0 is empty, bailing!"
@@ -14,7 +13,6 @@ else
 fi
 
 echo "Templating external configs"
-
 ../scripts/mo config/external/cloudmason.org.yaml.mo | tee config/external/cloudmason.org.yaml
 ../scripts/mo config/external/letsbuildthe.cloud.yaml.mo | tee config/external/letsbuildthe.cloud.yaml
 
@@ -23,14 +21,18 @@ if ! command -v octodns-sync &>/dev/null; then
   exit 1
 fi
 
-echo "Syncing OctoDNS"
-
-octodns-sync --config-file config/external.yaml "$*"
-octodns-sync --config-file config/internal.yaml "$*"
-
-echo "Restarting PowerDNS"
+if [[ "$1" == "--doit" ]]; then
+  echo "Syncing OctoDNS"
+  octodns-sync --config-file config/external.yaml --doit
+  octodns-sync --config-file config/internal.yaml --doit
+else
+  echo "Showing OctoDNS"
+  octodns-sync --config-file config/external.yaml
+  octodns-sync --config-file config/internal.yaml
+fi
 
 if [[ "$1" == "--doit" ]]; then
+  echo "Restarting PowerDNS"
   ssh mark@192.168.1.10 "sudo systemctl restart pdns; sudo systemctl restart pdns-recursor"; sleep 3
   ssh mark@192.168.1.11 "sudo systemctl restart pdns; sudo systemctl restart pdns-recursor"; sleep 3
 fi

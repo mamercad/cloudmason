@@ -25,10 +25,16 @@ smtp:
   type: A
   value: {{eth0}}
   ttl: 3600
-adarobin:
+net:
+  type: A
+  values:
+    - 192.168.1.10
+    - 192.168.1.11
+  ttl: 3600
+awx:
   type: CNAME
-  value: adarobin.net.
-  ttl: 300
+  value: net.cloudmason.org.
+  ttl: 3600
 jonagold:
   type: A
   value: 192.168.1.26
