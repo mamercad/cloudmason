@@ -34,23 +34,23 @@
     organization: Cloudmason
     credential_type: Source Control
     inputs:
-      ssh_key_data: "{{ awx.awx_ssh_key_data }}"
-      ssh_key_unlock: "{{ awx.awx_ssh_key_unlock }}"
+      ssh_key_data: "{{ awx.awx.ssh_key_data }}"
+      ssh_key_unlock: "{{ awx.awx.ssh_key_unlock }}"
   tags:
     - awx
 
 - name: Machine Credential
   awx.awx.tower_credential:
     state: present
-    name: Cloudmason Machine
+    name: Cloudmason Machine / awx
     description: Cloudmason
     organization: Cloudmason
     credential_type: Machine
     inputs:
       username: awx
-      password: "{{ awx.awx_password }}"
-      ssh_key_data: "{{ awx.awx_ssh_key_data }}"
-      ssh_key_unlock: "{{ awx.awx_ssh_key_unlock }}"
+      password: "{{ awx.awx.password }}"
+      ssh_key_data: "{{ awx.awx.ssh_key_data }}"
+      ssh_key_unlock: "{{ awx.awx.ssh_key_unlock }}"
   tags:
     - awx
 
