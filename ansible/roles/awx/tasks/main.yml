@@ -277,6 +277,76 @@
   tags:
     - awx
 
+- name: Job Template
+  awx.awx.tower_job_template:
+    state: present
+    name: Cloudmason / OctoDNS
+    job_type: run
+    organization: Cloudmason
+    inventory: Cloudmason
+    ask_inventory_on_launch: no
+    project: Cloudmason
+    playbook: ansible/playbooks/octodns.yml
+    credentials:
+      - Cloudmason Machine / awx
+    ask_credential_on_launch: no
+    limit: lenovo
+    ask_limit_on_launch: no
+  tags:
+    - awx
+
+- name: Vault Credential
+  awx.awx.tower_credential:
+    state: present
+    name: Cloudmason Vault
+    description: Cloudmason Vault
+    organization: Cloudmason
+    credential_type: Vault
+    inputs:
+      vault_id: Cloudmason
+      vault_password: !vault |
+        $ANSIBLE_VAULT;1.1;AES256
+        64383535393831613632353664323562653964663864383430616333376462333938626266356334
+        3332343636306466623035396462633432333735653766300a663466393461633561363363326666
+        34653065636366616231356661636465393661303438383730393534646131623738393332316632
+        3339666535643762300a363163633138626565373565326464393835373636663733383935636133
+        3764
+  tags:
+    - awx
+
+- name: Job Template
+  awx.awx.tower_job_template:
+    state: present
+    name: Cloudmason / AWX
+    job_type: run
+    organization: Cloudmason
+    inventory: Cloudmason
+    ask_inventory_on_launch: no
+    project: Cloudmason
+    playbook: ansible/playbooks/awx.yml
+    credentials:
+      - Cloudmason Vault
+      - Cloudmason Machine / mark
+    ask_credential_on_launch: yes
+    limit: lenovo
+    ask_limit_on_launch: yes
+  tags:
+    - awx
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 #- name: Slack Notification Template
