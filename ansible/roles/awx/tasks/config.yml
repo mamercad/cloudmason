@@ -367,36 +367,32 @@
   tags:
     - awx
 
+- name: Slack Notification Template
+  awx.awx.tower_notification_template:
+    state: present
+    name: Cloudmason Slack (awx)
+    organization: Cloudmason
+    notification_type: slack
+    notification_configuration:
+      channels:
+        - '#awx'
+      token: "{{ awx_secrets.awx.slack_bot_oauth_token }}"
+    # messages:
+    #   started:
+    #     message: "{{ '{{ job_friendly_name }} {{ job.id }} started [{{ job.summary_fields.project.name }}|{{ job.name }}|{{ job.playbook }}]' }}"
+    #   success:
+    #     message: "{{ '{{ job_friendly_name }} {{ job.id }} completed in {{ job.elapsed }} seconds' }}"
+    #   error:
+    #     message: "{{ '{{ job_friendly_name }} {{ job.id }} failed, please look at {{ job.url }}' }}"
+  tags:
+    - awx
 
-
-
-
-
-
-
-
-
-
-
-
-
-#- name: Slack Notification Template
-#  awx.awx.tower_notification_template:
-#    name: Slack
-#    organization: Cloudmason
-#    notification_type: slack
-#    notification_configuration:
-#      channels:
-#        - awx
-#      token: "{{ slack_token }}"
-#    messages:
-#      started:
-#        message: "{{ '{{ job_friendly_name }} {{ job.id }} started [{{ job.summary_fields.project.name }}|{{ job.name }}|{{ job.playbook }}]' }}"
-#      success:
-#        message: "{{ '{{ job_friendly_name }} {{ job.id }} completed in {{ job.elapsed }} seconds' }}"
-#      error:
-#        message: "{{ '{{ job_friendly_name }} {{ job.id }} failed, please look at {{ job.url }}' }}"
-#    state: present
+- name: Setting TOWER_URL_BASE
+  tower_settings:
+    name: TOWER_URL_BASE
+    value: "{{ lookup('env', 'TOWER_HOST') }}"
+  tags:
+    - awx
 
 #    notification_templates_started:
 #      - Slack
