@@ -38,9 +38,6 @@
 22:
   type: PTR
   value: rokufamilyroom.cloudmason.org.
-26:
-  type: PTR
-  value: jonagold.cloudmason.org.
 30:
   type: PTR
   value: cloudkeyfallback.cloudmason.org.
@@ -53,6 +50,9 @@
 33:
   type: PTR
   value: ringbasestation.cloudmason.org.
+43:
+  type: PTR
+  value: jonagold.cloudmason.org.
 47:
   type: PTR
   value: markxboxone.cloudmason.org.
