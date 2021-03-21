@@ -35,6 +35,10 @@ awx:
   type: CNAME
   value: net.cloudmason.org.
   ttl: 3600
+cloudkey:
+  type: A
+  value: 192.168.1.3
+  ttl: 3600
 jonagold:
   type: A
   value: 192.168.1.26
