@@ -10,6 +10,7 @@
     ansible_python_interpreter: /opt/octodns/bin/python
     eth0: 68.46.132.66
     eth2: 162.230.47.152
+    doit: --doit
 
   tasks:
 
@@ -33,7 +34,7 @@
 
     - name: Run octodns-sync (external)
       shell: |
-        /opt/octodns/bin/octodns-sync --config config/external.yaml
+        /opt/octodns/bin/octodns-sync --config config/external.yaml {{ doit }}
       args:
         chdir: /home/awx/src/github.com/mamercad/cloudmason/octodns
       environment:
@@ -43,7 +44,7 @@
 
     - name: Run octodns-sync (internal)
       shell: |
-        /opt/octodns/bin/octodns-sync --config config/internal.yaml
+        /opt/octodns/bin/octodns-sync --config config/internal.yaml {{ doit }}
       args:
         chdir: /home/awx/src/github.com/mamercad/cloudmason/octodns
       environment:
