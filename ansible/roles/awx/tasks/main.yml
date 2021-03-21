@@ -290,6 +290,7 @@
     credentials:
       - Cloudmason Machine / awx
       - Cloudmason PowerDNS API Key
+      - Cloudmason CloudFlare API Key
       - Cloudmason CloudFlare API Token
     ask_credential_on_launch: no
     limit: lenovo

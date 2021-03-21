@@ -21,7 +21,7 @@
         key_file: /home/awx/.ssh/id_rsa
         accept_hostkey: yes
 
-    - name: Do the mo templates
+    - name: Do the mo templates (for external)
       shell: |
         ../scripts/mo config/external/letsbuildthe.cloud.yaml.mo | tee config/external/letsbuildthe.cloud.yaml
         ../scripts/mo config/external/cloudmason.org.yaml.mo | tee config/external/cloudmason.org.yaml
@@ -31,22 +31,38 @@
         eth0: "{{ eth0 }}"
         eth2: "{{ eth2 }}"
 
-    - name: Run octodns-sync
+    - name: Run octodns-sync (external)
       shell: |
         /opt/octodns/bin/octodns-sync --config config/external.yaml
+      args:
+        chdir: /home/awx/src/github.com/mamercad/cloudmason/octodns
+      environment:
+        CLOUDFLARE_API_KEY: "{{ lookup('env', 'CLOUDFLARE_API_KEY') }}"
+      register: octodns_sync_external
+      changed_when: no # Don't care, we'll see the results below
+
+    - name: Run octodns-sync (internal)
+      shell: |
         /opt/octodns/bin/octodns-sync --config config/internal.yaml
       args:
         chdir: /home/awx/src/github.com/mamercad/cloudmason/octodns
       environment:
         POWERDNS_API_KEY: "{{ lookup('env', 'POWERDNS_API_KEY') }}"
-        CLOUDFLARE_API_KEY: "{{ lookup('env', 'CLOUDFLARE_API_KEY') }}"
-      register: octodns_sync
+      register: octodns_sync_internal
       changed_when: no # Don't care, we'll see the results below
 
-    - name: Show octodns-sync
+    - name: Show octodns-sync (external)
       pause:
         seconds: 1
         prompt: |
-          {% for line in octodns_sync.stderr_lines %}
+          {% for line in octodns_sync_external.stderr_lines %}
+          {{ line }}
+          {% endfor %}
+
+    - name: Show octodns-sync (internal)
+      pause:
+        seconds: 1
+        prompt: |
+          {% for line in octodns_sync_internal.stderr_lines %}
           {{ line }}
           {% endfor %}
