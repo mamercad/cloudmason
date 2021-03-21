@@ -55,7 +55,7 @@
         owner: awx
         group: awx
         mode: 0600
-        content: "{{ awx.awx.ssh_key_data }}"
+        content: "{{ awx.awx.ssh_key }}"
       become: yes
 
     - name: Give awx passwordless sudo
