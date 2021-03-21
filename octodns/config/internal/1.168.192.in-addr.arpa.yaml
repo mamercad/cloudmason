@@ -50,6 +50,9 @@
 33:
   type: PTR
   value: ringbasestation.cloudmason.org.
+40:
+  type: PTR
+  value: switch2.cloudmason.org.
 43:
   type: PTR
   value: jonagold.cloudmason.org.
@@ -113,9 +116,6 @@
 73:
   type: PTR
   value: honeycrisp.cloudmason.org.
-74:
-  type: PTR
-  value: switch4.cloudmason.org.
 75:
   type: PTR
   value: judeair.cloudmason.org.
@@ -238,13 +238,10 @@
   value: traefik1.cloudmason.org.
 124:
   type: PTR
-  value: alexashow1.cloudmason.org.
+  value: bedroom.cloudmason.org.
 125:
   type: PTR
   value: node0.cloudmason.org.
-126:
-  type: PTR
-  value: switch2.cloudmason.org.
 127:
   type: PTR
   value: pws.cloudmason.org.
@@ -268,7 +265,7 @@
   value: rog.cloudmason.org.
 137:
   type: PTR
-  value: db3.cloudmason.org.
+  value: switch4.cloudmason.org.
 138:
   type: PTR
   value: alexa3.cloudmason.org.
@@ -278,9 +275,6 @@
 140:
   type: PTR
   value: livingroomtv.cloudmason.org.
-141:
-  type: PTR
-  value: bedroom.cloudmason.org.
 144:
   type: PTR
   value: basementlamp2.cloudmason.org.

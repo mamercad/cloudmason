@@ -184,7 +184,7 @@ honeycrisp:
   value: 192.168.1.73
 switch4:
   type: A
-  value: 192.168.1.74
+  value: 192.168.1.137
 judeair:
   type: A
   value: 192.168.1.75
@@ -349,7 +349,7 @@ node0:
   value: 192.168.1.125
 switch2:
   type: A
-  value: 192.168.1.126
+  value: 192.168.1.40
 pws:
   type: A
   value: 192.168.1.127
@@ -385,7 +385,7 @@ livingroomtv:
   value: 192.168.1.140
 bedroom:
   type: A
-  value: 192.168.1.141
+  value: 192.168.1.124
 basementlamp2:
   type: A
   value: 192.168.1.144

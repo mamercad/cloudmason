@@ -18,6 +18,27 @@ all:
       ansible_host: 192.168.1.1
       ansible_user: mamercad
       ansible_python_interpreter: /usr/bin/python
+    clusterpi0:
+      ansible_host: 192.168.1.62
+      ansible_python_interpreter: /usr/bin/python3
+    clusterpi1:
+      ansible_host: 192.168.1.81
+      ansible_python_interpreter: /usr/bin/python3
+    clusterpi2:
+      ansible_host: 192.168.1.64
+      ansible_python_interpreter: /usr/bin/python3
+    clusterpi3:
+      ansible_host: 192.168.1.116
+      ansible_python_interpreter: /usr/bin/python3
+    clusterpi4:
+      ansible_host: 192.168.1.66
+      ansible_python_interpreter: /usr/bin/python3
+    clusterpi5:
+      ansible_host: 192.168.1.68
+      ansible_python_interpreter: /usr/bin/python3
+    clusterpi6:
+      ansible_host: 192.168.1.111
+      ansible_python_interpreter: /usr/bin/python3
   vars:
     network:
       interface: eth0
@@ -588,3 +609,11 @@ all:
       hosts:
         net1:
         net2:
+    clusterpi:
+      hosts:
+        clusterpi0:
+        clusterpi1:
+        clusterpi2:
+        clusterpi3:
+        clusterpi4:
+        clusterpi5:
