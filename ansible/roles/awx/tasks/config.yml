@@ -387,6 +387,44 @@
   tags:
     - awx
 
+- name: Job Template
+  awx.awx.tower_job_template:
+    state: present
+    name: Cloudmason / Ubuntu (main)
+    job_type: run
+    organization: Cloudmason
+    inventory: Cloudmason
+    ask_inventory_on_launch: yes
+    project: Cloudmason
+    playbook: ansible/playbooks/ubuntu.yml
+    credentials:
+      - Cloudmason Vault
+      - Cloudmason Machine
+    ask_credential_on_launch: yes
+    limit: ubuntu
+    ask_limit_on_launch: yes
+  tags:
+    - awx
+
+- name: Job Template
+  awx.awx.tower_job_template:
+    state: present
+    name: Cloudmason / Ubuntu (mark)
+    job_type: run
+    organization: Cloudmason
+    inventory: Cloudmason
+    ask_inventory_on_launch: yes
+    project: Cloudmason
+    playbook: ansible/playbooks/ubuntu.yml
+    credentials:
+      - Cloudmason Vault
+      - Cloudmason Machine
+    ask_credential_on_launch: yes
+    limit: ubuntu
+    ask_limit_on_launch: yes
+  tags:
+    - awx
+
 - name: Setting TOWER_URL_BASE
   tower_settings:
     name: TOWER_URL_BASE
