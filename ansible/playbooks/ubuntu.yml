@@ -1,0 +1,12 @@
+---
+- name: Ubuntu / main
+  hosts: "{{ ansible_limit | default(omit) }}"
+  gather_facts: yes
+  become: no
+
+  tasks:
+
+    - name: Include ubuntu role (main)
+      include_role:
+        name: ubuntu
+        tasks_from: main.yml
