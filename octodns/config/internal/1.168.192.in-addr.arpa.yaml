@@ -26,9 +26,6 @@
 13:
   type: PTR
   value: net4.cloudmason.org.
-14:
-  type: PTR
-  value: printer.cloudmason.org.
 16:
   type: PTR
   value: ringdoorbell.cloudmason.org.
@@ -259,7 +256,7 @@
   value: markapplewatch.cloudmason.org.
 134:
   type: PTR
-  value: indyipod.cloudmason.org.
+  value: printer.cloudmason.org.
 136:
   type: PTR
   value: rog.cloudmason.org.

@@ -95,9 +95,6 @@ net3:
 net4:
   type: A
   value: 192.168.1.13
-printer:
-  type: A
-  value: 192.168.1.14
 ringdoorbell:
   type: A
   value: 192.168.1.16
@@ -365,7 +362,7 @@ node2:
 markapplewatch:
   type: A
   value: 192.168.1.133
-indyipod:
+printer:
   type: A
   value: 192.168.1.134
 rog:
