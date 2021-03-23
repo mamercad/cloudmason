@@ -25,15 +25,9 @@ smtp:
   type: A
   value: {{eth0}}
   ttl: 3600
-net:
-  type: A
-  values:
-    - 192.168.1.10
-    - 192.168.1.11
-  ttl: 3600
 awx:
-  type: CNAME
-  value: net.cloudmason.org.
+  type: A
+  value: {{eth0}}
   ttl: 3600
 cloudkey:
   type: A
