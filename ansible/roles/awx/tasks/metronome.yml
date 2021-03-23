@@ -1,8 +1,9 @@
 ---
 
 - name: Include vars
-  include_vars: metronome.yml
-  name: metronome
+  include_vars:
+    file: metronome.yml
+    name: metronome
 
 - name: Post to Healthchecks.io
   uri:
