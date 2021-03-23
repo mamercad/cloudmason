@@ -115,7 +115,7 @@ ringbasestation:
   value: 192.168.1.33
 jonagold:
   type: A
-  value: 192.168.1.43
+  value: 192.168.1.110
 markxboxone:
   type: A
   value: 192.168.1.47

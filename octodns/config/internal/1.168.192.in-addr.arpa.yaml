@@ -47,9 +47,6 @@
 40:
   type: PTR
   value: switch2.cloudmason.org.
-43:
-  type: PTR
-  value: jonagold.cloudmason.org.
 47:
   type: PTR
   value: markxboxone.cloudmason.org.
@@ -200,6 +197,9 @@
 109:
   type: PTR
   value: gala.cloudmason.org.
+110:
+  type: PTR
+  value: jonagold.cloudmason.org.
 111:
   type: PTR
   value: clusterpi6.cloudmason.org.
