@@ -6,5 +6,5 @@
 
 - name: Post to Healthchecks.io
   uri:
-    url: "{{ metronome.healthchecks.io }}"
+    url: "{{ metronome.healthchecks_io }}"
     method: POST
