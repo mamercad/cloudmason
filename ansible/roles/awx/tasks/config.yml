@@ -342,6 +342,7 @@
     name: Cloudmason / OctoDNS Workflow
     description: Cloudmason / OctoDNS Workflow
     organization: Cloudmason
+    webhook_service: github
   tags:
     - awx
 
