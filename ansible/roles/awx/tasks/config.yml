@@ -336,6 +336,33 @@
   tags:
     - awx
 
+- name: Job Template
+  awx.awx.tower_job_template:
+    state: present
+    name: Cloudmason / AWX (metronome)
+    job_type: run
+    organization: Cloudmason
+    inventory: Cloudmason
+    ask_inventory_on_launch: no
+    project: Cloudmason
+    playbook: ansible/playbooks/awx-metronome.yml
+    ask_credential_on_launch: yes
+    limit: localhost
+    ask_limit_on_launch: no
+  tags:
+    - awx
+
+- name: Schedule
+  awx.awx.tower_schedule:
+    state: present
+    name: Cloudmason / AWX (metronome) Schedule
+    description: Hourly AWX Metronome
+    rrule: "DTSTART:20210323T000000Z RRULE:FREQ=HOURLY;INTERVAL=1"
+    unified_job_template: Cloudmason / AWX (metronome)
+    enabled: yes
+  tags:
+    - awx
+
 - name: Workflow Job Template
   awx.awx.tower_workflow_job_template:
     state: present

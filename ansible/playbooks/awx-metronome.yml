@@ -1,0 +1,13 @@
+---
+- name: AWX
+  hosts: localhost
+  connection: local
+  gather_facts: no
+  become: no
+
+  tasks:
+
+    - name: Include awx role (metronome)
+      include_role:
+        name: awx
+        tasks_from: metronome.yml

@@ -1,0 +1,10 @@
+---
+
+- name: Include vars
+  include_vars: metronome.yml
+  name: metronome
+
+- name: Post to Healthchecks.io
+  uri:
+    url: "{{ metronome.healthchecks.io }}"
+    method: POST
