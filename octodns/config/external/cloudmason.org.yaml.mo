@@ -29,6 +29,10 @@ awx:
   type: A
   value: {{eth0}}
   ttl: 3600
+valheim:
+  type: A
+  value: {{eth0}}
+  ttl: 3600
 cloudkey:
   type: A
   value: 192.168.1.3
