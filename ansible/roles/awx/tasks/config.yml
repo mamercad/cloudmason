@@ -62,7 +62,7 @@
     organization: Cloudmason
     scm_type: git
     scm_url: git@github.com:mamercad/cloudmason.git
-    scm_branch: refactor
+    scm_branch: main
     scm_clean: yes
     scm_delete_on_update: yes
     scm_update_on_launch: yes

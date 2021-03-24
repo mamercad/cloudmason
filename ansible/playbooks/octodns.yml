@@ -17,7 +17,7 @@
     - name: Clone git@github.com:mamercad/cloudmason.git
       git:
         repo: git@github.com:mamercad/cloudmason.git
-        version: refactor
+        version: main
         dest: /home/awx/src/github.com/mamercad/cloudmason
         key_file: /home/awx/.ssh/id_rsa
         accept_hostkey: yes
