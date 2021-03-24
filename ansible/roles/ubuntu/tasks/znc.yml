@@ -1,0 +1,8 @@
+---
+
+- name: Install ZNC
+  apt:
+    state: present
+    name: znc
+    update_cache: yes
+  become: yes

@@ -1,0 +1,12 @@
+---
+- name: Ubuntu / znc
+  hosts: "{{ ansible_limit | default(omit) }}"
+  gather_facts: yes
+  become: no
+
+  tasks:
+
+    - name: Include ubuntu role (znc)
+      include_role:
+        name: ubuntu
+        tasks_from: znc.yml
