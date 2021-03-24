@@ -1,0 +1,11 @@
+---
+- name: K3s
+  hosts: "{{ ansible_limit | default(omit) }}"
+  gather_facts: no
+  become: no
+
+  tasks:
+
+    - name: Include K3s role
+      include_role:
+        name: k3s

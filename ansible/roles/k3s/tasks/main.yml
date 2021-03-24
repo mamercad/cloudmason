@@ -1,0 +1,16 @@
+---
+
+- name: Include variables
+  include_vars:
+    file: main.yml
+    name: k3s
+
+- name: Download the release
+  get_url:
+    url: https://github.com/k3s-io/k3s/releases/download/{{ k3s.version }}/k3s-{{ k3s.arch }}
+    dest: /tmp/k3s-{{ k3s.arch }}
+    checksum: sha256:{{ k3s.sha256 }}
+    owner: root
+    group: root
+    mode: 0755
+  become: yes

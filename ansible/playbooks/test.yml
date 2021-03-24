@@ -1,0 +1,12 @@
+---
+- name: Test
+  hosts: localhost
+  connection: local
+  gather_facts: no
+  become: no
+  tasks:
+    - debug:
+        msg: |
+          {{ awx_secrets.awx.slack_app_token }}
+          {{ awx_secrets.awx.slack_webhook }}
+          {{ awx_secrets.awx.slack_webhook_token }}
