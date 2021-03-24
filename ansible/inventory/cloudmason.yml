@@ -7,7 +7,7 @@ all:
       ansible_python_interpreter: /usr/bin/python3
       healthchecks_io: https://hc-ping.com/c8bd3c9c-9d8b-445b-bdf0-75935b4e6db4
     jonagold:
-      ansible_host: 192.168.1.43
+      ansible_host: 192.168.1.110
       ansible_python_interpreter: /usr/bin/python3
     net1:
       ansible_host: 192.168.1.10
