@@ -30,6 +30,9 @@ minecraft:
 awx:
   type: CNAME
   value: net.cloudmason.org.
+valheim:
+  type: CNAME
+  value: lenovo.cloudmason.org.
 awx-dev:
   type: CNAME
   value: net.cloudmason.org.
