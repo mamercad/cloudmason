@@ -25,31 +25,46 @@ all:
       ansible_host: 192.168.1.62
       ansible_python_interpreter: /usr/bin/python3
       healthchecks_io: https://hc-ping.com/9e4b7ec3-9590-4341-b1aa-d51ae4d45282
+      k3s_options: --cluster-init
     clusterpi1:
       ansible_host: 192.168.1.81
       ansible_python_interpreter: /usr/bin/python3
       healthchecks_io: https://hc-ping.com/29c8d430-9375-46a3-ab62-dcdeef183faf
+      k3s_options: --server https://clusterpi0.cloudmason.org:6443
     clusterpi2:
       ansible_host: 192.168.1.64
       ansible_python_interpreter: /usr/bin/python3
       healthchecks_io: https://hc-ping.com/e1ae9db1-b39a-4af2-9c6b-149a05f1784e
+      k3s_options: --server https://clusterpi0.cloudmason.org:6443
     clusterpi3:
       ansible_host: 192.168.1.116
       ansible_python_interpreter: /usr/bin/python3
       healthchecks_io: https://hc-ping.com/9a5cc3d5-63ab-4021-b5c6-e5c6efb5534b
+      k3s_options: --server https://clusterpi0.cloudmason.org:6443
     clusterpi4:
       ansible_host: 192.168.1.66
       ansible_python_interpreter: /usr/bin/python3
       healthchecks_io: https://hc-ping.com/a338d1db-7f24-4000-b676-a6a7ad60ff3a
+      k3s_options: --server https://clusterpi0.cloudmason.org:6443
     clusterpi5:
       ansible_host: 192.168.1.68
       ansible_python_interpreter: /usr/bin/python3
       healthchecks_io: https://hc-ping.com/c8b46701-e89f-4fa1-965e-4bd610b027ba
+      k3s_options: --server https://clusterpi0.cloudmason.org:6443
     clusterpi6:
       ansible_host: 192.168.1.111
       ansible_python_interpreter: /usr/bin/python3
       healthchecks_io: https://hc-ping.com/e7af7746-58c3-44c1-89db-1a86277ed034
+      k3s_options: --server https://clusterpi0.cloudmason.org:6443
   vars:
+    k3s_secrets:
+      token: !vault |
+        $ANSIBLE_VAULT;1.1;AES256
+        66353665363438333264656331366335616530313964323065646562356535346561616461646534
+        3064666136613435663332353531626334353765396633370a383431613638366366323931333232
+        64616237323839363133636433333439623864643036626465383965623538333861353565323036
+        6565366262633363360a353263353362616135343363623534373837373137616263643538623536
+        6330
     network:
       interface: eth0
       address: 192.168.1.0
