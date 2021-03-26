@@ -1,0 +1,12 @@
+---
+- name: K9s
+  hosts: localhost
+  connection: local
+  gather_facts: no
+  become: no
+
+  tasks:
+
+    - name: Include K9s role
+      include_role:
+        name: k9s
