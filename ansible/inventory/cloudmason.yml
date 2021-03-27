@@ -9,9 +9,11 @@ all:
     jonagold:
       ansible_host: 192.168.1.110
       ansible_python_interpreter: /usr/bin/python3
+      healthchecks_io: https://hc-ping.com/177cb674-b199-4fbb-8879-5f83ba901fa5
     ambrosia:
       ansible_host: 192.168.1.91
       ansible_python_interpreter: /usr/bin/python3
+      healthchecks_io: https://hc-ping.com/3c245b36-bde6-440b-97ba-4c4b231d95b2
     net1:
       ansible_host: 192.168.1.10
       ansible_python_interpreter: /usr/bin/python3
