@@ -444,7 +444,7 @@
     inventory: Cloudmason
     ask_inventory_on_launch: yes
     project: Cloudmason
-    playbook: ansible/playbooks/ubuntu.yml
+    playbook: ansible/playbooks/ubuntu-mark.yml
     credentials:
       - Cloudmason Vault
       - Cloudmason Machine
