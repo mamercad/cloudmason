@@ -140,6 +140,7 @@
       password: "{{ awx_secrets.mark.password }}"
       ssh_key_data: "{{ awx_secrets.mark.ssh_key_data }}"
       ssh_key_unlock: "{{ awx_secrets.mark.ssh_key_unlock }}"
+      become_password: "{{ awx_secrets.mark.password }}"
   tags:
     - awx
 
