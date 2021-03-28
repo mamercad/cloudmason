@@ -1,14 +1,9 @@
 ---
 
-- name: Include variables
-  include_vars:
-    file: main.yml
-    name: k3s
-
 - name: Download the release
   get_url:
-    url: https://github.com/k3s-io/k3s/releases/download/{{ k3s.version }}/k3s-{{ k3s.arch }}
-    dest: /tmp/k3s-{{ k3s.arch }}
+    url: https://github.com/k3s-io/k3s/releases/download/{{ k3s.version }}/{{ k3s.binary }}
+    dest: /tmp/{{ k3s.binary }}
     checksum: sha256:{{ k3s.sha256 }}
     owner: root
     group: root
@@ -17,7 +12,7 @@
 
 - name: Move the release
   copy:
-    src: /tmp/k3s-{{ k3s.arch }}
+    src: /tmp/{{ k3s.binary }}
     remote_src: yes
     dest: /usr/local/bin/k3s
     owner: root
