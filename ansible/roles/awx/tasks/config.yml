@@ -1,5 +1,4 @@
 ---
-
 - name: Organization
   awx.awx.tower_organization:
     state: present
@@ -458,6 +457,13 @@
   tower_settings:
     name: TOWER_URL_BASE
     value: "{{ lookup('env', 'TOWER_HOST') }}"
+  tags:
+    - awx
+
+- name: Setting SESSION_COOKIE_AGE
+  tower_settings:
+    name: SESSION_COOKIE_AGE
+    value: 86400
   tags:
     - awx
 
