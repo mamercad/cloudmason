@@ -1,4 +1,13 @@
 ---
 
 - name: Include Healthchecks.io
-  include_tasks: healthchecks_io.yml
+  include_tasks:
+    file: healthchecks_io.yml
+
+- name: Include Packages
+  include_tasks:
+    file: packages.yml
+
+- name: Include Mark
+  include_tasks:
+    file: mark.yml
