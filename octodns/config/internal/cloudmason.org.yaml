@@ -140,9 +140,6 @@ buddyrokutv:
 alexa5:
   type: A
   value: 192.168.1.56
-sunfire:
-  type: A
-  value: 192.168.1.57
 indiphone:
   type: A
   value: 192.168.1.58
@@ -404,27 +401,6 @@ node3:
 marymacbook:
   type: A
   value: 192.168.1.162
-traefik.sunfire:
-  type: A
-  value: 192.168.1.170
-awx.sunfire:
-  type: CNAME
-  value: traefik.sunfire.cloudmason.org.
-consul.sunfire:
-  type: A
-  value: 192.168.1.172
-awx-service.sunfire:
-  type: A
-  value: 192.168.1.173
-prometheus.sunfire:
-  type: A
-  value: 192.168.1.174
-grafana.sunfire:
-  type: A
-  value: 192.168.1.175
-alertmanager.sunfire:
-  type: A
-  value: 192.168.1.176
 judeipad:
   type: A
   value: 192.168.1.180
