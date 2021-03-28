@@ -404,15 +404,6 @@ marymacbook:
 judeipad:
   type: A
   value: 192.168.1.180
-awx-web-svc.jonagold:
-  type: A
-  value: 192.168.1.221
-prometheus.jonagold:
-  type: A
-  value: 192.168.1.222
-grafana.jonagold:
-  type: A
-  value: 192.168.1.223
 kiali:
   type: A
   value: 192.168.1.224
@@ -428,3 +419,6 @@ awx.lenovo:
 vault.lenovo:
   type: A
   value: 192.168.1.243
+awx-service.ambrosia:
+  type: A
+  value: 192.168.1.221

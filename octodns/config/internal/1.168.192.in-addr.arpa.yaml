@@ -292,13 +292,7 @@
   value: judeipad.cloudmason.org.
 221:
   type: PTR
-  value: awx-web-svc.jonagold.cloudmason.org.
-222:
-  type: PTR
-  value: prometheus.jonagold.cloudmason.org.
-223:
-  type: PTR
-  value: grafana.jonagold.cloudmason.org.
+  value: awx-service.cloudmason.org.
 224:
   type: PTR
   value: kiali.cloudmason.org.
