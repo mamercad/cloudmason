@@ -463,7 +463,7 @@
 - name: Setting SESSION_COOKIE_AGE
   tower_settings:
     name: SESSION_COOKIE_AGE
-    value: 86400
+    value: "86400"
   tags:
     - awx
 

@@ -1,11 +1,6 @@
 ---
 
-- name: Include vars
-  include_vars:
-    file: metronome.yml
-    name: metronome
-
 - name: Post to Healthchecks.io
   uri:
-    url: "{{ metronome.healthchecks_io }}"
+    url: "{{ awx_secrets.awx.metronome.healthchecks_io }}"
     method: POST
