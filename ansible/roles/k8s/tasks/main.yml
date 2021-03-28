@@ -1,56 +1,66 @@
 ---
 
-- name: Include variables
-  include_vars:
-    file: main.yml
-    name: k8s
-
 - name: Add default repository
   community.kubernetes.helm_repository:
     name: stable
     repo_url: https://charts.helm.sh/stable
+  delegate_to: localhost
 
 - name: Add bitnami chart repo
   community.kubernetes.helm_repository:
     name: bitnami
     repo_url: https://charts.bitnami.com/bitnami
+  delegate_to: localhost
 
 - name: Create the metallb namespace
   community.kubernetes.k8s:
     state: present
-    context: clusterpi
+    context: "{{ context }}"
     name: metallb
     api_version: v1
     kind: Namespace
+  delegate_to: localhost
 
 - name: Download metallb namespace manifest
   ansible.builtin.get_url:
     url: https://raw.githubusercontent.com/metallb/metallb/v0.9.6/manifests/namespace.yaml
     dest: /tmp/metallb-namespace.yml
     mode: 0664
+  delegate_to: localhost
+  when:
+    - metallb is defined
 
 - name: Apply metallb namespace manifest
   community.kubernetes.k8s:
     state: present
-    context: clusterpi
+    context: "{{ context }}"
     src: /tmp/metallb-namespace.yml
+  delegate_to: localhost
+  when:
+    - metallb is defined
 
 - name: Download metallb manifest
   ansible.builtin.get_url:
     url: https://raw.githubusercontent.com/metallb/metallb/v0.9.6/manifests/metallb.yaml
     dest: /tmp/metallb.yml
     mode: 0664
+  delegate_to: localhost
+  when:
+    - metallb is defined
 
 - name: Apply metallb manifest
   community.kubernetes.k8s:
     state: present
-    context: clusterpi
+    context: "{{ context }}"
     src: /tmp/metallb.yml
+  delegate_to: localhost
+  when:
+    - metallb is defined
 
 - name: Create metallb memberlist secret
   community.kubernetes.k8s:
     state: present
-    context: clusterpi
+    context: "{{ context }}"
     definition:
       apiVersion: v1
       kind: Secret
@@ -59,12 +69,15 @@
         namespace: metallb-system
         name: memberlist
       data:
-        secretkey: "{{ k8s_secrets.metallb.memberlist | b64encode }}"
+        secretkey: "{{ metallb.memberlist | b64encode }}"
+  delegate_to: localhost
+  when:
+    - metallb is defined
 
 - name: Create metallb configmap
   community.kubernetes.k8s:
     state: present
-    context: clusterpi
+    context: "{{ context }}"
     definition:
       apiVersion: v1
       kind: ConfigMap
@@ -77,17 +90,7 @@
           - name: default
             protocol: layer2
             addresses:
-            - 192.168.1.230-192.168.1.239
-
-# - name: Deploy bitnami/metallb
-#   community.kubernetes.helm:
-#     context: clusterpi
-#     name: my-metallb
-#     chart_ref: bitnami/metallb
-#     release_namespace: metallb
-#     values:
-#       configInline:
-#         - name: generic-cluster-pool
-#           protocol: layer2
-#           addresses:
-#             - 192.168.1.230-192.168.1.239
+            - "{{ metallb.range }}"
+  delegate_to: localhost
+  when:
+    - metallb is defined
