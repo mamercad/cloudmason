@@ -47,5 +47,5 @@ lenovo:
   ttl: 3600
 ambrosia:
   type: A
-  value: 192.168.1.91
+  value: 192.168.1.128
   ttl: 3600
