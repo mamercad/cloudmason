@@ -23,3 +23,9 @@
   stat:
     path: /var/run/reboot-required
   register: reboot
+
+- name: Install packages
+  apt:
+    state: present
+    name:
+      - curl
