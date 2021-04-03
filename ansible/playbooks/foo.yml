@@ -6,4 +6,4 @@
   become: no
   tasks:
     - community.general.make:
-      chdir: /foo/bar
+        chdir: /foo/bar
