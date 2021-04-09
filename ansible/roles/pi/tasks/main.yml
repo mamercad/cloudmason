@@ -30,3 +30,12 @@
         - postfix
   tags:
     - always
+
+- name: Include nginx
+  include_tasks:
+    file: nginx.yml
+    apply:
+      tags:
+        - nginx
+  tags:
+    - always
