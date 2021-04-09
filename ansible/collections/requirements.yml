@@ -4,3 +4,4 @@ collections:
   - community.kubernetes
   - community.libvirt
   - community.mysql
+  - ansible.netcommon
