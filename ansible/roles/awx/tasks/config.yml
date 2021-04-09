@@ -1,9 +1,24 @@
 ---
+- name: Galaxy Credential
+  awx.awx.tower_credential:
+    state: present
+    name: Cloudmason Galaxy
+    description: Cloudmason Galaxy
+    organization: Cloudmason
+    credential_type: Ansible Galaxy/Automation Hub API Token
+    inputs:
+      auth_url: ''
+      url: https://galaxy.ansible.com
+  tags:
+    - awx
+
 - name: Organization
   awx.awx.tower_organization:
     state: present
     name: Cloudmason
     description: Cloudmason
+    galaxy_credentials:
+      - Cloudmason Galaxy
   tags:
     - awx
 
