@@ -57,6 +57,9 @@ sonarr:
 radarr:
   type: CNAME
   value: net.cloudmason.org.
+thelounge:
+  type: CNAME
+  value: net.cloudmason.org.
 net:
   type: A
   values:
