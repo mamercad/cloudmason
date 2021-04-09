@@ -1,0 +1,12 @@
+---
+- name: Pi / main
+  hosts: "{{ ansible_limit | default(omit) }}"
+  gather_facts: true
+  become: false
+
+  tasks:
+
+    - name: Include pi role (main)
+      include_role:
+        name: pi
+        tasks_from: main.yml
