@@ -453,6 +453,26 @@
   tags:
     - awx
 
+- name: Job Template
+  awx.awx.tower_job_template:
+    state: present
+    name: Cloudmason / Pi (main)
+    job_type: run
+    organization: Cloudmason
+    inventory: Cloudmason
+    ask_inventory_on_launch: true
+    project: Cloudmason
+    playbook: ansible/playbooks/pi.yml
+    credentials:
+      - Cloudmason Vault
+      - Cloudmason Machine
+    ask_credential_on_launch: true
+    limit: pi
+    ask_limit_on_launch: true
+    ask_tags_on_launch: true
+  tags:
+    - awx
+
 - name: Setting TOWER_URL_BASE
   tower_settings:
     name: TOWER_URL_BASE
