@@ -3,6 +3,11 @@
 - name: Include network
   include_tasks:
     file: network.yml
+    apply:
+      tags:
+        - network
+  tags:
+    - always
 
 - name: Include traefik
   include_tasks:
