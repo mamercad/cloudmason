@@ -164,6 +164,10 @@
             # middlewares = ["admin-user"]
             service = "radarr"
             [http.routers.radarr.tls]
+          [http.routers.thelounge]
+            rule = "Host(`thelounge.cloudmason.org`)"
+            service = "thelounge"
+            [http.routers.thelounge.tls]
 
         [http.middlewares]
           [http.middlewares.admin-user.basicAuth]
@@ -206,6 +210,9 @@
           [http.services.radarr.loadBalancer]
             [[http.services.radarr.loadBalancer.servers]]
               url = "http://qnap.cloudmason.org:11002/"
+          [http.services.thelounge.loadBalancer]
+            [[http.services.thelounge.loadBalancer.servers]]
+              url = "http://lenovo.cloudmason.org:9000/"
 
       [tls.options]
         [tls.options.default]
