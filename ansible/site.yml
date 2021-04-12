@@ -7,6 +7,8 @@
   become: no
   roles:
     - awx
+  tags:
+    - awx
 
 - name: ubuntu
   hosts: ubuntu
@@ -14,10 +16,14 @@
   become: no
   roles:
     - ubuntu
+  tags:
+    - ubuntu
 
 - name: pi
   hosts: pi
   gather_facts: yes
   become: no
   roles:
+    - pi
+  tags:
     - pi
