@@ -29,4 +29,13 @@
     state: present
     name:
       - curl
+      - fd-find
+      - fzf
+      - git
+      - nodejs
+      - pipenv
+      - rbenv
+      - silversearcher-ag
+      - vim
+      - zsh
   become: yes
