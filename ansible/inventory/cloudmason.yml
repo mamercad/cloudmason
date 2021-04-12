@@ -663,6 +663,8 @@ all:
   children:
     ubuntu:
       hosts:
+        ambrosia:
+        lenovo:
         net1:
         net2:
     pi:
