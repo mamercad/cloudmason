@@ -28,6 +28,9 @@ jobs:
         with:
           python-version: 3.8
 
+      - name: Install ansible
+        run: pip install ansible
+
       - name: Install ansible-lint
         run: pip install ansible-lint
 
