@@ -33,6 +33,10 @@ valheim:
   type: A
   value: {{eth0}}
   ttl: 3600
+minecraft:
+  type: A
+  value: {{eth0}}
+  ttl: 3600
 thelounge:
   type: A
   value: {{eth0}}
