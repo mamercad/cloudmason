@@ -38,8 +38,7 @@
   notify: Restart postfix
 
 - name: Call postmap /etc/postfix/access
-  shell:
-    postmap /etc/postfix/access
+  command: postmap /etc/postfix/access
   become: yes
   changed_when: no
   notify: Restart postfix

@@ -35,7 +35,9 @@
   become: yes
 
 - name: Move /etc/nginx/sites-enabled/default out of the way
-  shell: rm -f /etc/nginx/sites-enabled/default
+  file:
+    state: absent
+    path: /etc/nginx/sites-enabled/default
   when: default.stat.islnk is defined
   notify: Reload nginx
   become: yes
