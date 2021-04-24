@@ -5,6 +5,10 @@ cloudmason:
     dhcp:
       start: 192.168.1.40
       end:   192.168.1.139
+  thinkpad:
+    dhcp:
+      start: 192.168.1.200
+      end:   192.168.1.229
   clusterpi:
     dhcp:
       start: 192.168.1.230
