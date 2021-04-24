@@ -292,7 +292,7 @@
   value: judeipad.cloudmason.org.
 221:
   type: PTR
-  value: awx-service.cloudmason.org.
+  value: awx.ambrosia.cloudmason.org.
 224:
   type: PTR
   value: kiali.cloudmason.org.

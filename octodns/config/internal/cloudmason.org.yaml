@@ -407,6 +407,9 @@ marymacbook:
 judeipad:
   type: A
   value: 192.168.1.180
+awx.ambrosia:
+  type: A
+  value: 192.168.1.221
 kiali:
   type: A
   value: 192.168.1.224
