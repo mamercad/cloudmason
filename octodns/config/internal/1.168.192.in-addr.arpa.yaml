@@ -293,6 +293,9 @@
 201:
   type: PTR
   value: awx.thinkpad.cloudmason.org.
+202:
+  type: PTR
+  value: registry.thinkpad.cloudmason.org.
 221:
   type: PTR
   value: awx.ambrosia.cloudmason.org.

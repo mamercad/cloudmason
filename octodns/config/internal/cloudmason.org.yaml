@@ -410,6 +410,9 @@ judeipad:
 awx.thinkpad:
   type: A
   value: 192.168.1.201
+registry.thinkpad:
+  type: A
+  value: 192.168.1.202
 awx.ambrosia:
   type: A
   value: 192.168.1.221
