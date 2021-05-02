@@ -97,7 +97,7 @@
     scm_clean: yes
     scm_delete_on_update: yes
     scm_update_on_launch: yes
-    scm_update_cache_timeout: 900
+    scm_update_cache_timeout: 0
     credential: Cloudmason GitHub
   tags:
     - awx
@@ -536,6 +536,7 @@
     limit: thinkpad
     ask_limit_on_launch: false
     verbosity: 1
+    webhook_service: github
   tags:
     - awx
 
