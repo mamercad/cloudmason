@@ -85,6 +85,23 @@
   tags:
     - awx
 
+- name: Project
+  awx.awx.tower_project:
+    state: present
+    name: SnakeBot
+    description: SnakeBot
+    organization: Cloudmason
+    scm_type: git
+    scm_url: git@github.com:mamercad/snakebot.git
+    scm_branch: main
+    scm_clean: yes
+    scm_delete_on_update: yes
+    scm_update_on_launch: yes
+    scm_update_cache_timeout: 900
+    credential: Cloudmason GitHub
+  tags:
+    - awx
+
 - name: Inventory
   awx.awx.tower_inventory:
     state: present
@@ -499,6 +516,25 @@
   tower_settings:
     name: SESSION_COOKIE_AGE
     value: "86400"
+  tags:
+    - awx
+
+- name: Job Template
+  awx.awx.tower_job_template:
+    state: present
+    name: SnakeBot / deployment
+    job_type: run
+    organization: Cloudmason
+    inventory: Cloudmason
+    ask_inventory_on_launch: false
+    project: SnakeBot
+    playbook: ansible/deployment.yml
+    credentials:
+      - Cloudmason Machine / mark
+      - Cloudmason Vault
+    ask_credential_on_launch: false
+    limit: thinkpad
+    ask_limit_on_launch: false
   tags:
     - awx
 
