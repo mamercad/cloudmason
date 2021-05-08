@@ -1,8 +1,8 @@
 ---
 - name: WAN
   hosts: gateway
-  gather_facts: no
-  become: no
+  gather_facts: false
+  become: false
 
   tasks:
 

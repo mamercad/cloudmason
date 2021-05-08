@@ -3,8 +3,8 @@
 - name: awx
   hosts: localhost
   connection: local
-  gather_facts: no
-  become: no
+  gather_facts: false
+  become: false
   roles:
     - awx
   tags:
@@ -13,7 +13,7 @@
 - name: ubuntu
   hosts: ubuntu
   gather_facts: yes
-  become: no
+  become: false
   roles:
     - ubuntu
   tags:
@@ -22,7 +22,7 @@
 - name: pi
   hosts: pi
   gather_facts: yes
-  become: no
+  become: false
   roles:
     - pi
   tags:

@@ -1,8 +1,8 @@
 ---
 - name: K8s
   hosts: "{{ ansible_limit | default(omit) }}"
-  gather_facts: no
-  become: no
+  gather_facts: false
+  become: false
 
   tasks:
 

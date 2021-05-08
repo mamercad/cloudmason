@@ -1,8 +1,8 @@
 ---
 - name: Ubuntu / main
   hosts: "{{ ansible_limit | default(omit) }}"
-  gather_facts: yes
-  become: no
+  gather_facts: true
+  become: false
 
   tasks:
 
