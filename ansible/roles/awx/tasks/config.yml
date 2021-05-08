@@ -437,13 +437,13 @@
       channels:
         - '#awx'
       token: "{{ awx_secrets.awx.slack_bot_oauth_token }}"
-    # messages:
-    #   started:
-    #     message: "{{ '{{ job_friendly_name }} {{ job.id }} started [{{ job.summary_fields.project.name }}|{{ job.name }}|{{ job.playbook }}]' }}"
-    #   success:
-    #     message: "{{ '{{ job_friendly_name }} {{ job.id }} completed in {{ job.elapsed }} seconds' }}"
-    #   error:
-    #     message: "{{ '{{ job_friendly_name }} {{ job.id }} failed, please look at {{ job.url }}' }}"
+      # messages:
+      #   started:
+      #     message: "{{ '{{ job_friendly_name }} {{ job.id }} started [{{ job.summary_fields.project.name }}|{{ job.name }}|{{ job.playbook }}]' }}"
+      #   success:
+      #     message: "{{ '{{ job_friendly_name }} {{ job.id }} completed in {{ job.elapsed }} seconds' }}"
+      #   error:
+      #     message: "{{ '{{ job_friendly_name }} {{ job.id }} failed, please look at {{ job.url }}' }}"
   tags:
     - awx
 
@@ -539,64 +539,3 @@
     webhook_service: github
   tags:
     - awx
-
-#    notification_templates_started:
-#      - Slack
-#    notification_templates_success:
-#      - Slack
-#    notification_templates_error:
-#      - Slack
-#
-#- name: Healthchecks.io Job Template
-#  awx.awx.tower_job_template:
-#    state: present
-#    name: Healthchecks.io
-#    job_type: run
-#    organization: Cloudmason
-#    inventory: Cloudmason
-#    project: Cloudmason
-#    playbook: ansible/playbooks/healthchecks.io.yml
-#    credentials:
-#      - Cloudmason Machine
-#    notification_templates_started:
-#      - Slack
-#    notification_templates_success:
-#      - Slack
-#    notification_templates_error:
-#      - Slack
-#
-#- name: Pi-hole Job Template
-#  awx.awx.tower_job_template:
-#    state: present
-#    name: Pi-hole
-#    job_type: run
-#    organization: Cloudmason
-#    inventory: Cloudmason
-#    project: Cloudmason
-#    playbook: ansible/playbooks/pi-hole.yml
-#    credentials:
-#      - Cloudmason Machine
-#    notification_templates_started:
-#      - Slack
-#    notification_templates_success:
-#      - Slack
-#    notification_templates_error:
-#      - Slack
-#
-#- name: Prometheus Job Template
-#  awx.awx.tower_job_template:
-#    state: present
-#    name: Prometheus
-#    job_type: run
-#    organization: Cloudmason
-#    inventory: Cloudmason
-#    project: Cloudmason
-#    playbook: ansible/playbooks/prometheus.yml
-#    credentials:
-#      - Cloudmason Machine
-#    notification_templates_started:
-#      - Slack
-#    notification_templates_success:
-#      - Slack
-#    notification_templates_error:
-#      - Slack

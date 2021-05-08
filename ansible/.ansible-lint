@@ -1,2 +1,5 @@
 exclude_paths:
   - .attic
+
+skip_list:
+  - line-length

@@ -118,7 +118,7 @@
     state: stopped
     enabled: false
     name: avahi-daemon
-  ignore_errors: true # Might not exist
+  ignore_errors: true  # Might not exist
   become: true
 
 - name: Disable systemd-resolved

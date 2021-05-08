@@ -4,10 +4,10 @@
   systemd:
     name: postfix
     state: restarted
-  become: yes
+  become: true
 
 - name: Restart traefik
   systemd:
     name: traefik
     state: restarted
-  become: yes
+  become: true
