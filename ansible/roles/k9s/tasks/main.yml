@@ -19,9 +19,9 @@
 - name: Copy the binary
   ansible.builtin.copy:
     src: /tmp/k9s
-    remote_src: yes
+    remote_src: true
     dest: /usr/local/bin/k9s
     owner: root
     group: root
     mode: 0755
-  become: yes
+  become: true

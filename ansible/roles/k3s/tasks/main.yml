@@ -8,7 +8,7 @@
     owner: root
     group: root
     mode: 0755
-  become: yes
+  become: true
 
 - name: Move the release
   copy:
@@ -18,7 +18,7 @@
     owner: root
     group: root
     mode: 0755
-  become: yes
+  become: true
 
 - name: Deploy the unit
   template:
@@ -27,11 +27,11 @@
     owner: root
     group: root
     mode: 0644
-  become: yes
+  become: true
 
 - name: Start and enable
   systemd:
     name: k3s
     state: started
-    enabled: yes 
-  become: yes
+    enabled: true
+  become: true
