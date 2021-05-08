@@ -6,8 +6,8 @@
     name:
       - nginx
       - php-fpm
-    update_cache: yes
-  become: yes
+    update_cache: true
+  become: true
 
 - name: Set php-fpm version for x86_64 (bionic)
   set_fact:
@@ -32,7 +32,7 @@
   stat:
     path: /etc/nginx/sites-enabled/default
   register: default
-  become: yes
+  become: true
 
 - name: Move /etc/nginx/sites-enabled/default out of the way
   file:
@@ -40,7 +40,7 @@
     path: /etc/nginx/sites-enabled/default
   when: default.stat.islnk is defined
   notify: Reload nginx
-  become: yes
+  become: true
 
 - name: Deploy /etc/nginx/conf.d/default.conf
   copy:
@@ -48,7 +48,7 @@
     owner: root
     group: root
     mode: 0644
-    backup: yes
+    backup: true
     content: |
       server {
         listen *:8000 default_server;
@@ -70,18 +70,18 @@
           autoindex on;
         }
       }
-  become: yes
+  become: true
   notify: Reload nginx
 
 - name: Start and enable nginx and phpX-fpm
   systemd:
     name: "{{ item }}"
     state: started
-    enabled: yes
+    enabled: true
   loop:
     - nginx
     - php{{ php_fpm_version }}-fpm
-  become: yes
+  become: true
 
 - name: Create cloudmason.org base directory
   file:
@@ -90,7 +90,7 @@
     owner: root
     group: root
     mode: 0755
-  become: yes
+  become: true
   notify: Reload nginx
 
 - name: Deploy cloudmason.org site
@@ -100,8 +100,8 @@
     owner: root
     group: root
     mode: 0644
-    backup: yes
-  become: yes
+    backup: true
+  become: true
   loop:
     - android-chrome-192x192.png
     - android-chrome-512x512.png
@@ -117,8 +117,8 @@
     owner: root
     group: root
     mode: 0644
-    backup: yes
-  become: yes
+    backup: true
+  become: true
   loop:
     - README.md
     - cloudmason.php
@@ -132,8 +132,8 @@
     state: link
     src: /usr/share/nginx/html/cloudmason.org/cloudmason.php
     dest: /usr/share/nginx/html/cloudmason.org/index.php
-    force: yes
-  become: yes
+    force: true
+  become: true
 
 - name: Install fping, fortune and fortunes
   apt:
@@ -143,4 +143,4 @@
       - fortune
       - fortunes
       - fortunes-bofh-excuses
-  become: yes
+  become: true

@@ -8,7 +8,7 @@
     - mailutils
     - postfix
     - libsasl2-modules
-  become: yes
+  become: true
 
 - name: Deploy /etc/postfix/gmail_sasl
   copy:
@@ -17,15 +17,15 @@
     group: root
     mode: 0600
     content: "{{ postfix.gmail_sasl_auth }}"
-  become: yes
+  become: true
   notify: Restart postfix
 
 - name: Call postmap /etc/postfix/gmail_sasl
   shell:
     postmap /etc/postfix/gmail_sasl;
     chown root:root /etc/postfix/gmail_sasl.db;
-  become: yes
-  changed_when: no
+  become: true
+  changed_when: false
   notify: Restart postfix
 
 - name: Deploy /etc/postfix/access
@@ -34,13 +34,13 @@
     mode: 0644
     content: |
       {{ network.prefix }} OK
-  become: yes
+  become: true
   notify: Restart postfix
 
 - name: Call postmap /etc/postfix/access
   command: postmap /etc/postfix/access
-  become: yes
-  changed_when: no
+  become: true
+  changed_when: false
   notify: Restart postfix
 
 - name: Update /etc/aliases
@@ -50,14 +50,14 @@
     block: |
       root: "{{ postfix.root }}"
       mark: "{{ postfix.mark }}"
-    backup: yes
-  become: yes
+    backup: true
+  become: true
 
 - name: Call newaliases
   shell: |
     newaliases
-  become: yes
-  changed_when: no
+  become: true
+  changed_when: false
   notify: Restart postfix
 
 - name: Enable 587/tcp (submission)
@@ -65,8 +65,8 @@
     state: present
     path: /etc/postfix/master.cf
     line: submission inet n - y - - smtpd
-    backup: yes
-  become: yes
+    backup: true
+  become: true
   notify: Restart postfix
 
 - name: Deploy /etc/postfix/main.cf
@@ -105,13 +105,13 @@
       smtp_tls_security_level = encrypt
       smtp_tls_CAfile = /etc/ssl/certs/ca-certificates.crt
       masquerade_domains = $mydomain
-    backup: yes
-  become: yes
+    backup: true
+  become: true
   notify: Restart postfix
 
 - name: Start and enable postfix
   systemd:
     name: postfix
     state: started
-    enabled: yes
-  become: yes
+    enabled: true
+  become: true

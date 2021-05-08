@@ -4,20 +4,20 @@
   apt:
     state: absent
     name: openresolv
-  become: yes
+  become: true
 
 - name: Add resolvconf
   apt:
     state: absent
     name: resolvconf
-  become: yes
+  become: true
 
 - name: Enable resolvconf
   systemd:
     name: resolvconf
     state: started
-    enabled: yes
-  become: yes
+    enabled: true
+  become: true
 
 - name: Deploy /etc/dhcpcd.conf
   copy:
@@ -32,5 +32,5 @@
       static domain_name_servers={{ ansible_default_ipv4.address | default(ansible_host) }}
       static domain_name={{ network.domain | default('localdomain') }}
       static domain_search={{ network.domain | default('localdomain') }}
-    backup: yes
-  become: yes
+    backup: true
+  become: true

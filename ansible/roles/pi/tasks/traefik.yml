@@ -3,15 +3,15 @@
 - name: Create the traefik group
   group:
     name: traefik
-  become: yes
+  become: true
 
 - name: Create the traefik user
   user:
     name: traefik
     group: traefik
-    create_home: yes
+    create_home: true
     shell: /bin/bash
-  become: yes
+  become: true
 
 - name: Pull down the traefik binary tarball
   get_url:
@@ -23,7 +23,7 @@
     mode: 0644
   when:
     - ansible_architecture == 'armv7l'
-  become: yes
+  become: true
 
 - name: Pull down the traefik binary tarball
   get_url:
@@ -35,31 +35,31 @@
     mode: 0644
   when:
     - ansible_architecture == 'x86_64'
-  become: yes
+  become: true
 
 - name: Extract the traefik tarball
   unarchive:
     src: /home/traefik/traefik_v2.3.5_linux_armv7.tar.gz
     dest: /home/traefik
-    remote_src: yes
+    remote_src: true
     owner: traefik
     group: traefik
     creates: /home/traefik/traefik
   when:
     - ansible_architecture == 'armv7l'
-  become: yes
+  become: true
 
 - name: Extract the traefik tarball
   unarchive:
     src: /home/traefik/traefik_v2.3.6_linux_amd64.tar.gz
     dest: /home/traefik
-    remote_src: yes
+    remote_src: true
     owner: traefik
     group: traefik
     creates: /home/traefik/traefik
   when:
     - ansible_architecture == 'x86_64'
-  become: yes
+  become: true
 
 - name: Deploy traefik.toml
   copy:
@@ -98,7 +98,7 @@
         filePath = "/home/traefik/traefik.log"
         level = "WARN"
   notify: Restart traefik
-  become: yes
+  become: true
 
 - name: Deploy traefik_dynamic.toml
   copy:
@@ -220,14 +220,14 @@
         [tls.options.mintls13]
           minVersion = "VersionTLS13"
   notify: Restart traefik
-  become: yes
+  become: true
 
 - name: Give net priv ports to the traefik binary
   community.general.capabilities:
     path: /home/traefik/traefik
     capability: cap_net_bind_service=+ep
     state: present
-  become: yes
+  become: true
 
 - name: Deploy the traefik systemd unit file
   copy:
@@ -251,12 +251,12 @@
 
       [Install]
       WantedBy=multi-user.target
-  become: yes
+  become: true
 
 - name: Start and enable traefik
   systemd:
     name: traefik
     state: started
-    enabled: yes
-    daemon_reload: yes
-  become: yes
+    enabled: true
+    daemon_reload: true
+  become: true

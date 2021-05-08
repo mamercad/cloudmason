@@ -5,22 +5,22 @@
     state: present
     path: /etc/ssh/sshd_config
     line: PasswordAuthentication no
-    backup: yes
-  become: yes
+    backup: true
+  become: true
   notify: Restart sshd
 
 - name: Install fail2ban
   apt:
     name: fail2ban
     state: present
-  become: yes
+  become: true
 
 - name: Start and enable fail2ban
   systemd:
     name: fail2ban
     state: started
-    enabled: yes
-  become: yes
+    enabled: true
+  become: true
 
 - name: Create /etc/fail2ban/jail.local
   copy:
@@ -35,35 +35,35 @@
       filter = sshd
       logpath = /var/log/auth.log
       maxretry = 3
-    backup: yes
-  become: yes
+    backup: true
+  become: true
   notify: Restart fail2ban
 
 - name: Install node_exporter
   apt:
     state: present
     name: prometheus-node-exporter
-  become: yes
+  become: true
 
 - name: Start and enable node_exporter
   systemd:
     name: prometheus-node-exporter
     state: started
-    enabled: yes
-  become: yes
+    enabled: true
+  become: true
 
 - name: Install gnupg
   apt:
     state: present
     name: gnupg
-  become: yes
+  become: true
 
 - name: Add PowerDNS apt GPG key
   apt_key:
     state: present
     id: "{{ powerdns.gpg_key_id }}"
     keyserver: keys.gnupg.net
-  become: yes
+  become: true
 
 - name: Add PowerDNS recursor repository
   apt_repository:
@@ -72,7 +72,7 @@
   when:
     - ansible_architecture == 'armv7l'
     - ansible_distribution_release == 'buster'
-  become: yes
+  become: true
 
 - name: Add PowerDNS authoritative server repository
   apt_repository:
@@ -81,7 +81,7 @@
   when:
     - ansible_architecture == 'armv7l'
     - ansible_distribution_release == 'buster'
-  become: yes
+  become: true
 
 - name: Add PowerDNS recursor repository
   apt_repository:
@@ -90,7 +90,7 @@
   when:
     - ansible_architecture == 'x86_64'
     - ansible_distribution_release == 'bionic'
-  become: yes
+  become: true
 
 - name: Add PowerDNS authoritative server repository
   apt_repository:
@@ -99,7 +99,7 @@
   when:
     - ansible_architecture == 'x86_64'
     - ansible_distribution_release == 'bionic'
-  become: yes
+  become: true
 
 - name: Add pin-priority for PowerDNS packages
   copy:
@@ -111,22 +111,22 @@
       Package: pdns-*
       Pin: origin repo.powerdns.com
       Pin-Priority: 600
-  become: yes
+  become: true
 
 - name: Disable avahi-daemon
   systemd:
     state: stopped
-    enabled: no
+    enabled: false
     name: avahi-daemon
-  ignore_errors: yes # Might not exist
-  become: yes
+  ignore_errors: true # Might not exist
+  become: true
 
 - name: Disable systemd-resolved
   systemd:
     state: stopped
-    enabled: no
+    enabled: false
     name: systemd-resolved
-  become: yes
+  become: true
 
 - name: Deploy /etc/resolv.conf
   copy:
@@ -138,8 +138,8 @@
       domain cloudmason.org
       search cloudmason.org
       nameserver {{ ansible_default_ipv4.address | default(ansible_host) }}
-    backup: yes
-  become: yes
+    backup: true
+  become: true
 
 - name: Install pdns-server, pdns-backend-mysql, pdns-recursor, default-mysql-server
   apt:
@@ -149,7 +149,7 @@
       - pdns-backend-mysql
       - pdns-recursor
       - default-mysql-server
-  become: yes
+  become: true
 
 - name: Deploy /etc/powerdns/recursor.conf
   copy:
@@ -169,28 +169,28 @@
       forward-zones=cloudmason.org=127.0.0.1:5353,1.168.192.in-addr.arpa=127.0.0.1:5353
       # forward-zones+=another.example.com=127.0.0.1:5300
   notify: Restart pdns-recursor
-  become: yes
+  become: true
 
 - name: Start and enable pdns-recursor
   systemd:
     name: pdns-recursor
     state: started
-    enabled: yes
-  become: yes
+    enabled: true
+  become: true
 
 - name: Install python3-pymysql
   apt:
     state: present
     name: python3-pymysql
-  become: yes
+  become: true
 
 - name: Create PowerDNS database
   community.mysql.mysql_db:
     state: present
     name: pdns
-    check_implicit_admin: yes
+    check_implicit_admin: true
     login_unix_socket: /var/run/mysqld/mysqld.sock
-  become: yes
+  become: true
 
 - name: Create PowerDNS user
   community.mysql.mysql_user:
@@ -198,9 +198,9 @@
     name: pdns
     password: "{{ powerdns.mysql_password }}"
     priv: 'pdns.*:ALL'
-    check_implicit_admin: yes
+    check_implicit_admin: true
     login_unix_socket: /var/run/mysqld/mysqld.sock
-  become: yes
+  become: true
 
 - name: Create PowerDNS schema
   community.mysql.mysql_query:
@@ -278,7 +278,7 @@
           PRIMARY KEY (id)
         ) Engine=InnoDB CHARACTER SET 'latin1';
       - ALTER TABLE tsigkeys ADD UNIQUE INDEX (name, algorithm);
-  become: yes
+  become: true
 
 - name: Deploy /etc/powerdns/pdns.conf
   copy:
@@ -300,11 +300,11 @@
       gmysql-user=pdns
       gmysql-password={{ powerdns.mysql_password }}
   notify: Restart pdns
-  become: yes
+  become: true
 
 - name: Start and enable pdns
   systemd:
     name: pdns
     state: started
-    enabled: yes
-  become: yes
+    enabled: true
+  become: true
