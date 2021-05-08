@@ -12,7 +12,7 @@
 
 - name: ubuntu
   hosts: ubuntu
-  gather_facts: yes
+  gather_facts: true
   become: false
   roles:
     - ubuntu

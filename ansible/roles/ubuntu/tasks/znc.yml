@@ -4,5 +4,5 @@
   apt:
     state: present
     name: znc
-    update_cache: yes
+    update_cache: true
   become: true
