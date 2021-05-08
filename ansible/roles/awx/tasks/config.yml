@@ -77,9 +77,9 @@
     scm_type: git
     scm_url: git@github.com:mamercad/cloudmason.git
     scm_branch: main
-    scm_clean: yes
-    scm_delete_on_update: yes
-    scm_update_on_launch: yes
+    scm_clean: true
+    scm_delete_on_update: true
+    scm_update_on_launch: true
     scm_update_cache_timeout: 900
     credential: Cloudmason GitHub
   tags:
@@ -94,9 +94,9 @@
     scm_type: git
     scm_url: git@github.com:mamercad/snakebot.git
     scm_branch: main
-    scm_clean: yes
-    scm_delete_on_update: yes
-    scm_update_on_launch: yes
+    scm_clean: true
+    scm_delete_on_update: true
+    scm_update_on_launch: true
     scm_update_cache_timeout: 0
     credential: Cloudmason GitHub
   tags:
@@ -121,9 +121,9 @@
     source: scm
     source_project: Cloudmason
     source_path: ansible/inventory/cloudmason.yml
-    overwrite: yes
+    overwrite: true
     update_cache_timeout: 900
-    update_on_project_update: yes
+    update_on_project_update: true
   tags:
     - awx
 
@@ -134,13 +134,13 @@
     job_type: run
     organization: Cloudmason
     inventory: Cloudmason
-    ask_inventory_on_launch: yes
+    ask_inventory_on_launch: true
     project: Cloudmason
     playbook: ansible/playbooks/ping.yml
     credentials:
       - Cloudmason Machine
-    ask_credential_on_launch: yes
-    ask_limit_on_launch: yes
+    ask_credential_on_launch: true
+    ask_limit_on_launch: true
   tags:
     - awx
 
@@ -182,14 +182,14 @@
     job_type: run
     organization: Cloudmason
     inventory: Cloudmason
-    ask_inventory_on_launch: no
+    ask_inventory_on_launch: false
     project: Cloudmason
     playbook: ansible/playbooks/wan.yml
     credentials:
       - Cloudmason Machine / mamercad
-    ask_credential_on_launch: no
+    ask_credential_on_launch: false
     limit: gateway
-    ask_limit_on_launch: no
+    ask_limit_on_launch: false
   tags:
     - awx
 
@@ -316,7 +316,7 @@
     job_type: run
     organization: Cloudmason
     inventory: Cloudmason
-    ask_inventory_on_launch: no
+    ask_inventory_on_launch: false
     project: Cloudmason
     playbook: ansible/playbooks/octodns.yml
     credentials:
@@ -324,9 +324,9 @@
       - Cloudmason PowerDNS API Key
       - Cloudmason CloudFlare API Key
       - Cloudmason CloudFlare API Token
-    ask_credential_on_launch: no
+    ask_credential_on_launch: false
     limit: lenovo
-    ask_limit_on_launch: no
+    ask_limit_on_launch: false
   tags:
     - awx
 
@@ -356,15 +356,15 @@
     job_type: run
     organization: Cloudmason
     inventory: Cloudmason
-    ask_inventory_on_launch: no
+    ask_inventory_on_launch: false
     project: Cloudmason
     playbook: ansible/playbooks/awx-user.yml
     credentials:
       - Cloudmason Vault
       - Cloudmason Machine / mark
-    ask_credential_on_launch: yes
+    ask_credential_on_launch: true
     limit: lenovo
-    ask_limit_on_launch: yes
+    ask_limit_on_launch: true
   tags:
     - awx
 
@@ -375,12 +375,12 @@
     job_type: run
     organization: Cloudmason
     inventory: Cloudmason
-    ask_inventory_on_launch: no
+    ask_inventory_on_launch: false
     project: Cloudmason
     playbook: ansible/playbooks/awx-metronome.yml
-    ask_credential_on_launch: yes
+    ask_credential_on_launch: true
     limit: localhost
-    ask_limit_on_launch: no
+    ask_limit_on_launch: false
   tags:
     - awx
 
@@ -391,7 +391,7 @@
     description: Hourly AWX Metronome
     rrule: "DTSTART:20210323T000000Z RRULE:FREQ=HOURLY;INTERVAL=1"
     unified_job_template: Cloudmason / AWX (metronome)
-    enabled: yes
+    enabled: true
   tags:
     - awx
 
@@ -454,15 +454,15 @@
     job_type: run
     organization: Cloudmason
     inventory: Cloudmason
-    ask_inventory_on_launch: yes
+    ask_inventory_on_launch: true
     project: Cloudmason
     playbook: ansible/playbooks/ubuntu.yml
     credentials:
       - Cloudmason Vault
       - Cloudmason Machine
-    ask_credential_on_launch: yes
+    ask_credential_on_launch: true
     limit: ubuntu
-    ask_limit_on_launch: yes
+    ask_limit_on_launch: true
   tags:
     - awx
 
@@ -473,15 +473,15 @@
     job_type: run
     organization: Cloudmason
     inventory: Cloudmason
-    ask_inventory_on_launch: yes
+    ask_inventory_on_launch: true
     project: Cloudmason
     playbook: ansible/playbooks/ubuntu-mark.yml
     credentials:
       - Cloudmason Vault
       - Cloudmason Machine
-    ask_credential_on_launch: yes
+    ask_credential_on_launch: true
     limit: ubuntu
-    ask_limit_on_launch: yes
+    ask_limit_on_launch: true
   tags:
     - awx
 

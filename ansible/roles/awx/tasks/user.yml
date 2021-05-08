@@ -2,7 +2,7 @@
   group:
     state: present
     name: awx
-  become: yes
+  become: true
 
 - name: Create awx user
   user:
@@ -11,8 +11,8 @@
     groups: awx
     comment: AWX Service Account
     shell: /bin/bash
-    create_home: yes
-  become: yes
+    create_home: true
+  become: true
 
 - name: Create ~awx/.ssh
   file:
@@ -21,7 +21,7 @@
     owner: awx
     group: awx
     mode: 0700
-  become: yes
+  become: true
 
 - name: Deploy ~awx/.ssh/authorized_keys
   copy:
@@ -30,7 +30,7 @@
     group: awx
     mode: 0600
     content: "{{ awx_secrets.awx.ssh_pub_key }}"
-  become: yes
+  become: true
 
 - name: Deploy ~awx/.ssh/id_rsa.pub
   copy:
@@ -39,7 +39,7 @@
     group: awx
     mode: 0600
     content: "{{ awx_secrets.awx.ssh_pub_key }}"
-  become: yes
+  become: true
 
 - name: Deploy ~awx/.ssh/id_rsa
   copy:
@@ -48,7 +48,7 @@
     group: awx
     mode: 0600
     content: "{{ awx_secrets.awx.ssh_key }}"
-  become: yes
+  become: true
 
 - name: Give awx passwordless sudo
   copy:
@@ -58,4 +58,4 @@
     mode: 0440
     content: |
       awx ALL=(ALL) NOPASSWD: ALL
-  become: yes
+  become: true
