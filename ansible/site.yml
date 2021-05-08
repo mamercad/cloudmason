@@ -21,7 +21,7 @@
 
 - name: pi
   hosts: pi
-  gather_facts: yes
+  gather_facts: true
   become: false
   roles:
     - pi
