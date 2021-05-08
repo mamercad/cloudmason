@@ -7,16 +7,16 @@
 
 - name: Ensure zsh installed
   apt:
-    update_cache: yes
+    update_cache: true
     name: zsh
     state: present
-  become: yes
+  become: true
 
 - name: Ensure mark group exists
   group:
     state: present
     name: "{{ mark.group }}"
-  become: yes
+  become: true
 
 - name: Ensure mark exists
   user:
@@ -24,9 +24,9 @@
     comment: "{{ mark.full_name }}"
     group: "{{ mark.group }}"
     password: "{{ mark.password }}"
-    create_home: yes
+    create_home: true
     shell: /usr/bin/zsh
-  become: yes
+  become: true
 
 - name: Create ~mark/.ssh
   file:
@@ -35,14 +35,14 @@
     owner: "{{ mark.user }}"
     group: "{{ mark.group }}"
     mode: 0700
-  become: yes
+  become: true
 
 - name: Give mark passwordless sudo
   copy:
     content: "{{ mark.user }} ALL=(ALL:ALL) NOPASSWD:ALL"
     dest: /etc/sudoers.d/{{ mark.user }}
     mode: 0440
-  become: yes
+  become: true
 
 - name: Deploy ~mark/.ssh/authorized_keys
   copy:
@@ -51,8 +51,8 @@
     owner: "{{ mark.user }}"
     group: "{{ mark.group }}"
     mode: 0644
-    backup: yes
-  become: yes
+    backup: true
+  become: true
 
 - name: Deploy ~mark/.ssh/personal.key.pub
   copy:
@@ -61,8 +61,8 @@
     owner: "{{ mark.user }}"
     group: "{{ mark.group }}"
     mode: 0644
-    backup: yes
-  become: yes
+    backup: true
+  become: true
 
 - name: Deploy ~mark/.ssh/personal.key
   copy:
@@ -71,8 +71,8 @@
     owner: "{{ mark.user }}"
     group: "{{ mark.group }}"
     mode: 0600
-    backup: yes
-  become: yes
+    backup: true
+  become: true
 
 - name: Ensure set -o vi
   blockinfile:
@@ -81,8 +81,8 @@
     block: |
       alias c=clear
       set -o vi
-    backup: yes
-  become: yes
+    backup: true
+  become: true
 
 - name: Create /var/mail/mark
   file:
@@ -91,5 +91,5 @@
     owner: "{{ mark.user }}"
     group: "{{ mark.group }}"
     mode: 0600
-  changed_when: no
-  become: yes
+  changed_when: false
+  become: true

@@ -4,19 +4,19 @@
   apt:
     name: "*"
     state: latest  # noqa package-latest
-  become: yes
+  become: true
   register: update
 
 - name: Remove useless packages from the cache
   apt:
-    autoclean: yes
-  become: yes
+    autoclean: true
+  become: true
   register: clean
 
 - name: Remove dependencies that are no longer required
   apt:
-    autoremove: yes
-  become: yes
+    autoremove: true
+  become: true
   register: remove
 
 - name: Check if /var/run/reboot-required exists
@@ -38,4 +38,4 @@
       - silversearcher-ag
       - vim
       - zsh
-  become: yes
+  become: true

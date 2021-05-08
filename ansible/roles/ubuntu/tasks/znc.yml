@@ -5,4 +5,4 @@
     state: present
     name: znc
     update_cache: yes
-  become: yes
+  become: true
