@@ -11,10 +11,9 @@
         preference: 20
     ttl: 3600
   - type: TXT
-    value: forward-email=mamercad@gmail.com
-    ttl: 3600
-  - type: TXT
-    value: v=spf1 a mx include:spf.forwardemail.net include:_spf.google.com -all
+    values:
+      - forward-email=mamercad@gmail.com
+      - v=spf1 a mx include:spf.forwardemail.net include:_spf.google.com -all
     ttl: 3600
 att:
   type: A
