@@ -13,6 +13,9 @@
   - type: TXT
     value: forward-email=mamercad@gmail.com
     ttl: 3600
+  - type: TXT
+    value: v=spf1 a mx include:spf.forwardemail.net include:_spf.google.com -all
+    ttl: 3600
 att:
   type: A
   value: {{eth2}}
