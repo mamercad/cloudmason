@@ -24,6 +24,9 @@ net5:
 net6:
   type: A
   value: 192.168.1.9
+thinkpad:
+  type: CNAME
+  value: thinkpad-wired.cloudmason.org.
 minecraft:
   type: CNAME
   value: lenovo.cloudmason.org.
@@ -161,6 +164,9 @@ clusterpi2:
 clusterpi4:
   type: A
   value: 192.168.1.66
+thinkpad-wireless:
+  type: A
+  value: 192.168.1.67
 clusterpi5:
   type: A
   value: 192.168.1.68
@@ -374,7 +380,7 @@ db3:
 alexa3:
   type: A
   value: 192.168.1.138
-thinkpad:
+thinkpad-wired:
   type: A
   value: 192.168.1.139
 livingroomtv:

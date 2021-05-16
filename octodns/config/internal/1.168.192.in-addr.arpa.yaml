@@ -86,6 +86,9 @@
 66:
   type: PTR
   value: clusterpi4.cloudmason.org.
+67:
+  type: PTR
+  value: thinkpad-wireless.cloudmason.org.
 68:
   type: PTR
   value: clusterpi5.cloudmason.org.
@@ -262,7 +265,7 @@
   value: alexa3.cloudmason.org.
 139:
   type: PTR
-  value: thinkpad.cloudmason.org.
+  value: thinkpad-wired.cloudmason.org.
 140:
   type: PTR
   value: livingroomtv.cloudmason.org.
