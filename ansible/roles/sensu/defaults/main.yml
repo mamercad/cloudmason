@@ -1,0 +1,7 @@
+sensu_tarball: https://s3-us-west-2.amazonaws.com/sensu.io/sensu-go/6.2.7/sensu-go_6.2.7_linux_amd64.tar.gz
+sensu_checksums: https://s3-us-west-2.amazonaws.com/sensu.io/sensu-go/6.2.7/sensu-go_6.2.7_checksums.txt
+sensu_backend_yml: https://docs.sensu.io/sensu-go/latest/files/backend.yml
+sensu_state_dir: /var/lib/sensu/sensu-backend
+sensu_cache_dir: /var/cache/sensu
+sensu_admin_username: sensu
+sensu_admin_password: sensu

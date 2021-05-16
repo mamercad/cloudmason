@@ -1,0 +1,131 @@
+# - name: Fetch the Sensu tarball
+#   ansible.builtin.get_url:
+#     url: "{{ sensu_tarball }}"
+#     dest: /tmp/
+
+# - name: Fetch the Sensu checksums
+#   ansible.builtin.get_url:
+#     url: "{{ sensu_checksums }}"
+#     dest: /tmp/
+
+# - name: Check the Sensu checksums
+#   ansible.builtin.shell:
+#     cmd: |
+#       sha256sum -c {{ sensu_checksums | basename }} 2>&1 | grep ': OK'
+#   args:
+#     chdir: /tmp/
+#   changed_when: false  # Don't care
+
+# - name: Create /tmp/sensu
+#   ansible.builtin.file:
+#     state: directory
+#     path: /tmp/sensu
+
+# - name: Extract the tarball
+#   ansible.builtin.unarchive:
+#     src: /tmp/{{ sensu_tarball | basename }}
+#     dest: /tmp/sensu
+#     remote_src: true
+#     creates: /tmp/CHANGELOG.md
+
+# - name: Create sensu group
+#   ansible.builtin.group:
+#     state: present
+#     name: sensu
+#   become: true
+
+# - name: Create sensu user
+#   ansible.builtin.user:
+#     state: present
+#     name: sensu
+#     group: sensu
+#     shell: /bin/bash
+#   become: true
+
+# - name: Deploy sensu binaries
+#   ansible.builtin.copy:
+#     src: /tmp/sensu/{{ item }}
+#     dest: /usr/local/bin/{{ item }}
+#     owner: sensu
+#     group: sensu
+#     mode: 0755
+#     remote_src: true
+#   loop:
+#     - sensu-agent
+#     - sensu-backend
+#     - sensuctl
+#   become: true
+
+# - name: Create /etc/sensu
+#   ansible.builtin.file:
+#     state: directory
+#     path: /etc/sensu
+#     owner: sensu
+#     group: sensu
+#   become: true
+
+# - name: Fetch sensu backend.yml
+#   ansible.builtin.get_url:
+#     url: "{{ sensu_backend_yml }}"
+#     dest: /etc/sensu/backend.yml
+#     owner: sensu
+#     group: sensu
+#   become: true
+
+# - name: Create sensu state dir
+#   ansible.builtin.file:
+#     state: directory
+#     path: "{{ sensu_state_dir }}"
+#     owner: sensu
+#     group: sensu
+#   become: true
+
+# - name: Deploy sensu units
+#   ansible.builtin.template:
+#     src: "{{ item }}.j2"
+#     dest: "/etc/systemd/system/{{ item }}"
+#     owner: root
+#     group: root
+#   loop:
+#     - sensu-agent.service
+#     - sensu-backend.service
+#   become: true
+#   notify:
+#     - reload-systemd
+
+# - name: Create sensu cache dir
+#   ansible.builtin.file:
+#     state: directory
+#     path: "{{ sensu_cache_dir }}"
+#     owner: sensu
+#     group: sensu
+#   become: true
+
+# - name: Start and enable sensu
+#   ansible.builtin.systemd:
+#     name: "{{ item }}"
+#     state: started
+#     enabled: true
+#   loop:
+#     - sensu-agent
+#     - sensu-backend
+#   become: true
+
+- name: Check if backend needs init
+  ansible.builtin.shell:
+    cmd: |
+      /usr/local/bin/sensu-backend init 2>&1 \
+        | grep 'Xboth cluster-admin-username and cluster-admin-password are required to be set'
+  register: needs_init
+  changed_when: false  # Don't care
+  failed_when: false  # Might be initialized already
+
+- name: Initialize the cluster
+  ansible.builtin.shell:
+    cmd: |
+      /usr/local/bin/sensu-backend init
+  environment:
+    SENSU_BACKEND_CLUSTER_ADMIN_USERNAME: "{{ sensu_admin_username }}"
+    SENSU_BACKEND_CLUSTER_ADMIN_PASSWORD: "{{ sensu_admin_password }}"
+  when:
+    - needs_init.stdout is search("both cluster-admin-username and cluster-admin-password are required to be set")
