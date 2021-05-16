@@ -413,6 +413,9 @@ marymacbook:
 judeipad:
   type: A
   value: 192.168.1.180
+awx-service.awx.thinkpad:
+  type: A
+  value: 192.168.1.200
 awx.thinkpad:
   type: A
   value: 192.168.1.201

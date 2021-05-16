@@ -293,6 +293,9 @@
 180:
   type: PTR
   value: judeipad.cloudmason.org.
+200:
+  type: PTR
+  value: awx-service.awx.thinkpad.cloudmason.org.
 201:
   type: PTR
   value: awx.thinkpad.cloudmason.org.
