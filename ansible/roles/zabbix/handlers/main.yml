@@ -15,3 +15,15 @@
     name: apache2
     state: restarted
   become: true
+
+- name: restart-zabbix-server
+  ansible.builtin.systemd:
+    name: zabbix-server
+    state: restarted
+  become: true
+
+- name: restart-zabbix-agent
+  ansible.builtin.systemd:
+    name: zabbix-agent
+    state: restarted
+  become: true

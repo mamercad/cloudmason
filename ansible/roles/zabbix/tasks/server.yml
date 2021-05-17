@@ -55,25 +55,6 @@
   become: true
   when: create_database.changed
 
-- name: Set DBPassword in /etc/zabbix/zabbix_server.conf
-  ansible.builtin.lineinfile:
-    path: /etc/zabbix/zabbix_server.conf
-    regexp: "^# DBPassword ="
-    line: "DBPassword = {{ zabbix_db_password }}"
-  notify: restart-zabbix-server
-  become: true
-
-- name: Start and enable Zabbix stuff
-  ansible.builtin.systemd:
-    name: "{{ item }}"
-    state: started
-    enabled: true
-  loop:
-    - zabbix-server
-    - zabbix-agent
-    - apache2
-  become: true
-
 - name: Create zabbix virtualhost
   ansible.builtin.copy:
     dest: /etc/apache2/sites-available/zabbix.conf
@@ -94,4 +75,57 @@
   ansible.builtin.shell:
     cmd: /usr/sbin/a2ensite zabbix
   become: true
+  changed_when: false  # Don't care
   notify: reload-apache2
+
+- name: Deploy /etc/zabbix/web/zabbix.conf.php
+  ansible.builtin.template:
+    src: zabbix.conf.php.j2
+    dest: /etc/zabbix/web/zabbix.conf.php
+    owner: www-data
+    group: www-data
+    mode: 0600
+    backup: true
+  become: true
+  notify: reload-apache2
+
+- name: Symlink /etc/zabbix/web/zabbix.conf.php
+  ansible.builtin.file:
+    state: link
+    src: /etc/zabbix/web/zabbix.conf.php
+    dest: /usr/share/zabbix/conf/zabbix.conf.php
+  become: true
+  notify: reload-apache2
+
+- name: Deploy /etc/zabbix/zabbix_server.conf
+  ansible.builtin.template:
+    src: zabbix_server.conf.j2
+    dest: /etc/zabbix/zabbix_server.conf
+    owner: root
+    group: root
+    mode: 0600
+    backup: true
+  become: true
+  notify: restart-zabbix-server
+
+- name: Deploy /etc/zabbix/zabbix_agentd.conf
+  ansible.builtin.template:
+    src: zabbix_agentd.conf.j2
+    dest: /etc/zabbix/zabbix_agentd.conf
+    owner: root
+    group: root
+    mode: 0644
+    backup: true
+  become: true
+  notify: restart-zabbix-agent
+
+- name: Start and enable Zabbix stuff
+  ansible.builtin.systemd:
+    name: "{{ item }}"
+    state: started
+    enabled: true
+  loop:
+    - zabbix-server
+    - zabbix-agent
+    - apache2
+  become: true

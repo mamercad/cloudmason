@@ -1,0 +1,126 @@
+- name: Install the Zabbix release deb
+  ansible.builtin.apt:
+    state: present
+    deb: "{{ zabbix_release_deb }}"
+  become: true
+
+- name: Install Zabbix release
+  ansible.builtin.apt:
+    state: present
+    name: zabbix-release
+    update_cache: true
+  become: true
+
+- name: Install Zabbix packages
+  ansible.builtin.apt:
+    state: present
+    name:
+      - zabbix-agent
+  become: true
+
+# - name: Install python3-pymysql
+#   ansible.builtin.apt:
+#     state: present
+#     name: python3-pymysql
+#   become: true
+
+# - name: Create Zabbix database
+#   community.mysql.mysql_db:
+#     state: present
+#     name: zabbix
+#     encoding: utf8
+#     collation: utf8_bin
+#     login_unix_socket: /var/run/mysqld/mysqld.sock
+#   register: create_database
+#   become: true
+
+# - name: Create zabbix database user
+#   community.mysql.mysql_user:
+#     state: present
+#     name: zabbix
+#     password: "{{ zabbix_db_password }}"
+#     priv: 'zabbix.*:ALL'
+#     login_unix_socket: /var/run/mysqld/mysqld.sock
+#   become: true
+
+# - name: Restore zabbix database
+#   community.mysql.mysql_db:
+#     state: import
+#     name: zabbix
+#     target: /usr/share/doc/zabbix-server-mysql/create.sql.gz
+#     login_unix_socket: /var/run/mysqld/mysqld.sock
+#   become: true
+#   when: create_database.changed
+
+# - name: Create zabbix virtualhost
+#   ansible.builtin.copy:
+#     dest: /etc/apache2/sites-available/zabbix.conf
+#     content: |
+#       <VirtualHost *:80>
+#         ServerAdmin webmaster@localhost
+#         DocumentRoot /var/www/html
+#         ErrorLog ${APACHE_LOG_DIR}/zabbix.log
+#         CustomLog ${APACHE_LOG_DIR}/zabbix.log combined
+#         Include conf-available/zabbix.conf
+#       </VirtualHost>
+#     owner: root
+#     group: root
+#   become: true
+#   notify: reload-apache2
+
+# - name: Run a2ensite for zabbix
+#   ansible.builtin.shell:
+#     cmd: /usr/sbin/a2ensite zabbix
+#   become: true
+#   changed_when: false  # Don't care
+#   notify: reload-apache2
+
+# - name: Deploy /etc/zabbix/web/zabbix.conf.php
+#   ansible.builtin.template:
+#     src: zabbix.conf.php.j2
+#     dest: /etc/zabbix/web/zabbix.conf.php
+#     owner: www-data
+#     group: www-data
+#     mode: 0600
+#     backup: true
+#   become: true
+#   notify: reload-apache2
+
+# - name: Symlink /etc/zabbix/web/zabbix.conf.php
+#   ansible.builtin.file:
+#     state: link
+#     src: /etc/zabbix/web/zabbix.conf.php
+#     dest: /usr/share/zabbix/conf/zabbix.conf.php
+#   become: true
+#   notify: reload-apache2
+
+# - name: Deploy /etc/zabbix/zabbix_server.conf
+#   ansible.builtin.template:
+#     src: zabbix_server.conf.j2
+#     dest: /etc/zabbix/zabbix_server.conf
+#     owner: root
+#     group: root
+#     mode: 0600
+#     backup: true
+#   become: true
+#   notify: restart-zabbix-server
+
+- name: Deploy /etc/zabbix/zabbix_agentd.conf
+  ansible.builtin.template:
+    src: zabbix_agentd.conf.j2
+    dest: /etc/zabbix/zabbix_agentd.conf
+    owner: root
+    group: root
+    mode: 0644
+    backup: true
+  become: true
+  notify: restart-zabbix-agent
+
+- name: Start and enable Zabbix stuff
+  ansible.builtin.systemd:
+    name: "{{ item }}"
+    state: started
+    enabled: true
+  loop:
+    - zabbix-agent
+  become: true
