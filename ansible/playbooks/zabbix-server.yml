@@ -19,3 +19,6 @@
         server_url: http://thinkpad/zabbix/
         login_user: Admin
         login_password: zabbix
+        linux_servers:
+          - thinkpad
+          - lenovo
