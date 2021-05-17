@@ -1,0 +1,38 @@
+- name: Install zabbix_api
+  ansible.builtin.pip:
+    state: present
+    name: zabbix_api
+  become: true
+
+- name: Deploy agent auto-registration action
+  community.zabbix.zabbix_action:
+    server_url: "{{ server_url }}"
+    login_user: "{{ login_user }}"
+    login_password: "{{ login_password }}"
+    name: Agent auto-registration
+    event_source: auto_registration
+    state: present
+    status: enabled
+    esc_period: 0s
+    operations:
+      - type: add_host
+
+- name: Deploy Linux agent action
+  community.zabbix.zabbix_action:
+    server_url: "{{ server_url }}"
+    login_user: "{{ login_user }}"
+    login_password: "{{ login_password }}"
+    name: Linux agent action
+    event_source: auto_registration
+    state: present
+    status: enabled
+    esc_period: 0s
+    conditions:
+      - type: host_metadata
+        operator: like
+        value: Linux
+    operations:
+      - type: link_to_template
+        templates:
+          - Linux by Zabbix agent
+      - type: enable_host
