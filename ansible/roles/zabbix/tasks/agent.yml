@@ -115,6 +115,16 @@
   become: true
   notify: restart-zabbix-agent
 
+- name: Ensure /var/log/zabbix exists
+  ansible.builtin.file:
+    state: directory
+    path: /var/log/zabbix
+    owner: zabbix
+    group: zabbix
+    mode: 0755
+  become: true
+  notify: restart-zabbix-agent
+
 - name: Deploy /etc/zabbix/zabbix_agentd.conf
   ansible.builtin.template:
     src: zabbix_agentd.conf.j2
