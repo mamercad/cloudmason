@@ -6,16 +6,21 @@
 
   tasks:
 
-    # - name: Include zabbix role (server)
-    #   include_role:
-    #     name: zabbix
-    #     tasks_from: server.yml
+    - name: Include zabbix role (server)
+      include_role:
+        name: zabbix
+        tasks_from: server.yml
+      vars:
+        zabbix_source_ip: 192.168.1.139
+        zabbix_server: 192.168.1.139
 
     - name: Include zabbix role (config)
       include_role:
         name: zabbix
         tasks_from: config.yml
       vars:
+        zabbix_source_ip: 192.168.1.139
+        zabbix_server: 192.168.1.139
         server_url: http://thinkpad/zabbix/
         login_user: Admin
         login_password: zabbix
