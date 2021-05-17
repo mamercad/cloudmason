@@ -129,3 +129,27 @@
     SENSU_BACKEND_CLUSTER_ADMIN_PASSWORD: "{{ sensu_admin_password }}"
   when:
     - needs_init.stdout is search("both cluster-admin-username and cluster-admin-password are required to be set")
+
+- name: Add sensu apt signing key
+  ansible.builtin.apt_key:
+    state: present
+    url: https://packagecloud.io/sensu/stable/gpgkey
+  become: true
+
+- name: Add sensu deb repository
+  ansible.builtin.apt_repository:
+    state: present
+    repo: deb https://packagecloud.io/sensu/stable/ubuntu/ focal main
+  become: true
+
+- name: Add sensu deb-src repository
+  ansible.builtin.apt_repository:
+    state: present
+    repo: deb-src https://packagecloud.io/sensu/stable/ubuntu/ focal main
+  become: true
+
+- name: Install sensu-go-backend
+  ansible.builtin.apt:
+    state: present
+    name: sensu-go-backend
+  become: true
