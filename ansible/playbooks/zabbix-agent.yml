@@ -1,0 +1,12 @@
+---
+- name: Zabbix / agent
+  hosts: "{{ ansible_limit | default(omit) }}"
+  gather_facts: true
+  become: false
+
+  tasks:
+
+    - name: Include zabbix role (agent)
+      include_role:
+        name: zabbix
+        tasks_from: agent.yml
