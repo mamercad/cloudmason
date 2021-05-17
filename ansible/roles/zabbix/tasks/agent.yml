@@ -105,6 +105,16 @@
 #   become: true
 #   notify: restart-zabbix-server
 
+- name: Ensure /etc/zabbix/zabbix_agentd.d exists
+  ansible.builtin.file:
+    state: directory
+    path: /etc/zabbix/zabbix_agentd.d
+    owner: root
+    group: root
+    mode: 0755
+  become: true
+  notify: restart-zabbix-agent
+
 - name: Deploy /etc/zabbix/zabbix_agentd.conf
   ansible.builtin.template:
     src: zabbix_agentd.conf.j2
