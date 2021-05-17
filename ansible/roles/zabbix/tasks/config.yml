@@ -36,3 +36,36 @@
         templates:
           - Linux by Zabbix agent
       - type: enable_host
+
+- name: Create host groups
+  community.zabbix.zabbix_group:
+    server_url: "{{ server_url }}"
+    login_user: "{{ login_user }}"
+    login_password: "{{ login_password }}"
+    state: present
+    host_groups:
+      - Linux servers
+
+- name: Delete host (Zabbix server)
+  community.zabbix.zabbix_host:
+    server_url: "{{ server_url }}"
+    login_user: "{{ login_user }}"
+    login_password: "{{ login_password }}"
+    state: absent
+    host_name: Zabbix server
+
+- name: Create linux host
+  community.zabbix.zabbix_host:
+    server_url: "{{ server_url }}"
+    login_user: "{{ login_user }}"
+    login_password: "{{ login_password }}"
+    state: present
+    host_name: "{{ item }}"
+    visible_name: "{{ item }}"
+    description: "{{ item }}"
+    host_groups:
+      - Linux servers
+    link_templates:
+      - Linux by Zabbix agent active
+    status: enabled
+  loop: "{{ linux_servers }}"
