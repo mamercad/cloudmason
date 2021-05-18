@@ -21,6 +21,27 @@
       - zabbix-agent
   become: true
 
+- name: Install snmp and snmp-mibs-downloader
+  ansible.builtin.apt:
+    state: present
+    name:
+      - snmp
+      - snmp-mibs-downloader
+  become: true
+
+- name: Download UniFi MIBs
+  ansible.builtin.get_url:
+    url: http://dl.ubnt-ut.com/snmp/{{ item }}
+    dest: /usr/share/snmp/mibs/{{ item }}.txt
+    owner: root
+    group: root
+    mode: 0644
+  loop:
+    - UBNT-MIB
+    - UBNT-UniFi-MIB
+  become: true
+  notify: restart-zabbix-server
+
 - name: Install python3-pymysql
   ansible.builtin.apt:
     state: present

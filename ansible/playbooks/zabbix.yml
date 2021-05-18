@@ -1,11 +1,9 @@
 ---
 - name: Zabbix / server
-  hosts: "{{ ansible_limit | default(omit) }}"
+  hosts: thinkpad
   gather_facts: true
   become: false
-
   tasks:
-
     - name: Include zabbix role (server)
       include_role:
         name: zabbix
@@ -13,7 +11,6 @@
       vars:
         zabbix_source_ip: 192.168.1.139
         zabbix_server: 192.168.1.139
-
     - name: Include zabbix role (config)
       include_role:
         name: zabbix
@@ -33,9 +30,23 @@
             ip: 192.168.1.10
           - dns: net2
             ip: 192.168.1.11
-        snmp_servers:
+        unifi_devices:
           - dns: gateway
             ip: 192.168.1.1
+          - dns: switch1
+            ip: 192.168.1.95
+          - dns: switch2
+            ip: 192.168.1.40
+          - dns: switch3
+            ip: 192.168.1.70
+          - dns: switch4
+            ip: 192.168.1.137
+          - dns: basement
+            ip: 192.168.1.63
+          - dns: bedroom
+            ip: 192.168.1.124
+          - dns: familyroom
+            ip: 192.168.1.120
         printers:
           - dns: printer
             ip: 192.168.1.134
@@ -44,3 +55,15 @@
             ip: 8.8.8.8
           - dns: one.one.one.one
             ip: 1.1.1.1
+
+- name: Zabbix / agent
+  hosts: thinkpad:lenovo:net1:net2
+  gather_facts: true
+  become: false
+  tasks:
+    - name: Include zabbix role (agent)
+      include_role:
+        name: zabbix
+        tasks_from: agent.yml
+      vars:
+        zabbix_server: 192.168.1.139
