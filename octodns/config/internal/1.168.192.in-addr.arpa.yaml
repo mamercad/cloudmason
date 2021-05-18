@@ -194,9 +194,6 @@
 107:
   type: PTR
   value: db2.cloudmason.org.
-109:
-  type: PTR
-  value: gala.cloudmason.org.
 110:
   type: PTR
   value: jonagold.cloudmason.org.
@@ -262,7 +259,7 @@
   value: switch4.cloudmason.org.
 138:
   type: PTR
-  value: alexa3.cloudmason.org.
+  value: gala.cloudmason.org.
 139:
   type: PTR
   value: thinkpad-wired.cloudmason.org.

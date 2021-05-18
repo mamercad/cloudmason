@@ -275,9 +275,6 @@ marypc:
 db2:
   type: A
   value: 192.168.1.107
-gala:
-  type: A
-  value: 192.168.1.109
 clusterpi6:
   type: A
   value: 192.168.1.111
@@ -377,7 +374,7 @@ rog:
 db3:
   type: A
   value: 192.168.1.137
-alexa3:
+gala:
   type: A
   value: 192.168.1.138
 thinkpad-wired:
