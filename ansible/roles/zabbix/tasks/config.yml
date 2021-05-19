@@ -4,6 +4,39 @@
     name: zabbix_api
   become: true
 
+- name: create a new zabbix user.
+  community.zabbix.zabbix_user:
+    server_url: "{{ server_url }}"
+    login_user: "{{ login_user }}"
+    login_password: "{{ login_password }}"
+    alias: mark
+    name: Mark
+    surname: Mercado
+    usrgrps:
+      - Zabbix administrators
+    passwd: "{{ mark_password }}"
+    lang: en_US
+    theme: dark-theme
+    autologin: no
+    autologout: '0'
+    refresh: '30'
+    rows_per_page: '200'
+    after_login_url: ''
+    user_medias:
+      - mediatype: Email
+        sendto: mamercad@gmail.com
+        period: 1-7,00:00-24:00
+        severity:
+          not_classified: no
+          information: yes
+          warning: yes
+          average: yes
+          high: yes
+          disaster: yes
+        active: no
+    type: Zabbix super admin
+    state: present
+
 - name: Deploy agent auto-registration action
   community.zabbix.zabbix_action:
     server_url: "{{ server_url }}"
