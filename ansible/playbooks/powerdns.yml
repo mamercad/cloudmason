@@ -1,0 +1,15 @@
+---
+- name: PowerDNS
+  hosts: thinkpad
+  gather_facts: true
+  become: false
+  tasks:
+    - name: Include powerdns role (main)
+      include_role:
+        name: powerdns
+        tasks_from: main.yml
+      vars:
+        powerdns_api_key: hunter2
+        powerdns_web_password: hunter2
+        powerdns_mysql_password: password
+        powerdns_forward_zones: cloudmason.org=127.0.0.1:5353,1.168.192.in-addr.arpa=127.0.0.1:5353

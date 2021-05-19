@@ -1,0 +1,228 @@
+---
+- name: Add PowerDNS apt GPG key
+  ansible.builtin.apt_key:
+    state: present
+    id: "{{ powerdns_gpg_key_id }}"
+    keyserver: keys.gnupg.net
+  become: true
+
+- name: Add PowerDNS recursor repository
+  ansible.builtin.apt_repository:
+    state: present
+    repo: deb http://repo.powerdns.com/ubuntu {{ ansible_distribution_release }}-rec-{{ powerdns_version | replace('.', '') }} main
+  become: true
+
+- name: Add PowerDNS authoritative server repository
+  ansible.builtin.apt_repository:
+    state: present
+    repo: deb http://repo.powerdns.com/ubuntu {{ ansible_distribution_release }}-auth-{{ powerdns_version | replace('.', '') }} main
+  become: true
+
+- name: Add pin-priority for PowerDNS packages
+  ansible.builtin.copy:
+    dest: /etc/apt/preferences.d/pdns
+    owner: root
+    group: root
+    mode: 0644
+    content: |
+      Package: pdns-*
+      Pin: origin repo.powerdns.com
+      Pin-Priority: 600
+  become: true
+
+- name: Disable avahi-daemon
+  systemd:
+    state: stopped
+    enabled: false
+    name: avahi-daemon
+  ignore_errors: true  # Might not exist
+  become: true
+
+- name: Disable systemd-resolved
+  systemd:
+    state: stopped
+    enabled: false
+    name: systemd-resolved
+  become: true
+
+- name: Deploy /etc/resolv.conf
+  copy:
+    dest: /etc/resolv.conf
+    owner: root
+    group: root
+    mode: 0644
+    content: |
+      domain cloudmason.org
+      search cloudmason.org
+      nameserver {{ ansible_default_ipv4.address }}
+    backup: true
+  become: true
+
+- name: Install pdns-server, pdns-backend-mysql, pdns-recursor, default-mysql-server
+  ansible.builtin.apt:
+    state: present
+    name:
+      - pdns-server
+      - pdns-backend-mysql
+      - pdns-recursor
+      - default-mysql-server
+  become: true
+
+- name: Deploy /etc/powerdns/recursor.conf
+  copy:
+    dest: /etc/powerdns/recursor.conf
+    owner: pdns
+    group: root
+    mode: 0640
+    content: |
+      api-key={{ powerdns_api_key }}
+      webserver=yes
+      webserver-address=0.0.0.0
+      webserver-port=8082
+      webserver-allow-from=0.0.0.0/0
+      webserver-password={{ powerdns.web_password }}
+      local-address=0.0.0.0:53
+      serve-rfc1918=no
+      # forward-zones={{ powerdns_forward_zones }}
+      # forward-zones+=another.example.com=127.0.0.1:5300
+  notify: restart-pdns-recursor
+  become: true
+
+- name: Start and enable pdns-recursor
+  ansible.builtin.systemd:
+    name: pdns-recursor
+    state: started
+    enabled: true
+  become: true
+
+- name: Install python3-pymysql
+  ansible.builtin.apt:
+    state: present
+    name: python3-pymysql
+  become: true
+
+- name: Create PowerDNS database
+  community.mysql.mysql_db:
+    state: present
+    name: pdns
+    check_implicit_admin: true
+    login_unix_socket: /var/run/mysqld/mysqld.sock
+  become: true
+
+- name: Create PowerDNS user
+  community.mysql.mysql_user:
+    state: present
+    name: pdns
+    password: "{{ powerdns_mysql_password }}"
+    priv: 'pdns.*:ALL'
+    check_implicit_admin: true
+    login_unix_socket: /var/run/mysqld/mysqld.sock
+  become: true
+
+- name: Create PowerDNS schema
+  community.mysql.mysql_query:
+    login_db: pdns
+    login_unix_socket: /var/run/mysqld/mysqld.sock
+    query:
+      - CREATE TABLE IF NOT EXISTS domains (
+          id                    INT AUTO_INCREMENT,
+          name                  VARCHAR(255) NOT NULL,
+          master                VARCHAR(128) DEFAULT NULL,
+          last_check            INT DEFAULT NULL,
+          type                  VARCHAR(6) NOT NULL,
+          notified_serial       INT UNSIGNED DEFAULT NULL,
+          account               VARCHAR(40) CHARACTER SET 'utf8' DEFAULT NULL,
+          PRIMARY KEY (id)
+        ) Engine=InnoDB CHARACTER SET 'latin1';
+      - ALTER TABLE domains ADD UNIQUE INDEX(name);
+      - CREATE TABLE IF NOT EXISTS records (
+          id                    BIGINT AUTO_INCREMENT,
+          domain_id             INT DEFAULT NULL,
+          name                  VARCHAR(255) DEFAULT NULL,
+          type                  VARCHAR(10) DEFAULT NULL,
+          content               VARCHAR(64000) DEFAULT NULL,
+          ttl                   INT DEFAULT NULL,
+          prio                  INT DEFAULT NULL,
+          disabled              TINYINT(1) DEFAULT 0,
+          ordername             VARCHAR(255) BINARY DEFAULT NULL,
+          auth                  TINYINT(1) DEFAULT 1,
+          PRIMARY KEY (id)
+        ) Engine=InnoDB CHARACTER SET 'latin1';
+      - ALTER TABLE records ADD INDEX(name, type);
+      - ALTER TABLE records ADD INDEX(domain_id);
+      - ALTER TABLE records ADD INDEX(ordername);
+      - CREATE TABLE IF NOT EXISTS supermasters (
+          ip                    VARCHAR(64) NOT NULL,
+          nameserver            VARCHAR(255) NOT NULL,
+          account               VARCHAR(40) CHARACTER SET 'utf8' NOT NULL,
+          PRIMARY KEY (ip, nameserver)
+        ) Engine=InnoDB CHARACTER SET 'latin1';
+      - CREATE TABLE IF NOT EXISTS comments (
+          id                    INT AUTO_INCREMENT,
+          domain_id             INT NOT NULL,
+          name                  VARCHAR(255) NOT NULL,
+          type                  VARCHAR(10) NOT NULL,
+          modified_at           INT NOT NULL,
+          account               VARCHAR(40) CHARACTER SET 'utf8' DEFAULT NULL,
+          comment               TEXT CHARACTER SET 'utf8' NOT NULL,
+          PRIMARY KEY (id)
+        ) Engine=InnoDB CHARACTER SET 'latin1';
+      - ALTER TABLE comments ADD INDEX(name, type);
+      - ALTER TABLE comments ADD INDEX(domain_id, modified_at);
+      - CREATE TABLE IF NOT EXISTS domainmetadata (
+          id                    INT AUTO_INCREMENT,
+          domain_id             INT NOT NULL,
+          kind                  VARCHAR(32),
+          content               TEXT,
+          PRIMARY KEY (id)
+        ) Engine=InnoDB CHARACTER SET 'latin1';
+      - ALTER TABLE domainmetadata ADD INDEX(domain_id, kind);
+      - CREATE TABLE IF NOT EXISTS cryptokeys (
+          id                    INT AUTO_INCREMENT,
+          domain_id             INT NOT NULL,
+          flags                 INT NOT NULL,
+          active                BOOL,
+          published             BOOL DEFAULT 1,
+          content               TEXT,
+          PRIMARY KEY(id)
+        ) Engine=InnoDB CHARACTER SET 'latin1';
+      - ALTER TABLE cryptokeys ADD INDEX(domain_id);
+      - CREATE TABLE IF NOT EXISTS tsigkeys (
+          id                    INT AUTO_INCREMENT,
+          name                  VARCHAR(255),
+          algorithm             VARCHAR(50),
+          secret                VARCHAR(255),
+          PRIMARY KEY (id)
+        ) Engine=InnoDB CHARACTER SET 'latin1';
+      - ALTER TABLE tsigkeys ADD UNIQUE INDEX(name, algorithm);
+  become: true
+  changed_when: false  # Don't care
+
+- name: Deploy /etc/powerdns/pdns.conf
+  copy:
+    dest: /etc/powerdns/pdns.conf
+    owner: pdns
+    group: root
+    mode: 0640
+    content: |
+      local-address=0.0.0.0:5353
+      api=yes
+      api-key={{ powerdns.api_key }}
+      webserver=yes
+      webserver-address=0.0.0.0
+      webserver-allow-from=0.0.0.0/0
+      webserver-password={{ powerdns.web_password }}
+      launch=gmysql
+      gmysql-socket=/var/run/mysqld/mysqld.sock
+      gmysql-dbname=pdns
+      gmysql-user=pdns
+      gmysql-password={{ powerdns.mysql_password }}
+  notify: Restart pdns
+  become: true
+
+- name: Start and enable pdns
+  systemd:
+    name: pdns
+    state: started
+    enabled: true
+  become: true
