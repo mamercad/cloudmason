@@ -674,14 +674,18 @@ all:
         thinkpad:
     zabbix_clients:
       hosts:
-        ubuntu:
-    ubuntu:
-      hosts:
-        ambrosia:
         lenovo:
         net1:
         net2:
         gala:
+        thinkpad:
+    ubuntu:
+      hosts:
+        lenovo:
+        net1:
+        net2:
+        gala:
+        thinkpad:
     pi:
       hosts:
         net1:
