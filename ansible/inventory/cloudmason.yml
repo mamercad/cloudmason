@@ -7,7 +7,7 @@ all:
       ansible_python_interpreter: /usr/bin/python3
       # healthchecks_io: https://hc-ping.com/cae50618-c97f-483e-9814-0277dc523d1e
     thinkpad:
-      ansible_host: 192.168.1.139
+      ansible_host: 192.168.1.67
       ansible_python_interpreter: /usr/bin/python3
       healthchecks_io: https://hc-ping.com/cae50618-c97f-483e-9814-0277dc523d1e
     lenovo:
@@ -669,12 +669,19 @@ all:
         34626564613638336465373563643536646563613566306337353463666138643630626362353735
         343536353463343431363534356639373665
   children:
+    zabbix_servers:
+      hosts:
+        thinkpad:
+    zabbix_clients:
+      hosts:
+        ubuntu:
     ubuntu:
       hosts:
         ambrosia:
         lenovo:
         net1:
         net2:
+        gala:
     pi:
       hosts:
         net1:

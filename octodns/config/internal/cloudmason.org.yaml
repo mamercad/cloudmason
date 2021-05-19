@@ -167,7 +167,7 @@ clusterpi2:
 clusterpi4:
   type: A
   value: 192.168.1.66
-thinkpad-wireless:
+thinkpad-wired:
   type: A
   value: 192.168.1.67
 clusterpi5:
@@ -380,7 +380,7 @@ db3:
 gala:
   type: A
   value: 192.168.1.138
-thinkpad-wired:
+thinkpad-wireless:
   type: A
   value: 192.168.1.139
 livingroomtv:

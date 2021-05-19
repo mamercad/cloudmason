@@ -83,6 +83,7 @@
       - Printers
       - Ping servers
       - UniFi devices
+      - NAS devices
 
 - name: Delete host (Zabbix server)
   community.zabbix.zabbix_host:
@@ -104,6 +105,7 @@
     host_groups:
       - Linux servers
     link_templates:
+      - ICMP Ping
       - Linux by Zabbix agent active
     status: enabled
     interfaces:
@@ -113,6 +115,29 @@
         ip: "{{ item.ip }}"
         main: 1
   loop: "{{ linux_servers }}"
+
+- name: Create nas host
+  community.zabbix.zabbix_host:
+    server_url: "{{ server_url }}"
+    login_user: "{{ login_user }}"
+    login_password: "{{ login_password }}"
+    state: present
+    host_name: "{{ item.dns }}"
+    visible_name: "{{ item.dns }}"
+    description: "{{ item.dns }}"
+    host_groups:
+      - NAS devices
+    link_templates:
+      - ICMP Ping
+      - Linux by Zabbix agent active
+    status: enabled
+    interfaces:
+      - port: "10050"
+        type: agent
+        dns: "{{ item.dns }}"
+        ip: "{{ item.ip }}"
+        main: 1
+  loop: "{{ nas_devices }}"
 
 - name: Create generic snmp host
   community.zabbix.zabbix_host:
@@ -126,6 +151,7 @@
     host_groups:
       - SNMP servers
     link_templates:
+      - ICMP Ping
       - Generic SNMP
       - Interfaces SNMP
     status: enabled
@@ -154,6 +180,7 @@
     host_groups:
       - Printers
     link_templates:
+      - ICMP Ping
       - Generic SNMP
     status: enabled
     interfaces:

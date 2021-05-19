@@ -1,6 +1,6 @@
 ---
 - name: Zabbix / server
-  hosts: thinkpad
+  hosts: zabbix_servers
   gather_facts: true
   become: false
   tasks:
@@ -9,8 +9,8 @@
         name: zabbix
         tasks_from: server.yml
       vars:
-        zabbix_source_ip: 192.168.1.139
-        zabbix_server: 192.168.1.139
+        zabbix_source_ip: 192.168.1.67
+        zabbix_server: 192.168.1.67
     - name: Include zabbix role (config)
       include_role:
         name: zabbix
@@ -23,8 +23,8 @@
           38636666396161383732323432336631663136656133383265353234376630613963396131326336
           3534646630643061320a656333616631653035333430376233323437623066313664353161353064
           3132
-        zabbix_source_ip: 192.168.1.139
-        zabbix_server: 192.168.1.139
+        zabbix_source_ip: 192.168.1.67
+        zabbix_server: 192.168.1.67
         server_url: http://thinkpad/zabbix/
         login_user: mark
         login_password: "{{ mark_password }}"
@@ -38,7 +38,7 @@
         #   3064
         linux_servers:
           - dns: thinkpad
-            ip: 192.168.1.139
+            ip: 192.168.1.67
           - dns: gala
             ip: 192.168.1.138
           - dns: lenovo
@@ -72,9 +72,12 @@
             ip: 8.8.8.8
           - dns: one.one.one.one
             ip: 1.1.1.1
+        nas_devices:
+          - dns: qnap
+            ip: 192.168.1.118
 
 - name: Zabbix / agent
-  hosts: thinkpad:lenovo:net1:net2
+  hosts: zabbix_clients
   gather_facts: true
   become: false
   tasks:
@@ -83,4 +86,4 @@
         name: zabbix
         tasks_from: agent.yml
       vars:
-        zabbix_server: 192.168.1.139
+        zabbix_server: 192.168.1.67
