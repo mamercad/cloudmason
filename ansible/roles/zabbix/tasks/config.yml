@@ -152,10 +152,10 @@
         dns: "{{ item.dns }}"
         ip: "{{ item.ip }}"
         main: 1
-        useip: 1
+        useip: 0
   loop: "{{ ping_servers }}"
 
-- name: Create generic snmp host
+- name: Create generic ping host
   community.zabbix.zabbix_host:
     server_url: "{{ server_url }}"
     login_user: "{{ login_user }}"
@@ -167,16 +167,38 @@
     host_groups:
       - UniFi devices
     link_templates:
-      - Generic SNMP
-      - Interfaces SNMP
+      - ICMP Ping
     status: enabled
     interfaces:
-      - details:
-          community: public
-          version: 2
-        port: "161"
-        type: snmp
+      - type: agent
         dns: "{{ item.dns }}"
         ip: "{{ item.ip }}"
         main: 1
+        useip: 0
   loop: "{{ unifi_devices }}"
+
+# - name: Create generic snmp host
+#   community.zabbix.zabbix_host:
+#     server_url: "{{ server_url }}"
+#     login_user: "{{ login_user }}"
+#     login_password: "{{ login_password }}"
+#     state: present
+#     host_name: "{{ item.dns }}"
+#     visible_name: "{{ item.dns }}"
+#     description: "{{ item.dns }}"
+#     host_groups:
+#       - UniFi devices
+#     link_templates:
+#       - Generic SNMP
+#       - Interfaces SNMP
+#     status: enabled
+#     interfaces:
+#       - details:
+#           community: public
+#           version: 2
+#         port: "161"
+#         type: snmp
+#         dns: "{{ item.dns }}"
+#         ip: "{{ item.ip }}"
+#         main: 1
+#   loop: "{{ unifi_devices }}"
