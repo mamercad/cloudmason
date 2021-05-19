@@ -128,6 +128,7 @@
           [http.routers.zabbix]
             rule = "Host(`zabbix.cloudmason.org`)"
             service = "zabbix"
+            middlewares = ["zabbix"]
             [http.routers.zabbix.tls]
           [http.routers.concourse]
             rule = "Host(`concourse.cloudmason.org`)"
@@ -176,6 +177,8 @@
         [http.middlewares]
           [http.middlewares.admin-user.basicAuth]
             users = ["{{ traefik.admin.username }}:{{ traefik.admin.password }}"]
+          [http.middlewares.zabbix.addPrefix]
+            prefix = "/zabbix"
 
         [http.services]
           [http.services.apex.loadBalancer]
@@ -189,7 +192,7 @@
               url = "http://awx-service.awx.thinkpad.cloudmason.org:80/"
           [http.services.zabbix.loadBalancer]
             [[http.services.zabbix.loadBalancer.servers]]
-              url = "http://thinkpad.cloudmason.org:80/zabbix/"
+              url = "http://thinkpad.cloudmason.org:80/"
           [http.services.concourse.loadBalancer]
             [[http.services.concourse.loadBalancer.servers]]
               url = "http://concourse.lenovo.cloudmason.org:8080/"
