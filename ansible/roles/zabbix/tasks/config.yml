@@ -35,6 +35,7 @@
           disaster: yes
         active: no
     type: Zabbix super admin
+    role_name: Super admin role
     state: present
 
 - name: Deploy agent auto-registration action
