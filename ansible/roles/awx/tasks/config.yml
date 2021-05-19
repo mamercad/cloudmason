@@ -492,16 +492,17 @@
     job_type: run
     organization: Cloudmason
     inventory: Cloudmason
-    ask_inventory_on_launch: true
+    ask_inventory_on_launch: false
     project: Cloudmason
     playbook: ansible/playbooks/pi.yml
     credentials:
       - Cloudmason Vault
       - Cloudmason Machine
-    ask_credential_on_launch: true
+    ask_credential_on_launch: false
     limit: pi
-    ask_limit_on_launch: true
-    ask_tags_on_launch: true
+    ask_limit_on_launch: false
+    ask_tags_on_launch: false
+    webhook_service: github
   tags:
     - awx
 
