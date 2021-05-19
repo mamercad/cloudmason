@@ -180,7 +180,7 @@
     host_groups:
       - Printers
     link_templates:
-      - ICMP Ping
+      # - ICMP Ping
       - Generic SNMP
     status: enabled
     interfaces:
