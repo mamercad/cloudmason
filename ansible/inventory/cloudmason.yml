@@ -2,6 +2,10 @@ all:
   hosts:
     localhost:
       ansible_connection: local
+    gala:
+      ansible_host: 192.168.1.138
+      ansible_python_interpreter: /usr/bin/python3
+      # healthchecks_io: https://hc-ping.com/cae50618-c97f-483e-9814-0277dc523d1e
     thinkpad:
       ansible_host: 192.168.1.139
       ansible_python_interpreter: /usr/bin/python3
