@@ -1,6 +1,6 @@
 ---
 - name: Pi / main
-  hosts: "{{ ansible_limit | default(omit) }}"
+  hosts: pi
   gather_facts: true
   become: false
 
