@@ -31,6 +31,10 @@ awx:
   type: A
   value: {{eth0}}
   ttl: 3600
+zabbix:
+  type: A
+  value: {{eth0}}
+  ttl: 3600
 valheim:
   type: A
   value: {{eth0}}
