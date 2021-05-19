@@ -42,6 +42,25 @@
   become: true
   notify: restart-zabbix-server
 
+- name: Download Lexmark MIBs
+  ansible.builtin.unarchive:
+    src: http://support.lexmark.com/library/LEXMARK/FA615/Lexmark_MIB_file_pack_20190502.zip
+    remote_src: true
+    dest: /usr/share/snmp/mibs/
+    owner: root
+    group: root
+    mode: 0644
+  become: true
+  notify: restart-zabbix-server
+
+- name: Let Ubuntu download MIBs
+  ansible.builtin.replace:
+    path: /etc/snmp/snmp.conf
+    regexp: '^mibs :$'
+    replace: '#mibs :'
+  become: true
+  notify: restart-zabbix-server
+
 - name: Install python3-pymysql
   ansible.builtin.apt:
     state: present
