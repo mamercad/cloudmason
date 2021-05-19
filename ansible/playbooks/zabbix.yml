@@ -24,6 +24,8 @@
         linux_servers:
           - dns: thinkpad
             ip: 192.168.1.139
+          - dns: gala
+            ip: 192.168.1.138
           - dns: lenovo
             ip: 192.168.1.89
           - dns: net1
