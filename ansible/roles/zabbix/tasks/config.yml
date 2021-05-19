@@ -263,3 +263,11 @@
 #         ip: "{{ item.ip }}"
 #         main: 1
 #   loop: "{{ unifi_devices }}"
+
+- name: Import Zabbix templates from JSON
+  community.zabbix.zabbix_template:
+    server_url: "{{ server_url }}"
+    login_user: "{{ login_user }}"
+    login_password: "{{ login_password }}"
+    state: present
+    template_json: "{{ lookup('ansible.builtin.file', 'templates/zabbix/ICMP_ping.xml.j2') }}"
