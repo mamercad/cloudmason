@@ -10,3 +10,10 @@
       include_role:
         name: ubuntu
         tasks_from: main.yml
+
+    - name: Include ubuntu role (thelounge)
+      include_role:
+        name: ubuntu
+        tasks_from: thelounge.yml
+      when:
+        - thelounge | default(False, True)

@@ -57,7 +57,7 @@ jonagold:
   ttl: 3600
 lenovo:
   type: A
-  value: 192.168.1.89
+  value: 192.168.1.98
   ttl: 3600
 ambrosia:
   type: A
