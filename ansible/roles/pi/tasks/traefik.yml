@@ -222,7 +222,7 @@
               url = "http://qnap.cloudmason.org:11002/"
           [http.services.thelounge.loadBalancer]
             [[http.services.thelounge.loadBalancer.servers]]
-              url = "http://lenovo.cloudmason.org:9000/"
+              url = "http://thinkpad.cloudmason.org:9000/"
 
       [tls.options]
         [tls.options.default]
