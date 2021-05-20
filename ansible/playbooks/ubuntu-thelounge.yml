@@ -1,0 +1,12 @@
+---
+- name: Ubuntu / thelounge
+  hosts: "{{ ansible_limit | default(omit) }}"
+  gather_facts: true
+  become: false
+
+  tasks:
+
+    - name: Include ubuntu role (thelounge)
+      include_role:
+        name: ubuntu
+        tasks_from: thelounge.yml
