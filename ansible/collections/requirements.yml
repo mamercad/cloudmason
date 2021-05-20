@@ -1,1 +1,8 @@
-collections/requirements.yml
+---
+collections:
+  - community.general
+  - community.kubernetes
+  - community.libvirt
+  - community.mysql
+  - ansible.netcommon
+  - community.zabbix
