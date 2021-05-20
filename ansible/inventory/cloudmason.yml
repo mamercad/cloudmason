@@ -12,7 +12,7 @@ all:
       healthchecks_io: https://hc-ping.com/cae50618-c97f-483e-9814-0277dc523d1e
       thelounge: true
     lenovo:
-      ansible_host: 192.168.1.89
+      ansible_host: 192.168.1.98
       ansible_python_interpreter: /usr/bin/python3
       healthchecks_io: https://hc-ping.com/c8bd3c9c-9d8b-445b-bdf0-75935b4e6db4
     # jonagold:
