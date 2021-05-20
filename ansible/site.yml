@@ -79,6 +79,8 @@
         unifi_devices:
           - dns: gateway
             ip: 192.168.1.1
+          - dns: cloudkey
+            ip: 192.168.1.3
           - dns: switch1
             ip: 192.168.1.95
           - dns: switch2
