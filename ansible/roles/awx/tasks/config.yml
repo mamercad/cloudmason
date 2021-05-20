@@ -540,3 +540,24 @@
     webhook_service: github
   tags:
     - awx
+
+- name: Job Template
+  awx.awx.tower_job_template:
+    state: present
+    name: Cloudmason / Zabbix
+    job_type: run
+    organization: Cloudmason
+    inventory: Cloudmason
+    ask_inventory_on_launch: false
+    project: Cloudmason
+    playbook: ansible/playbooks/zabbix.yml
+    credentials:
+      - Cloudmason Vault
+      - Cloudmason Machine
+    ask_credential_on_launch: false
+    limit: zabbix_servers:zabbix_clients
+    ask_limit_on_launch: false
+    ask_tags_on_launch: false
+    webhook_service: github
+  tags:
+    - awx
