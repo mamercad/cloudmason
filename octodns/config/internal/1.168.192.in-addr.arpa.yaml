@@ -143,9 +143,6 @@
 90:
   type: PTR
   value: marypcwifi.cloudmason.org.
-91:
-  type: PTR
-  value: ambrosia.cloudmason.org.
 92:
   type: PTR
   value: buddyiphone.cloudmason.org.
@@ -233,9 +230,6 @@
 127:
   type: PTR
   value: pws.cloudmason.org.
-128:
-  type: PTR
-  value: ambrosia.cloudmason.org.
 129:
   type: PTR
   value: maryiphone.cloudmason.org.

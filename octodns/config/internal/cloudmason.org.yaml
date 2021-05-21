@@ -230,9 +230,6 @@ lenovo:
 marypcwifi:
   type: A
   value: 192.168.1.90
-ambrosia:
-  type: A
-  value: 192.168.1.91
 buddyiphone:
   type: A
   value: 192.168.1.92
@@ -293,17 +290,6 @@ clusterpi3:
 ooma:
   type: A
   value: 192.168.1.117
-qnap:
-  type: A
-  values:
-    - 192.168.1.118
-    - 192.168.1.119
-qnap1:
-  type: A
-  value: 192.168.1.118
-qnap2:
-  type: A
-  value: 192.168.1.119
 familyroom:
   type: A
   value: 192.168.1.120
@@ -313,20 +299,12 @@ smartplug3:
 traefik1:
   type: A
   value: 192.168.1.122
-alexashow1:
-  type: A
 smarthub:
   type: A
   value: 192.168.1.41
-livingroomlamp:
-  type: A
-  value: 192.168.1.115
 C02D6D7BMD6M:
   type: A
   value: 192.168.1.116
-ooma:
-  type: A
-  value: 192.168.1.117
 qnap:
   type: A
   values:
@@ -338,15 +316,9 @@ qnap1:
 qnap2:
   type: A
   value: 192.168.1.119
-familyroom:
-  type: A
-  value: 192.168.1.120
 garagedoor:
   type: A
   value: 192.168.1.121
-traefik1:
-  type: A
-  value: 192.168.1.122
 alexashow1:
   type: A
   value: 192.168.1.124
@@ -359,9 +331,6 @@ switch2:
 pws:
   type: A
   value: 192.168.1.127
-ambrosia:
-  type: A
-  value: 192.168.1.128
 maryiphone:
   type: A
   value: 192.168.1.129
@@ -425,9 +394,6 @@ awx.thinkpad:
 registry.thinkpad:
   type: A
   value: 192.168.1.202
-awx.ambrosia:
-  type: A
-  value: 192.168.1.221
 kiali:
   type: A
   value: 192.168.1.224
@@ -443,6 +409,3 @@ awx.lenovo:
 vault.lenovo:
   type: A
   value: 192.168.1.243
-awx-service.ambrosia:
-  type: A
-  value: 192.168.1.221
