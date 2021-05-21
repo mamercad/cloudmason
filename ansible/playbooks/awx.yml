@@ -1,0 +1,33 @@
+---
+
+- name: AWX / config
+  hosts: localhost
+  connection: local
+  gather_facts: false
+  become: false
+  tasks:
+    - name: Include awx role (config)
+      include_role:
+        name: awx
+        tasks_from: config.yml
+
+- name: AWX / metronome
+  hosts: localhost
+  connection: local
+  gather_facts: false
+  become: false
+  tasks:
+    - name: Include awx role (metronome)
+      include_role:
+        name: awx
+        tasks_from: metronome.yml
+
+- name: AWX / user
+  hosts: "{{ ansible_limit | default(omit) }}"
+  gather_facts: false
+  become: false
+  tasks:
+    - name: Include awx role (user)
+      include_role:
+        name: awx
+        tasks_from: user.yml
