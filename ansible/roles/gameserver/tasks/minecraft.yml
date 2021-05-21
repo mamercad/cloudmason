@@ -1,0 +1,226 @@
+- name: Include minecraft vars
+  ansible.builtin.include_vars:
+    file: minecraft.yml
+
+- name: Create minecraft group
+  ansible.builtin.group:
+    state: present
+    name: "{{ group }}"
+  become: true
+
+- name: Create minecraft user
+  ansible.builtin.user:
+    state: present
+    name: "{{ user }}"
+    group: "{{ group }}"
+    home: "{{ home }}"
+    shell: /bin/bash
+  become: true
+
+- name: Install openjdk-X-jre-headless
+  ansible.builtin.apt:
+    state: present
+    name: openjdk-{{ item }}-jre-headless
+  loop:
+    - 8
+    - 11
+  become: true
+
+- name: Minecraft server jar
+  ansible.builtin.get_url:
+    url: https://launcher.mojang.com/v1/objects/1b557e7b033b583cd9f66746b7a9ab1ec1673ced/server.jar
+    dest: "{{ home }}/minecraft_server.jar"
+  become: true
+  become_user: "{{ user }}"
+
+- name: Deploy eula.txt
+  ansible.builtin.copy:
+    dest: "{{ home }}/eula.txt"
+    owner: "{{ user }}"
+    group: "{{ group }}"
+    mode: 0644
+    content: |
+      eula=true
+  become: true
+  become_user: "{{ user }}"
+
+- name: Deploy server.properties
+  ansible.builtin.copy:
+    dest: "{{ home }}/server.properties"
+    owner: "{{ user }}"
+    group: "{{ group }}"
+    mode: 0644
+    content: |
+      #Minecraft server properties
+      #Thu May 20 08:48:42 EDT 2021
+      enable-jmx-monitoring=false
+      rcon.port=25575
+      level-seed=
+      gamemode=survival
+      enable-command-block=false
+      enable-query=false
+      generator-settings=
+      level-name=world
+      motd={{ gamename }}
+      query.port=25565
+      pvp=true
+      generate-structures=true
+      difficulty=easy
+      network-compression-threshold=256
+      max-tick-time=60000
+      max-players=20
+      use-native-transport=true
+      online-mode=true
+      enable-status=true
+      allow-flight=false
+      broadcast-rcon-to-ops=true
+      view-distance=10
+      max-build-height=256
+      server-ip=
+      allow-nether=true
+      server-port=25565
+      enable-rcon=true
+      sync-chunk-writes=true
+      op-permission-level=4
+      prevent-proxy-connections=false
+      resource-pack=
+      entity-broadcast-range-percentage=100
+      rcon.password=hunter2
+      player-idle-timeout=0
+      force-gamemode=false
+      rate-limit=0
+      hardcore=false
+      white-list=false
+      broadcast-console-to-ops=true
+      spawn-npcs=true
+      spawn-animals=true
+      snooper-enabled=true
+      function-permission-level=2
+      level-type=default
+      text-filtering-config=
+      spawn-monsters=true
+      enforce-whitelist=false
+      resource-pack-sha1=
+      spawn-protection=16
+      max-world-size=29999984
+  become: true
+  become_user: "{{ user }}"
+
+- name: Deploy minecraft systemd unit
+  ansible.builtin.copy:
+    dest: /etc/systemd/system/minecraft.service
+    owner: root
+    group: root
+    mode: 0644
+    content: |
+      [Unit]
+      Description={{ gamename }}
+      After=network.target
+      [Service]
+      WorkingDirectory={{ home }}
+      User={{ user }}
+      Group={{ group }}
+      Restart=always
+      ExecStart=/usr/bin/screen -DmS minecraft /usr/bin/java -Xmx2G -jar minecraft_server.jar nogui
+      [Install]
+      WantedBy=multi-user.target
+  become: true
+
+# - name: Deploy valheim-restart systemd unit
+#   ansible.builtin.copy:
+#     dest: /etc/systemd/system/valheim-restart.service
+#     owner: root
+#     group: root
+#     mode: 0644
+#     content: |
+#       [Unit]
+#       Description=Restart Valheim
+#       Wants=valheim.target
+#       [Service]
+#       Type=oneshot
+#       ExecStart=/usr/bin/systemctl try-restart valheim.service
+#       [Install]
+#       WantedBy=multi-user.target
+#   become: true
+
+# - name: Deploy valheim-restart systemd timer
+#   ansible.builtin.copy:
+#     dest: /etc/systemd/system/valheim-restart.timer
+#     owner: root
+#     group: root
+#     mode: 0644
+#     content: |
+#       [Unit]
+#       Description=Restart Valheim
+#       [Timer]
+#       OnCalendar=weekly
+#       Persistent=true
+#       [Install]
+#       WantedBy=timers.target
+#   become: true
+
+# - name: Deploy valheim start script
+#   ansible.builtin.copy:
+#     dest: "{{ home }}/start_valheim.sh"
+#     owner: root
+#     group: root
+#     mode: 0755
+#     content: |
+#       #!/usr/bin/env bash
+#       echo "Backing up Valheim"
+#       tar czvf {{ home }}/valheim_server_Data_$(date +%s).tgz {{ home }}/valheim_server_Data
+#       export templdpath=$LD_LIBRARY_PATH
+#       export LD_LIBRARY_PATH=./linux64:$LD_LIBRARY_PATH
+#       # export SteamAppId=892970
+#       echo "Starting server PRESS CTRL-C to exit"
+#       ./valheim_server.x86_64 -name "{{ gamename }}" -port "{{ port }}" -world "Dedicated" -password "{{ gamepass }}"
+#       export LD_LIBRARY_PATH=$templdpath
+#   become: true
+
+
+# - name: Accept Steam license
+#   ansible.builtin.debconf:
+#     name: steamcmd
+#     question: steamcmd/question
+#     value: I AGREE
+#     vtype: select
+#   become: true
+
+# - name: Install steamcmd
+#   ansible.builtin.apt:
+#     state: present
+#     name: steamcmd
+#   become: true
+
+# - name: Install valheim
+#   ansible.builtin.shell:
+#     cmd: |
+#       /usr/games/steamcmd +login anonymous +force_install_dir /home/valheim +app_update 896660 validate +exit
+#   become: true
+#   become_user: valheim
+
+# - name: Reload systemd
+#   ansible.builtin.systemd:
+#     daemon_reload: true
+#   become: true
+
+- name: Start and enable minecraft.service
+  ansible.builtin.systemd:
+    name: minecraft.service
+    state: started
+    enabled: true
+  become: true
+
+# - name: Start and enable valheim-restart.service
+#   ansible.builtin.systemd:
+#     name: valheim-restart.service
+#     state: started
+#     enabled: true
+#   become: true
+
+# - name: Start and enable valheim-retart.timer
+#   ansible.builtin.systemd:
+#     name: valheim-restart.timer
+#     state: started
+#     enabled: true
+#   become: true

@@ -1,0 +1,5 @@
+user: minecraft
+group: minecraft
+home: /home/minecraft
+gamename: Cloudmason Minecraft
+port: 25565
