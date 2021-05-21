@@ -38,6 +38,26 @@
     role_name: Super admin role
     state: present
 
+- name: Create discovery rule with ICMP, agent, and SNMP checks
+  community.zabbix.zabbix_discovery_rule:
+    server_url: "{{ server_url }}"
+    login_user: "{{ login_user }}"
+    login_password: "{{ login_password }}"
+    name: Cloudmason
+    state: present
+    iprange: 192.168.1.1-254
+    dchecks:
+      - type: ICMP
+      - type: Zabbix
+        key: "system.hostname"
+        ports: 10050
+        uniq: true
+        host_source: "discovery"
+      - type: SNMPv2
+        snmp_community: public
+        ports: "161"
+        key: SNMPv2-MIB::sysName.0
+
 - name: Deploy agent auto-registration action
   community.zabbix.zabbix_action:
     server_url: "{{ server_url }}"
