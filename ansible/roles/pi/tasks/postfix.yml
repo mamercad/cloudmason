@@ -10,6 +10,46 @@
     - libsasl2-modules
   become: true
 
+- name: Deploy /etc/postfix/main.cf
+  copy:
+    dest: /etc/postfix/main.cf
+    owner: root
+    group: root
+    mode: 0644
+    content: |
+      smtpd_banner = $myhostname ESMTP $mail_name (Ubuntu)
+      biff = no
+      append_dot_mydomain = yes
+      readme_directory = no
+      compatibility_level = 2
+      smtpd_tls_cert_file=/etc/ssl/certs/ssl-cert-snakeoil.pem
+      smtpd_tls_key_file=/etc/ssl/private/ssl-cert-snakeoil.key
+      smtpd_tls_security_level=may
+      smtp_tls_CApath=/etc/ssl/certs
+      smtp_tls_session_cache_database = btree:${data_directory}/smtp_scache
+      smtpd_relay_restrictions = permit_mynetworks permit_sasl_authenticated defer_unauth_destination
+      myhostname = {{ ansible_fqdn }}
+      mydomain = {{ network.domain }}
+      myorigin = $mydomain
+      alias_maps = hash:/etc/aliases
+      alias_database = hash:/etc/aliases
+      mydestination = $myhostname $mydomain localhost.localdomain localhost
+      mynetworks = 127.0.0.0/8 [::ffff:127.0.0.0]/104 [::1]/128 192.168.1.0/24
+      mailbox_size_limit = 0
+      recipient_delimiter = +
+      inet_interfaces = all
+      inet_protocols = all
+      relayhost = [smtp.gmail.com]:587
+      smtp_sasl_auth_enable = yes
+      smtp_sasl_security_options = noanonymous
+      smtp_sasl_password_maps = hash:/etc/postfix/gmail_sasl
+      smtp_tls_security_level = encrypt
+      smtp_tls_CAfile = /etc/ssl/certs/ca-certificates.crt
+      masquerade_domains = $mydomain
+    backup: true
+  become: true
+  notify: Restart postfix
+
 - name: Deploy /etc/postfix/gmail_sasl
   copy:
     dest: /etc/postfix/gmail_sasl
@@ -65,46 +105,6 @@
     state: present
     path: /etc/postfix/master.cf
     line: submission inet n - y - - smtpd
-    backup: true
-  become: true
-  notify: Restart postfix
-
-- name: Deploy /etc/postfix/main.cf
-  copy:
-    dest: /etc/postfix/main.cf
-    owner: root
-    group: root
-    mode: 0644
-    content: |
-      smtpd_banner = $myhostname ESMTP $mail_name (Ubuntu)
-      biff = no
-      append_dot_mydomain = yes
-      readme_directory = no
-      compatibility_level = 2
-      smtpd_tls_cert_file=/etc/ssl/certs/ssl-cert-snakeoil.pem
-      smtpd_tls_key_file=/etc/ssl/private/ssl-cert-snakeoil.key
-      smtpd_tls_security_level=may
-      smtp_tls_CApath=/etc/ssl/certs
-      smtp_tls_session_cache_database = btree:${data_directory}/smtp_scache
-      smtpd_relay_restrictions = permit_mynetworks permit_sasl_authenticated defer_unauth_destination
-      myhostname = {{ ansible_fqdn }}
-      mydomain = {{ network.domain }}
-      myorigin = $mydomain
-      alias_maps = hash:/etc/aliases
-      alias_database = hash:/etc/aliases
-      mydestination = $myhostname $mydomain localhost.localdomain localhost
-      mynetworks = 127.0.0.0/8 [::ffff:127.0.0.0]/104 [::1]/128 192.168.1.0/24
-      mailbox_size_limit = 0
-      recipient_delimiter = +
-      inet_interfaces = all
-      inet_protocols = all
-      relayhost = [smtp.gmail.com]:587
-      smtp_sasl_auth_enable = yes
-      smtp_sasl_security_options = noanonymous
-      smtp_sasl_password_maps = hash:/etc/postfix/gmail_sasl
-      smtp_tls_security_level = encrypt
-      smtp_tls_CAfile = /etc/ssl/certs/ca-certificates.crt
-      masquerade_domains = $mydomain
     backup: true
   become: true
   notify: Restart postfix
