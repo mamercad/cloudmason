@@ -112,7 +112,7 @@ openhab:
   value: 192.168.1.20
 rokufamilyroom:
   type: A
-  value: 192.168.1.22
+  value: 192.168.1.135
 cloudkeyfallback:
   type: A
   value: 192.168.1.30
@@ -121,7 +121,7 @@ coffeepot:
   value: 192.168.1.31
 rokubedroom:
   type: A
-  value: 192.168.1.32
+  value: 192.168.1.132
 ringbasestation:
   type: A
   value: 192.168.1.33
@@ -385,7 +385,7 @@ thinkpad-wireless:
   value: 192.168.1.139
 livingroomtv:
   type: A
-  value: 192.168.1.140
+  value: 192.168.1.112
 bedroom:
   type: A
   value: 192.168.1.124

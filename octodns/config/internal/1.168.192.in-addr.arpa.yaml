@@ -29,7 +29,7 @@
 20:
   type: PTR
   value: openhab.cloudmason.org.
-22:
+135:
   type: PTR
   value: rokufamilyroom.cloudmason.org.
 30:
@@ -38,7 +38,7 @@
 31:
   type: PTR
   value: coffeepot.cloudmason.org.
-32:
+132:
   type: PTR
   value: rokubedroom.cloudmason.org.
 33:
@@ -260,7 +260,7 @@
 139:
   type: PTR
   value: thinkpad-wireless.cloudmason.org.
-140:
+112:
   type: PTR
   value: livingroomtv.cloudmason.org.
 144:
