@@ -13,7 +13,7 @@
 - name: Move the release
   copy:
     src: /tmp/{{ k3s.binary }}
-    remote_src: yes
+    remote_src: true
     dest: /usr/local/bin/k3s
     owner: root
     group: root
