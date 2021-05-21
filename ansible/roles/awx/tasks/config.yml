@@ -377,8 +377,8 @@
     inventory: Cloudmason
     ask_inventory_on_launch: false
     project: Cloudmason
-    playbook: ansible/playbooks/awx-metronome.yml
-    ask_credential_on_launch: true
+    playbook: ansible/playbooks/awx.yml
+    ask_credential_on_launch: false
     limit: localhost
     ask_limit_on_launch: false
     job_tags: metronome
