@@ -176,13 +176,10 @@
 102:
   type: PTR
   value: rog-wifi.cloudmason.org.
-103:
-  type: PTR
-  value: marymercado.cloudmason.org.
 104:
   type: PTR
   value: wyzefront.cloudmason.org.
-105:
+103:
   type: PTR
   value: retroarcade.cloudmason.org.
 106:

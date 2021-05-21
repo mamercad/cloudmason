@@ -260,15 +260,12 @@ buddyxboxx:
 rog-wifi:
   type: A
   value: 192.168.1.102
-marymercado:
-  type: A
-  value: 192.168.1.103
 wyzefront:
   type: A
   value: 192.168.1.104
 retroarcade:
   type: A
-  value: 192.168.1.105
+  value: 192.168.1.103
 marypc:
   type: A
   value: 192.168.1.106
