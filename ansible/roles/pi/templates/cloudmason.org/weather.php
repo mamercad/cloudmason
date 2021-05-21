@@ -70,7 +70,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
   <div class="collapse navbar-collapse" id="navbarsExampleDefault">
     <ul class="navbar-nav mr-auto">
-      <li class="nav-item active"><a class="nav-link" href="index.php">Home <span class="sr-only">(current)</span></a></li>
+      <li class="nav-item"><a class="nav-link" href="index.php">Home <span class="sr-only">(current)</span></a></li>
       <!-- <li class="nav-item"><a class="nav-link" href="graphs.php">Graphs</a></li> -->
       <!-- <li class="nav-item"><a class="nav-link" href="media.php">Media</a></li> -->
       <!-- <li class="nav-item"><a class="nav-link" href="/prometheus">Prometheus</a></li> -->
@@ -78,7 +78,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
       <!-- <li class="nav-item"><a class="nav-link" href="/sabnzbd">Sabnzbd</a></li> -->
       <li class="nav-item"><a class="nav-link" href="https://github.com/mamercad/">GitHub</a></li>
       <li class="nav-item"><a class="nav-link" href="https://mamercad.github.io/">Blog</a></li>
-      <li class="nav-item"><a class="nav-link" href="weather.php">PWS</a></li>
+      <li class="nav-item active"><a class="nav-link" href="weather.php">PWS</a></li>
     </ul>
     <form class="form-inline my-2 my-lg-0">
       <img src="https://healthchecks.io/badge/5dc9afdd-f4da-4b74-bb83-84430f/_JD3lXcF.svg">
@@ -109,34 +109,9 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 <main role="main" class="container">
 
   <div class="starter-template">
-<h1>Chop wood, carry water.</h1>
-<br/>
-<p class="lead"><?= shell_exec("cat /usr/share/nginx/html/cloudmason.org/cloudmason"); ?></p>
-<br/>
-<b>$ hostname</b> <?= shell_exec('hostname'); ?><br/>
-<b>$ uptime</b> <?= shell_exec('uptime'); ?><br/>
-<br/>
-<b>$ date</b> <?= shell_exec('date'); ?><br/>
-<b>$ date -u</b> <?= shell_exec('date -u'); ?><br/>
-<br/>
-<b>$ rand</b> <?= rand(); ?><br/>
-<b>$ openssl rand -hex 20</b> <?= shell_exec('openssl rand -hex 20'); ?><br/>
-<b>$ openesl rand -base64 20</b> <?= shell_exec('openssl rand -base64 20'); ?><br/>
-<br/>
-<!--
-<b>$ f2b-sshd</b><br/><pre><?= shell_exec('cat /usr/share/nginx/html/f2b-sshd'); ?></pre>
-<br/>
--->
-<b>$ fortune bofh-excuses linuxcookie computers linux</b><br/><pre><?= shell_exec('/usr/games/fortune bofh-excuses linuxcookie computers linux'); ?></pre>
-<!--
-<? if ($_SERVER['HTTP_X_FORWARDED_SERVER'] == 'net1') { ?>
-<b>$ sshbrutes.sh</b><br/><pre><?= shell_exec('cat /usr/share/nginx/html/cloudmason.org/sshbrutes'); ?></pre>
-<? } ?>
--->
-<br/>
-<!--
-<b>$ git log -1</b><br/><pre><?= shell_exec('git log -1'); ?></pre>
--->
+
+  <iframe width="500" height="400" frameborder="0" src="https://ambientweather.net/devices/public/b04839a71b99715951e1b756934b2427?embed=true"></iframe><p>powered by <a target="_blank" href="https://ambientweather.net">Ambient Weather</a></p>
+
   </div>
 
 </main><!-- /.container -->
