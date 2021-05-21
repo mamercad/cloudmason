@@ -128,7 +128,6 @@
           [http.routers.zabbix]
             rule = "Host(`zabbix.cloudmason.org`)"
             service = "zabbix"
-            middlewares = ["zabbix"]
             [http.routers.zabbix.tls]
           [http.routers.concourse]
             rule = "Host(`concourse.cloudmason.org`)"
