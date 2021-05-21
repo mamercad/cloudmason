@@ -2,6 +2,18 @@ all:
   hosts:
     localhost:
       ansible_connection: local
+    gateway:
+      ansible_host: 192.168.1.1
+      ansible_user: mamercad
+      ansible_python_interpreter: /usr/bin/python
+    net1:
+      ansible_host: 192.168.1.10
+      ansible_python_interpreter: /usr/bin/python3
+      healthchecks_io: https://hc-ping.com/ae55147f-0aff-4b0e-b0f9-1f55c81c5a1a
+    net2:
+      ansible_host: 192.168.1.11
+      ansible_python_interpreter: /usr/bin/python3
+      healthchecks_io: https://hc-ping.com/b4576296-81ee-4cf5-a239-4286af184cf3
     gala:
       ansible_host: 192.168.1.138
       ansible_python_interpreter: /usr/bin/python3
@@ -15,18 +27,6 @@ all:
       ansible_host: 192.168.1.98
       ansible_python_interpreter: /usr/bin/python3
       healthchecks_io: https://hc-ping.com/c8bd3c9c-9d8b-445b-bdf0-75935b4e6db4
-    net1:
-      ansible_host: 192.168.1.10
-      ansible_python_interpreter: /usr/bin/python3
-      healthchecks_io: https://hc-ping.com/ae55147f-0aff-4b0e-b0f9-1f55c81c5a1a
-    net2:
-      ansible_host: 192.168.1.11
-      ansible_python_interpreter: /usr/bin/python3
-      healthchecks_io: https://hc-ping.com/b4576296-81ee-4cf5-a239-4286af184cf3
-    gateway:
-      ansible_host: 192.168.1.1
-      ansible_user: mamercad
-      ansible_python_interpreter: /usr/bin/python
     # clusterpi0:
     #   ansible_host: 192.168.1.62
     #   ansible_python_interpreter: /usr/bin/python3
