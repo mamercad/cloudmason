@@ -5,7 +5,7 @@
 - name: Create valheim group
   ansible.builtin.group:
     state: present
-    name: "{{ user }}"
+    name: "{{ group }}"
   become: true
 
 - name: Create valheim user
