@@ -4,7 +4,7 @@
     name: zabbix_api
   become: true
 
-- name: create a new zabbix user.
+- name: Create mark admin
   community.zabbix.zabbix_user:
     server_url: "{{ server_url }}"
     login_user: "{{ login_user }}"
@@ -17,7 +17,7 @@
     passwd: "{{ mark_password }}"
     lang: en_US
     theme: dark-theme
-    autologin: no
+    autologin: false
     autologout: '0'
     refresh: '30'
     rows_per_page: '200'
@@ -27,13 +27,13 @@
         sendto: mamercad@gmail.com
         period: 1-7,00:00-24:00
         severity:
-          not_classified: no
-          information: yes
-          warning: yes
-          average: yes
-          high: yes
-          disaster: yes
-        active: no
+          not_classified: false
+          information: true
+          warning: true
+          average: true
+          high: true
+          disaster: true
+        active: true
     type: Zabbix super admin
     role_name: Super admin role
     state: present
@@ -57,6 +57,33 @@
         snmp_community: public
         ports: "161"
         key: SNMPv2-MIB::sysName.0
+
+- name: Deploy discovery action
+  community.zabbix.zabbix_action:
+    server_url: "{{ server_url }}"
+    login_user: "{{ login_user }}"
+    login_password: "{{ login_password }}"
+    name: Discovered device
+    event_source: discovery
+    state: present
+    status: enabled
+    esc_period: 0s
+    conditions:
+      - type: discovery_status
+        operator: "="
+        value: up
+      - type: discovered_service_type
+        operator: "="
+        value: ICMP ping
+      - type: uptime_or_downtime_duration
+        operator: ">="
+        value: 3600
+    operations:
+      - type: add_host
+      - type: enable_host
+      - type: link_to_template
+        templates:
+          - ICMP Ping
 
 - name: Deploy agent auto-registration action
   community.zabbix.zabbix_action:
