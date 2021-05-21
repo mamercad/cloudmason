@@ -16,6 +16,7 @@
       - Zabbix administrators
     passwd: "{{ mark_password }}"
     lang: en_US
+    timezone: America/Detroit
     theme: dark-theme
     autologin: false
     autologout: '0'
