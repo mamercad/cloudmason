@@ -164,7 +164,7 @@
 98:
   type: PTR
   value: lenovo.cloudmason.org.
-99:
+133:
   type: PTR
   value: ringbridge.cloudmason.org.
 100:
@@ -236,9 +236,6 @@
 131:
   type: PTR
   value: smartplug5.cloudmason.org.
-133:
-  type: PTR
-  value: markapplewatch.cloudmason.org.
 134:
   type: PTR
   value: printer.cloudmason.org.
