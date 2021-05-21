@@ -96,6 +96,9 @@ all:
       hosts:
         net1:
         net2:
+    gameserver:
+      hosts:
+        thinkpad:
     # clusterpi:
     #   hosts:
     #     clusterpi0:
