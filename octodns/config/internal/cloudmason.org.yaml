@@ -143,9 +143,6 @@ node5:
 smartplug6:
   type: A
   value: 192.168.1.52
-db1:
-  type: A
-  value: 192.168.1.53
 buddyrokutv:
   type: A
   value: 192.168.1.55
@@ -205,6 +202,9 @@ judeypc:
   value: 192.168.1.77
 alexa1:
   type: A
+  value: 192.168.1.44
+alexa3:
+  type: A
   value: 192.168.1.80
 clusterpi1:
   type: A
@@ -214,7 +214,7 @@ nintendoswitch:
   value: 192.168.1.84
 alexa2:
   type: A
-  value: 192.168.1.85
+  value: 192.168.1.53
 streamlabs:
   type: A
   value: 192.168.1.86

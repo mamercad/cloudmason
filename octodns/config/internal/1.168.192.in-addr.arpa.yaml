@@ -56,15 +56,12 @@
 50:
   type: PTR
   value: buddyxboxone.cloudmason.org.
-51:
-  type: PTR
-  value: node5.cloudmason.org.
 52:
   type: PTR
   value: smartplug6.cloudmason.org.
 53:
   type: PTR
-  value: db1.cloudmason.org.
+  value: alexa2.cloudmason.org.
 55:
   type: PTR
   value: buddyrokutv.cloudmason.org.
@@ -110,16 +107,13 @@
 105:
   type: PTR
   value: honeycrisp.cloudmason.org.
-94:
-  type: PTR
-  value: judeair.cloudmason.org.
 76:
   type: PTR
   value: nest.cloudmason.org.
 77:
   type: PTR
   value: judeypc.cloudmason.org.
-80:
+44:
   type: PTR
   value: alexa1.cloudmason.org.
 81:
@@ -128,9 +122,9 @@
 84:
   type: PTR
   value: nintendoswitch.cloudmason.org.
-85:
+80:
   type: PTR
-  value: alexa2.cloudmason.org.
+  value: alexa3.cloudmason.org.
 86:
   type: PTR
   value: streamlabs.cloudmason.org.
