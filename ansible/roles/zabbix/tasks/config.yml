@@ -50,7 +50,7 @@
       - type: ICMP
       - type: Zabbix
         key: "system.hostname"
-        ports: 10050
+        ports: "10050"
         uniq: true
         host_source: "discovery"
       - type: SNMPv2
