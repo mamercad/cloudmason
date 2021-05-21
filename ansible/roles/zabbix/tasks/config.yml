@@ -399,3 +399,25 @@
     event_menu: true
     event_menu_name: "Open in Slack: '{EVENT.TAGS.__channel_name}'"
     event_menu_url: '{EVENT.TAGS.__message_link}'
+
+- name: Deploy trigger action
+  community.zabbix.zabbix_action:
+    server_url: "{{ server_url }}"
+    login_user: "{{ login_user }}"
+    login_password: "{{ login_password }}"
+    name: "Send alerts to Mark"
+    event_source: trigger
+    state: present
+    status: enabled
+    esc_period: 60
+    conditions:
+      - type: trigger_severity
+        operator: ">="
+        value: Average
+    operations:
+      - type: send_message
+        # subject: "Something bad is happening"
+        # message: "Come on, guys do something"
+        media_type: Slack
+        send_to_users:
+          - mark
