@@ -106,7 +106,7 @@ net4:
   value: 192.168.1.13
 ringdoorbell:
   type: A
-  value: 192.168.1.16
+  value: 192.168.1.46
 openhab:
   type: A
   value: 192.168.1.20
@@ -175,7 +175,7 @@ clusterpi5:
   value: 192.168.1.68
 roomba:
   type: A
-  value: 192.168.1.69
+  value: 192.168.1.47
 switch3:
   type: A
   value: 192.168.1.70
@@ -187,13 +187,13 @@ juderokutv:
   value: 192.168.1.72
 honeycrisp:
   type: A
-  value: 192.168.1.73
+  value: 192.168.1.105
 switch4:
   type: A
   value: 192.168.1.137
 judeair:
   type: A
-  value: 192.168.1.75
+  value: 192.168.1.94
 nest:
   type: A
   value: 192.168.1.76
@@ -254,7 +254,7 @@ plugoutside2:
 ringbridge:
   type: A
   value: 192.168.1.99
-maryipad1:
+maryrog:
   type: A
   value: 192.168.1.100
 buddyxboxx:
@@ -312,9 +312,9 @@ traefik1:
   value: 192.168.1.122
 alexashow1:
   type: A
-smartthings:
+smarthub:
   type: A
-  value: 192.168.1.112
+  value: 192.168.1.41
 livingroomlamp:
   type: A
   value: 192.168.1.115
@@ -371,7 +371,7 @@ markapplewatch:
 printer:
   type: A
   value: 192.168.1.134
-rog:
+markrog:
   type: A
   value: 192.168.1.136
 db3:
@@ -400,7 +400,7 @@ maryipad2:
   value: 192.168.1.146
 fuji:
   type: A
-  value: 192.168.1.148
+  value: 192.168.1.51
 biaslighting:
   type: A
   value: 192.168.1.149
