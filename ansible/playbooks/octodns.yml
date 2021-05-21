@@ -20,7 +20,7 @@
         version: main
         dest: /home/awx/src/github.com/mamercad/cloudmason
         key_file: /home/awx/.ssh/id_rsa
-        accept_hostkey: yes
+        accept_hostkey: true
 
     - name: Do the mo templates (for external)
       shell: |
@@ -40,7 +40,7 @@
       environment:
         CLOUDFLARE_API_KEY: "{{ lookup('env', 'CLOUDFLARE_API_KEY') }}"
       register: octodns_sync_external
-      changed_when: no # Don't care, we'll see the results below
+      changed_when: false  # Don't care, we'll see the results below
 
     - name: Run octodns-sync (internal)
       shell: |
@@ -50,7 +50,7 @@
       environment:
         POWERDNS_API_KEY: "{{ lookup('env', 'POWERDNS_API_KEY') }}"
       register: octodns_sync_internal
-      changed_when: no # Don't care, we'll see the results below
+      changed_when: false  # Don't care, we'll see the results below
 
     - name: Show octodns-sync (external)
       pause:
