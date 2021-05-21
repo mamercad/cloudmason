@@ -151,7 +151,7 @@ buddyrokutv:
   value: 192.168.1.55
 alexa5:
   type: A
-  value: 192.168.1.56
+  value: 192.168.1.57
 indiphone:
   type: A
   value: 192.168.1.58
@@ -293,7 +293,7 @@ familyroom:
 smartplug3:
   type: A
   value: 192.168.1.121
-traefik1:
+alexa4:
   type: A
   value: 192.168.1.122
 smarthub:

@@ -65,7 +65,7 @@
 55:
   type: PTR
   value: buddyrokutv.cloudmason.org.
-56:
+57:
   type: PTR
   value: alexa5.cloudmason.org.
 58:
@@ -211,7 +211,7 @@
   value: smartplug3.cloudmason.org.
 122:
   type: PTR
-  value: traefik1.cloudmason.org.
+  value: alexa4.cloudmason.org.
 124:
   type: PTR
   value: bedroom.cloudmason.org.
