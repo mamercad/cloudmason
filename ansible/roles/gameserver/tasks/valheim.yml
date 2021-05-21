@@ -1,0 +1,137 @@
+- name: Include valheim vars
+  ansible.builtin.include_vars:
+    file: valheim.yml
+
+- name: Create valheim group
+  ansible.builtin.group:
+    state: present
+    name: "{{ user }}"
+  become: true
+
+- name: Create valheim user
+  ansible.builtin.user:
+    state: present
+    name: "{{ user }}"
+    group: "{{ group }}"
+    home: "{{ home }}"
+    shell: /bin/bash
+  become: true
+
+- name: Deploy valheim systemd unit
+  ansible.builtin.copy:
+    dest: /etc/systemd/system/valheim.service
+    owner: root
+    group: root
+    mode: 0644
+    content: |
+      [Unit]
+      Description=Valheim
+      Wants=network.target
+      After=syslog.target network-online.target
+      [Service]
+      Type=simple
+      User={{ user }}
+      WorkingDirectory={{ home }}
+      ExecStart={{ home }}/start_valheim.sh
+      [Install]
+      WantedBy=multi-user.target
+  become: true
+
+- name: Deploy valheim-restart systemd unit
+  ansible.builtin.copy:
+    dest: /etc/systemd/system/valheim-restart.service
+    owner: root
+    group: root
+    mode: 0644
+    content: |
+      [Unit]
+      Description=Restart Valheim
+      Wants=valheim.target
+      [Service]
+      Type=oneshot
+      ExecStart=/usr/bin/systemctl try-restart valheim.service
+      [Install]
+      WantedBy=multi-user.target
+  become: true
+
+- name: Deploy valheim-restart systemd timer
+  ansible.builtin.copy:
+    dest: /etc/systemd/system/valheim-restart.timer
+    owner: root
+    group: root
+    mode: 0644
+    content: |
+      [Unit]
+      Description=Restart Valheim
+      [Timer]
+      OnCalendar=weekly
+      Persistent=true
+      [Install]
+      WantedBy=timers.target
+  become: true
+
+- name: Deploy valheim start script
+  ansible.builtin.copy:
+    dest: "{{ home }}/start_valheim.sh"
+    owner: root
+    group: root
+    mode: 0755
+    content: |
+      #!/usr/bin/env bash
+      echo "Backing up Valheim"
+      tar czvf {{ home }}/valheim_server_Data_$(date +%s).tgz {{ home }}/valheim_server_Data
+      export templdpath=$LD_LIBRARY_PATH
+      export LD_LIBRARY_PATH=./linux64:$LD_LIBRARY_PATH
+      # export SteamAppId=892970
+      echo "Starting server PRESS CTRL-C to exit"
+      ./valheim_server.x86_64 -name "{{ gamename }}" -port "{{ port }}" -world "Dedicated" -password "{{ gamepass }}"
+      export LD_LIBRARY_PATH=$templdpath
+  become: true
+
+
+- name: Accept Steam license
+  ansible.builtin.debconf:
+    name: steamcmd
+    question: steamcmd/question
+    value: I AGREE
+    vtype: select
+  become: true
+
+- name: Install steamcmd
+  ansible.builtin.apt:
+    state: present
+    name: steamcmd
+  become: true
+
+- name: Install valheim
+  ansible.builtin.shell:
+    cmd: |
+      /usr/games/steamcmd +login anonymous +force_install_dir /home/valheim +app_update 896660 validate +exit
+  become: true
+  become_user: valheim
+
+- name: Reload systemd
+  ansible.builtin.systemd:
+    daemon_reload: true
+  become: true
+
+- name: Start and enable valheim.service
+  ansible.builtin.systemd:
+    name: valheim.service
+    state: started
+    enabled: true
+  become: true
+
+- name: Start and enable valheim-restart.service
+  ansible.builtin.systemd:
+    name: valheim-restart.service
+    state: started
+    enabled: true
+  become: true
+
+- name: Start and enable valheim-retart.timer
+  ansible.builtin.systemd:
+    name: valheim-restart.timer
+    state: started
+    enabled: true
+  become: true
