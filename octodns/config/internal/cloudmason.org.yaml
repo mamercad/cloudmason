@@ -397,7 +397,7 @@ node4:
   value: 192.168.1.145
 maryipad2:
   type: A
-  value: 192.168.1.146
+  value: 192.168.1.83
 fuji:
   type: A
   value: 192.168.1.51
