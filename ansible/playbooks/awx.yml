@@ -10,6 +10,9 @@
       include_role:
         name: awx
         tasks_from: config.yml
+  tags:
+    - awx
+    - config
 
 - name: AWX / metronome
   hosts: localhost
@@ -21,6 +24,9 @@
       include_role:
         name: awx
         tasks_from: metronome.yml
+  tags:
+    - awx
+    - metronome
 
 - name: AWX / user
   hosts: "{{ ansible_limit | default(omit) }}"
@@ -31,3 +37,6 @@
       include_role:
         name: awx
         tasks_from: user.yml
+  tags:
+    - awx
+    - user

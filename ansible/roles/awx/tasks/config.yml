@@ -381,6 +381,7 @@
     ask_credential_on_launch: true
     limit: localhost
     ask_limit_on_launch: false
+    job_tags: metronome
   tags:
     - awx
 
