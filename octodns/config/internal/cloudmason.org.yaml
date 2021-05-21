@@ -66,6 +66,9 @@ radarr:
 thelounge:
   type: CNAME
   value: net.cloudmason.org.
+qnapweb:
+  type: CNAME
+  value: net.cloudmason.org.
 net:
   type: A
   values:

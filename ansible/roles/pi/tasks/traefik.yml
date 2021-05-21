@@ -172,6 +172,10 @@
             rule = "Host(`thelounge.cloudmason.org`)"
             service = "thelounge"
             [http.routers.thelounge.tls]
+          [http.routers.qnapweb]
+            rule = "Host(`qnapweb.cloudmason.org`)"
+            service = "qnapweb"
+            [http.routers.qnapweb.tls]
 
         [http.middlewares]
           [http.middlewares.admin-user.basicAuth]
@@ -222,6 +226,9 @@
           [http.services.thelounge.loadBalancer]
             [[http.services.thelounge.loadBalancer.servers]]
               url = "http://lenovo.cloudmason.org:9000/"
+          [http.services.qnapweb.loadBalancer]
+            [[http.services.qnapweb.loadBalancer.servers]]
+              url = "http://qnap.cloudmason.org:10000/"
 
       [tls.options]
         [tls.options.default]
