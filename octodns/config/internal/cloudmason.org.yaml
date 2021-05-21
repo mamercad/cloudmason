@@ -107,6 +107,9 @@ net4:
 ringdoorbell:
   type: A
   value: 192.168.1.46
+smartplug1:
+  type: A
+  value: 192.168.1.49
 openhab:
   type: A
   value: 192.168.1.20
@@ -119,7 +122,7 @@ cloudkeyfallback:
 coffeepot:
   type: A
   value: 192.168.1.31
-rokubedroom:
+smartplug2:
   type: A
   value: 192.168.1.132
 ringbasestation:
@@ -137,7 +140,7 @@ buddyxboxone:
 node5:
   type: A
   value: 192.168.1.51
-basementlamp1:
+smartplug6:
   type: A
   value: 192.168.1.52
 db1:
@@ -152,7 +155,7 @@ alexa5:
 indiphone:
   type: A
   value: 192.168.1.58
-dehumidifier:
+smartplug4:
   type: A
   value: 192.168.1.60
 clusterpi0:
@@ -304,7 +307,7 @@ qnap2:
 familyroom:
   type: A
   value: 192.168.1.120
-garagedoor:
+smartplug3:
   type: A
   value: 192.168.1.121
 traefik1:
@@ -362,7 +365,7 @@ ambrosia:
 maryiphone:
   type: A
   value: 192.168.1.129
-node2:
+smartplug5:
   type: A
   value: 192.168.1.131
 markapplewatch:

@@ -40,7 +40,7 @@
   value: coffeepot.cloudmason.org.
 132:
   type: PTR
-  value: rokubedroom.cloudmason.org.
+  value: smartplug2.cloudmason.org.
 33:
   type: PTR
   value: ringbasestation.cloudmason.org.
@@ -50,9 +50,9 @@
 41:
   type: PTR
   value: smarthub.cloudmason.org.
-47:
+49:
   type: PTR
-  value: markxboxone.cloudmason.org.
+  value: smartplug1.cloudmason.org.
 50:
   type: PTR
   value: buddyxboxone.cloudmason.org.
@@ -61,7 +61,7 @@
   value: node5.cloudmason.org.
 52:
   type: PTR
-  value: basementlamp1.cloudmason.org.
+  value: smartplug6.cloudmason.org.
 53:
   type: PTR
   value: db1.cloudmason.org.
@@ -76,7 +76,7 @@
   value: indyiphone.cloudmason.org.
 60:
   type: PTR
-  value: dehumidifier.cloudmason.org.
+  value: smartplug4.cloudmason.org.
 62:
   type: PTR
   value: clusterpi0.cloudmason.org.
@@ -220,7 +220,7 @@
   value: familyroom.cloudmason.org.
 121:
   type: PTR
-  value: garagedoor.cloudmason.org.
+  value: smartplug3.cloudmason.org.
 122:
   type: PTR
   value: traefik1.cloudmason.org.
@@ -241,7 +241,7 @@
   value: maryiphone.cloudmason.org.
 131:
   type: PTR
-  value: node2.cloudmason.org.
+  value: smartplug5.cloudmason.org.
 133:
   type: PTR
   value: markapplewatch.cloudmason.org.
