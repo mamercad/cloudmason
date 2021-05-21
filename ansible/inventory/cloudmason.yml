@@ -670,6 +670,9 @@ all:
         34626564613638336465373563643536646563613566306337353463666138643630626362353735
         343536353463343431363534356639373665
   children:
+    powerdns_servers:
+      hosts:
+        thinkpad:
     zabbix_servers:
       hosts:
         thinkpad:
