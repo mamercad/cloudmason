@@ -1,5 +1,9 @@
 ---
 
+- name: Include AWX user
+  include_tasks:
+    file: awx_user.yml
+
 - name: Include Healthchecks.io
   include_tasks:
     file: healthchecks_io.yml
