@@ -394,6 +394,9 @@
     limit: localhost
     ask_limit_on_launch: false
     job_tags: metronome
+    notification_templates_started: ['Cloudmason Slack (awx)']
+    notification_templates_success: ['Cloudmason Slack (awx)']
+    notification_templates_error: ['Cloudmason Slack (awx)']
   tags:
     - awx
 
