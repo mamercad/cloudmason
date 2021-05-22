@@ -534,11 +534,19 @@
 
 - name: Import Zabbix templates from JSON
   community.zabbix.zabbix_template:
+    state: present
     server_url: "{{ server_url }}"
     login_user: "{{ login_user }}"
     login_password: "{{ login_password }}"
+    template_json: "{{ lookup('ansible.builtin.template', 'templates/zabbix/ICMP_ping.json.j2') }}"
+
+- name: Import Zabbix templates from JSON
+  community.zabbix.zabbix_template:
     state: present
-    template_json: "{{ lookup('ansible.builtin.template', 'templates/zabbix/ICMP_ping.xml.j2') }}"
+    server_url: "{{ server_url }}"
+    login_user: "{{ login_user }}"
+    login_password: "{{ login_password }}"
+    template_json: "{{ lookup('ansible.builtin.template', 'templates/zabbix/DNS_service.json.j2') }}"
 
 - name: Deploy trigger action
   community.zabbix.zabbix_action:
