@@ -314,6 +314,9 @@ ringdoorbell:
 rog-wifi:
   type: A
   value: 192.168.1.102
+rokubedroom:
+  type: A
+  value: 192.168.1.123
 rokufamilyroom:
   type: A
   value: 192.168.1.135

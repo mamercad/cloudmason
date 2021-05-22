@@ -71,6 +71,9 @@
 '122':
   type: PTR
   value: alexa4.cloudmason.org.
+'123':
+  type: PTR
+  value: rokubedroom.cloudmason.org.
 '124':
   type: PTR
   value: bedroom.cloudmason.org.
