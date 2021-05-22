@@ -63,6 +63,8 @@ unifi_devices:
     ip: 192.168.1.124
   - dns: familyroom.cloudmason.org
     ip: 192.168.1.120
+  - dns: diningroom.cloudmason.org
+    ip: 192.168.1.87
 
 printers:
   - dns: printer.cloudmason.org
