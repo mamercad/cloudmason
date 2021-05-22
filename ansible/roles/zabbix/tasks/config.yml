@@ -71,6 +71,59 @@
     event_menu: true
     event_menu_name: "Open in Slack: '{EVENT.TAGS.__channel_name}'"
     event_menu_url: '{EVENT.TAGS.__message_link}'
+    message_templates:
+      - subject: 'Problem: {EVENT.NAME}'
+        body: |
+          Problem started at {EVENT.TIME} on {EVENT.DATE}
+          Problem name: {EVENT.NAME}
+          Host: {HOST.NAME}
+          Severity: {EVENT.SEVERITY}
+          Operational data: {EVENT.OPDATA}
+          Original problem ID: {EVENT.ID}
+          {TRIGGER.URL}
+        eventsource: triggers
+        recovery: operations
+      - subject: 'Resolved in {EVENT.DURATION}: {EVENT.NAME}'
+        body: |
+          Problem has been resolved at {EVENT.RECOVERY.TIME} on {EVENT.RECOVERY.DATE}
+          Problem name: {EVENT.NAME}
+          Problem duration: {EVENT.DURATION}
+          Host: {HOST.NAME}
+          Severity: {EVENT.SEVERITY}
+          Original problem ID: {EVENT.ID}
+          {TRIGGER.URL}
+        eventsource: triggers
+        recovery: recovery_operations
+      - subject: 'Updated problem in {EVENT.AGE}: {EVENT.NAME}'
+        body: |
+          {USER.FULLNAME} {EVENT.UPDATE.ACTION} problem at {EVENT.UPDATE.DATE} {EVENT.UPDATE.TIME}.
+          {EVENT.UPDATE.MESSAGE}
+
+          Current problem status is {EVENT.STATUS}, age is {EVENT.AGE}, acknowledged: {EVENT.ACK.STATUS}.
+        eventsource: triggers
+        recovery: update_operations
+      - subject: 'Discovery: {DISCOVERY.DEVICE.STATUS} {DISCOVERY.DEVICE.IPADDRESS}'
+        body: |
+          Discovery rule: {DISCOVERY.RULE.NAME}
+
+          Device IP: {DISCOVERY.DEVICE.IPADDRESS}
+          Device DNS: {DISCOVERY.DEVICE.DNS}
+          Device status: {DISCOVERY.DEVICE.STATUS}
+          Device uptime: {DISCOVERY.DEVICE.UPTIME}
+
+          Device service name: {DISCOVERY.SERVICE.NAME}
+          Device service port: {DISCOVERY.SERVICE.PORT}
+          Device service status: {DISCOVERY.SERVICE.STATUS}
+          Device service uptime: {DISCOVERY.SERVICE.UPTIME}
+        eventsource: discovery
+        recovery: operations
+      - subject: 'Autoregistration: {HOST.HOST}'
+        body: |
+          Host name: {HOST.HOST}
+          Host IP: {HOST.IP}
+          Agent port: {HOST.PORT}
+        eventsource: autoregistration
+        recovery: operations
 
 - name: Create an email mediatype with message templates
   community.zabbix.zabbix_mediatype:
@@ -160,7 +213,7 @@
     dchecks:
       - type: ICMP
       - type: Zabbix
-        key: "system.hostname"
+        key: "agent.hostname"
         ports: "10050"
         uniq: true
         host_source: "discovery"
