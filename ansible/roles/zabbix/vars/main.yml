@@ -33,39 +33,39 @@ login_password: !vault |
 #   3064
 
 linux_servers:
-  - dns: thinkpad
+  - dns: thinkpad.cloudmason.org
     ip: 192.168.1.67
-  - dns: gala
+  - dns: gala.cloudmason.org
     ip: 192.168.1.138
-  - dns: lenovo
+  - dns: lenovo.cloudmason.org
     ip: 192.168.1.98
-  - dns: net1
+  - dns: net1.cloudmason.org
     ip: 192.168.1.10
-  - dns: net2
+  - dns: net2.cloudmason.org
     ip: 192.168.1.11
 
 unifi_devices:
-  - dns: gateway
+  - dns: gateway.cloudmason.org
     ip: 192.168.1.1
-  - dns: cloudkey
+  - dns: cloudkey.cloudmason.org
     ip: 192.168.1.3
-  - dns: switch1
+  - dns: switch1.cloudmason.org
     ip: 192.168.1.95
-  - dns: switch2
+  - dns: switch2.cloudmason.org
     ip: 192.168.1.40
-  - dns: switch3
+  - dns: switch3.cloudmason.org
     ip: 192.168.1.70
-  - dns: switch4
+  - dns: switch4.cloudmason.org
     ip: 192.168.1.137
-  - dns: basement
+  - dns: basement.cloudmason.org
     ip: 192.168.1.63
-  - dns: bedroom
+  - dns: bedroom.cloudmason.org
     ip: 192.168.1.124
-  - dns: familyroom
+  - dns: familyroom.cloudmason.org
     ip: 192.168.1.120
 
 printers:
-  - dns: printer
+  - dns: printer.cloudmason.org
     ip: 192.168.1.134
 
 ping_servers:
@@ -75,7 +75,7 @@ ping_servers:
     ip: 1.1.1.1
 
 nas_devices:
-  - dns: qnap
+  - dns: qnap.cloudmason.org
     ip: 192.168.1.118
 
 slack_bot_token: !vault |
