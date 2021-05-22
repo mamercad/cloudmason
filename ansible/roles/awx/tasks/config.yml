@@ -563,6 +563,39 @@
   tags:
     - awx
 
+
+- name: Workflow Job Template
+  awx.awx.tower_workflow_job_template:
+    state: present
+    name: Cloudmason / Edge Workflow
+    description: Cloudmason / Edge Workflow
+    organization: Cloudmason
+    webhook_service: github
+  tags:
+    - awx
+
+- name: Workflow Job Template Node
+  awx.awx.tower_workflow_job_template_node:
+    state: present
+    identifier: octodns-workflow
+    workflow: Cloudmason / Edge Workflow
+    unified_job_template: Cloudmason / OctoDNS Workflow
+    organization: Cloudmason
+  tags:
+    - awx
+
+- name: Workflow Job Template Node
+  awx.awx.tower_workflow_job_template_node:
+    state: present
+    identifier: octodns-wan
+    workflow: Cloudmason / Edge Workflow
+    unified_job_template: Cloudmason / Pi (main)
+    organization: Cloudmason
+    success_nodes:
+      - octodns-workflow
+  tags:
+    - awx
+
 - name: Schedule
   awx.awx.tower_schedule:
     state: present
