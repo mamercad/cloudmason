@@ -4,6 +4,22 @@
     name: zabbix_api
   become: true
 
+- name: Import Zabbix templates from JSON
+  community.zabbix.zabbix_template:
+    state: present
+    server_url: "{{ server_url }}"
+    login_user: "{{ login_user }}"
+    login_password: "{{ login_password }}"
+    template_json: "{{ lookup('ansible.builtin.template', 'templates/zabbix/ICMP_ping.json.j2') }}"
+
+- name: Import Zabbix templates from JSON
+  community.zabbix.zabbix_template:
+    state: present
+    server_url: "{{ server_url }}"
+    login_user: "{{ login_user }}"
+    login_password: "{{ login_password }}"
+    template_json: "{{ lookup('ansible.builtin.template', 'templates/zabbix/DNS_service.json.j2') }}"
+
 - name: Add Slack media type
   community.zabbix.zabbix_mediatype:
     name: Cloudmason Slack
@@ -300,7 +316,7 @@
       - type: enable_host
       - type: link_to_template
         templates:
-          - ICMP Ping
+          - ICMP ping
 
 - name: Deploy agent auto-registration action
   community.zabbix.zabbix_action:
@@ -370,7 +386,7 @@
     host_groups:
       - Linux servers
     link_templates:
-      - ICMP Ping
+      - ICMP ping
       - Linux by Zabbix agent active
     status: enabled
     interfaces:
@@ -394,7 +410,7 @@
     host_groups:
       - NAS devices
     link_templates:
-      - ICMP Ping
+      - ICMP ping
       - Linux by Zabbix agent active
     status: enabled
     interfaces:
@@ -418,7 +434,7 @@
     host_groups:
       - SNMP servers
     link_templates:
-      - ICMP Ping
+      - ICMP ping
       - Generic SNMP
       - Interfaces SNMP
     status: enabled
@@ -448,7 +464,7 @@
     host_groups:
       - Printers
     link_templates:
-      # - ICMP Ping
+      # - ICMP ping
       - Generic SNMP
     status: enabled
     interfaces:
@@ -475,7 +491,7 @@
     host_groups:
       - Printers
     link_templates:
-      - ICMP Ping
+      - ICMP ping
     status: enabled
     interfaces:
       - type: agent
@@ -497,7 +513,7 @@
     host_groups:
       - UniFi devices
     link_templates:
-      - ICMP Ping
+      - ICMP ping
     status: enabled
     interfaces:
       - type: agent
@@ -532,22 +548,6 @@
 #         ip: "{{ item.ip }}"
 #         main: 1
 #   loop: "{{ unifi_devices }}"
-
-- name: Import Zabbix templates from JSON
-  community.zabbix.zabbix_template:
-    state: present
-    server_url: "{{ server_url }}"
-    login_user: "{{ login_user }}"
-    login_password: "{{ login_password }}"
-    template_json: "{{ lookup('ansible.builtin.template', 'templates/zabbix/ICMP_ping.json.j2') }}"
-
-- name: Import Zabbix templates from JSON
-  community.zabbix.zabbix_template:
-    state: present
-    server_url: "{{ server_url }}"
-    login_user: "{{ login_user }}"
-    login_password: "{{ login_password }}"
-    template_json: "{{ lookup('ansible.builtin.template', 'templates/zabbix/DNS_service.json.j2') }}"
 
 - name: Deploy trigger action
   community.zabbix.zabbix_action:

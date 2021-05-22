@@ -9,9 +9,9 @@
         ],
         "templates": [
             {
-                "template": "ICMP Ping",
-                "name": "ICMP Ping",
-                "description": "Template Module ICMP Ping\n\nTemplate tooling version used: 0.38\n\nImported on: {{ ansible_date_time.iso8601 }}",
+                "template": "ICMP ping",
+                "name": "ICMP ping",
+                "description": "Template Module ICMP ping\n\nTemplate tooling version used: 0.38\n\nImported on: {{ ansible_date_time.iso8601 }}",
                 "groups": [
                     {
                         "name": "Templates/Modules"
@@ -66,7 +66,7 @@
                                 "dependencies": [
                                     {
                                         "name": "Unavailable by ICMP ping",
-                                        "expression": "{ICMP Ping:icmpping.max(#3)}=0"
+                                        "expression": "{ICMP ping:icmpping.max(#3)}=0"
                                     }
                                 ]
                             }
@@ -93,11 +93,11 @@
                                 "dependencies": [
                                     {
                                         "name": "High ICMP ping loss",
-                                        "expression": "{ICMP Ping:icmppingloss.min(5m)}>{$ICMP_LOSS_WARN} and {ICMP Ping:icmppingloss.min(5m)}<100"
+                                        "expression": "{ICMP ping:icmppingloss.min(5m)}>{$ICMP_LOSS_WARN} and {ICMP ping:icmppingloss.min(5m)}<100"
                                     },
                                     {
                                         "name": "Unavailable by ICMP ping",
-                                        "expression": "{ICMP Ping:icmpping.max(#3)}=0"
+                                        "expression": "{ICMP ping:icmpping.max(#3)}=0"
                                     }
                                 ]
                             }
