@@ -141,6 +141,9 @@
       - Cloudmason Machine
     ask_credential_on_launch: true
     ask_limit_on_launch: true
+    notification_templates_started: ['Cloudmason Slack (awx)']
+    notification_templates_success: ['Cloudmason Slack (awx)']
+    notification_templates_error: ['Cloudmason Slack (awx)']
   tags:
     - awx
 
@@ -190,6 +193,9 @@
     ask_credential_on_launch: false
     limit: gateway
     ask_limit_on_launch: false
+    notification_templates_started: ['Cloudmason Slack (awx)']
+    notification_templates_success: ['Cloudmason Slack (awx)']
+    notification_templates_error: ['Cloudmason Slack (awx)']
   tags:
     - awx
 
@@ -327,6 +333,9 @@
     ask_credential_on_launch: false
     limit: lenovo
     ask_limit_on_launch: false
+    notification_templates_started: ['Cloudmason Slack (awx)']
+    notification_templates_success: ['Cloudmason Slack (awx)']
+    notification_templates_error: ['Cloudmason Slack (awx)']
   tags:
     - awx
 
@@ -365,6 +374,9 @@
     ask_credential_on_launch: true
     limit: lenovo
     ask_limit_on_launch: true
+    notification_templates_started: ['Cloudmason Slack (awx)']
+    notification_templates_success: ['Cloudmason Slack (awx)']
+    notification_templates_error: ['Cloudmason Slack (awx)']
   tags:
     - awx
 
@@ -403,6 +415,9 @@
     description: Cloudmason / OctoDNS Workflow
     organization: Cloudmason
     webhook_service: github
+    notification_templates_started: ['Cloudmason Slack (awx)']
+    notification_templates_success: ['Cloudmason Slack (awx)']
+    notification_templates_error: ['Cloudmason Slack (awx)']
   tags:
     - awx
 
@@ -464,6 +479,9 @@
     ask_credential_on_launch: true
     limit: ubuntu
     ask_limit_on_launch: true
+    notification_templates_started: ['Cloudmason Slack (awx)']
+    notification_templates_success: ['Cloudmason Slack (awx)']
+    notification_templates_error: ['Cloudmason Slack (awx)']
   tags:
     - awx
 
@@ -483,6 +501,9 @@
     ask_credential_on_launch: true
     limit: ubuntu
     ask_limit_on_launch: true
+    notification_templates_started: ['Cloudmason Slack (awx)']
+    notification_templates_success: ['Cloudmason Slack (awx)']
+    notification_templates_error: ['Cloudmason Slack (awx)']
   tags:
     - awx
 
@@ -504,6 +525,9 @@
     ask_limit_on_launch: false
     ask_tags_on_launch: false
     webhook_service: github
+    notification_templates_started: ['Cloudmason Slack (awx)']
+    notification_templates_success: ['Cloudmason Slack (awx)']
+    notification_templates_error: ['Cloudmason Slack (awx)']
   tags:
     - awx
 
@@ -539,6 +563,9 @@
     ask_limit_on_launch: false
     verbosity: 1
     webhook_service: github
+    notification_templates_started: ['Cloudmason Slack (awx)']
+    notification_templates_success: ['Cloudmason Slack (awx)']
+    notification_templates_error: ['Cloudmason Slack (awx)']
   tags:
     - awx
 
@@ -560,6 +587,9 @@
     ask_limit_on_launch: false
     ask_tags_on_launch: false
     webhook_service: github
+    notification_templates_started: ['Cloudmason Slack (awx)']
+    notification_templates_success: ['Cloudmason Slack (awx)']
+    notification_templates_error: ['Cloudmason Slack (awx)']
   tags:
     - awx
 
@@ -571,6 +601,9 @@
     description: Cloudmason / Edge Workflow
     organization: Cloudmason
     webhook_service: github
+    notification_templates_started: ['Cloudmason Slack (awx)']
+    notification_templates_success: ['Cloudmason Slack (awx)']
+    notification_templates_error: ['Cloudmason Slack (awx)']
   tags:
     - awx
 
