@@ -4,6 +4,105 @@
     name: zabbix_api
   become: true
 
+- name: Add Slack media type
+  community.zabbix.zabbix_mediatype:
+    name: Cloudmason Slack
+    server_url: "{{ server_url }}"
+    login_user: "{{ login_user }}"
+    login_password: "{{ login_password }}"
+    type: webhook
+    webhook_script: "{{ lookup('ansible.builtin.file', 'files/slack.js') }}"
+    webhook_params:
+      - name: alert_message
+        value: "{ALERT.MESSAGE}"
+      - name: alert_subject
+        value: "{ALERT.SUBJECT}"
+      - name: bot_token
+        value: "{{ slack_bot_token }}"
+      - name: channel
+        value: "{ALERT.SENDTO}"
+      - name: discovery_host_dns
+        value: "{DISCOVERY.DEVICE.DNS}"
+      - name: discovery_host_ip
+        value: "{DISCOVERY.DEVICE.IPADDRESS}"
+      - name: event_date
+        value: "{EVENT.DATE}"
+      - name: event_id
+        value: "{EVENT.ID}"
+      - name: event_nseverity
+        value: "{EVENT.NSEVERITY}"
+      - name: event_opdata
+        value: "{EVENT.OPDATA}"
+      - name: event_recovery_date
+        value: "{EVENT.RECOVERY.DATE}"
+      - name: event_recovery_time
+        value: "{EVENT.RECOVERY.TIME}"
+      - name: event_severity
+        value: "{EVENT.SEVERITY}"
+      - name: event_source
+        value: "{EVENT.SOURCE}"
+      - name: event_tags
+        value: "{EVENT.TAGS}"
+      - name: event_time
+        value: "{EVENT.TIME}"
+      - name: event_update_date
+        value: "{EVENT.UPDATE.DATE}"
+      - name: event_update_status
+        value: "{EVENT.UPDATE.STATUS}"
+      - name: event_update_time
+        value: "{EVENT.UPDATE.TIME}"
+      - name: event_value
+        value: "{EVENT.VALUE}"
+      - name: host_conn
+        value: "{HOST.CONN}"
+      - name: host_name
+        value: "{HOST.HOST}"
+      - name: slack_as_user
+        value: true
+      - name: slack_mode
+        value: alarm
+      - name: trigger_description
+        value: "{TRIGGER.DESCRIPTION}"
+      - name: trigger_id
+        value: "{TRIGGER.ID}"
+      - name: zabbix_url
+        value: "{$ZABBIX_URL}"
+    process_tags: true
+    event_menu: true
+    event_menu_name: "Open in Slack: '{EVENT.TAGS.__channel_name}'"
+    event_menu_url: '{EVENT.TAGS.__message_link}'
+
+- name: Create an email mediatype with message templates
+  community.zabbix.zabbix_mediatype:
+    name: Cloudmason Email
+    server_url: "{{ server_url }}"
+    login_user: "{{ login_user }}"
+    login_password: "{{ login_password }}"
+    type: email
+    smtp_email: "{{ smtp_email }}"
+    smtp_server: "{{ smtp_server }}"
+    message_templates:
+      - eventsource: triggers
+        recovery: operations
+        subject: "Problem: {EVENT.NAME}"
+        body: "Problem started at {EVENT.TIME} on {EVENT.DATE}\r\nProblem name: {EVENT.NAME}\r\n"
+      - eventsource: triggers
+        recovery: recovery_operations
+        subject: "Resolved: {EVENT.NAME}"
+        body: "Problem resolved at {EVENT.TIME} on {EVENT.DATE}\r\nProblem name: {EVENT.NAME}\r\n"
+      - eventsource: triggers
+        recovery: update_operations
+        subject: "Updated problem: {EVENT.NAME}"
+        body: "{USER.FULLNAME} {EVENT.UPDATE.ACTION} problem at {EVENT.UPDATE.DATE} {EVENT.UPDATE.TIME}.\r\n"
+      - eventsource: discovery
+        recovery: operations
+        subject: "Discovery: {DISCOVERY.DEVICE.STATUS} {DISCOVERY.DEVICE.IPADDRESS}"
+        body: "Discovery rule: {DISCOVERY.RULE.NAME}\r\n\r\nDevice IP: {DISCOVERY.DEVICE.IPADDRESS}"
+      - eventsource: autoregistration
+        recovery: operations
+        subject: "Autoregistration: {HOST.HOST}"
+        body: "Host name: {HOST.HOST}\r\nHost IP: {HOST.IP}\r\nAgent port: {HOST.PORT}"
+
 - name: Create mark admin
   community.zabbix.zabbix_user:
     server_url: "{{ server_url }}"
@@ -330,105 +429,6 @@
     login_password: "{{ login_password }}"
     state: present
     template_json: "{{ lookup('ansible.builtin.template', 'templates/zabbix/ICMP_ping.xml.j2') }}"
-
-- name: Add Slack media type
-  community.zabbix.zabbix_mediatype:
-    name: Cloudmason Slack
-    server_url: "{{ server_url }}"
-    login_user: "{{ login_user }}"
-    login_password: "{{ login_password }}"
-    type: webhook
-    webhook_script: "{{ lookup('ansible.builtin.file', 'files/slack.js') }}"
-    webhook_params:
-      - name: alert_message
-        value: "{ALERT.MESSAGE}"
-      - name: alert_subject
-        value: "{ALERT.SUBJECT}"
-      - name: bot_token
-        value: "{{ slack_bot_token }}"
-      - name: channel
-        value: "{ALERT.SENDTO}"
-      - name: discovery_host_dns
-        value: "{DISCOVERY.DEVICE.DNS}"
-      - name: discovery_host_ip
-        value: "{DISCOVERY.DEVICE.IPADDRESS}"
-      - name: event_date
-        value: "{EVENT.DATE}"
-      - name: event_id
-        value: "{EVENT.ID}"
-      - name: event_nseverity
-        value: "{EVENT.NSEVERITY}"
-      - name: event_opdata
-        value: "{EVENT.OPDATA}"
-      - name: event_recovery_date
-        value: "{EVENT.RECOVERY.DATE}"
-      - name: event_recovery_time
-        value: "{EVENT.RECOVERY.TIME}"
-      - name: event_severity
-        value: "{EVENT.SEVERITY}"
-      - name: event_source
-        value: "{EVENT.SOURCE}"
-      - name: event_tags
-        value: "{EVENT.TAGS}"
-      - name: event_time
-        value: "{EVENT.TIME}"
-      - name: event_update_date
-        value: "{EVENT.UPDATE.DATE}"
-      - name: event_update_status
-        value: "{EVENT.UPDATE.STATUS}"
-      - name: event_update_time
-        value: "{EVENT.UPDATE.TIME}"
-      - name: event_value
-        value: "{EVENT.VALUE}"
-      - name: host_conn
-        value: "{HOST.CONN}"
-      - name: host_name
-        value: "{HOST.HOST}"
-      - name: slack_as_user
-        value: true
-      - name: slack_mode
-        value: alarm
-      - name: trigger_description
-        value: "{TRIGGER.DESCRIPTION}"
-      - name: trigger_id
-        value: "{TRIGGER.ID}"
-      - name: zabbix_url
-        value: "{$ZABBIX_URL}"
-    process_tags: true
-    event_menu: true
-    event_menu_name: "Open in Slack: '{EVENT.TAGS.__channel_name}'"
-    event_menu_url: '{EVENT.TAGS.__message_link}'
-
-- name: Create an email mediatype with message templates
-  community.zabbix.zabbix_mediatype:
-    name: Cloudmason Email
-    server_url: "{{ server_url }}"
-    login_user: "{{ login_user }}"
-    login_password: "{{ login_password }}"
-    type: email
-    smtp_email: "{{ smtp_email }}"
-    smtp_server: "{{ smtp_server }}"
-    message_templates:
-      - eventsource: triggers
-        recovery: operations
-        subject: "Problem: {EVENT.NAME}"
-        body: "Problem started at {EVENT.TIME} on {EVENT.DATE}\r\nProblem name: {EVENT.NAME}\r\n"
-      - eventsource: triggers
-        recovery: recovery_operations
-        subject: "Resolved: {EVENT.NAME}"
-        body: "Problem resolved at {EVENT.TIME} on {EVENT.DATE}\r\nProblem name: {EVENT.NAME}\r\n"
-      - eventsource: triggers
-        recovery: update_operations
-        subject: "Updated problem: {EVENT.NAME}"
-        body: "{USER.FULLNAME} {EVENT.UPDATE.ACTION} problem at {EVENT.UPDATE.DATE} {EVENT.UPDATE.TIME}.\r\n"
-      - eventsource: discovery
-        recovery: operations
-        subject: "Discovery: {DISCOVERY.DEVICE.STATUS} {DISCOVERY.DEVICE.IPADDRESS}"
-        body: "Discovery rule: {DISCOVERY.RULE.NAME}\r\n\r\nDevice IP: {DISCOVERY.DEVICE.IPADDRESS}"
-      - eventsource: autoregistration
-        recovery: operations
-        subject: "Autoregistration: {HOST.HOST}"
-        body: "Host name: {HOST.HOST}\r\nHost IP: {HOST.IP}\r\nAgent port: {HOST.PORT}"
 
 - name: Deploy trigger action
   community.zabbix.zabbix_action:
