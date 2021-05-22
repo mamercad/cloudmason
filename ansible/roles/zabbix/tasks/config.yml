@@ -36,7 +36,7 @@
       - name: bot_token
         value: "{{ slack_bot_token }}"
       - name: channel
-        value: "{ALERT.SENDTO}"
+        value: "#zabbix"
       - name: discovery_host_dns
         value: "{DISCOVERY.DEVICE.DNS}"
       - name: discovery_host_ip
