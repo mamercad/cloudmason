@@ -310,7 +310,7 @@
         value: ICMP ping
       - type: uptime_or_downtime_duration
         operator: ">="
-        value: 3600
+        value: "3600"
     operations:
       - type: add_host
       - type: enable_host
@@ -348,7 +348,7 @@
     operations:
       - type: link_to_template
         templates:
-          - Linux by Zabbix agent
+          - Linux by Zabbix agent active
       - type: enable_host
 
 - name: Create host groups
@@ -464,7 +464,7 @@
     host_groups:
       - Printers
     link_templates:
-      # - ICMP ping
+      - ICMP ping
       - Generic SNMP
     status: enabled
     interfaces:
@@ -473,6 +473,11 @@
           version: 2
         port: "161"
         type: snmp
+        dns: "{{ item.dns }}"
+        ip: "{{ item.ip }}"
+        main: 1
+        useip: 1
+      - type: agent
         dns: "{{ item.dns }}"
         ip: "{{ item.ip }}"
         main: 1
@@ -489,7 +494,7 @@
     visible_name: "{{ item.dns }}"
     description: "{{ item.dns }}"
     host_groups:
-      - Printers
+      - Ping servers
     link_templates:
       - ICMP ping
     status: enabled
@@ -562,7 +567,7 @@
     conditions:
       - type: trigger_severity
         operator: ">="
-        value: Average
+        value: not classified
     operations:
       - type: send_message
         media_type: Cloudmason Slack
