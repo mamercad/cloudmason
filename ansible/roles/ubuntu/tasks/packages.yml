@@ -38,6 +38,7 @@
       - pipenv
       - rbenv
       - silversearcher-ag
+      - traceroute
       - vim
       - zsh
   become: true
