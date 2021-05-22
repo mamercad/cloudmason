@@ -562,3 +562,14 @@
     webhook_service: github
   tags:
     - awx
+
+- name: Schedule
+  awx.awx.tower_schedule:
+    state: present
+    name: Cloudmason / Edge Workflow Schedule
+    description: Edge Workflow 6h Schedule
+    rrule: "DTSTART:20210323T000000Z RRULE:FREQ=HOURLY;INTERVAL=6"
+    unified_job_template: Cloudmason / Edge Workflow
+    enabled: true
+  tags:
+    - awx
