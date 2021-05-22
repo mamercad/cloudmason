@@ -135,26 +135,79 @@
     smtp_email: "{{ smtp_email }}"
     smtp_server: "{{ smtp_server }}"
     message_templates:
-      - eventsource: triggers
+      - subject: 'Problem: {EVENT.NAME}'
+        body: |
+          Problem started at {EVENT.TIME} on {EVENT.DATE}
+          Problem name: {EVENT.NAME}
+          Host: {HOST.NAME}
+          Severity: {EVENT.SEVERITY}
+          Operational data: {EVENT.OPDATA}
+          Original problem ID: {EVENT.ID}
+          {TRIGGER.URL}
+        eventsource: triggers
         recovery: operations
-        subject: "Problem: {EVENT.NAME}"
-        body: "Problem started at {EVENT.TIME} on {EVENT.DATE}\r\nProblem name: {EVENT.NAME}\r\n"
-      - eventsource: triggers
+      - subject: 'Resolved in {EVENT.DURATION}: {EVENT.NAME}'
+        body: |
+          Problem has been resolved at {EVENT.RECOVERY.TIME} on {EVENT.RECOVERY.DATE}
+          Problem name: {EVENT.NAME}
+          Problem duration: {EVENT.DURATION}
+          Host: {HOST.NAME}
+          Severity: {EVENT.SEVERITY}
+          Original problem ID: {EVENT.ID}
+          {TRIGGER.URL}
+        eventsource: triggers
         recovery: recovery_operations
-        subject: "Resolved: {EVENT.NAME}"
-        body: "Problem resolved at {EVENT.TIME} on {EVENT.DATE}\r\nProblem name: {EVENT.NAME}\r\n"
-      - eventsource: triggers
+      - subject: 'Updated problem in {EVENT.AGE}: {EVENT.NAME}'
+        body: |
+          {USER.FULLNAME} {EVENT.UPDATE.ACTION} problem at {EVENT.UPDATE.DATE} {EVENT.UPDATE.TIME}.
+          {EVENT.UPDATE.MESSAGE}
+
+          Current problem status is {EVENT.STATUS}, age is {EVENT.AGE}, acknowledged: {EVENT.ACK.STATUS}.
+        eventsource: triggers
         recovery: update_operations
-        subject: "Updated problem: {EVENT.NAME}"
-        body: "{USER.FULLNAME} {EVENT.UPDATE.ACTION} problem at {EVENT.UPDATE.DATE} {EVENT.UPDATE.TIME}.\r\n"
-      - eventsource: discovery
+      - subject: 'Discovery: {DISCOVERY.DEVICE.STATUS} {DISCOVERY.DEVICE.IPADDRESS}'
+        body: |
+          Discovery rule: {DISCOVERY.RULE.NAME}
+
+          Device IP: {DISCOVERY.DEVICE.IPADDRESS}
+          Device DNS: {DISCOVERY.DEVICE.DNS}
+          Device status: {DISCOVERY.DEVICE.STATUS}
+          Device uptime: {DISCOVERY.DEVICE.UPTIME}
+
+          Device service name: {DISCOVERY.SERVICE.NAME}
+          Device service port: {DISCOVERY.SERVICE.PORT}
+          Device service status: {DISCOVERY.SERVICE.STATUS}
+          Device service uptime: {DISCOVERY.SERVICE.UPTIME}
+        eventsource: discovery
         recovery: operations
-        subject: "Discovery: {DISCOVERY.DEVICE.STATUS} {DISCOVERY.DEVICE.IPADDRESS}"
-        body: "Discovery rule: {DISCOVERY.RULE.NAME}\r\n\r\nDevice IP: {DISCOVERY.DEVICE.IPADDRESS}"
-      - eventsource: autoregistration
+      - subject: 'Autoregistration: {HOST.HOST}'
+        body: |
+          Host name: {HOST.HOST}
+          Host IP: {HOST.IP}
+          Agent port: {HOST.PORT}
+        eventsource: autoregistration
         recovery: operations
-        subject: "Autoregistration: {HOST.HOST}"
-        body: "Host name: {HOST.HOST}\r\nHost IP: {HOST.IP}\r\nAgent port: {HOST.PORT}"
+    # message_templates:
+    #   - eventsource: triggers
+    #     recovery: operations
+    #     subject: "Problem: {EVENT.NAME}"
+    #     body: "Problem started at {EVENT.TIME} on {EVENT.DATE}\r\nProblem name: {EVENT.NAME}\r\n"
+    #   - eventsource: triggers
+    #     recovery: recovery_operations
+    #     subject: "Resolved: {EVENT.NAME}"
+    #     body: "Problem resolved at {EVENT.TIME} on {EVENT.DATE}\r\nProblem name: {EVENT.NAME}\r\n"
+    #   - eventsource: triggers
+    #     recovery: update_operations
+    #     subject: "Updated problem: {EVENT.NAME}"
+    #     body: "{USER.FULLNAME} {EVENT.UPDATE.ACTION} problem at {EVENT.UPDATE.DATE} {EVENT.UPDATE.TIME}.\r\n"
+    #   - eventsource: discovery
+    #     recovery: operations
+    #     subject: "Discovery: {DISCOVERY.DEVICE.STATUS} {DISCOVERY.DEVICE.IPADDRESS}"
+    #     body: "Discovery rule: {DISCOVERY.RULE.NAME}\r\n\r\nDevice IP: {DISCOVERY.DEVICE.IPADDRESS}"
+    #   - eventsource: autoregistration
+    #     recovery: operations
+    #     subject: "Autoregistration: {HOST.HOST}"
+    #     body: "Host name: {HOST.HOST}\r\nHost IP: {HOST.IP}\r\nAgent port: {HOST.PORT}"
 
 - name: Create mark admin
   community.zabbix.zabbix_user:
