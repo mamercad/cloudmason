@@ -119,6 +119,9 @@ dns:
   values:
     - 192.168.1.10
     - 192.168.1.11
+diningroom:
+  type: A
+  value: 192.168.1.87
 docker:
   type: CNAME
   value: net.cloudmason.org.
@@ -264,9 +267,6 @@ ooma:
 openhab:
   type: A
   value: 192.168.1.20
-plugoutside1:
-  type: A
-  value: 192.168.1.87
 plugoutside2:
   type: A
   value: 192.168.1.98
