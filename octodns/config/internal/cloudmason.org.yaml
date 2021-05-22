@@ -11,7 +11,7 @@
         preference: 10
 C02D6D7BMD6M:
   type: A
-  value: 192.168.1.116
+  value: 192.168.1.109
 alexa1:
   type: A
   value: 192.168.1.44
