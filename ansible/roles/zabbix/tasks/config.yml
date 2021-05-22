@@ -348,6 +348,7 @@
       - Ping servers
       - UniFi devices
       - NAS devices
+      - DNS servers
 
 - name: Delete host (Zabbix server)
   community.zabbix.zabbix_host:
@@ -505,6 +506,28 @@
         main: 1
         useip: 1
   loop: "{{ unifi_devices }}"
+
+- name: Create dns host
+  community.zabbix.zabbix_host:
+    server_url: "{{ server_url }}"
+    login_user: "{{ login_user }}"
+    login_password: "{{ login_password }}"
+    state: present
+    host_name: "{{ item.dns }}"
+    visible_name: "{{ item.dns }}"
+    description: "{{ item.dns }}"
+    host_groups:
+      - DNS servers
+    link_templates:
+      - DNS service
+    status: enabled
+    interfaces:
+      - type: agent
+        dns: "{{ item.dns }}"
+        ip: "{{ item.ip }}"
+        main: 1
+        useip: 1
+  loop: "{{ dns_servers }}"
 
 # - name: Create generic snmp host
 #   community.zabbix.zabbix_host:

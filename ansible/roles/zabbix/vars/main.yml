@@ -74,6 +74,12 @@ ping_servers:
   - dns: one.one.one.one
     ip: 1.1.1.1
 
+dns_servers:
+  - dns: net1.cloudmason.org
+    ip: 192.168.1.10
+  - dns: net2.cloudmason.org
+    ip: 192.168.1.11
+
 nas_devices:
   - dns: qnap.cloudmason.org
     ip: 192.168.1.118
