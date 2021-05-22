@@ -4,97 +4,224 @@
     values:
       - 192.168.1.10
       - 192.168.1.11
-  - type: MX
+  - ttl: 3600
+    type: MX
     values:
       - exchange: smtp.cloudmason.org.
         preference: 10
-    ttl: 3600
-gateway:
+C02D6D7BMD6M:
   type: A
-  value: 192.168.1.1
-cloudkey:
+  value: 192.168.1.116
+alexa1:
   type: A
-  value: 192.168.1.3
-unifi:
-  type: CNAME
-  value: cloudkey.cloudmason.org.
-net5:
+  value: 192.168.1.44
+alexa2:
   type: A
-  value: 192.168.1.8
-net6:
+  value: 192.168.1.53
+alexa3:
   type: A
-  value: 192.168.1.9
-thinkpad:
-  type: CNAME
-  value: thinkpad-wired.cloudmason.org.
-minecraft:
-  type: CNAME
-  value: lenovo.cloudmason.org.
+  value: 192.168.1.80
+alexa4:
+  type: A
+  value: 192.168.1.122
+alexa5:
+  type: A
+  value: 192.168.1.57
+alexashow1:
+  type: A
+  value: 192.168.1.124
 awx:
   type: CNAME
   value: net.cloudmason.org.
-zabbix:
-  type: CNAME
-  value: net.cloudmason.org.
-valheim:
-  type: CNAME
-  value: lenovo.cloudmason.org.
 awx-dev:
   type: CNAME
   value: net.cloudmason.org.
+awx-service.awx.thinkpad:
+  type: A
+  value: 192.168.1.200
+awx.lenovo:
+  type: A
+  value: 192.168.1.242
+awx.thinkpad:
+  type: A
+  value: 192.168.1.201
+basement:
+  type: A
+  value: 192.168.1.63
+basementlamp2:
+  type: A
+  value: 192.168.1.144
+bedroom:
+  type: A
+  value: 192.168.1.124
+biaslighting:
+  type: A
+  value: 192.168.1.149
+buddyipad:
+  type: A
+  value: 192.168.1.97
+buddyiphone:
+  type: A
+  value: 192.168.1.92
+buddyrokutv:
+  type: A
+  value: 192.168.1.55
+buddyxboxone:
+  type: A
+  value: 192.168.1.50
+buddyxboxx:
+  type: A
+  value: 192.168.1.101
+cloudkey:
+  type: A
+  value: 192.168.1.3
+cloudkeyfallback:
+  type: A
+  value: 192.168.1.30
+clusterpi0:
+  type: A
+  value: 192.168.1.62
+clusterpi1:
+  type: A
+  value: 192.168.1.81
+clusterpi2:
+  type: A
+  value: 192.168.1.64
+clusterpi3:
+  type: A
+  value: 192.168.1.116
+clusterpi4:
+  type: A
+  value: 192.168.1.66
+clusterpi5:
+  type: A
+  value: 192.168.1.68
+clusterpi6:
+  type: A
+  value: 192.168.1.111
+coffeepot:
+  type: A
+  value: 192.168.1.31
 concourse:
   type: CNAME
   value: net.cloudmason.org.
-docker:
-  type: CNAME
-  value: net.cloudmason.org.
-grafana:
-  type: CNAME
-  value: net.cloudmason.org.
-prometheus:
-  type: CNAME
-  value: net.cloudmason.org.
-nzbget:
-  type: CNAME
-  value: net.cloudmason.org.
-sonarr:
-  type: CNAME
-  value: net.cloudmason.org.
-radarr:
-  type: CNAME
-  value: net.cloudmason.org.
-thelounge:
-  type: CNAME
-  value: net.cloudmason.org.
-qnapweb:
-  type: CNAME
-  value: net.cloudmason.org.
-net:
+concourse.lenovo:
   type: A
-  values:
-    - 192.168.1.10
-    - 192.168.1.11
+  value: 192.168.1.240
+db2:
+  type: A
+  value: 192.168.1.107
+db3:
+  type: A
+  value: 192.168.1.137
 dns:
   type: A
   values:
     - 192.168.1.10
     - 192.168.1.11
+docker:
+  type: CNAME
+  value: net.cloudmason.org.
+docker.lenovo:
+  type: A
+  value: 192.168.1.241
+familyroom:
+  type: A
+  value: 192.168.1.120
+fuji:
+  type: A
+  value: 192.168.1.51
+gala:
+  type: A
+  value: 192.168.1.138
+garagedoor:
+  type: A
+  value: 192.168.1.121
+gateway:
+  type: A
+  value: 192.168.1.1
+grafana:
+  type: CNAME
+  value: net.cloudmason.org.
+honeycrisp:
+  type: A
+  value: 192.168.1.105
+indiphone:
+  type: A
+  value: 192.168.1.58
+jonagold:
+  type: A
+  value: 192.168.1.110
+judeair:
+  type: A
+  value: 192.168.1.94
+judeipad:
+  type: A
+  value: 192.168.1.180
+juderokutv:
+  type: A
+  value: 192.168.1.72
+judeswitch:
+  type: A
+  value: 192.168.1.94
+judexboxx:
+  type: A
+  value: 192.168.1.71
+judeypc:
+  type: A
+  value: 192.168.1.77
+kiali:
+  type: A
+  value: 192.168.1.224
+lenovo:
+  type: A
+  value: 192.168.1.98
+livingroomlamp:
+  type: A
+  value: 192.168.1.115
+livingroomtv:
+  type: A
+  value: 192.168.1.112
 mail:
   type: A
   values:
     - 192.168.1.10
     - 192.168.1.11
-smtp:
+markrog:
+  type: A
+  value: 192.168.1.136
+markxboxone:
+  type: A
+  value: 192.168.1.47
+maryipad2:
+  type: A
+  value: 192.168.1.83
+maryiphone:
+  type: A
+  value: 192.168.1.129
+marymacbook:
+  type: A
+  value: 192.168.1.162
+marypc:
+  type: A
+  value: 192.168.1.106
+marypcwifi:
+  type: A
+  value: 192.168.1.90
+maryrog:
+  type: A
+  value: 192.168.1.100
+minecraft:
+  type: CNAME
+  value: lenovo.cloudmason.org.
+nest:
+  type: A
+  value: 192.168.1.76
+net:
   type: A
   values:
     - 192.168.1.10
     - 192.168.1.11
-www:
-  type: CNAME
-  value: net.cloudmason.org.
-web:
-  type: CNAME
-  value: net.cloudmason.org.
 net1:
   type: A
   value: 192.168.1.10
@@ -107,201 +234,51 @@ net3:
 net4:
   type: A
   value: 192.168.1.13
-ringdoorbell:
+net5:
   type: A
-  value: 192.168.1.46
-smartplug1:
+  value: 192.168.1.8
+net6:
   type: A
-  value: 192.168.1.49
-openhab:
-  type: A
-  value: 192.168.1.20
-rokufamilyroom:
-  type: A
-  value: 192.168.1.135
-cloudkeyfallback:
-  type: A
-  value: 192.168.1.30
-coffeepot:
-  type: A
-  value: 192.168.1.31
-smartplug2:
-  type: A
-  value: 192.168.1.132
-ringbasestation:
-  type: A
-  value: 192.168.1.33
-jonagold:
-  type: A
-  value: 192.168.1.110
-markxboxone:
-  type: A
-  value: 192.168.1.47
-buddyxboxone:
-  type: A
-  value: 192.168.1.50
-node5:
-  type: A
-  value: 192.168.1.51
-smartplug6:
-  type: A
-  value: 192.168.1.52
-buddyrokutv:
-  type: A
-  value: 192.168.1.55
-alexa5:
-  type: A
-  value: 192.168.1.57
-indiphone:
-  type: A
-  value: 192.168.1.58
-smartplug4:
-  type: A
-  value: 192.168.1.60
-clusterpi0:
-  type: A
-  value: 192.168.1.62
-basement:
-  type: A
-  value: 192.168.1.63
-clusterpi2:
-  type: A
-  value: 192.168.1.64
-clusterpi4:
-  type: A
-  value: 192.168.1.66
-thinkpad-wired:
-  type: A
-  value: 192.168.1.67
-clusterpi5:
-  type: A
-  value: 192.168.1.68
-roomba:
-  type: A
-  value: 192.168.1.47
-switch3:
-  type: A
-  value: 192.168.1.70
-judexboxx:
-  type: A
-  value: 192.168.1.71
-juderokutv:
-  type: A
-  value: 192.168.1.72
-honeycrisp:
-  type: A
-  value: 192.168.1.105
-switch4:
-  type: A
-  value: 192.168.1.137
-judeair:
-  type: A
-  value: 192.168.1.94
-nest:
-  type: A
-  value: 192.168.1.76
-judeypc:
-  type: A
-  value: 192.168.1.77
-alexa1:
-  type: A
-  value: 192.168.1.44
-alexa3:
-  type: A
-  value: 192.168.1.80
-clusterpi1:
-  type: A
-  value: 192.168.1.81
+  value: 192.168.1.9
 nintendoswitch:
   type: A
   value: 192.168.1.84
-alexa2:
+node0:
   type: A
-  value: 192.168.1.53
-streamlabs:
+  value: 192.168.1.125
+node3:
   type: A
-  value: 192.168.1.86
-plugoutside1:
+  value: 192.168.1.150
+node4:
   type: A
-  value: 192.168.1.87
-wyzeback:
+  value: 192.168.1.145
+node5:
   type: A
-  value: 192.168.1.88
-lenovo:
-  type: A
-  value: 192.168.1.98
-marypcwifi:
-  type: A
-  value: 192.168.1.90
-buddyiphone:
-  type: A
-  value: 192.168.1.92
-rokulivingroom:
-  type: A
-  value: 192.168.1.93
-judeswitch:
-  type: A
-  value: 192.168.1.94
-switch1:
-  type: A
-  value: 192.168.1.95
-sense:
-  type: A
-  value: 192.168.1.96
-buddyipad:
-  type: A
-  value: 192.168.1.97
-plugoutside2:
-  type: A
-  value: 192.168.1.98
-maryrog:
-  type: A
-  value: 192.168.1.100
-buddyxboxx:
-  type: A
-  value: 192.168.1.101
-rog-wifi:
-  type: A
-  value: 192.168.1.102
-wyzefront:
-  type: A
-  value: 192.168.1.104
-retroarcade:
-  type: A
-  value: 192.168.1.103
-marypc:
-  type: A
-  value: 192.168.1.106
-db2:
-  type: A
-  value: 192.168.1.107
-clusterpi6:
-  type: A
-  value: 192.168.1.111
-livingroomlamp:
-  type: A
-  value: 192.168.1.115
-clusterpi3:
-  type: A
-  value: 192.168.1.116
+  value: 192.168.1.51
+nzbget:
+  type: CNAME
+  value: net.cloudmason.org.
 ooma:
   type: A
   value: 192.168.1.117
-familyroom:
+openhab:
   type: A
-  value: 192.168.1.120
-smartplug3:
+  value: 192.168.1.20
+plugoutside1:
   type: A
-  value: 192.168.1.121
-alexa4:
+  value: 192.168.1.87
+plugoutside2:
   type: A
-  value: 192.168.1.122
-smarthub:
+  value: 192.168.1.98
+printer:
   type: A
-  value: 192.168.1.41
-C02D6D7BMD6M:
+  value: 192.168.1.134
+prometheus:
+  type: CNAME
+  value: net.cloudmason.org.
+pws:
   type: A
-  value: 192.168.1.116
+  value: 192.168.1.127
 qnap:
   type: A
   values:
@@ -313,96 +290,119 @@ qnap1:
 qnap2:
   type: A
   value: 192.168.1.119
-garagedoor:
-  type: A
-  value: 192.168.1.121
-alexashow1:
-  type: A
-  value: 192.168.1.124
-node0:
-  type: A
-  value: 192.168.1.125
-switch2:
-  type: A
-  value: 192.168.1.40
-pws:
-  type: A
-  value: 192.168.1.127
-maryiphone:
-  type: A
-  value: 192.168.1.129
-smartplug5:
-  type: A
-  value: 192.168.1.131
-ringbridge:
-  type: A
-  value: 192.168.1.133
-printer:
-  type: A
-  value: 192.168.1.134
-markrog:
-  type: A
-  value: 192.168.1.136
-db3:
-  type: A
-  value: 192.168.1.137
-gala:
-  type: A
-  value: 192.168.1.138
-thinkpad-wireless:
-  type: A
-  value: 192.168.1.139
-livingroomtv:
-  type: A
-  value: 192.168.1.112
-bedroom:
-  type: A
-  value: 192.168.1.124
-basementlamp2:
-  type: A
-  value: 192.168.1.144
-node4:
-  type: A
-  value: 192.168.1.145
-maryipad2:
-  type: A
-  value: 192.168.1.83
-fuji:
-  type: A
-  value: 192.168.1.51
-biaslighting:
-  type: A
-  value: 192.168.1.149
-node3:
-  type: A
-  value: 192.168.1.150
-marymacbook:
-  type: A
-  value: 192.168.1.162
-judeipad:
-  type: A
-  value: 192.168.1.180
-awx-service.awx.thinkpad:
-  type: A
-  value: 192.168.1.200
-awx.thinkpad:
-  type: A
-  value: 192.168.1.201
+qnapweb:
+  type: CNAME
+  value: net.cloudmason.org.
+radarr:
+  type: CNAME
+  value: net.cloudmason.org.
 registry.thinkpad:
   type: A
   value: 192.168.1.202
-kiali:
+retroarcade:
   type: A
-  value: 192.168.1.224
-concourse.lenovo:
+  value: 192.168.1.103
+ringbasestation:
   type: A
-  value: 192.168.1.240
-docker.lenovo:
+  value: 192.168.1.33
+ringbridge:
   type: A
-  value: 192.168.1.241
-awx.lenovo:
+  value: 192.168.1.133
+ringdoorbell:
   type: A
-  value: 192.168.1.242
+  value: 192.168.1.46
+rog-wifi:
+  type: A
+  value: 192.168.1.102
+rokufamilyroom:
+  type: A
+  value: 192.168.1.135
+rokulivingroom:
+  type: A
+  value: 192.168.1.93
+roomba:
+  type: A
+  value: 192.168.1.47
+sense:
+  type: A
+  value: 192.168.1.96
+smarthub:
+  type: A
+  value: 192.168.1.41
+smartplug1:
+  type: A
+  value: 192.168.1.49
+smartplug2:
+  type: A
+  value: 192.168.1.132
+smartplug3:
+  type: A
+  value: 192.168.1.121
+smartplug4:
+  type: A
+  value: 192.168.1.60
+smartplug5:
+  type: A
+  value: 192.168.1.131
+smartplug6:
+  type: A
+  value: 192.168.1.52
+smtp:
+  type: A
+  values:
+    - 192.168.1.10
+    - 192.168.1.11
+sonarr:
+  type: CNAME
+  value: net.cloudmason.org.
+streamlabs:
+  type: A
+  value: 192.168.1.86
+switch1:
+  type: A
+  value: 192.168.1.95
+switch2:
+  type: A
+  value: 192.168.1.40
+switch3:
+  type: A
+  value: 192.168.1.70
+switch4:
+  type: A
+  value: 192.168.1.137
+thelounge:
+  type: CNAME
+  value: net.cloudmason.org.
+thinkpad:
+  type: CNAME
+  value: thinkpad-wired.cloudmason.org.
+thinkpad-wired:
+  type: A
+  value: 192.168.1.67
+thinkpad-wireless:
+  type: A
+  value: 192.168.1.139
+unifi:
+  type: CNAME
+  value: cloudkey.cloudmason.org.
+valheim:
+  type: CNAME
+  value: lenovo.cloudmason.org.
 vault.lenovo:
   type: A
   value: 192.168.1.243
+web:
+  type: CNAME
+  value: net.cloudmason.org.
+www:
+  type: CNAME
+  value: net.cloudmason.org.
+wyzeback:
+  type: A
+  value: 192.168.1.88
+wyzefront:
+  type: A
+  value: 192.168.1.104
+zabbix:
+  type: CNAME
+  value: net.cloudmason.org.
