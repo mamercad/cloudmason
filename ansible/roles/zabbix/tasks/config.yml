@@ -272,6 +272,7 @@
         dns: "{{ item.dns }}"
         ip: "{{ item.ip }}"
         main: 1
+        useip: 1
   loop: "{{ linux_servers }}"
 
 - name: Create nas host
@@ -295,6 +296,7 @@
         dns: "{{ item.dns }}"
         ip: "{{ item.ip }}"
         main: 1
+        useip: 1
   loop: "{{ nas_devices }}"
 
 - name: Create generic snmp host
@@ -322,6 +324,7 @@
         dns: "{{ item.dns }}"
         ip: "{{ item.ip }}"
         main: 1
+        useip: 1
   loop: "{{ snmp_servers }}"
   when:
     - snmp_servers is defined
@@ -350,6 +353,7 @@
         dns: "{{ item.dns }}"
         ip: "{{ item.ip }}"
         main: 1
+        useip: 1
   loop: "{{ printers }}"
 
 - name: Create ping host
@@ -371,7 +375,7 @@
         dns: "{{ item.dns }}"
         ip: "{{ item.ip }}"
         main: 1
-        useip: 0
+        useip: 1
   loop: "{{ ping_servers }}"
 
 - name: Create generic ping host
@@ -393,7 +397,7 @@
         dns: "{{ item.dns }}"
         ip: "{{ item.ip }}"
         main: 1
-        useip: 0
+        useip: 1
   loop: "{{ unifi_devices }}"
 
 # - name: Create generic snmp host
