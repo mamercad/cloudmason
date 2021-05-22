@@ -586,6 +586,7 @@
     host_groups:
       - DNS servers
     link_templates:
+      - ICMP ping
       - DNS service
     status: enabled
     interfaces:
