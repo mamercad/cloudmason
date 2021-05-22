@@ -24,7 +24,7 @@
     rows_per_page: '200'
     after_login_url: ''
     user_medias:
-      - mediatype: Email
+      - mediatype: Cloudmason Email
         sendto: mamercad@gmail.com
         period: 1-7,00:00-24:00
         severity:
@@ -35,7 +35,7 @@
           high: true
           disaster: true
         active: true
-      - mediatype: Slack
+      - mediatype: Cloudmason Slack
         sendto: "#zabbix"
         period: 1-7,00:00-24:00
         severity:
@@ -331,10 +331,9 @@
     state: present
     template_json: "{{ lookup('ansible.builtin.template', 'templates/zabbix/ICMP_ping.xml.j2') }}"
 
-
-- name: Add Slack bot token
+- name: Add Slack media type
   community.zabbix.zabbix_mediatype:
-    name: Slack
+    name: Cloudmason Slack
     server_url: "{{ server_url }}"
     login_user: "{{ login_user }}"
     login_password: "{{ login_password }}"
@@ -352,7 +351,7 @@
       - name: discovery_host_dns
         value: "{DISCOVERY.DEVICE.DNS}"
       - name: discovery_host_ip
-        value: "{DISCOVERY.DEVICE.IP}"
+        value: "{DISCOVERY.DEVICE.IPADDRESS}"
       - name: event_date
         value: "{EVENT.DATE}"
       - name: event_id
@@ -400,6 +399,37 @@
     event_menu_name: "Open in Slack: '{EVENT.TAGS.__channel_name}'"
     event_menu_url: '{EVENT.TAGS.__message_link}'
 
+- name: Create an email mediatype with message templates
+  community.zabbix.zabbix_mediatype:
+    name: Cloudmason Email
+    server_url: "{{ server_url }}"
+    login_user: "{{ login_user }}"
+    login_password: "{{ login_password }}"
+    type: email
+    smtp_email: "{{ smtp_email }}"
+    smtp_server: "{{ smtp_server }}"
+    message_templates:
+      - eventsource: triggers
+        recovery: operations
+        subject: "Problem: {EVENT.NAME}"
+        body: "Problem started at {EVENT.TIME} on {EVENT.DATE}\r\nProblem name: {EVENT.NAME}\r\n"
+      - eventsource: triggers
+        recovery: recovery_operations
+        subject: "Resolved: {EVENT.NAME}"
+        body: "Problem resolved at {EVENT.TIME} on {EVENT.DATE}\r\nProblem name: {EVENT.NAME}\r\n"
+      - eventsource: triggers
+        recovery: update_operations
+        subject: "Updated problem: {EVENT.NAME}"
+        body: "{USER.FULLNAME} {EVENT.UPDATE.ACTION} problem at {EVENT.UPDATE.DATE} {EVENT.UPDATE.TIME}.\r\n"
+      - eventsource: discovery
+        recovery: operations
+        subject: "Discovery: {DISCOVERY.DEVICE.STATUS} {DISCOVERY.DEVICE.IPADDRESS}"
+        body: "Discovery rule: {DISCOVERY.RULE.NAME}\r\n\r\nDevice IP: {DISCOVERY.DEVICE.IPADDRESS}"
+      - eventsource: autoregistration
+        recovery: operations
+        subject: "Autoregistration: {HOST.HOST}"
+        body: "Host name: {HOST.HOST}\r\nHost IP: {HOST.IP}\r\nAgent port: {HOST.PORT}"
+
 - name: Deploy trigger action
   community.zabbix.zabbix_action:
     server_url: "{{ server_url }}"
@@ -416,8 +446,8 @@
         value: Average
     operations:
       - type: send_message
-        # subject: "Something bad is happening"
-        # message: "Come on, guys do something"
-        media_type: Slack
+        subject: "Something bad is happening"
+        message: "Come on, guys do something"
+        media_type: all
         send_to_users:
           - mark
