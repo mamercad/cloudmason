@@ -588,6 +588,7 @@
     link_templates:
       - ICMP ping
       - DNS service
+      - Linux by Zabbix agent
     status: enabled
     interfaces:
       - type: agent
