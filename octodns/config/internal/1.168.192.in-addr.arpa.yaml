@@ -190,7 +190,7 @@
   value: roomba.cloudmason.org.
 '49':
   type: PTR
-  value: smartplug1.cloudmason.org.
+  value: pws.cloudmason.org.
 '50':
   type: PTR
   value: buddyxboxone.cloudmason.org.

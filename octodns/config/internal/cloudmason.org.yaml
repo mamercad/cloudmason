@@ -176,6 +176,9 @@ kiali:
 lenovo:
   type: A
   value: 192.168.1.98
+maryipad:
+  type: A
+  value: 192.168.1.115
 livingroomtv:
   type: A
   value: 192.168.1.112
@@ -190,9 +193,6 @@ markrog:
 markxboxone:
   type: A
   value: 192.168.1.47
-maryipad:
-  type: A
-  value: 192.168.1.115
 maryipad2:
   type: A
   value: 192.168.1.83
@@ -329,7 +329,7 @@ sense:
 smarthub:
   type: A
   value: 192.168.1.41
-smartplug1:
+pws:
   type: A
   value: 192.168.1.49
 smartplug2:
