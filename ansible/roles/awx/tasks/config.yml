@@ -577,9 +577,9 @@
 - name: Workflow Job Template Node
   awx.awx.tower_workflow_job_template_node:
     state: present
-    identifier: octodns-workflow
+    identifier: pi-main
     workflow: Cloudmason / Edge Workflow
-    unified_job_template: Cloudmason / OctoDNS Workflow
+    unified_job_template: Cloudmason / Pi (main)
     organization: Cloudmason
   tags:
     - awx
@@ -587,12 +587,12 @@
 - name: Workflow Job Template Node
   awx.awx.tower_workflow_job_template_node:
     state: present
-    identifier: octodns-wan
+    identifier: octodns-workflow
     workflow: Cloudmason / Edge Workflow
-    unified_job_template: Cloudmason / Pi (main)
+    unified_job_template: Cloudmason / OctoDNS Workflow
     organization: Cloudmason
     success_nodes:
-      - octodns-workflow
+      - pi-main
   tags:
     - awx
 
