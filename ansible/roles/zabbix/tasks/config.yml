@@ -357,14 +357,7 @@
     login_user: "{{ login_user }}"
     login_password: "{{ login_password }}"
     state: present
-    host_groups:
-      - Linux servers
-      - SNMP servers
-      - Printers
-      - Ping servers
-      - UniFi devices
-      - NAS devices
-      - DNS servers
+    host_groups: "{{ host_groups }}"
 
 - name: Delete host (Zabbix server)
   community.zabbix.zabbix_host:
@@ -404,8 +397,8 @@
     login_user: "{{ login_user }}"
     login_password: "{{ login_password }}"
     state: present
-    host_name: "{{ item.dns }}"
-    visible_name: "{{ item.dns }}"
+    host_name: "{{ item.name }}"
+    visible_name: "{{ item.name }}"
     description: "{{ item.dns }}"
     host_groups:
       - NAS devices
@@ -484,7 +477,7 @@
         useip: 1
   loop: "{{ printers }}"
 
-- name: Create ping host
+- name: Create external host
   community.zabbix.zabbix_host:
     server_url: "{{ server_url }}"
     login_user: "{{ login_user }}"
@@ -494,7 +487,7 @@
     visible_name: "{{ item.dns }}"
     description: "{{ item.dns }}"
     host_groups:
-      - Ping servers
+      - External hosts
     link_templates:
       - ICMP ping
     status: enabled
@@ -504,7 +497,7 @@
         ip: "{{ item.ip }}"
         main: 1
         useip: 1
-  loop: "{{ ping_servers }}"
+  loop: "{{ external_hosts }}"
 
 - name: Create generic ping host
   community.zabbix.zabbix_host:
