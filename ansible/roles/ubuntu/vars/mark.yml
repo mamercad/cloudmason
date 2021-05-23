@@ -10,6 +10,8 @@ user_name: mark
 
 email: mamercad@gmail.com
 
+shell: /bin/bash
+
 password: !vault |
   $ANSIBLE_VAULT;1.1;AES256
   39643361333563316230306261313132653531383963313438313965633039653139306532366463
