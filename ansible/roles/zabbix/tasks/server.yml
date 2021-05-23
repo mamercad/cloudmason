@@ -1,8 +1,10 @@
 - name: Install the Zabbix release deb
   ansible.builtin.apt:
     state: present
-    deb: "{{ zabbix_release_deb }}"
+    deb: "{{ zabbix_release_focal_deb }}"
   become: true
+  when:
+    - ansible_distribution_release == 'focal'
 
 - name: Install Zabbix release
   ansible.builtin.apt:
