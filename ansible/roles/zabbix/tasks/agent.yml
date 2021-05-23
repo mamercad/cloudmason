@@ -136,6 +136,39 @@
   become: true
   notify: restart-zabbix-agent
 
+- name: Create UserParameterDir
+  ansible.builtin.file:
+    state: directory
+    path: "{{ user_parameter_dir }}"
+    owner: root
+    group: root
+    mode: 0755
+  become: true
+
+- name: Deploy /etc/zabbix/zabbix_agentd.d/user_parameter.conf
+  ansible.builtin.template:
+    src: user_parameter.conf.j2
+    dest: /etc/zabbix/zabbix_agentd.d/user_parameter.conf
+    owner: root
+    group: root
+    mode: 0644
+    backup: true
+  become: true
+  notify: restart-zabbix-agent
+
+- name: Deploy user_parameter template scripts
+  ansible.builtin.template:
+    src: "{{ item }}"
+    dest: "{{ user_parameter_dir }}/{{ item | basename | replace('.j2', '') }}"
+    owner: root
+    group: root
+    mode: 0755
+    backup: true
+  become: true
+  with_fileglob:
+    - templates/user_parameter/*.j2
+  notify: restart-zabbix-agent
+
 - name: Start and enable Zabbix stuff
   ansible.builtin.systemd:
     name: "{{ item }}"
