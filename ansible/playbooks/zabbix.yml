@@ -8,11 +8,15 @@
       include_role:
         name: zabbix
         tasks_from: server.yml
+        apply:
+          tags: ['server']
       tags: ['server']
     - name: Include zabbix role (config)
       include_role:
         name: zabbix
         tasks_from: config.yml
+        apply:
+          tags: ['server']
       tags: ['server']
 
 - name: Zabbix / agent
@@ -24,4 +28,6 @@
       include_role:
         name: zabbix
         tasks_from: agent.yml
+        apply:
+          tags: ['agent']
       tags: ['agent']
