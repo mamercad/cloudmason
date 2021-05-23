@@ -48,6 +48,8 @@ smtp_email: mamercad@gmail.com
 
 smtp_server: localhost
 
+user_parameter_dir: /etc/zabbix/user_parameter
+
 host_groups:
   - Linux servers
   - SNMP servers
