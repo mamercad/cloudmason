@@ -1,0 +1,18 @@
+#!/usr/bin/env bash
+if [[ -z "$1" ]]; then
+  echo "Usage: $0 <hostname or IP> [anything for reverse]"
+  exit 1
+fi
+results=""
+if [[ -n "$2" ]]; then
+  results=$(dig +short -x $1)
+else
+  results=$(dig +short $1)
+fi
+if [[ -z "$results" ]]; then
+  echo 0
+  exit 1
+else
+  echo 1
+  exit 0
+fi
