@@ -1,0 +1,17 @@
+---
+
+- name: Fetch starship install.sh
+  ansible.builtin.get_url:
+    url: https://starship.rs/install.sh
+    dest: /tmp/starship.sh
+    mode: 0755
+
+- name: Install starship.sh
+  ansible.builtin.shell:
+    cmd: /tmp/starship.sh -y
+
+- name: Ensure eval starship in /etc/bash.bashrc
+  ansible.builtin.lineinfile:
+    path: /etc/bash.bashrc
+    line: eval "$(starship init bash)"
+    backup: yes
