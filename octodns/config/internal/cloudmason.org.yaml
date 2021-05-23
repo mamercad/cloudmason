@@ -167,9 +167,12 @@ juderokutv:
 judeswitch:
   type: A
   value: 192.168.1.94
-judexboxx:
+alexa7:
   type: A
   value: 192.168.1.71
+alexa6:
+  type: A
+  value: 192.168.1.56
 judeypc:
   type: A
   value: 192.168.1.77
