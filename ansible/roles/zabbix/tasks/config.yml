@@ -400,6 +400,7 @@
     link_templates:
       - ICMP ping
       - Linux by Zabbix agent active
+      - Check DNS
     status: enabled
     interfaces:
       - port: "10050"
