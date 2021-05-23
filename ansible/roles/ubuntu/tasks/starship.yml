@@ -14,4 +14,10 @@
   ansible.builtin.lineinfile:
     path: /etc/bash.bashrc
     line: eval "$(starship init bash)"
-    backup: yes
+    backup: true
+
+- name: Ensure eval starship in /etc/zsh/zshrc
+  ansible.builtin.lineinfile:
+    path: /etc/zsh/zshrc
+    line: eval "$(starship init zsh)"
+    backup: true
