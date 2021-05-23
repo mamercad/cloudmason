@@ -2,6 +2,8 @@ zabbix_source_ip: 192.168.1.67
 
 zabbix_server: 192.168.1.67
 
+zabbix_db_password: zabbix
+
 mark_password: !vault |
   $ANSIBLE_VAULT;1.1;AES256
   30633830396334623565343036613730623738353439613533326633303431643361623732363036
