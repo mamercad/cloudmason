@@ -101,6 +101,10 @@ external_hosts:
     ip: 8.8.8.8
   - dns: one.one.one.one
     ip: 1.1.1.1
+  - dns: be-109-ar02.pontiac.mi.michigan.comcast.net
+    ip: 162.151.160.173
+  - dns: 96-87-9-122-static.hfc.comcastbusiness.net
+    ip: 96.87.9.122
 
 dns_servers:
   - dns: net1.cloudmason.org
