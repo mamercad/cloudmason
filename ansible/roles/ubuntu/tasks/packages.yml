@@ -6,23 +6,27 @@
     state: latest  # noqa package-latest
   become: true
   register: update
+  tags: ['update', 'updates']
 
 - name: Remove useless packages from the cache
   apt:
     autoclean: true
   become: true
   register: clean
+  tags: ['update', 'updates']
 
 - name: Remove dependencies that are no longer required
   apt:
     autoremove: true
   become: true
   register: remove
+  tags: ['update', 'updates']
 
 - name: Check if /var/run/reboot-required exists
   stat:
     path: /var/run/reboot-required
   register: reboot
+  tags: ['update', 'updates']
 
 - name: Install packages
   apt:
