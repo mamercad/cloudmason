@@ -25,7 +25,7 @@
     group: "{{ mark.group }}"
     password: "{{ mark.password }}"
     create_home: true
-    shell: /usr/bin/zsh
+    shell: "{{ mark.shell }}"
   become: true
 
 - name: Create ~mark/.ssh
