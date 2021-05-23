@@ -1,5 +1,10 @@
 ---
 
+- name: Include mark vars
+  ansible.builtin.include_vars:
+    file: mark.yml
+    name: mark
+
 - name: Fetch starship install.sh
   ansible.builtin.get_url:
     url: https://starship.rs/install.sh
@@ -9,15 +14,22 @@
 - name: Install starship.sh
   ansible.builtin.shell:
     cmd: /tmp/starship.sh -y
+  become: true
 
-- name: Ensure eval starship in /etc/bash.bashrc
+- name: Ensure eval starship in ~/.bashrc
   ansible.builtin.lineinfile:
-    path: /etc/bash.bashrc
+    path: "{{ mark.home }}/.bashrc"
     line: eval "$(starship init bash)"
     backup: true
+  become: true
+  become_user: "{{ mark.user }}"
+  ignore_errors: true  # I don't care if it doesn't exist
 
-- name: Ensure eval starship in /etc/zsh/zshrc
+- name: Ensure eval starship in ~/.zshrc
   ansible.builtin.lineinfile:
-    path: /etc/zsh/zshrc
+    path: "{{ mark.home }}/.zshrc"
     line: eval "$(starship init zsh)"
     backup: true
+  become: true
+  become_user: "{{ mark.user }}"
+  ignore_errors: true  # I don't care if it doesn't exist
