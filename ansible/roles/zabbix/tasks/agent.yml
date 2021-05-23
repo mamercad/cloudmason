@@ -82,7 +82,7 @@
 - name: Deploy user_parameter template scripts
   ansible.builtin.template:
     src: "{{ item }}"
-    dest: "{{ user_parameter_dir }}/{{ item | basename | replace('.j2', '') }}"
+    dest: "/usr/local/bin/zbx_{{ item | basename | replace('.j2', '') }}"
     owner: root
     group: root
     mode: 0755
