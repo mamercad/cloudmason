@@ -346,7 +346,9 @@ Include=/etc/zabbix/zabbix_agentd.d/*.conf
 # Mandatory: no
 # Default:
 # UserParameterDir=
+{% if ansible_distribution_release != 'buster' %}
 UserParameterDir={{ user_parameter_dir }}
+{% endif %}
 
 ####### LOADABLE MODULES #######
 
