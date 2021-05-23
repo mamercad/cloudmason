@@ -70,7 +70,7 @@
   value: smartplug3.cloudmason.org.
 '122':
   type: PTR
-  value: alexa4.cloudmason.org.
+  value: ringbasestation.cloudmason.org.
 '123':
   type: PTR
   value: rokubedroom.cloudmason.org.
@@ -173,9 +173,6 @@
 '31':
   type: PTR
   value: coffeepot.cloudmason.org.
-'33':
-  type: PTR
-  value: ringbasestation.cloudmason.org.
 '40':
   type: PTR
   value: switch2.cloudmason.org.

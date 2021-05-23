@@ -21,7 +21,7 @@ alexa2:
 alexa3:
   type: A
   value: 192.168.1.80
-alexa4:
+ringbasestation:
   type: A
   value: 192.168.1.122
 alexa5:
@@ -305,9 +305,6 @@ registry.thinkpad:
 retroarcade:
   type: A
   value: 192.168.1.103
-ringbasestation:
-  type: A
-  value: 192.168.1.33
 ringbridge:
   type: A
   value: 192.168.1.133
