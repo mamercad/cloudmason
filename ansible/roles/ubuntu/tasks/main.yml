@@ -17,9 +17,9 @@
   include_tasks:
     file: mark.yml
 
-- name: Include Starship
-  include_tasks:
-    file: starship.yml
+# - name: Include Starship
+#   include_tasks:
+#     file: starship.yml
 
 - name: Include pi / postfix
   include_role:
