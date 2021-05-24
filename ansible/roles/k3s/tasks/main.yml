@@ -2,8 +2,8 @@
 
 - name: Download the release
   get_url:
-    url: https://github.com/k3s-io/k3s/releases/download/{{ k3s.version }}/{{ k3s.binary }}
-    dest: /tmp/{{ k3s.binary }}
+    url: https://github.com/k3s-io/k3s/releases/download/{{ k3s.version }}/k3s
+    dest: /tmp/k3s
     checksum: sha256:{{ k3s.sha256 }}
     owner: root
     group: root
@@ -12,7 +12,7 @@
 
 - name: Move the release
   copy:
-    src: /tmp/{{ k3s.binary }}
+    src: /tmp/k3s
     remote_src: true
     dest: /usr/local/bin/k3s
     owner: root
@@ -34,4 +34,9 @@
     name: k3s
     state: started
     enabled: true
+  become: true
+
+- name: Show the kubeconfig
+  ansible.builtin.shell:
+    cmd: cat /etc/rancher/k3s/k3s.yaml 
   become: true

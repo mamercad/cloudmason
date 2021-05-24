@@ -1,3 +1,13 @@
+#k3s:
+#  version: v1.20.4%2Bk3s1
+#  binary: k3s-armhf
+#  sha256: 6567e3773022bd1a44514ddfb4da74efd2ec6cbb6b30ea5f89e70c4590173763
+
+k3s:
+  version: v1.21.1%2Bk3s1
+  binary: k3s
+  sha256: c2cb00380694eedbc126fadccbe0c0c41ea08a268a49f480576c5e044791d2a8
+
 k3s_secrets:
   token: !vault |
     $ANSIBLE_VAULT;1.1;AES256
