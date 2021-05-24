@@ -37,6 +37,7 @@
       - fzf
       - git
       - mailutils
+      - ncdu
       - net-tools
       - nodejs
       - pipenv
