@@ -55,10 +55,12 @@
         value: "{{ slack_bot_token }}"
       - name: channel
         value: "#zabbix"
+      - name: channel_id
+        value: '{EVENT.TAGS.__channel_id}'
       - name: discovery_host_dns
         value: "{DISCOVERY.DEVICE.DNS}"
       - name: discovery_host_ip
-        value: "{DISCOVERY.DEVICE.IP}"
+        value: "{DISCOVERY.DEVICE.IPADDRESS}"
       - name: event_date
         value: "{EVENT.DATE}"
       - name: event_id
@@ -91,10 +93,12 @@
         value: "{HOST.CONN}"
       - name: host_name
         value: "{HOST.HOST}"
+      - name: message_ts
+        value: '{EVENT.TAGS.__message_ts}'
       - name: slack_as_user
-        value: true
+        value: 'true'
       - name: slack_mode
-        value: alarm
+        value: 'alarm'
       - name: trigger_description
         value: "{TRIGGER.DESCRIPTION}"
       - name: trigger_id

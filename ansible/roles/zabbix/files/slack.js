@@ -41,21 +41,23 @@ function isEventResolve(params) {
 }
 
 function getPermalink(channelId, messageTimestamp) {
-    var req = new CurlHttpRequest();
+    var req = new HttpRequest();
 
-    req.AddHeader('Content-Type: application/x-www-form-urlencoded; charset=utf-8');
+    if (typeof params.HTTPProxy === 'string' && params.HTTPProxy.trim() !== '') {
+        req.setProxy(params.HTTPProxy);
+    }
 
-    var resp = JSON.parse(req.Get(
-        '{0}?token={1}&channel={2}&message_ts={3}'.format(
+    req.addHeader('Content-Type: application/x-www-form-urlencoded; charset=utf-8');
+    req.addHeader('Authorization: Bearer ' + params.bot_token);
+
+    var query = '{0}?channel={1}&message_ts={2}'.format(
             Slack.getPermalink,
-            params.bot_token,
-            channelId,
-            messageTimestamp
-        )
-    ));
+            encodeURIComponent(channelId),
+            encodeURIComponent(messageTimestamp)),
+        resp = JSON.parse(req.get(query));
 
-    if (req.Status != 200 && !resp.ok) {
-        throw resp.error;
+    if (req.getStatus() != 200 || !resp.ok || resp.ok === 'false') {
+        throw 'message was created, but getting message link was failed with reason "' + resp.error + '"';
     }
 
     return resp.permalink;
@@ -78,21 +80,6 @@ function createProblemURL(zabbix_url, triggerid, eventid, event_source) {
     return problem_url;
 }
 
-function getTagValue(event_tags, key) {
-    var pattern = new RegExp('(' + key + ':.+)');
-    var tag_value = event_tags
-        .split(',')
-        .filter(function (v) {
-            return v.match(pattern);
-        })
-        .map(function (v) {
-            return v.split(':')[1];
-        })[0]
-        || 0;
-
-    return tag_value;
-}
-
 function handlerAlarm(params) {
     var fields = {
         channel: params.channel,
@@ -109,9 +96,9 @@ function handlerAlarm(params) {
             )
         ];
 
-        var resp = JSON.parse(req.Post(Slack.postMessage, JSON.stringify(fields)));
+        var resp = JSON.parse(req.post(Slack.postMessage, JSON.stringify(fields)));
 
-        if (req.Status != 200 && !resp.ok) {
+        if (req.getStatus() != 200 || !resp.ok || resp.ok === 'false') {
             throw resp.error;
         }
 
@@ -121,7 +108,7 @@ function handlerAlarm(params) {
         result.tags.__message_link = getPermalink(resp.channel, resp.ts);
     }
     else if (isEventUpdate(params)) {
-        fields.thread_ts = getTagValue(params.event_tags, 'message_ts');
+        fields.thread_ts = params.message_ts;
         fields.attachments = [
             createMessage(
                 SEVERITY_COLORS[params.event_nseverity] || 0,
@@ -132,16 +119,16 @@ function handlerAlarm(params) {
             )
         ];
 
-        resp = JSON.parse(req.Post(Slack.postMessage, JSON.stringify(fields)));
-        if (req.Status != 200 && !resp.ok) {
+        resp = JSON.parse(req.post(Slack.postMessage, JSON.stringify(fields)));
+        if (req.getStatus() != 200 || !resp.ok || resp.ok === 'false') {
             throw resp.error;
         }
 
     }
     else if (isEventResolve(params)) {
-        fields.channel = getTagValue(params.event_tags, 'channel_id');
+        fields.channel = params.channel_id;
         fields.text = '';
-        fields.ts = getTagValue(params.event_tags, 'message_ts');
+        fields.ts = params.message_ts;
         fields.attachments = [
             createMessage(
                 RESOLVE_COLOR,
@@ -151,8 +138,8 @@ function handlerAlarm(params) {
             )
         ];
 
-        resp = JSON.parse(req.Post(Slack.chatUpdate, JSON.stringify(fields)));
-        if (req.Status != 200 && !resp.ok) {
+        resp = JSON.parse(req.post(Slack.chatUpdate, JSON.stringify(fields)));
+        if (req.getStatus() != 200 || !resp.ok || resp.ok === 'false') {
             throw resp.error;
         }
     }
@@ -174,9 +161,9 @@ function handlerEvent(params) {
             )
         ];
 
-        var resp = JSON.parse(req.Post(Slack.postMessage, JSON.stringify(fields)));
+        var resp = JSON.parse(req.post(Slack.postMessage, JSON.stringify(fields)));
 
-        if (req.Status != 200 && !resp.ok) {
+        if (req.getStatus() != 200 || !resp.ok || resp.ok === 'false') {
             throw resp.error;
         }
 
@@ -195,9 +182,9 @@ function handlerEvent(params) {
             )
         ];
 
-        resp = JSON.parse(req.Post(Slack.postMessage, JSON.stringify(fields)));
+        resp = JSON.parse(req.post(Slack.postMessage, JSON.stringify(fields)));
 
-        if (req.Status != 200 && !resp.ok) {
+        if (req.getStatus() != 200 || !resp.ok || resp.ok === 'false') {
             throw resp.error;
         }
 
@@ -212,9 +199,9 @@ function handlerEvent(params) {
             )
         ];
 
-        resp = JSON.parse(req.Post(Slack.postMessage, JSON.stringify(fields)));
+        resp = JSON.parse(req.post(Slack.postMessage, JSON.stringify(fields)));
 
-        if (req.Status != 200 && !resp.ok) {
+        if (req.getStatus() != 200 || !resp.ok || resp.ok === 'false') {
             throw resp.error;
         }
     }
@@ -383,15 +370,15 @@ try {
 
     validateParams(params);
 
-    var req = new CurlHttpRequest(),
+    var req = new HttpRequest(),
         result = {tags: {}};
 
     if (typeof params.HTTPProxy === 'string' && params.HTTPProxy.trim() !== '') {
-        req.SetProxy(params.HTTPProxy);
+        req.setProxy(params.HTTPProxy);
     }
 
-    req.AddHeader('Content-Type: application/json; charset=utf-8');
-    req.AddHeader('Authorization: Bearer ' + params.bot_token);
+    req.addHeader('Content-Type: application/json; charset=utf-8');
+    req.addHeader('Authorization: Bearer ' + params.bot_token);
 
     var slack_endpoint = 'https://slack.com/api/';
 
@@ -416,6 +403,6 @@ try {
     }
 }
 catch (error) {
-    Zabbix.Log(4, '[ Slack Webhook ] Slack notification failed : ' + error);
+    Zabbix.log(4, '[ Slack Webhook ] Slack notification failed : ' + error);
     throw 'Slack notification failed : ' + error;
 }
