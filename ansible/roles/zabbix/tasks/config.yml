@@ -58,7 +58,7 @@
       - name: discovery_host_dns
         value: "{DISCOVERY.DEVICE.DNS}"
       - name: discovery_host_ip
-        value: "{DISCOVERY.DEVICE.IPADDRESS}"
+        value: "{DISCOVERY.DEVICE.IP}"
       - name: event_date
         value: "{EVENT.DATE}"
       - name: event_id
