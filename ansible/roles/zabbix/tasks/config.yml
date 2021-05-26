@@ -38,341 +38,341 @@
 #     login_password: "{{ login_password }}"
 #     template_json: "{{ lookup('ansible.builtin.template', 'templates/zabbix/Check_DNS.json.j2') }}"
 
-- name: Add Slack media type
-  community.zabbix.zabbix_mediatype:
-    name: Cloudmason Slack
-    server_url: "{{ server_url }}"
-    login_user: "{{ login_user }}"
-    login_password: "{{ login_password }}"
-    type: webhook
-    webhook_script: "{{ lookup('ansible.builtin.file', 'files/slack.js') }}"
-    webhook_params:
-      - name: alert_message
-        value: "{ALERT.MESSAGE}"
-      - name: alert_subject
-        value: "{ALERT.SUBJECT}"
-      - name: bot_token
-        value: "{{ slack_bot_token }}"
-      - name: channel
-        value: "#zabbix"
-      - name: channel_id
-        value: '{EVENT.TAGS.__channel_id}'
-      - name: discovery_host_dns
-        value: "{DISCOVERY.DEVICE.DNS}"
-      - name: discovery_host_ip
-        value: "{DISCOVERY.DEVICE.IPADDRESS}"
-      - name: event_date
-        value: "{EVENT.DATE}"
-      - name: event_id
-        value: "{EVENT.ID}"
-      - name: event_nseverity
-        value: "{EVENT.NSEVERITY}"
-      - name: event_opdata
-        value: "{EVENT.OPDATA}"
-      - name: event_recovery_date
-        value: "{EVENT.RECOVERY.DATE}"
-      - name: event_recovery_time
-        value: "{EVENT.RECOVERY.TIME}"
-      - name: event_severity
-        value: "{EVENT.SEVERITY}"
-      - name: event_source
-        value: "{EVENT.SOURCE}"
-      - name: event_tags
-        value: "{EVENT.TAGS}"
-      - name: event_time
-        value: "{EVENT.TIME}"
-      - name: event_update_date
-        value: "{EVENT.UPDATE.DATE}"
-      - name: event_update_status
-        value: "{EVENT.UPDATE.STATUS}"
-      - name: event_update_time
-        value: "{EVENT.UPDATE.TIME}"
-      - name: event_value
-        value: "{EVENT.VALUE}"
-      - name: host_conn
-        value: "{HOST.CONN}"
-      - name: host_name
-        value: "{HOST.HOST}"
-      - name: message_ts
-        value: '{EVENT.TAGS.__message_ts}'
-      - name: slack_as_user
-        value: 'true'
-      - name: slack_mode
-        value: 'alarm'
-      - name: trigger_description
-        value: "{TRIGGER.DESCRIPTION}"
-      - name: trigger_id
-        value: "{TRIGGER.ID}"
-      - name: zabbix_url
-        value: "{{ slack_zabbix_url }}"
-    process_tags: true
-    event_menu: true
-    event_menu_name: "Open in Slack: '{EVENT.TAGS.__channel_name}'"
-    event_menu_url: '{EVENT.TAGS.__message_link}'
-    message_templates:
-      - subject: 'Problem: {EVENT.NAME}'
-        body: |
-          Problem started at {EVENT.TIME} on {EVENT.DATE}
-          Problem name: {EVENT.NAME}
-          Host: {HOST.NAME}
-          Severity: {EVENT.SEVERITY}
-          Operational data: {EVENT.OPDATA}
-          Original problem ID: {EVENT.ID}
-          {TRIGGER.URL}
-        eventsource: triggers
-        recovery: operations
-      - subject: 'Resolved in {EVENT.DURATION}: {EVENT.NAME}'
-        body: |
-          Problem has been resolved at {EVENT.RECOVERY.TIME} on {EVENT.RECOVERY.DATE}
-          Problem name: {EVENT.NAME}
-          Problem duration: {EVENT.DURATION}
-          Host: {HOST.NAME}
-          Severity: {EVENT.SEVERITY}
-          Original problem ID: {EVENT.ID}
-          {TRIGGER.URL}
-        eventsource: triggers
-        recovery: recovery_operations
-      - subject: 'Updated problem in {EVENT.AGE}: {EVENT.NAME}'
-        body: |
-          {USER.FULLNAME} {EVENT.UPDATE.ACTION} problem at {EVENT.UPDATE.DATE} {EVENT.UPDATE.TIME}.
-          {EVENT.UPDATE.MESSAGE}
+# - name: Add Slack media type
+#   community.zabbix.zabbix_mediatype:
+#     name: Cloudmason Slack
+#     server_url: "{{ server_url }}"
+#     login_user: "{{ login_user }}"
+#     login_password: "{{ login_password }}"
+#     type: webhook
+#     webhook_script: "{{ lookup('ansible.builtin.file', 'files/slack.js') }}"
+#     webhook_params:
+#       - name: alert_message
+#         value: "{ALERT.MESSAGE}"
+#       - name: alert_subject
+#         value: "{ALERT.SUBJECT}"
+#       - name: bot_token
+#         value: "{{ slack_bot_token }}"
+#       - name: channel
+#         value: "#zabbix"
+#       - name: channel_id
+#         value: '{EVENT.TAGS.__channel_id}'
+#       - name: discovery_host_dns
+#         value: "{DISCOVERY.DEVICE.DNS}"
+#       - name: discovery_host_ip
+#         value: "{DISCOVERY.DEVICE.IPADDRESS}"
+#       - name: event_date
+#         value: "{EVENT.DATE}"
+#       - name: event_id
+#         value: "{EVENT.ID}"
+#       - name: event_nseverity
+#         value: "{EVENT.NSEVERITY}"
+#       - name: event_opdata
+#         value: "{EVENT.OPDATA}"
+#       - name: event_recovery_date
+#         value: "{EVENT.RECOVERY.DATE}"
+#       - name: event_recovery_time
+#         value: "{EVENT.RECOVERY.TIME}"
+#       - name: event_severity
+#         value: "{EVENT.SEVERITY}"
+#       - name: event_source
+#         value: "{EVENT.SOURCE}"
+#       - name: event_tags
+#         value: "{EVENT.TAGS}"
+#       - name: event_time
+#         value: "{EVENT.TIME}"
+#       - name: event_update_date
+#         value: "{EVENT.UPDATE.DATE}"
+#       - name: event_update_status
+#         value: "{EVENT.UPDATE.STATUS}"
+#       - name: event_update_time
+#         value: "{EVENT.UPDATE.TIME}"
+#       - name: event_value
+#         value: "{EVENT.VALUE}"
+#       - name: host_conn
+#         value: "{HOST.CONN}"
+#       - name: host_name
+#         value: "{HOST.HOST}"
+#       - name: message_ts
+#         value: '{EVENT.TAGS.__message_ts}'
+#       - name: slack_as_user
+#         value: 'true'
+#       - name: slack_mode
+#         value: 'alarm'
+#       - name: trigger_description
+#         value: "{TRIGGER.DESCRIPTION}"
+#       - name: trigger_id
+#         value: "{TRIGGER.ID}"
+#       - name: zabbix_url
+#         value: "{{ slack_zabbix_url }}"
+#     process_tags: true
+#     event_menu: true
+#     event_menu_name: "Open in Slack: '{EVENT.TAGS.__channel_name}'"
+#     event_menu_url: '{EVENT.TAGS.__message_link}'
+#     message_templates:
+#       - subject: 'Problem: {EVENT.NAME}'
+#         body: |
+#           Problem started at {EVENT.TIME} on {EVENT.DATE}
+#           Problem name: {EVENT.NAME}
+#           Host: {HOST.NAME}
+#           Severity: {EVENT.SEVERITY}
+#           Operational data: {EVENT.OPDATA}
+#           Original problem ID: {EVENT.ID}
+#           {TRIGGER.URL}
+#         eventsource: triggers
+#         recovery: operations
+#       - subject: 'Resolved in {EVENT.DURATION}: {EVENT.NAME}'
+#         body: |
+#           Problem has been resolved at {EVENT.RECOVERY.TIME} on {EVENT.RECOVERY.DATE}
+#           Problem name: {EVENT.NAME}
+#           Problem duration: {EVENT.DURATION}
+#           Host: {HOST.NAME}
+#           Severity: {EVENT.SEVERITY}
+#           Original problem ID: {EVENT.ID}
+#           {TRIGGER.URL}
+#         eventsource: triggers
+#         recovery: recovery_operations
+#       - subject: 'Updated problem in {EVENT.AGE}: {EVENT.NAME}'
+#         body: |
+#           {USER.FULLNAME} {EVENT.UPDATE.ACTION} problem at {EVENT.UPDATE.DATE} {EVENT.UPDATE.TIME}.
+#           {EVENT.UPDATE.MESSAGE}
 
-          Current problem status is {EVENT.STATUS}, age is {EVENT.AGE}, acknowledged: {EVENT.ACK.STATUS}.
-        eventsource: triggers
-        recovery: update_operations
-      - subject: 'Discovery: {DISCOVERY.DEVICE.STATUS} {DISCOVERY.DEVICE.IPADDRESS}'
-        body: |
-          Discovery rule: {DISCOVERY.RULE.NAME}
+#           Current problem status is {EVENT.STATUS}, age is {EVENT.AGE}, acknowledged: {EVENT.ACK.STATUS}.
+#         eventsource: triggers
+#         recovery: update_operations
+#       - subject: 'Discovery: {DISCOVERY.DEVICE.STATUS} {DISCOVERY.DEVICE.IPADDRESS}'
+#         body: |
+#           Discovery rule: {DISCOVERY.RULE.NAME}
 
-          Device IP: {DISCOVERY.DEVICE.IPADDRESS}
-          Device DNS: {DISCOVERY.DEVICE.DNS}
-          Device status: {DISCOVERY.DEVICE.STATUS}
-          Device uptime: {DISCOVERY.DEVICE.UPTIME}
+#           Device IP: {DISCOVERY.DEVICE.IPADDRESS}
+#           Device DNS: {DISCOVERY.DEVICE.DNS}
+#           Device status: {DISCOVERY.DEVICE.STATUS}
+#           Device uptime: {DISCOVERY.DEVICE.UPTIME}
 
-          Device service name: {DISCOVERY.SERVICE.NAME}
-          Device service port: {DISCOVERY.SERVICE.PORT}
-          Device service status: {DISCOVERY.SERVICE.STATUS}
-          Device service uptime: {DISCOVERY.SERVICE.UPTIME}
-        eventsource: discovery
-        recovery: operations
-      - subject: 'Autoregistration: {HOST.HOST}'
-        body: |
-          Host name: {HOST.HOST}
-          Host IP: {HOST.IP}
-          Agent port: {HOST.PORT}
-        eventsource: autoregistration
-        recovery: operations
+#           Device service name: {DISCOVERY.SERVICE.NAME}
+#           Device service port: {DISCOVERY.SERVICE.PORT}
+#           Device service status: {DISCOVERY.SERVICE.STATUS}
+#           Device service uptime: {DISCOVERY.SERVICE.UPTIME}
+#         eventsource: discovery
+#         recovery: operations
+#       - subject: 'Autoregistration: {HOST.HOST}'
+#         body: |
+#           Host name: {HOST.HOST}
+#           Host IP: {HOST.IP}
+#           Agent port: {HOST.PORT}
+#         eventsource: autoregistration
+#         recovery: operations
 
-- name: Create an email mediatype with message templates
-  community.zabbix.zabbix_mediatype:
-    name: Cloudmason Email
-    server_url: "{{ server_url }}"
-    login_user: "{{ login_user }}"
-    login_password: "{{ login_password }}"
-    type: email
-    smtp_email: "{{ smtp_email }}"
-    smtp_server: "{{ smtp_server }}"
-    message_templates:
-      - subject: 'Problem: {EVENT.NAME}'
-        body: |
-          Problem started at {EVENT.TIME} on {EVENT.DATE}
-          Problem name: {EVENT.NAME}
-          Host: {HOST.NAME}
-          Severity: {EVENT.SEVERITY}
-          Operational data: {EVENT.OPDATA}
-          Original problem ID: {EVENT.ID}
-          {TRIGGER.URL}
-        eventsource: triggers
-        recovery: operations
-      - subject: 'Resolved in {EVENT.DURATION}: {EVENT.NAME}'
-        body: |
-          Problem has been resolved at {EVENT.RECOVERY.TIME} on {EVENT.RECOVERY.DATE}
-          Problem name: {EVENT.NAME}
-          Problem duration: {EVENT.DURATION}
-          Host: {HOST.NAME}
-          Severity: {EVENT.SEVERITY}
-          Original problem ID: {EVENT.ID}
-          {TRIGGER.URL}
-        eventsource: triggers
-        recovery: recovery_operations
-      - subject: 'Updated problem in {EVENT.AGE}: {EVENT.NAME}'
-        body: |
-          {USER.FULLNAME} {EVENT.UPDATE.ACTION} problem at {EVENT.UPDATE.DATE} {EVENT.UPDATE.TIME}.
-          {EVENT.UPDATE.MESSAGE}
+# - name: Create an email mediatype with message templates
+#   community.zabbix.zabbix_mediatype:
+#     name: Cloudmason Email
+#     server_url: "{{ server_url }}"
+#     login_user: "{{ login_user }}"
+#     login_password: "{{ login_password }}"
+#     type: email
+#     smtp_email: "{{ smtp_email }}"
+#     smtp_server: "{{ smtp_server }}"
+#     message_templates:
+#       - subject: 'Problem: {EVENT.NAME}'
+#         body: |
+#           Problem started at {EVENT.TIME} on {EVENT.DATE}
+#           Problem name: {EVENT.NAME}
+#           Host: {HOST.NAME}
+#           Severity: {EVENT.SEVERITY}
+#           Operational data: {EVENT.OPDATA}
+#           Original problem ID: {EVENT.ID}
+#           {TRIGGER.URL}
+#         eventsource: triggers
+#         recovery: operations
+#       - subject: 'Resolved in {EVENT.DURATION}: {EVENT.NAME}'
+#         body: |
+#           Problem has been resolved at {EVENT.RECOVERY.TIME} on {EVENT.RECOVERY.DATE}
+#           Problem name: {EVENT.NAME}
+#           Problem duration: {EVENT.DURATION}
+#           Host: {HOST.NAME}
+#           Severity: {EVENT.SEVERITY}
+#           Original problem ID: {EVENT.ID}
+#           {TRIGGER.URL}
+#         eventsource: triggers
+#         recovery: recovery_operations
+#       - subject: 'Updated problem in {EVENT.AGE}: {EVENT.NAME}'
+#         body: |
+#           {USER.FULLNAME} {EVENT.UPDATE.ACTION} problem at {EVENT.UPDATE.DATE} {EVENT.UPDATE.TIME}.
+#           {EVENT.UPDATE.MESSAGE}
 
-          Current problem status is {EVENT.STATUS}, age is {EVENT.AGE}, acknowledged: {EVENT.ACK.STATUS}.
-        eventsource: triggers
-        recovery: update_operations
-      - subject: 'Discovery: {DISCOVERY.DEVICE.STATUS} {DISCOVERY.DEVICE.IPADDRESS}'
-        body: |
-          Discovery rule: {DISCOVERY.RULE.NAME}
+#           Current problem status is {EVENT.STATUS}, age is {EVENT.AGE}, acknowledged: {EVENT.ACK.STATUS}.
+#         eventsource: triggers
+#         recovery: update_operations
+#       - subject: 'Discovery: {DISCOVERY.DEVICE.STATUS} {DISCOVERY.DEVICE.IPADDRESS}'
+#         body: |
+#           Discovery rule: {DISCOVERY.RULE.NAME}
 
-          Device IP: {DISCOVERY.DEVICE.IPADDRESS}
-          Device DNS: {DISCOVERY.DEVICE.DNS}
-          Device status: {DISCOVERY.DEVICE.STATUS}
-          Device uptime: {DISCOVERY.DEVICE.UPTIME}
+#           Device IP: {DISCOVERY.DEVICE.IPADDRESS}
+#           Device DNS: {DISCOVERY.DEVICE.DNS}
+#           Device status: {DISCOVERY.DEVICE.STATUS}
+#           Device uptime: {DISCOVERY.DEVICE.UPTIME}
 
-          Device service name: {DISCOVERY.SERVICE.NAME}
-          Device service port: {DISCOVERY.SERVICE.PORT}
-          Device service status: {DISCOVERY.SERVICE.STATUS}
-          Device service uptime: {DISCOVERY.SERVICE.UPTIME}
-        eventsource: discovery
-        recovery: operations
-      - subject: 'Autoregistration: {HOST.HOST}'
-        body: |
-          Host name: {HOST.HOST}
-          Host IP: {HOST.IP}
-          Agent port: {HOST.PORT}
-        eventsource: autoregistration
-        recovery: operations
-    # message_templates:
-    #   - eventsource: triggers
-    #     recovery: operations
-    #     subject: "Problem: {EVENT.NAME}"
-    #     body: "Problem started at {EVENT.TIME} on {EVENT.DATE}\r\nProblem name: {EVENT.NAME}\r\n"
-    #   - eventsource: triggers
-    #     recovery: recovery_operations
-    #     subject: "Resolved: {EVENT.NAME}"
-    #     body: "Problem resolved at {EVENT.TIME} on {EVENT.DATE}\r\nProblem name: {EVENT.NAME}\r\n"
-    #   - eventsource: triggers
-    #     recovery: update_operations
-    #     subject: "Updated problem: {EVENT.NAME}"
-    #     body: "{USER.FULLNAME} {EVENT.UPDATE.ACTION} problem at {EVENT.UPDATE.DATE} {EVENT.UPDATE.TIME}.\r\n"
-    #   - eventsource: discovery
-    #     recovery: operations
-    #     subject: "Discovery: {DISCOVERY.DEVICE.STATUS} {DISCOVERY.DEVICE.IPADDRESS}"
-    #     body: "Discovery rule: {DISCOVERY.RULE.NAME}\r\n\r\nDevice IP: {DISCOVERY.DEVICE.IPADDRESS}"
-    #   - eventsource: autoregistration
-    #     recovery: operations
-    #     subject: "Autoregistration: {HOST.HOST}"
-    #     body: "Host name: {HOST.HOST}\r\nHost IP: {HOST.IP}\r\nAgent port: {HOST.PORT}"
+#           Device service name: {DISCOVERY.SERVICE.NAME}
+#           Device service port: {DISCOVERY.SERVICE.PORT}
+#           Device service status: {DISCOVERY.SERVICE.STATUS}
+#           Device service uptime: {DISCOVERY.SERVICE.UPTIME}
+#         eventsource: discovery
+#         recovery: operations
+#       - subject: 'Autoregistration: {HOST.HOST}'
+#         body: |
+#           Host name: {HOST.HOST}
+#           Host IP: {HOST.IP}
+#           Agent port: {HOST.PORT}
+#         eventsource: autoregistration
+#         recovery: operations
+#     # message_templates:
+#     #   - eventsource: triggers
+#     #     recovery: operations
+#     #     subject: "Problem: {EVENT.NAME}"
+#     #     body: "Problem started at {EVENT.TIME} on {EVENT.DATE}\r\nProblem name: {EVENT.NAME}\r\n"
+#     #   - eventsource: triggers
+#     #     recovery: recovery_operations
+#     #     subject: "Resolved: {EVENT.NAME}"
+#     #     body: "Problem resolved at {EVENT.TIME} on {EVENT.DATE}\r\nProblem name: {EVENT.NAME}\r\n"
+#     #   - eventsource: triggers
+#     #     recovery: update_operations
+#     #     subject: "Updated problem: {EVENT.NAME}"
+#     #     body: "{USER.FULLNAME} {EVENT.UPDATE.ACTION} problem at {EVENT.UPDATE.DATE} {EVENT.UPDATE.TIME}.\r\n"
+#     #   - eventsource: discovery
+#     #     recovery: operations
+#     #     subject: "Discovery: {DISCOVERY.DEVICE.STATUS} {DISCOVERY.DEVICE.IPADDRESS}"
+#     #     body: "Discovery rule: {DISCOVERY.RULE.NAME}\r\n\r\nDevice IP: {DISCOVERY.DEVICE.IPADDRESS}"
+#     #   - eventsource: autoregistration
+#     #     recovery: operations
+#     #     subject: "Autoregistration: {HOST.HOST}"
+#     #     body: "Host name: {HOST.HOST}\r\nHost IP: {HOST.IP}\r\nAgent port: {HOST.PORT}"
 
-- name: Create mark admin
-  community.zabbix.zabbix_user:
-    server_url: "{{ server_url }}"
-    login_user: "{{ login_user }}"
-    login_password: "{{ login_password }}"
-    alias: mark
-    name: Mark
-    surname: Mercado
-    usrgrps:
-      - Zabbix administrators
-    passwd: "{{ mark_password }}"
-    lang: en_US
-    timezone: America/Detroit
-    theme: dark-theme
-    autologin: false
-    autologout: '0'
-    refresh: '30'
-    rows_per_page: '200'
-    after_login_url: ''
-    user_medias:
-      - mediatype: Cloudmason Email
-        sendto: mamercad@gmail.com
-        period: 1-7,00:00-24:00
-        severity:
-          not_classified: false
-          information: true
-          warning: true
-          average: true
-          high: true
-          disaster: true
-        active: true
-      - mediatype: Cloudmason Slack
-        sendto: "#zabbix"
-        period: 1-7,00:00-24:00
-        severity:
-          not_classified: false
-          information: true
-          warning: true
-          average: true
-          high: true
-          disaster: true
-        active: true
-    type: Zabbix super admin
-    role_name: Super admin role
-    state: present
+# - name: Create mark admin
+#   community.zabbix.zabbix_user:
+#     server_url: "{{ server_url }}"
+#     login_user: "{{ login_user }}"
+#     login_password: "{{ login_password }}"
+#     alias: mark
+#     name: Mark
+#     surname: Mercado
+#     usrgrps:
+#       - Zabbix administrators
+#     passwd: "{{ mark_password }}"
+#     lang: en_US
+#     timezone: America/Detroit
+#     theme: dark-theme
+#     autologin: false
+#     autologout: '0'
+#     refresh: '30'
+#     rows_per_page: '200'
+#     after_login_url: ''
+#     user_medias:
+#       - mediatype: Cloudmason Email
+#         sendto: mamercad@gmail.com
+#         period: 1-7,00:00-24:00
+#         severity:
+#           not_classified: false
+#           information: true
+#           warning: true
+#           average: true
+#           high: true
+#           disaster: true
+#         active: true
+#       - mediatype: Cloudmason Slack
+#         sendto: "#zabbix"
+#         period: 1-7,00:00-24:00
+#         severity:
+#           not_classified: false
+#           information: true
+#           warning: true
+#           average: true
+#           high: true
+#           disaster: true
+#         active: true
+#     type: Zabbix super admin
+#     role_name: Super admin role
+#     state: present
 
-- name: Create discovery rule with ICMP, agent, and SNMP checks
-  community.zabbix.zabbix_discovery_rule:
-    server_url: "{{ server_url }}"
-    login_user: "{{ login_user }}"
-    login_password: "{{ login_password }}"
-    name: Cloudmason
-    state: present
-    iprange: 192.168.1.1-254
-    dchecks:
-      - type: ICMP
-      - type: Zabbix
-        key: "agent.hostname"
-        ports: "10050"
-        uniq: true
-        host_source: "discovery"
-      - type: SNMPv2
-        snmp_community: public
-        ports: "161"
-        key: SNMPv2-MIB::sysName.0
+# - name: Create discovery rule with ICMP, agent, and SNMP checks
+#   community.zabbix.zabbix_discovery_rule:
+#     server_url: "{{ server_url }}"
+#     login_user: "{{ login_user }}"
+#     login_password: "{{ login_password }}"
+#     name: Cloudmason
+#     state: present
+#     iprange: 192.168.1.1-254
+#     dchecks:
+#       - type: ICMP
+#       - type: Zabbix
+#         key: "agent.hostname"
+#         ports: "10050"
+#         uniq: true
+#         host_source: "discovery"
+#       - type: SNMPv2
+#         snmp_community: public
+#         ports: "161"
+#         key: SNMPv2-MIB::sysName.0
 
-- name: Deploy discovery action
-  community.zabbix.zabbix_action:
-    server_url: "{{ server_url }}"
-    login_user: "{{ login_user }}"
-    login_password: "{{ login_password }}"
-    name: Discovered device
-    event_source: discovery
-    state: present
-    status: enabled
-    esc_period: 0s
-    conditions:
-      - type: discovery_status
-        operator: "="
-        value: up
-      - type: discovered_service_type
-        operator: "="
-        value: ICMP ping
-      - type: uptime_or_downtime_duration
-        operator: ">="
-        value: "3600"
-    operations:
-      - type: add_host
-      - type: enable_host
-      - type: link_to_template
-        templates:
-          - ICMP ping
+# - name: Deploy discovery action
+#   community.zabbix.zabbix_action:
+#     server_url: "{{ server_url }}"
+#     login_user: "{{ login_user }}"
+#     login_password: "{{ login_password }}"
+#     name: Discovered device
+#     event_source: discovery
+#     state: present
+#     status: enabled
+#     esc_period: 0s
+#     conditions:
+#       - type: discovery_status
+#         operator: "="
+#         value: up
+#       - type: discovered_service_type
+#         operator: "="
+#         value: ICMP ping
+#       - type: uptime_or_downtime_duration
+#         operator: ">="
+#         value: "3600"
+#     operations:
+#       - type: add_host
+#       - type: enable_host
+#       - type: link_to_template
+#         templates:
+#           - ICMP ping
 
-- name: Deploy agent auto-registration action
-  community.zabbix.zabbix_action:
-    server_url: "{{ server_url }}"
-    login_user: "{{ login_user }}"
-    login_password: "{{ login_password }}"
-    name: Agent auto-registration
-    event_source: auto_registration
-    state: present
-    status: enabled
-    esc_period: 0s
-    operations:
-      - type: add_host
+# - name: Deploy agent auto-registration action
+#   community.zabbix.zabbix_action:
+#     server_url: "{{ server_url }}"
+#     login_user: "{{ login_user }}"
+#     login_password: "{{ login_password }}"
+#     name: Agent auto-registration
+#     event_source: auto_registration
+#     state: present
+#     status: enabled
+#     esc_period: 0s
+#     operations:
+#       - type: add_host
 
-- name: Deploy Linux agent action
-  community.zabbix.zabbix_action:
-    server_url: "{{ server_url }}"
-    login_user: "{{ login_user }}"
-    login_password: "{{ login_password }}"
-    name: Linux agent action
-    event_source: auto_registration
-    state: present
-    status: enabled
-    esc_period: 0s
-    conditions:
-      - type: host_metadata
-        operator: like
-        value: Linux
-    operations:
-      - type: link_to_template
-        templates:
-          - Linux by Zabbix agent active
-          - Check DNS
-      - type: enable_host
+# - name: Deploy Linux agent action
+#   community.zabbix.zabbix_action:
+#     server_url: "{{ server_url }}"
+#     login_user: "{{ login_user }}"
+#     login_password: "{{ login_password }}"
+#     name: Linux agent action
+#     event_source: auto_registration
+#     state: present
+#     status: enabled
+#     esc_period: 0s
+#     conditions:
+#       - type: host_metadata
+#         operator: like
+#         value: Linux
+#     operations:
+#       - type: link_to_template
+#         templates:
+#           - Linux by Zabbix agent active
+#           - Check DNS
+#       - type: enable_host
 
 - name: Create host groups
   community.zabbix.zabbix_group:
@@ -382,13 +382,13 @@
     state: present
     host_groups: "{{ host_groups }}"
 
-- name: Delete host (Zabbix server)
-  community.zabbix.zabbix_host:
-    server_url: "{{ server_url }}"
-    login_user: "{{ login_user }}"
-    login_password: "{{ login_password }}"
-    state: absent
-    host_name: Zabbix server
+# - name: Delete host (Zabbix server)
+#   community.zabbix.zabbix_host:
+#     server_url: "{{ server_url }}"
+#     login_user: "{{ login_user }}"
+#     login_password: "{{ login_password }}"
+#     state: absent
+#     host_name: Zabbix server
 
 - name: Create linux host
   community.zabbix.zabbix_host:
@@ -402,9 +402,9 @@
     host_groups:
       - Linux servers
     link_templates:
-      - ICMP ping
+      - ICMP Ping
       - Linux by Zabbix agent active
-      - Check DNS
+      # - Check DNS
     status: enabled
     interfaces:
       - port: "10050"
@@ -427,7 +427,7 @@
     host_groups:
       - NAS devices
     link_templates:
-      - ICMP ping
+      - ICMP Ping
       - Linux by Zabbix agent active
     status: enabled
     interfaces:
@@ -439,35 +439,35 @@
         useip: 1
   loop: "{{ nas_devices }}"
 
-- name: Create generic snmp host
-  community.zabbix.zabbix_host:
-    server_url: "{{ server_url }}"
-    login_user: "{{ login_user }}"
-    login_password: "{{ login_password }}"
-    state: present
-    host_name: "{{ item.dns }}"
-    visible_name: "{{ item.dns }}"
-    description: "{{ item.dns }}"
-    host_groups:
-      - SNMP servers
-    link_templates:
-      - ICMP ping
-      - Generic SNMP
-      - Interfaces SNMP
-    status: enabled
-    interfaces:
-      - details:
-          community: public
-          version: 2
-        port: "161"
-        type: snmp
-        dns: "{{ item.dns }}"
-        ip: "{{ item.ip }}"
-        main: 1
-        useip: 1
-  loop: "{{ snmp_servers }}"
-  when:
-    - snmp_servers is defined
+# - name: Create generic snmp host
+#   community.zabbix.zabbix_host:
+#     server_url: "{{ server_url }}"
+#     login_user: "{{ login_user }}"
+#     login_password: "{{ login_password }}"
+#     state: present
+#     host_name: "{{ item.dns }}"
+#     visible_name: "{{ item.dns }}"
+#     description: "{{ item.dns }}"
+#     host_groups:
+#       - SNMP servers
+#     link_templates:
+#       - ICMP ping
+#       - Generic SNMP
+#       - Interfaces SNMP
+#     status: enabled
+#     interfaces:
+#       - details:
+#           community: public
+#           version: 2
+#         port: "161"
+#         type: snmp
+#         dns: "{{ item.dns }}"
+#         ip: "{{ item.ip }}"
+#         main: 1
+#         useip: 1
+#   loop: "{{ snmp_servers }}"
+#   when:
+#     - snmp_servers is defined
 
 - name: Create printer snmp host
   community.zabbix.zabbix_host:
@@ -481,7 +481,7 @@
     host_groups:
       - Printers
     link_templates:
-      - ICMP ping
+      # - ICMP Ping
       - Generic SNMP
     status: enabled
     interfaces:
@@ -513,7 +513,7 @@
     host_groups:
       - External hosts
     link_templates:
-      - ICMP ping
+      - ICMP Ping
     status: enabled
     interfaces:
       - type: agent
@@ -535,7 +535,7 @@
     host_groups:
       - UniFi devices
     link_templates:
-      - ICMP ping
+      - ICMP Ping
     status: enabled
     interfaces:
       - type: agent
@@ -571,51 +571,51 @@
 #         main: 1
 #   loop: "{{ unifi_devices }}"
 
-- name: Deploy trigger action
-  community.zabbix.zabbix_action:
-    server_url: "{{ server_url }}"
-    login_user: "{{ login_user }}"
-    login_password: "{{ login_password }}"
-    name: "Send alerts to Mark"
-    event_source: trigger
-    state: present
-    status: enabled
-    esc_period: 60
-    conditions:
-      - type: trigger_severity
-        operator: ">="
-        value: not classified
-    operations:
-      - type: send_message
-        media_type: Cloudmason Slack
-        send_to_users:
-          - mark
-    recovery_operations:
-      - type: send_message
-        media_type: Cloudmason Slack
-        send_to_users:
-          - mark
+# - name: Deploy trigger action
+#   community.zabbix.zabbix_action:
+#     server_url: "{{ server_url }}"
+#     login_user: "{{ login_user }}"
+#     login_password: "{{ login_password }}"
+#     name: "Send alerts to Mark"
+#     event_source: trigger
+#     state: present
+#     status: enabled
+#     esc_period: 60
+#     conditions:
+#       - type: trigger_severity
+#         operator: ">="
+#         value: not classified
+#     operations:
+#       - type: send_message
+#         media_type: Cloudmason Slack
+#         send_to_users:
+#           - mark
+#     recovery_operations:
+#       - type: send_message
+#         media_type: Cloudmason Slack
+#         send_to_users:
+#           - mark
 
-- name: Create dns host
-  community.zabbix.zabbix_host:
-    server_url: "{{ server_url }}"
-    login_user: "{{ login_user }}"
-    login_password: "{{ login_password }}"
-    state: present
-    host_name: "{{ item.dns }}"
-    visible_name: "{{ item.dns }}"
-    description: "{{ item.dns }}"
-    host_groups:
-      - DNS servers
-    link_templates:
-      - ICMP ping
-      - DNS service
-      - Linux by Zabbix agent active
-    status: enabled
-    interfaces:
-      - type: agent
-        dns: "{{ item.dns }}"
-        ip: "{{ item.ip }}"
-        main: 1
-        useip: 1
-  loop: "{{ dns_servers }}"
+# - name: Create dns host
+#   community.zabbix.zabbix_host:
+#     server_url: "{{ server_url }}"
+#     login_user: "{{ login_user }}"
+#     login_password: "{{ login_password }}"
+#     state: present
+#     host_name: "{{ item.dns }}"
+#     visible_name: "{{ item.dns }}"
+#     description: "{{ item.dns }}"
+#     host_groups:
+#       - DNS servers
+#     link_templates:
+#       - ICMP ping
+#       - DNS service
+#       - Linux by Zabbix agent active
+#     status: enabled
+#     interfaces:
+#       - type: agent
+#         dns: "{{ item.dns }}"
+#         ip: "{{ item.ip }}"
+#         main: 1
+#         useip: 1
+#   loop: "{{ dns_servers }}"
