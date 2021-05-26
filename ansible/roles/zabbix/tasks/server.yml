@@ -20,6 +20,7 @@
       - zabbix-server-mysql
       - zabbix-frontend-php
       - zabbix-apache-conf
+      - zabbix-sql-scripts
       - zabbix-agent
   become: true
 
@@ -92,7 +93,7 @@
   community.mysql.mysql_db:
     state: import
     name: zabbix
-    target: /usr/share/doc/zabbix-server-mysql/create.sql.gz
+    target: "{{ zabbix_sql_create }}"
     login_unix_socket: /var/run/mysqld/mysqld.sock
   become: true
   when: create_database.changed
