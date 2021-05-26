@@ -11,13 +11,13 @@
         apply:
           tags: ['server']
       tags: ['server']
-    - name: Include zabbix role (config)
-      include_role:
-        name: zabbix
-        tasks_from: config.yml
-        apply:
-          tags: ['server']
-      tags: ['server']
+    # - name: Include zabbix role (config)
+    #   include_role:
+    #     name: zabbix
+    #     tasks_from: config.yml
+    #     apply:
+    #       tags: ['server']
+    #   tags: ['server']
 
 - name: Zabbix / agent
   hosts: zabbix_clients

@@ -79,6 +79,7 @@
     login_unix_socket: /var/run/mysqld/mysqld.sock
   register: create_database
   become: true
+  no_log: true
 
 - name: Create zabbix database user
   community.mysql.mysql_user:
