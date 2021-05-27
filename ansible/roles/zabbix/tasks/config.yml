@@ -4,39 +4,15 @@
     name: zabbix_api
   become: true
 
-# - name: Import Zabbix templates from JSON
-#   community.zabbix.zabbix_template:
-#     state: present
-#     server_url: "{{ server_url }}"
-#     admin_login_user: "{{ admin_login_user }}"
-#     admin_login_password: "{{ admin_login_password }}"
-#     template_json: "{{ lookup('ansible.builtin.template', item) }}"
-#   with_fileglob:
-#     - templates/zabbix/*.j2
-
-# - name: Import Zabbix templates from JSON
-#   community.zabbix.zabbix_template:
-#     state: present
-#     server_url: "{{ server_url }}"
-#     admin_login_user: "{{ admin_login_user }}"
-#     admin_login_password: "{{ admin_login_password }}"
-#     template_json: "{{ lookup('ansible.builtin.template', 'templates/zabbix/ICMP_ping.json.j2') }}"
-
-# - name: Import Zabbix templates from JSON
-#   community.zabbix.zabbix_template:
-#     state: present
-#     server_url: "{{ server_url }}"
-#     admin_login_user: "{{ admin_login_user }}"
-#     admin_login_password: "{{ admin_login_password }}"
-#     template_json: "{{ lookup('ansible.builtin.template', 'templates/zabbix/DNS_service.json.j2') }}"
-
-# - name: Import Zabbix templates from JSON
-#   community.zabbix.zabbix_template:
-#     state: present
-#     server_url: "{{ server_url }}"
-#     admin_login_user: "{{ admin_login_user }}"
-#     admin_login_password: "{{ admin_login_password }}"
-#     template_json: "{{ lookup('ansible.builtin.template', 'templates/zabbix/Check_DNS.json.j2') }}"
+- name: Import Zabbix templates from JSON
+  community.zabbix.zabbix_template:
+    state: present
+    server_url: "{{ server_url }}"
+    admin_login_user: "{{ admin_login_user }}"
+    admin_login_password: "{{ admin_login_password }}"
+    template_json: "{{ lookup('ansible.builtin.template', item) }}"
+  with_fileglob:
+    - templates/zabbix/*.j2
 
 # - name: Add Slack media type
 #   community.zabbix.zabbix_mediatype:

@@ -1,6 +1,6 @@
 {
     "zabbix_export": {
-        "version": "5.2",
+        "version": "5.4",
         "date": "2021-05-22T15:45:51Z",
         "groups": [
             {
@@ -9,8 +9,8 @@
         ],
         "templates": [
             {
-                "template": "DNS service",
-                "name": "DNS service",
+                "template": "DNS Service",
+                "name": "DNS Service",
                 "groups": [
                     {
                         "name": "Templates/Modules"
@@ -23,7 +23,7 @@
                 ],
                 "items": [
                     {
-                        "name": "DNS service is running",
+                        "name": "DNS Service is running",
                         "type": "SIMPLE",
                         "key": "net.tcp.service[tcp,,53]",
                         "history": "1w",
@@ -38,7 +38,7 @@
                         "triggers": [
                             {
                                 "expression": "{max(#3)}=0",
-                                "name": "DNS service is down on {HOST.NAME}",
+                                "name": "DNS Service is down on {HOST.NAME}",
                                 "priority": "AVERAGE"
                             }
                         ]

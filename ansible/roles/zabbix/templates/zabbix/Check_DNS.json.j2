@@ -1,6 +1,6 @@
 {
     "zabbix_export": {
-        "version": "5.2",
+        "version": "5.4",
         "date": "2021-05-22T15:45:51Z",
         "groups": [
             {
@@ -23,7 +23,7 @@
                 ],
                 "items": [
                     {
-                        "name": "DNS resolution is working",
+                        "name": "DNS Resolution is working",
                         "type": "ZABBIX_ACTIVE",
                         "key": "check_dns[google.com]",
                         "history": "1w",
@@ -39,7 +39,7 @@
                         "triggers": [
                             {
                                 "expression": "{max(#3)}=0",
-                                "name": "DNS resolution is down on {HOST.NAME}",
+                                "name": "DNS Resolution is down on {HOST.NAME}",
                                 "priority": "AVERAGE"
                             }
                         ]
