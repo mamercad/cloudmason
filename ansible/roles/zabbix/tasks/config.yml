@@ -8,8 +8,8 @@
   community.zabbix.zabbix_template:
     state: present
     server_url: "{{ server_url }}"
-    admin_login_user: "{{ admin_login_user }}"
-    admin_login_password: "{{ admin_login_password }}"
+    login_user: "{{ admin_login_user }}"
+    login_password: "{{ admin_login_password }}"
     template_json: "{{ lookup('ansible.builtin.template', item) }}"
   with_fileglob:
     - templates/zabbix/*.j2
@@ -223,25 +223,28 @@
 #     #     subject: "Autoregistration: {HOST.HOST}"
 #     #     body: "Host name: {HOST.HOST}\r\nHost IP: {HOST.IP}\r\nAgent port: {HOST.PORT}"
 
-# - name: Create mark admin
-#   community.zabbix.zabbix_user:
-#     server_url: "{{ server_url }}"
-#     admin_login_user: "{{ admin_login_user }}"
-#     admin_login_password: "{{ admin_login_password }}"
-#     alias: mark
-#     name: Mark
-#     surname: Mercado
-#     usrgrps:
-#       - Zabbix administrators
-#     passwd: "{{ mark_password }}"
-#     lang: en_US
-#     timezone: America/Detroit
-#     theme: dark-theme
-#     autologin: false
-#     autologout: '0'
-#     refresh: '30'
-#     rows_per_page: '200'
-#     after_login_url: ''
+- name: Create mark admin
+  community.zabbix.zabbix_user:
+    server_url: "{{ server_url }}"
+    login_user: "{{ admin_login_user }}"
+    login_password: "{{ admin_login_password }}"
+    alias: "{{ mark_login_user }}"
+    name: Mark
+    surname: Mercado
+    usrgrps:
+      - Zabbix administrators
+    passwd: "{{ mark_login_password }}"
+    lang: en_US
+    timezone: America/Detroit
+    theme: dark-theme
+    autologin: false
+    autologout: '0'
+    refresh: '30'
+    rows_per_page: '200'
+    after_login_url: ''
+    type: Zabbix super admin
+    role_name: Super admin role
+    state: present
 #     user_medias:
 #       - mediatype: Cloudmason Email
 #         sendto: mamercad@gmail.com
@@ -265,9 +268,6 @@
 #           high: true
 #           disaster: true
 #         active: true
-#     type: Zabbix super admin
-#     role_name: Super admin role
-#     state: present
 
 # - name: Create discovery rule with ICMP, agent, and SNMP checks
 #   community.zabbix.zabbix_discovery_rule:
@@ -353,24 +353,24 @@
 - name: Create host groups
   community.zabbix.zabbix_group:
     server_url: "{{ server_url }}"
-    admin_login_user: "{{ admin_login_user }}"
-    admin_login_password: "{{ admin_login_password }}"
+    login_user: "{{ admin_login_user }}"
+    login_password: "{{ admin_login_password }}"
     state: present
     host_groups: "{{ host_groups }}"
 
-# - name: Delete host (Zabbix server)
-#   community.zabbix.zabbix_host:
-#     server_url: "{{ server_url }}"
-#     admin_login_user: "{{ admin_login_user }}"
-#     admin_login_password: "{{ admin_login_password }}"
-#     state: absent
-#     host_name: Zabbix server
+- name: Delete host (Zabbix server)
+  community.zabbix.zabbix_host:
+    server_url: "{{ server_url }}"
+    login_user: "{{ admin_login_user }}"
+    login_password: "{{ admin_login_password }}"
+    state: absent
+    host_name: Zabbix server
 
 - name: Create linux host
   community.zabbix.zabbix_host:
     server_url: "{{ server_url }}"
-    admin_login_user: "{{ admin_login_user }}"
-    admin_login_password: "{{ admin_login_password }}"
+    login_user: "{{ admin_login_user }}"
+    login_password: "{{ admin_login_password }}"
     state: present
     host_name: "{{ item.dns }}"
     visible_name: "{{ item.dns }}"
@@ -394,8 +394,8 @@
 - name: Create nas host
   community.zabbix.zabbix_host:
     server_url: "{{ server_url }}"
-    admin_login_user: "{{ admin_login_user }}"
-    admin_login_password: "{{ admin_login_password }}"
+    login_user: "{{ admin_login_user }}"
+    login_password: "{{ admin_login_password }}"
     state: present
     host_name: "{{ item.name }}"
     visible_name: "{{ item.name }}"
@@ -448,8 +448,8 @@
 - name: Create printer snmp host
   community.zabbix.zabbix_host:
     server_url: "{{ server_url }}"
-    admin_login_user: "{{ admin_login_user }}"
-    admin_login_password: "{{ admin_login_password }}"
+    login_user: "{{ admin_login_user }}"
+    login_password: "{{ admin_login_password }}"
     state: present
     host_name: "{{ item.dns }}"
     visible_name: "{{ item.dns }}"
@@ -480,8 +480,8 @@
 - name: Create external host
   community.zabbix.zabbix_host:
     server_url: "{{ server_url }}"
-    admin_login_user: "{{ admin_login_user }}"
-    admin_login_password: "{{ admin_login_password }}"
+    login_user: "{{ admin_login_user }}"
+    login_password: "{{ admin_login_password }}"
     state: present
     host_name: "{{ item.dns }}"
     visible_name: "{{ item.dns }}"
@@ -502,8 +502,8 @@
 - name: Create generic ping host
   community.zabbix.zabbix_host:
     server_url: "{{ server_url }}"
-    admin_login_user: "{{ admin_login_user }}"
-    admin_login_password: "{{ admin_login_password }}"
+    login_user: "{{ admin_login_user }}"
+    login_password: "{{ admin_login_password }}"
     state: present
     host_name: "{{ item.dns }}"
     visible_name: "{{ item.dns }}"
