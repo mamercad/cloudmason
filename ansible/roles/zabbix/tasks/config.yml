@@ -212,7 +212,7 @@
     surname: "{{ users.mark.last_name }}"
     usrgrps:
       - Zabbix administrators
-    passwd: "{{ mark_login_password }}"
+    passwd: "{{ users.mark.password }}"
     lang: en_US
     timezone: America/Detroit
     theme: dark-theme
