@@ -1,42 +1,61 @@
 ---
 
-- name: AWX / config
+- name: AWX / infra
   hosts: localhost
   connection: local
   gather_facts: false
   become: false
   tasks:
-    - name: Include awx role (config)
+    - name: Include awx role (infra)
       include_role:
         name: awx
-        tasks_from: config.yml
+        tasks_from: infra.yml
+      vars:
+        context: thinkpad
+        # spec:
+        #   ingress_type: LoadBalancer
+        #   loadbalancer_protocol: http
   tags:
     - awx
-    - config
+    - infra
 
-- name: AWX / metronome
-  hosts: localhost
-  connection: local
-  gather_facts: false
-  become: false
-  tasks:
-    - name: Include awx role (metronome)
-      include_role:
-        name: awx
-        tasks_from: metronome.yml
-  tags:
-    - awx
-    - metronome
+# - name: AWX / config
+#   hosts: localhost
+#   connection: local
+#   gather_facts: false
+#   become: false
+#   tasks:
+#     - name: Include awx role (config)
+#       include_role:
+#         name: awx
+#         tasks_from: config.yml
+#   tags:
+#     - awx
+#     - config
 
-- name: AWX / user
-  hosts: "{{ ansible_limit | default(omit) }}"
-  gather_facts: false
-  become: false
-  tasks:
-    - name: Include awx role (user)
-      include_role:
-        name: awx
-        tasks_from: user.yml
-  tags:
-    - awx
-    - user
+# - name: AWX / metronome
+#   hosts: localhost
+#   connection: local
+#   gather_facts: false
+#   become: false
+#   tasks:
+#     - name: Include awx role (metronome)
+#       include_role:
+#         name: awx
+#         tasks_from: metronome.yml
+#   tags:
+#     - awx
+#     - metronome
+
+# - name: AWX / user
+#   hosts: "{{ ansible_limit | default(omit) }}"
+#   gather_facts: false
+#   become: false
+#   tasks:
+#     - name: Include awx role (user)
+#       include_role:
+#         name: awx
+#         tasks_from: user.yml
+#   tags:
+#     - awx
+#     - user

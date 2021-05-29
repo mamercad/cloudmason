@@ -5,7 +5,7 @@
     api_version: v1
     kind: Namespace
 
-# https://raw.githubusercontent.com/ansible/awx-operator/0.9.0/deploy/awx-operator.yaml
+https://raw.githubusercontent.com/ansible/awx-operator/0.9.0/deploy/awx-operator.yaml
 - name: Deploy awx operator
   community.kubernetes.k8s:
     state: present
@@ -26,3 +26,10 @@
       metadata:
         name: awx
         namespace: awx
+      spec:
+        tower_ingress_type: LoadBalancer
+        # loadbalancer_protocol: http
+
+# - name: Patch the ingress
+#   ansible.builtin.shell:
+#     cmd: kubectl -n awx patch service awx-service --patch "$(cat roles/awx/files/ingress.yaml)"
