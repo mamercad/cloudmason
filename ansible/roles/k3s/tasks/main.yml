@@ -38,5 +38,5 @@
 
 - name: Show the kubeconfig
   ansible.builtin.shell:
-    cmd: cat /etc/rancher/k3s/k3s.yaml 
+    cmd: cat /etc/rancher/k3s/k3s.yaml
   become: true

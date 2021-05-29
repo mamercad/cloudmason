@@ -99,6 +99,9 @@ all:
     gameserver:
       hosts:
         thinkpad:
+    k3s_servers:
+      hosts:
+        thinkpad:
     # clusterpi:
     #   hosts:
     #     clusterpi0:
