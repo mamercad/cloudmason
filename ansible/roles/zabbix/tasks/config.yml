@@ -248,25 +248,25 @@
           disaster: true
         active: true
 
-# - name: Create discovery rule with ICMP, agent, and SNMP checks
-#   community.zabbix.zabbix_discovery_rule:
-#     server_url: "{{ server_url }}"
-#     admin_login_user: "{{ admin_login_user }}"
-#     admin_login_password: "{{ admin_login_password }}"
-#     name: Cloudmason
-#     state: present
-#     iprange: 192.168.1.1-254
-#     dchecks:
-#       - type: ICMP
-#       - type: Zabbix
-#         key: "agent.hostname"
-#         ports: "10050"
-#         uniq: true
-#         host_source: "discovery"
-#       - type: SNMPv2
-#         snmp_community: public
-#         ports: "161"
-#         key: SNMPv2-MIB::sysName.0
+- name: Create discovery rule with ICMP, agent, and SNMP checks
+  community.zabbix.zabbix_discovery_rule:
+    server_url: "{{ server_url }}"
+    admin_login_user: "{{ admin_login_user }}"
+    admin_login_password: "{{ admin_login_password }}"
+    name: Cloudmason
+    state: present
+    iprange: "{{ discovery_iprange }}"
+    dchecks:
+      - type: ICMP
+      - type: Zabbix
+        key: "agent.hostname"
+        ports: "10050"
+        uniq: true
+        host_source: "discovery"
+      - type: SNMPv2
+        snmp_community: public
+        ports: "161"
+        key: SNMPv2-MIB::sysName.0
 
 # - name: Deploy discovery action
 #   community.zabbix.zabbix_action:
