@@ -551,26 +551,26 @@
         send_to_users:
           - mark
 
-# - name: Create dns host
-#   community.zabbix.zabbix_host:
-#     server_url: "{{ server_url }}"
-#     admin_login_user: "{{ admin_login_user }}"
-#     admin_login_password: "{{ admin_login_password }}"
-#     state: present
-#     host_name: "{{ item.dns }}"
-#     visible_name: "{{ item.dns }}"
-#     description: "{{ item.dns }}"
-#     host_groups:
-#       - DNS servers
-#     link_templates:
-#       - ICMP ping
-#       - DNS service
-#       - Linux by Zabbix agent active
-#     status: enabled
-#     interfaces:
-#       - type: agent
-#         dns: "{{ item.dns }}"
-#         ip: "{{ item.ip }}"
-#         main: 1
-#         useip: 1
-#   loop: "{{ dns_servers }}"
+- name: Create dns host
+  community.zabbix.zabbix_host:
+    server_url: "{{ server_url }}"
+    login_user: "{{ admin_login_user }}"
+    login_password: "{{ admin_login_password }}"
+    state: present
+    host_name: "{{ item.dns }}"
+    visible_name: "{{ item.dns }}"
+    description: "{{ item.dns }}"
+    host_groups:
+      - DNS servers
+    link_templates:
+      - ICMP ping
+      # - DNS service
+      - Linux by Zabbix agent active
+    status: enabled
+    interfaces:
+      - type: agent
+        dns: "{{ item.dns }}"
+        ip: "{{ item.ip }}"
+        main: 1
+        useip: 1
+  loop: "{{ dns_servers }}"
