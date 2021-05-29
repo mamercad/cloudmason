@@ -251,8 +251,8 @@
 - name: Create discovery rule with ICMP, agent, and SNMP checks
   community.zabbix.zabbix_discovery_rule:
     server_url: "{{ server_url }}"
-    admin_login_user: "{{ admin_login_user }}"
-    admin_login_password: "{{ admin_login_password }}"
+    login_user: "{{ admin_login_user }}"
+    login_password: "{{ admin_login_password }}"
     name: Cloudmason
     state: present
     iprange: "{{ discovery_iprange }}"
@@ -526,30 +526,30 @@
 #         main: 1
 #   loop: "{{ unifi_devices }}"
 
-# - name: Deploy trigger action
-#   community.zabbix.zabbix_action:
-#     server_url: "{{ server_url }}"
-#     admin_login_user: "{{ admin_login_user }}"
-#     admin_login_password: "{{ admin_login_password }}"
-#     name: "Send alerts to Mark"
-#     event_source: trigger
-#     state: present
-#     status: enabled
-#     esc_period: 60
-#     conditions:
-#       - type: trigger_severity
-#         operator: ">="
-#         value: not classified
-#     operations:
-#       - type: send_message
-#         media_type: Cloudmason Slack
-#         send_to_users:
-#           - mark
-#     recovery_operations:
-#       - type: send_message
-#         media_type: Cloudmason Slack
-#         send_to_users:
-#           - mark
+- name: Deploy trigger action
+  community.zabbix.zabbix_action:
+    server_url: "{{ server_url }}"
+    admin_login_user: "{{ admin_login_user }}"
+    admin_login_password: "{{ admin_login_password }}"
+    name: "Send alerts to Mark"
+    event_source: trigger
+    state: present
+    status: enabled
+    esc_period: 60
+    conditions:
+      - type: trigger_severity
+        operator: ">="
+        value: not classified
+    operations:
+      - type: send_message
+        media_type: Cloudmason Slack
+        send_to_users:
+          - mark
+    recovery_operations:
+      - type: send_message
+        media_type: Cloudmason Slack
+        send_to_users:
+          - mark
 
 # - name: Create dns host
 #   community.zabbix.zabbix_host:
