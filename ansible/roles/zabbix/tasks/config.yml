@@ -207,9 +207,9 @@
     server_url: "{{ server_url }}"
     login_user: "{{ admin_login_user }}"
     login_password: "{{ admin_login_password }}"
-    alias: "{{ mark_login_user }}"
-    name: Mark
-    surname: Mercado
+    alias: "{{ users.mark.alias }}"
+    name: "{{ users.mark.first_name }}"
+    surname: "{{ users.mark.last_name }}"
     usrgrps:
       - Zabbix administrators
     passwd: "{{ mark_login_password }}"
@@ -224,29 +224,29 @@
     type: Zabbix super admin
     role_name: Super admin role
     state: present
-#     user_medias:
-#       - mediatype: Cloudmason Email
-#         sendto: mamercad@gmail.com
-#         period: 1-7,00:00-24:00
-#         severity:
-#           not_classified: false
-#           information: true
-#           warning: true
-#           average: true
-#           high: true
-#           disaster: true
-#         active: true
-#       - mediatype: Cloudmason Slack
-#         sendto: "#zabbix"
-#         period: 1-7,00:00-24:00
-#         severity:
-#           not_classified: false
-#           information: true
-#           warning: true
-#           average: true
-#           high: true
-#           disaster: true
-#         active: true
+    user_medias:
+      - mediatype: Cloudmason Email
+        sendto: "{{ users.mark.email }}"
+        period: 1-7,00:00-24:00
+        severity:
+          not_classified: false
+          information: true
+          warning: true
+          average: true
+          high: true
+          disaster: true
+        active: true
+      - mediatype: Cloudmason Slack
+        sendto: "{{ users.mark.slack }}"
+        period: 1-7,00:00-24:00
+        severity:
+          not_classified: false
+          information: true
+          warning: true
+          average: true
+          high: true
+          disaster: true
+        active: true
 
 # - name: Create discovery rule with ICMP, agent, and SNMP checks
 #   community.zabbix.zabbix_discovery_rule:
