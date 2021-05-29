@@ -16,3 +16,13 @@
     - ServiceAccount
     - ClusterRole
     - Deployment
+
+- name: Deploy awx
+  community.kubernetes.k8s:
+    state: present
+    definition:
+      apiVersion: awx.ansible.com/v1beta1
+      kind: AWX
+      metadata:
+        name: awx
+        namespace: awx
