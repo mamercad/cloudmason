@@ -18,8 +18,8 @@
   community.zabbix.zabbix_mediatype:
     name: Cloudmason Slack
     server_url: "{{ server_url }}"
-    admin_login_user: "{{ admin_login_user }}"
-    admin_login_password: "{{ admin_login_password }}"
+    login_user: "{{ admin_login_user }}"
+    login_password: "{{ admin_login_password }}"
     type: webhook
     webhook_script: "{{ lookup('ansible.builtin.file', 'files/slack.js') }}"
     webhook_params:
@@ -143,8 +143,8 @@
   community.zabbix.zabbix_mediatype:
     name: Cloudmason Email
     server_url: "{{ server_url }}"
-    admin_login_user: "{{ admin_login_user }}"
-    admin_login_password: "{{ admin_login_password }}"
+    login_user: "{{ admin_login_user }}"
+    login_password: "{{ admin_login_password }}"
     type: email
     smtp_email: "{{ smtp_email }}"
     smtp_server: "{{ smtp_server }}"
