@@ -14,130 +14,130 @@
   with_fileglob:
     - templates/zabbix/*.j2
 
-# - name: Add Slack media type
-#   community.zabbix.zabbix_mediatype:
-#     name: Cloudmason Slack
-#     server_url: "{{ server_url }}"
-#     admin_login_user: "{{ admin_login_user }}"
-#     admin_login_password: "{{ admin_login_password }}"
-#     type: webhook
-#     webhook_script: "{{ lookup('ansible.builtin.file', 'files/slack.js') }}"
-#     webhook_params:
-#       - name: alert_message
-#         value: "{ALERT.MESSAGE}"
-#       - name: alert_subject
-#         value: "{ALERT.SUBJECT}"
-#       - name: bot_token
-#         value: "{{ slack_bot_token }}"
-#       - name: channel
-#         value: "#zabbix"
-#       - name: channel_id
-#         value: '{EVENT.TAGS.__channel_id}'
-#       - name: discovery_host_dns
-#         value: "{DISCOVERY.DEVICE.DNS}"
-#       - name: discovery_host_ip
-#         value: "{DISCOVERY.DEVICE.IPADDRESS}"
-#       - name: event_date
-#         value: "{EVENT.DATE}"
-#       - name: event_id
-#         value: "{EVENT.ID}"
-#       - name: event_nseverity
-#         value: "{EVENT.NSEVERITY}"
-#       - name: event_opdata
-#         value: "{EVENT.OPDATA}"
-#       - name: event_recovery_date
-#         value: "{EVENT.RECOVERY.DATE}"
-#       - name: event_recovery_time
-#         value: "{EVENT.RECOVERY.TIME}"
-#       - name: event_severity
-#         value: "{EVENT.SEVERITY}"
-#       - name: event_source
-#         value: "{EVENT.SOURCE}"
-#       - name: event_tags
-#         value: "{EVENT.TAGS}"
-#       - name: event_time
-#         value: "{EVENT.TIME}"
-#       - name: event_update_date
-#         value: "{EVENT.UPDATE.DATE}"
-#       - name: event_update_status
-#         value: "{EVENT.UPDATE.STATUS}"
-#       - name: event_update_time
-#         value: "{EVENT.UPDATE.TIME}"
-#       - name: event_value
-#         value: "{EVENT.VALUE}"
-#       - name: host_conn
-#         value: "{HOST.CONN}"
-#       - name: host_name
-#         value: "{HOST.HOST}"
-#       - name: message_ts
-#         value: '{EVENT.TAGS.__message_ts}'
-#       - name: slack_as_user
-#         value: 'true'
-#       - name: slack_mode
-#         value: 'alarm'
-#       - name: trigger_description
-#         value: "{TRIGGER.DESCRIPTION}"
-#       - name: trigger_id
-#         value: "{TRIGGER.ID}"
-#       - name: zabbix_url
-#         value: "{{ slack_zabbix_url }}"
-#     process_tags: true
-#     event_menu: true
-#     event_menu_name: "Open in Slack: '{EVENT.TAGS.__channel_name}'"
-#     event_menu_url: '{EVENT.TAGS.__message_link}'
-#     message_templates:
-#       - subject: 'Problem: {EVENT.NAME}'
-#         body: |
-#           Problem started at {EVENT.TIME} on {EVENT.DATE}
-#           Problem name: {EVENT.NAME}
-#           Host: {HOST.NAME}
-#           Severity: {EVENT.SEVERITY}
-#           Operational data: {EVENT.OPDATA}
-#           Original problem ID: {EVENT.ID}
-#           {TRIGGER.URL}
-#         eventsource: triggers
-#         recovery: operations
-#       - subject: 'Resolved in {EVENT.DURATION}: {EVENT.NAME}'
-#         body: |
-#           Problem has been resolved at {EVENT.RECOVERY.TIME} on {EVENT.RECOVERY.DATE}
-#           Problem name: {EVENT.NAME}
-#           Problem duration: {EVENT.DURATION}
-#           Host: {HOST.NAME}
-#           Severity: {EVENT.SEVERITY}
-#           Original problem ID: {EVENT.ID}
-#           {TRIGGER.URL}
-#         eventsource: triggers
-#         recovery: recovery_operations
-#       - subject: 'Updated problem in {EVENT.AGE}: {EVENT.NAME}'
-#         body: |
-#           {USER.FULLNAME} {EVENT.UPDATE.ACTION} problem at {EVENT.UPDATE.DATE} {EVENT.UPDATE.TIME}.
-#           {EVENT.UPDATE.MESSAGE}
+- name: Add Slack media type
+  community.zabbix.zabbix_mediatype:
+    name: Cloudmason Slack
+    server_url: "{{ server_url }}"
+    admin_login_user: "{{ admin_login_user }}"
+    admin_login_password: "{{ admin_login_password }}"
+    type: webhook
+    webhook_script: "{{ lookup('ansible.builtin.file', 'files/slack.js') }}"
+    webhook_params:
+      - name: alert_message
+        value: "{ALERT.MESSAGE}"
+      - name: alert_subject
+        value: "{ALERT.SUBJECT}"
+      - name: bot_token
+        value: "{{ slack_bot_token }}"
+      - name: channel
+        value: "#zabbix"
+      - name: channel_id
+        value: '{EVENT.TAGS.__channel_id}'
+      - name: discovery_host_dns
+        value: "{DISCOVERY.DEVICE.DNS}"
+      - name: discovery_host_ip
+        value: "{DISCOVERY.DEVICE.IPADDRESS}"
+      - name: event_date
+        value: "{EVENT.DATE}"
+      - name: event_id
+        value: "{EVENT.ID}"
+      - name: event_nseverity
+        value: "{EVENT.NSEVERITY}"
+      - name: event_opdata
+        value: "{EVENT.OPDATA}"
+      - name: event_recovery_date
+        value: "{EVENT.RECOVERY.DATE}"
+      - name: event_recovery_time
+        value: "{EVENT.RECOVERY.TIME}"
+      - name: event_severity
+        value: "{EVENT.SEVERITY}"
+      - name: event_source
+        value: "{EVENT.SOURCE}"
+      - name: event_tags
+        value: "{EVENT.TAGS}"
+      - name: event_time
+        value: "{EVENT.TIME}"
+      - name: event_update_date
+        value: "{EVENT.UPDATE.DATE}"
+      - name: event_update_status
+        value: "{EVENT.UPDATE.STATUS}"
+      - name: event_update_time
+        value: "{EVENT.UPDATE.TIME}"
+      - name: event_value
+        value: "{EVENT.VALUE}"
+      - name: host_conn
+        value: "{HOST.CONN}"
+      - name: host_name
+        value: "{HOST.HOST}"
+      - name: message_ts
+        value: '{EVENT.TAGS.__message_ts}'
+      - name: slack_as_user
+        value: 'true'
+      - name: slack_mode
+        value: 'alarm'
+      - name: trigger_description
+        value: "{TRIGGER.DESCRIPTION}"
+      - name: trigger_id
+        value: "{TRIGGER.ID}"
+      - name: zabbix_url
+        value: "{{ slack_zabbix_url }}"
+    process_tags: true
+    event_menu: true
+    event_menu_name: "Open in Slack: '{EVENT.TAGS.__channel_name}'"
+    event_menu_url: '{EVENT.TAGS.__message_link}'
+    message_templates:
+      - subject: 'Problem: {EVENT.NAME}'
+        body: |
+          Problem started at {EVENT.TIME} on {EVENT.DATE}
+          Problem name: {EVENT.NAME}
+          Host: {HOST.NAME}
+          Severity: {EVENT.SEVERITY}
+          Operational data: {EVENT.OPDATA}
+          Original problem ID: {EVENT.ID}
+          {TRIGGER.URL}
+        eventsource: triggers
+        recovery: operations
+      - subject: 'Resolved in {EVENT.DURATION}: {EVENT.NAME}'
+        body: |
+          Problem has been resolved at {EVENT.RECOVERY.TIME} on {EVENT.RECOVERY.DATE}
+          Problem name: {EVENT.NAME}
+          Problem duration: {EVENT.DURATION}
+          Host: {HOST.NAME}
+          Severity: {EVENT.SEVERITY}
+          Original problem ID: {EVENT.ID}
+          {TRIGGER.URL}
+        eventsource: triggers
+        recovery: recovery_operations
+      - subject: 'Updated problem in {EVENT.AGE}: {EVENT.NAME}'
+        body: |
+          {USER.FULLNAME} {EVENT.UPDATE.ACTION} problem at {EVENT.UPDATE.DATE} {EVENT.UPDATE.TIME}.
+          {EVENT.UPDATE.MESSAGE}
 
-#           Current problem status is {EVENT.STATUS}, age is {EVENT.AGE}, acknowledged: {EVENT.ACK.STATUS}.
-#         eventsource: triggers
-#         recovery: update_operations
-#       - subject: 'Discovery: {DISCOVERY.DEVICE.STATUS} {DISCOVERY.DEVICE.IPADDRESS}'
-#         body: |
-#           Discovery rule: {DISCOVERY.RULE.NAME}
+          Current problem status is {EVENT.STATUS}, age is {EVENT.AGE}, acknowledged: {EVENT.ACK.STATUS}.
+        eventsource: triggers
+        recovery: update_operations
+      - subject: 'Discovery: {DISCOVERY.DEVICE.STATUS} {DISCOVERY.DEVICE.IPADDRESS}'
+        body: |
+          Discovery rule: {DISCOVERY.RULE.NAME}
 
-#           Device IP: {DISCOVERY.DEVICE.IPADDRESS}
-#           Device DNS: {DISCOVERY.DEVICE.DNS}
-#           Device status: {DISCOVERY.DEVICE.STATUS}
-#           Device uptime: {DISCOVERY.DEVICE.UPTIME}
+          Device IP: {DISCOVERY.DEVICE.IPADDRESS}
+          Device DNS: {DISCOVERY.DEVICE.DNS}
+          Device status: {DISCOVERY.DEVICE.STATUS}
+          Device uptime: {DISCOVERY.DEVICE.UPTIME}
 
-#           Device service name: {DISCOVERY.SERVICE.NAME}
-#           Device service port: {DISCOVERY.SERVICE.PORT}
-#           Device service status: {DISCOVERY.SERVICE.STATUS}
-#           Device service uptime: {DISCOVERY.SERVICE.UPTIME}
-#         eventsource: discovery
-#         recovery: operations
-#       - subject: 'Autoregistration: {HOST.HOST}'
-#         body: |
-#           Host name: {HOST.HOST}
-#           Host IP: {HOST.IP}
-#           Agent port: {HOST.PORT}
-#         eventsource: autoregistration
-#         recovery: operations
+          Device service name: {DISCOVERY.SERVICE.NAME}
+          Device service port: {DISCOVERY.SERVICE.PORT}
+          Device service status: {DISCOVERY.SERVICE.STATUS}
+          Device service uptime: {DISCOVERY.SERVICE.UPTIME}
+        eventsource: discovery
+        recovery: operations
+      - subject: 'Autoregistration: {HOST.HOST}'
+        body: |
+          Host name: {HOST.HOST}
+          Host IP: {HOST.IP}
+          Agent port: {HOST.PORT}
+        eventsource: autoregistration
+        recovery: operations
 
 # - name: Create an email mediatype with message templates
 #   community.zabbix.zabbix_mediatype:
