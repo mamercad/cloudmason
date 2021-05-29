@@ -563,7 +563,7 @@
     host_groups:
       - DNS servers
     link_templates:
-      - ICMP ping
+      - ICMP Ping
       # - DNS service
       - Linux by Zabbix agent active
     status: enabled
