@@ -63,7 +63,7 @@ host_groups:
   - Ping servers
   - UniFi devices
   - NAS devices
-  - DNS server
+  - DNS servers
   - External hosts
 
 linux_servers:
