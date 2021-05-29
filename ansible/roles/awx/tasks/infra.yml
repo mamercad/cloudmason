@@ -1,0 +1,18 @@
+- name: Create awx namespace
+  community.kubernetes.k8s:
+    state: present
+    name: awx
+    api_version: v1
+    kind: Namespace
+
+# https://raw.githubusercontent.com/ansible/awx-operator/0.9.0/deploy/awx-operator.yaml
+- name: Deploy awx operator
+  community.kubernetes.k8s:
+    state: present
+    definition: "{{ lookup('template', 'awx-operator/{{ item }}.yaml.j2') | from_yaml }}"
+  loop:
+    - CustomResourceDefinition
+    - ClusterRoleBinding
+    - ServiceAccount
+    - ClusterRole
+    - Deployment
