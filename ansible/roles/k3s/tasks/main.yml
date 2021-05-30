@@ -36,7 +36,18 @@
     enabled: true
   become: true
 
-- name: Show the kubeconfig
-  ansible.builtin.shell:
-    cmd: cat /etc/rancher/k3s/k3s.yaml
+- name: Fetch the kubeconfig
+  ansible.builtin.slurp:
+    src: /etc/rancher/k3s/k3s.yaml
   become: true
+  register: kubeconfig
+
+- name: Write the kubeconfig
+  ansible.builtin.copy:
+    dest: "/home/mark/.kube/config"
+    owner: mark
+    group: mark
+    mode: "0600"
+    content: "{{ kubeconfig.content | b64decode }}"
+    backup: true
+  delegate_to: localhost
