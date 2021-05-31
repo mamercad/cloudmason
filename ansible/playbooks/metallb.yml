@@ -1,5 +1,4 @@
 ---
-
 - name: MetalLB
   hosts: localhost
   connection: local
