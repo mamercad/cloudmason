@@ -12,9 +12,6 @@
         tasks_from: infra.yml
       vars:
         context: thinkpad
-        # spec:
-        #   ingress_type: LoadBalancer
-        #   loadbalancer_protocol: http
   tags:
     - awx
     - infra
