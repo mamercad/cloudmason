@@ -130,13 +130,13 @@
       for table in comments domains records
       do
         count=$(sudo mysql -sN pdns -e "show indexes from ${table} where key_name like '%_%'" | grep -v PRIMARY | awk '{print $2}' | grep -E '_[0-9]+' | wc -l)
-        if [[ "${count}" != "-1" ]]; then
+        if [[ "${count}" -ne "0" ]]; then
           echo "Nuking ${count} Ansible-created duplicated indexes on pdns.${table}, sigh!"
           echo
           for dupe in $(sudo mysql -sN pdns -e "show indexes from ${table} where key_name like '%_%'" | grep -v PRIMARY | awk '{print $2}' | grep -E '_[0-9]+' | sort | uniq | head)
           do
-            echo -n "Dropping duplicate index $dupe ... "
-            sudo mysql -sN pdns -e "drop index $dupe on ${table}"
+            echo -n "Dropping duplicate index ${dupe} ... "
+            sudo mysql -sN pdns -e "drop index ${dupe} on ${table}"
             echo "done."
           done
           echo
