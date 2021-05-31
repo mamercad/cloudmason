@@ -227,6 +227,7 @@
           echo "Timing select all records:"
           time sudo mysql -sN pdns -e "select count(*) from ${table}"
         fi
+      done
   become: true
 
 - name: Run nuke dupe index hack
