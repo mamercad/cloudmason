@@ -207,7 +207,7 @@
     dest: /usr/local/bin/pdns-nuke-dup-idx.sh
     owner: root
     group: root
-    mode: 0753
+    mode: 0755
     content: |
       #!/usr/bin/env bash
       set -euo pipefail

@@ -119,6 +119,37 @@
     login_unix_socket: /var/run/mysqld/mysqld.sock
   become: true
 
+- name: Deploy nuke pdns indexes
+  ansible.builtin.copy:
+    path: /usr/local/bin/nuke-pdns-dupe-indexes
+    owner: root
+    group: root
+    mode: 0755
+    content: |
+      #!/usr/bin/env bash
+      for table in comments domains records
+      do
+        count=$(sudo mysql -sN pdns -e "show indexes from ${table} where key_name like '%_%'" | grep -v PRIMARY | awk '{print $2}' | grep -E '_[0-9]+' | wc -l)
+        if [[ "${count}" != "-1" ]]; then
+          echo "Nuking ${count} Ansible-created duplicated indexes on pdns.${table}, sigh!"
+          echo
+          for dupe in $(sudo mysql -sN pdns -e "show indexes from ${table} where key_name like '%_%'" | grep -v PRIMARY | awk '{print $2}' | grep -E '_[0-9]+' | sort | uniq | head)
+          do
+            echo -n "Dropping duplicate index $dupe ... "
+            sudo mysql -sN pdns -e "drop index $dupe on ${table}"
+            echo "done."
+          done
+          echo
+          echo "Timing select all ${table}:"
+          time sudo mysql -sN pdns -e "select count(*) from ${table}"
+        fi
+      done
+  become: true
+
+- name: Run nuke pdns indexes
+  ansible.builtin.command: /usr/local/bin/nuke-pdns-dupe-indexes
+  become: true
+
 - name: Create PowerDNS schema
   community.mysql.mysql_query:
     login_db: pdns
@@ -225,35 +256,4 @@
     name: pdns
     state: started
     enabled: true
-  become: true
-
-- name: Deploy nuke pdns indexes
-  ansible.builtin.copy:
-    path: /usr/local/bin/nuke-pdns-dupe-indexes
-    owner: root
-    group: root
-    mode: 0755
-    content: |
-      #!/usr/bin/env bash
-      for table in comments records
-      do
-        count=$(sudo mysql -sN pdns -e "show indexes from ${table} where key_name like '%_%'" | grep -v PRIMARY | awk '{print $3}' | grep -E '_[0-9]+' | wc -l)
-        if [[ "${count}" != "0" ]]; then
-          echo "Nuking ${count} Ansible-created duplicated indexes on pdns.${table}, sigh!"
-          echo
-          for dupe in $(sudo mysql -sN pdns -e "show indexes from ${table} where key_name like '%_%'" | grep -v PRIMARY | awk '{print $3}' | grep -E '_[0-9]+' | sort | uniq | head)
-          do
-            echo -n "Dropping duplicate index $dupe ... "
-            sudo mysql -sN pdns -e "drop index $dupe on ${table}"
-            echo "done."
-          done
-          echo
-          echo "Timing select all ${table}:"
-          time sudo mysql -sN pdns -e "select count(*) from ${table}"
-        fi
-      done
-  become: true
-
-- name: Run nuke pdns indexes
-  ansible.builtin.command: /usr/local/bin/nuke-pdns-dupe-indexes
   become: true
