@@ -36,13 +36,13 @@ awx:
 awx-dev:
   type: CNAME
   value: net.cloudmason.org.
-awx-service.awx.thinkpad:
+traefik.kube-system.thinkpad:
   type: A
   value: 192.168.1.200
 awx.lenovo:
   type: A
   value: 192.168.1.242
-awx.thinkpad:
+awx-service.awx.thinkpad:
   type: A
   value: 192.168.1.201
 basement:
