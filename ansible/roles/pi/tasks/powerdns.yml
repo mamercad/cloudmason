@@ -216,7 +216,7 @@
         if [[ "${count}" -ne "0" ]]; then
           echo "Nuking ${count} Ansible-created duplicated indexes on pdns.${table}, sigh!"
           echo
-          for dupe in $(sudo mysql -sN pdns -e "show indexes from ${table} where key_name like '%_%'" | grep -v PRIMARY | awk '{print $1}' | grep -E '_[0-9]+' | sort | uniq | head)
+          for dupe in $(sudo mysql -sN pdns -e "show indexes from ${table} where key_name like '%_%'" | grep -v PRIMARY | awk '{print $3}' | grep -E '_[0-9]+' | sort | uniq | head)
           do
             echo -n "Dropping duplicate index ${dupe} on ${table} ... "
             sudo mysql -sN pdns -e "drop index ${dupe} on ${table}"
