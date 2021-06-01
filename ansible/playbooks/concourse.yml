@@ -1,0 +1,11 @@
+---
+- name: Concourse
+  hosts: localhost
+  connection: local
+  gather_facts: false
+  become: false
+  tasks:
+    - name: Include Concourse role (main tasks)
+      ansible.builtin.include_role:
+        name: concourse
+        tasks_from: main.yml

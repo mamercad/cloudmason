@@ -27,9 +27,10 @@
         name: awx
         namespace: awx
       spec:
-        tower_ingress_type: LoadBalancer
-        # loadbalancer_protocol: http
+        ingress_type: LoadBalancer
+        loadbalancer_protocol: http
 
-# - name: Patch the ingress
-#   ansible.builtin.shell:
-#     cmd: kubectl -n awx patch service awx-service --patch "$(cat roles/awx/files/ingress.yaml)"
+- name: Patch the ingress
+  ansible.builtin.shell:
+    cmd: kubectl -n awx patch service awx-service --patch "$(cat roles/awx/files/ingress.yaml)"
+  changed_when: false  # Will change every time
