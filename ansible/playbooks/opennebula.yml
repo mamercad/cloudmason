@@ -1,0 +1,10 @@
+---
+- name: OpenNebula / main
+  hosts: opennebula_servers
+  gather_facts: true
+  become: false
+  tasks:
+    - name: Include opennebula role (main)
+      include_role:
+        name: opennebula
+        tasks_from: main.yml
