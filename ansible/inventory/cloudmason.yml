@@ -102,6 +102,9 @@ all:
     k3s_servers:
       hosts:
         thinkpad:
+    opennebula_servers:
+      hosts:
+        thinkpad:
     # clusterpi:
     #   hosts:
     #     clusterpi0:
