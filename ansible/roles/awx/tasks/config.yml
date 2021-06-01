@@ -479,8 +479,6 @@
 #   tags:
 #     - awx
 
-
-
 # - name: Job Template
 #   awx.awx.tower_job_template:
 #     state: present
