@@ -1,7 +1,11 @@
 ---
+
 - name: Galaxy Credential
   awx.awx.tower_credential:
     state: present
+    tower_host: "{{ TOWER_HOST }}"
+    tower_username: "{{ TOWER_USERNAME }}"
+    tower_password: "{{ TOWER_PASSWORD }}"
     name: Cloudmason Galaxy
     description: Cloudmason Galaxy
     organization: Cloudmason
@@ -9,40 +13,44 @@
     inputs:
       auth_url: ''
       url: https://galaxy.ansible.com
-  tags:
-    - awx
 
 - name: Organization
   awx.awx.tower_organization:
     state: present
+    tower_host: "{{ TOWER_HOST }}"
+    tower_username: "{{ TOWER_USERNAME }}"
+    tower_password: "{{ TOWER_PASSWORD }}"
     name: Cloudmason
     description: Cloudmason
     galaxy_credentials:
       - Cloudmason Galaxy
-  tags:
-    - awx
 
 - name: Team
   awx.awx.tower_team:
     state: present
+    tower_host: "{{ TOWER_HOST }}"
+    tower_username: "{{ TOWER_USERNAME }}"
+    tower_password: "{{ TOWER_PASSWORD }}"
     name: Cloudmason
     description: Cloudmason
     organization: Cloudmason
-  tags:
-    - awx
 
 - name: Inventory
   awx.awx.tower_inventory:
     state: present
+    tower_host: "{{ TOWER_HOST }}"
+    tower_username: "{{ TOWER_USERNAME }}"
+    tower_password: "{{ TOWER_PASSWORD }}"
     name: Cloudmason
     description: Cloudmason
     organization: Cloudmason
-  tags:
-    - awx
 
 - name: SCM Credential
   awx.awx.tower_credential:
     state: present
+    tower_host: "{{ TOWER_HOST }}"
+    tower_username: "{{ TOWER_USERNAME }}"
+    tower_password: "{{ TOWER_PASSWORD }}"
     name: Cloudmason GitHub
     description: Cloudmason
     organization: Cloudmason
@@ -50,12 +58,13 @@
     inputs:
       ssh_key_data: "{{ awx_secrets.awx.ssh_key_data }}"
       ssh_key_unlock: "{{ awx_secrets.awx.ssh_key_unlock }}"
-  tags:
-    - awx
 
 - name: Machine Credential
   awx.awx.tower_credential:
     state: present
+    tower_host: "{{ TOWER_HOST }}"
+    tower_username: "{{ TOWER_USERNAME }}"
+    tower_password: "{{ TOWER_PASSWORD }}"
     name: Cloudmason Machine / awx
     description: Cloudmason
     organization: Cloudmason
@@ -65,12 +74,13 @@
       password: "{{ awx_secrets.awx.password }}"
       ssh_key_data: "{{ awx_secrets.awx.ssh_key_data }}"
       ssh_key_unlock: "{{ awx_secrets.awx.ssh_key_unlock }}"
-  tags:
-    - awx
 
 - name: Project
   awx.awx.tower_project:
     state: present
+    tower_host: "{{ TOWER_HOST }}"
+    tower_username: "{{ TOWER_USERNAME }}"
+    tower_password: "{{ TOWER_PASSWORD }}"
     name: Cloudmason
     description: Cloudmason
     organization: Cloudmason
@@ -82,12 +92,13 @@
     scm_update_on_launch: true
     scm_update_cache_timeout: 900
     credential: Cloudmason GitHub
-  tags:
-    - awx
 
 - name: Project
   awx.awx.tower_project:
     state: present
+    tower_host: "{{ TOWER_HOST }}"
+    tower_username: "{{ TOWER_USERNAME }}"
+    tower_password: "{{ TOWER_PASSWORD }}"
     name: SnakeBot
     description: SnakeBot
     organization: Cloudmason
@@ -99,21 +110,23 @@
     scm_update_on_launch: true
     scm_update_cache_timeout: 0
     credential: Cloudmason GitHub
-  tags:
-    - awx
 
 - name: Inventory
   awx.awx.tower_inventory:
     state: present
+    tower_host: "{{ TOWER_HOST }}"
+    tower_username: "{{ TOWER_USERNAME }}"
+    tower_password: "{{ TOWER_PASSWORD }}"
     name: Cloudmason
     description: Cloudmason
     organization: Cloudmason
-  tags:
-    - awx
 
 - name: Inventory Source
   awx.awx.tower_inventory_source:
     state: present
+    tower_host: "{{ TOWER_HOST }}"
+    tower_username: "{{ TOWER_USERNAME }}"
+    tower_password: "{{ TOWER_PASSWORD }}"
     name: Cloudmason
     description: Cloudmason
     organization: Cloudmason
@@ -124,331 +137,13 @@
     overwrite: true
     update_cache_timeout: 900
     update_on_project_update: true
-  tags:
-    - awx
-
-- name: Job Template
-  awx.awx.tower_job_template:
-    state: present
-    name: Cloudmason / Ping
-    job_type: run
-    organization: Cloudmason
-    inventory: Cloudmason
-    ask_inventory_on_launch: true
-    project: Cloudmason
-    playbook: ansible/playbooks/ping.yml
-    credentials:
-      - Cloudmason Machine
-    ask_credential_on_launch: true
-    ask_limit_on_launch: true
-    notification_templates_started: ['Cloudmason Slack (awx)']
-    notification_templates_success: ['Cloudmason Slack (awx)']
-    notification_templates_error: ['Cloudmason Slack (awx)']
-  tags:
-    - awx
-
-- name: Machine Credential
-  awx.awx.tower_credential:
-    state: present
-    name: Cloudmason Machine / mamercad
-    description: Cloudmason
-    organization: Cloudmason
-    credential_type: Machine
-    inputs:
-      username: mamercad
-      password: "{{ awx_secrets.mark.password }}"
-      ssh_key_data: "{{ awx_secrets.mark.ssh_key_data }}"
-      ssh_key_unlock: "{{ awx_secrets.mark.ssh_key_unlock }}"
-  tags:
-    - awx
-
-- name: Machine Credential
-  awx.awx.tower_credential:
-    state: present
-    name: Cloudmason Machine / mark
-    description: Cloudmason
-    organization: Cloudmason
-    credential_type: Machine
-    inputs:
-      username: mark
-      password: "{{ awx_secrets.mark.password }}"
-      ssh_key_data: "{{ awx_secrets.mark.ssh_key_data }}"
-      ssh_key_unlock: "{{ awx_secrets.mark.ssh_key_unlock }}"
-      become_password: "{{ awx_secrets.mark.password }}"
-  tags:
-    - awx
-
-- name: Job Template
-  awx.awx.tower_job_template:
-    state: present
-    name: Cloudmason / WAN
-    job_type: run
-    organization: Cloudmason
-    inventory: Cloudmason
-    ask_inventory_on_launch: false
-    project: Cloudmason
-    playbook: ansible/playbooks/wan.yml
-    credentials:
-      - Cloudmason Machine / mamercad
-    ask_credential_on_launch: false
-    limit: gateway
-    ask_limit_on_launch: false
-    notification_templates_started: ['Cloudmason Slack (awx)']
-    notification_templates_success: ['Cloudmason Slack (awx)']
-    notification_templates_error: ['Cloudmason Slack (awx)']
-  tags:
-    - awx
-
-- name: Credential Type
-  awx.awx.tower_credential_type:
-    state: present
-    name: Cloudmason / PowerDNS API Key
-    description: Cloudmason / PowerDNS API Key
-    kind: net
-    inputs:
-      fields:
-        - type: string
-          id: POWERDNS_API_KEY
-          label: POWERDNS_API_KEY
-          secret: true
-      required:
-        - POWERDNS_API_KEY
-    injectors:
-      env:
-        POWERDNS_API_KEY: !unsafe '{{ POWERDNS_API_KEY }}'
-  tags:
-    - awx
-
-- name: PowerDNS API Key Credential
-  awx.awx.tower_credential:
-    state: present
-    name: Cloudmason PowerDNS API Key
-    description: Cloudmason PowerDNS API Key
-    organization: Cloudmason
-    credential_type: Cloudmason / PowerDNS API Key
-    inputs:
-      POWERDNS_API_KEY: !vault |
-        $ANSIBLE_VAULT;1.1;AES256
-        37306266393431646462663233353063356334353133383831396463393266363761636137393062
-        3664663033636632303032373664656535653866356338650a393765653439343361616564663736
-        30363038336163356564396162366135333431383961343730396662633539646239626332386336
-        6336633833633733640a353935643532306331626538623763626438343933333735366261313538
-        3832
-  tags:
-    - awx
-
-- name: Credential Type
-  awx.awx.tower_credential_type:
-    state: present
-    name: Cloudmason / CloudFlare API Key
-    description: Cloudmason / CloudFlare API Key
-    kind: net
-    inputs:
-      fields:
-        - type: string
-          id: CLOUDFLARE_API_KEY
-          label: CLOUDFLARE_API_KEY
-          secret: true
-      required:
-        - CLOUDFLARE_API_KEY
-    injectors:
-      env:
-        CLOUDFLARE_API_KEY: !unsafe '{{ CLOUDFLARE_API_KEY }}'
-  tags:
-    - awx
-
-- name: CloudFlare API Key Credential
-  awx.awx.tower_credential:
-    state: present
-    name: Cloudmason CloudFlare API Key
-    description: Cloudmason CloudFlare API Key
-    organization: Cloudmason
-    credential_type: Cloudmason / CloudFlare API Key
-    inputs:
-      CLOUDFLARE_API_KEY: !vault |
-        $ANSIBLE_VAULT;1.1;AES256
-        61383030636463633363663834663730393033386334653932346135376134643238386134616234
-        6636343065383764653433376431643737623762323332620a306134386164336138363863613739
-        35373761353634633434336537383132383263326666396537656664616161626161333330633062
-        3034316462346633300a323265313035616238336138666432373764656234353131396339383962
-        65613864343064356331396132636261353832366132343138316461333565643137373730643233
-        6132316336393732363439666561373531383065643731346532
-  tags:
-    - awx
-
-- name: Credential Type
-  awx.awx.tower_credential_type:
-    state: present
-    name: Cloudmason / CloudFlare API Token
-    description: Cloudmason / CloudFlare API Token
-    kind: net
-    inputs:
-      fields:
-        - type: string
-          id: CLOUDFLARE_API_TOKEN
-          label: CLOUDFLARE_API_TOKEN
-          secret: true
-      required:
-        - CLOUDFLARE_API_TOKEN
-    injectors:
-      env:
-        CLOUDFLARE_API_TOKEN: !unsafe '{{ CLOUDFLARE_API_TOKEN }}'
-  tags:
-    - awx
-
-- name: CloudFlare API Token Credential
-  awx.awx.tower_credential:
-    state: present
-    name: Cloudmason CloudFlare API Token
-    description: Cloudmason CloudFlare API Token
-    organization: Cloudmason
-    credential_type: Cloudmason / CloudFlare API Token
-    inputs:
-      CLOUDFLARE_API_TOKEN: !vault |
-        $ANSIBLE_VAULT;1.1;AES256
-        61383030636463633363663834663730393033386334653932346135376134643238386134616234
-        6636343065383764653433376431643737623762323332620a306134386164336138363863613739
-        35373761353634633434336537383132383263326666396537656664616161626161333330633062
-        3034316462346633300a323265313035616238336138666432373764656234353131396339383962
-        65613864343064356331396132636261353832366132343138316461333565643137373730643233
-        6132316336393732363439666561373531383065643731346532
-  tags:
-    - awx
-
-- name: Job Template
-  awx.awx.tower_job_template:
-    state: present
-    name: Cloudmason / OctoDNS
-    job_type: run
-    organization: Cloudmason
-    inventory: Cloudmason
-    ask_inventory_on_launch: false
-    project: Cloudmason
-    playbook: ansible/playbooks/octodns.yml
-    credentials:
-      - Cloudmason Machine / awx
-      - Cloudmason PowerDNS API Key
-      - Cloudmason CloudFlare API Key
-      - Cloudmason CloudFlare API Token
-    ask_credential_on_launch: false
-    limit: lenovo
-    ask_limit_on_launch: false
-    notification_templates_started: ['Cloudmason Slack (awx)']
-    notification_templates_success: ['Cloudmason Slack (awx)']
-    notification_templates_error: ['Cloudmason Slack (awx)']
-  tags:
-    - awx
-
-- name: Vault Credential
-  awx.awx.tower_credential:
-    state: present
-    name: Cloudmason Vault
-    description: Cloudmason Vault
-    organization: Cloudmason
-    credential_type: Vault
-    inputs:
-      vault_id: Cloudmason
-      vault_password: !vault |
-        $ANSIBLE_VAULT;1.1;AES256
-        64383535393831613632353664323562653964663864383430616333376462333938626266356334
-        3332343636306466623035396462633432333735653766300a663466393461633561363363326666
-        34653065636366616231356661636465393661303438383730393534646131623738393332316632
-        3339666535643762300a363163633138626565373565326464393835373636663733383935636133
-        3764
-  tags:
-    - awx
-
-- name: Job Template
-  awx.awx.tower_job_template:
-    state: present
-    name: Cloudmason / AWX (user)
-    job_type: run
-    organization: Cloudmason
-    inventory: Cloudmason
-    ask_inventory_on_launch: false
-    project: Cloudmason
-    playbook: ansible/playbooks/awx-user.yml
-    credentials:
-      - Cloudmason Vault
-      - Cloudmason Machine / mark
-    ask_credential_on_launch: true
-    limit: lenovo
-    ask_limit_on_launch: true
-    notification_templates_started: ['Cloudmason Slack (awx)']
-    notification_templates_success: ['Cloudmason Slack (awx)']
-    notification_templates_error: ['Cloudmason Slack (awx)']
-  tags:
-    - awx
-
-- name: Job Template
-  awx.awx.tower_job_template:
-    state: present
-    name: Cloudmason / AWX (metronome)
-    job_type: run
-    organization: Cloudmason
-    inventory: Cloudmason
-    ask_inventory_on_launch: false
-    project: Cloudmason
-    playbook: ansible/playbooks/awx.yml
-    ask_credential_on_launch: false
-    limit: localhost
-    ask_limit_on_launch: false
-    job_tags: metronome
-    notification_templates_started: ['Cloudmason Slack (awx)']
-    notification_templates_success: ['Cloudmason Slack (awx)']
-    notification_templates_error: ['Cloudmason Slack (awx)']
-  tags:
-    - awx
-
-- name: Schedule
-  awx.awx.tower_schedule:
-    state: present
-    name: Cloudmason / AWX (metronome) Schedule
-    description: Hourly AWX Metronome
-    rrule: "DTSTART:20210323T000000Z RRULE:FREQ=HOURLY;INTERVAL=1"
-    unified_job_template: Cloudmason / AWX (metronome)
-    enabled: true
-  tags:
-    - awx
-
-- name: Workflow Job Template
-  awx.awx.tower_workflow_job_template:
-    state: present
-    name: Cloudmason / OctoDNS Workflow
-    description: Cloudmason / OctoDNS Workflow
-    organization: Cloudmason
-    webhook_service: github
-    notification_templates_started: ['Cloudmason Slack (awx)']
-    notification_templates_success: ['Cloudmason Slack (awx)']
-    notification_templates_error: ['Cloudmason Slack (awx)']
-  tags:
-    - awx
-
-- name: Workflow Job Template Node
-  awx.awx.tower_workflow_job_template_node:
-    state: present
-    identifier: octodns-sync
-    workflow: Cloudmason / OctoDNS Workflow
-    unified_job_template: Cloudmason / OctoDNS
-    organization: Cloudmason
-  tags:
-    - awx
-
-- name: Workflow Job Template Node
-  awx.awx.tower_workflow_job_template_node:
-    state: present
-    identifier: octodns-wan
-    workflow: Cloudmason / OctoDNS Workflow
-    unified_job_template: Cloudmason / WAN
-    organization: Cloudmason
-    success_nodes:
-      - octodns-sync
-  tags:
-    - awx
 
 - name: Slack Notification Template
   awx.awx.tower_notification_template:
     state: present
+    tower_host: "{{ TOWER_HOST }}"
+    tower_username: "{{ TOWER_USERNAME }}"
+    tower_password: "{{ TOWER_PASSWORD }}"
     name: Cloudmason Slack (awx)
     organization: Cloudmason
     notification_type: slack
@@ -463,182 +158,502 @@
       #     message: "{{ '{{ job_friendly_name }} {{ job.id }} completed in {{ job.elapsed }} seconds' }}"
       #   error:
       #     message: "{{ '{{ job_friendly_name }} {{ job.id }} failed, please look at {{ job.url }}' }}"
-  tags:
-    - awx
 
 - name: Job Template
   awx.awx.tower_job_template:
     state: present
-    name: Cloudmason / Ubuntu (main)
+    tower_host: "{{ TOWER_HOST }}"
+    tower_username: "{{ TOWER_USERNAME }}"
+    tower_password: "{{ TOWER_PASSWORD }}"
+    name: Cloudmason / Ping
     job_type: run
     organization: Cloudmason
     inventory: Cloudmason
     ask_inventory_on_launch: true
     project: Cloudmason
-    playbook: ansible/playbooks/ubuntu.yml
+    playbook: ansible/playbooks/ping.yml
     credentials:
-      - Cloudmason Vault
-      - Cloudmason Machine
+      - Cloudmason Machine / awx
     ask_credential_on_launch: true
-    limit: ubuntu
     ask_limit_on_launch: true
     notification_templates_started: ['Cloudmason Slack (awx)']
     notification_templates_success: ['Cloudmason Slack (awx)']
     notification_templates_error: ['Cloudmason Slack (awx)']
-  tags:
-    - awx
 
-- name: Job Template
-  awx.awx.tower_job_template:
-    state: present
-    name: Cloudmason / Ubuntu (mark)
-    job_type: run
-    organization: Cloudmason
-    inventory: Cloudmason
-    ask_inventory_on_launch: true
-    project: Cloudmason
-    playbook: ansible/playbooks/ubuntu-mark.yml
-    credentials:
-      - Cloudmason Vault
-      - Cloudmason Machine
-    ask_credential_on_launch: true
-    limit: ubuntu
-    ask_limit_on_launch: true
-    notification_templates_started: ['Cloudmason Slack (awx)']
-    notification_templates_success: ['Cloudmason Slack (awx)']
-    notification_templates_error: ['Cloudmason Slack (awx)']
-  tags:
-    - awx
+# - name: Machine Credential
+#   awx.awx.tower_credential:
+#     state: present
+#     name: Cloudmason Machine / mamercad
+#     description: Cloudmason
+#     organization: Cloudmason
+#     credential_type: Machine
+#     inputs:
+#       username: mamercad
+#       password: "{{ awx_secrets.mark.password }}"
+#       ssh_key_data: "{{ awx_secrets.mark.ssh_key_data }}"
+#       ssh_key_unlock: "{{ awx_secrets.mark.ssh_key_unlock }}"
+#   tags:
+#     - awx
 
-- name: Job Template
-  awx.awx.tower_job_template:
-    state: present
-    name: Cloudmason / Pi (main)
-    job_type: run
-    organization: Cloudmason
-    inventory: Cloudmason
-    ask_inventory_on_launch: false
-    project: Cloudmason
-    playbook: ansible/playbooks/pi.yml
-    credentials:
-      - Cloudmason Vault
-      - Cloudmason Machine
-    ask_credential_on_launch: false
-    limit: pi
-    ask_limit_on_launch: false
-    ask_tags_on_launch: false
-    webhook_service: github
-    notification_templates_started: ['Cloudmason Slack (awx)']
-    notification_templates_success: ['Cloudmason Slack (awx)']
-    notification_templates_error: ['Cloudmason Slack (awx)']
-  tags:
-    - awx
+# - name: Machine Credential
+#   awx.awx.tower_credential:
+#     state: present
+#     name: Cloudmason Machine / mark
+#     description: Cloudmason
+#     organization: Cloudmason
+#     credential_type: Machine
+#     inputs:
+#       username: mark
+#       password: "{{ awx_secrets.mark.password }}"
+#       ssh_key_data: "{{ awx_secrets.mark.ssh_key_data }}"
+#       ssh_key_unlock: "{{ awx_secrets.mark.ssh_key_unlock }}"
+#       become_password: "{{ awx_secrets.mark.password }}"
+#   tags:
+#     - awx
 
-- name: Setting TOWER_URL_BASE
-  tower_settings:
-    name: TOWER_URL_BASE
-    value: "{{ lookup('env', 'TOWER_HOST') }}"
-  tags:
-    - awx
+# - name: Job Template
+#   awx.awx.tower_job_template:
+#     state: present
+#     name: Cloudmason / WAN
+#     job_type: run
+#     organization: Cloudmason
+#     inventory: Cloudmason
+#     ask_inventory_on_launch: false
+#     project: Cloudmason
+#     playbook: ansible/playbooks/wan.yml
+#     credentials:
+#       - Cloudmason Machine / mamercad
+#     ask_credential_on_launch: false
+#     limit: gateway
+#     ask_limit_on_launch: false
+#     notification_templates_started: ['Cloudmason Slack (awx)']
+#     notification_templates_success: ['Cloudmason Slack (awx)']
+#     notification_templates_error: ['Cloudmason Slack (awx)']
+#   tags:
+#     - awx
 
-- name: Setting SESSION_COOKIE_AGE
-  tower_settings:
-    name: SESSION_COOKIE_AGE
-    value: "86400"
-  tags:
-    - awx
+# - name: Credential Type
+#   awx.awx.tower_credential_type:
+#     state: present
+#     name: Cloudmason / PowerDNS API Key
+#     description: Cloudmason / PowerDNS API Key
+#     kind: net
+#     inputs:
+#       fields:
+#         - type: string
+#           id: POWERDNS_API_KEY
+#           label: POWERDNS_API_KEY
+#           secret: true
+#       required:
+#         - POWERDNS_API_KEY
+#     injectors:
+#       env:
+#         POWERDNS_API_KEY: !unsafe '{{ POWERDNS_API_KEY }}'
+#   tags:
+#     - awx
 
-- name: Job Template
-  awx.awx.tower_job_template:
-    state: present
-    name: SnakeBot / deployment
-    job_type: run
-    organization: Cloudmason
-    inventory: Cloudmason
-    ask_inventory_on_launch: false
-    project: SnakeBot
-    playbook: ansible/deployment.yml
-    credentials:
-      - Cloudmason Machine / mark
-      - Cloudmason Vault
-    ask_credential_on_launch: false
-    limit: thinkpad
-    ask_limit_on_launch: false
-    verbosity: 1
-    webhook_service: github
-    notification_templates_started: ['Cloudmason Slack (awx)']
-    notification_templates_success: ['Cloudmason Slack (awx)']
-    notification_templates_error: ['Cloudmason Slack (awx)']
-  tags:
-    - awx
+# - name: PowerDNS API Key Credential
+#   awx.awx.tower_credential:
+#     state: present
+#     name: Cloudmason PowerDNS API Key
+#     description: Cloudmason PowerDNS API Key
+#     organization: Cloudmason
+#     credential_type: Cloudmason / PowerDNS API Key
+#     inputs:
+#       POWERDNS_API_KEY: !vault |
+#         $ANSIBLE_VAULT;1.1;AES256
+#         37306266393431646462663233353063356334353133383831396463393266363761636137393062
+#         3664663033636632303032373664656535653866356338650a393765653439343361616564663736
+#         30363038336163356564396162366135333431383961343730396662633539646239626332386336
+#         6336633833633733640a353935643532306331626538623763626438343933333735366261313538
+#         3832
+#   tags:
+#     - awx
 
-- name: Job Template
-  awx.awx.tower_job_template:
-    state: present
-    name: Cloudmason / Zabbix
-    job_type: run
-    organization: Cloudmason
-    inventory: Cloudmason
-    ask_inventory_on_launch: false
-    project: Cloudmason
-    playbook: ansible/playbooks/zabbix.yml
-    credentials:
-      - Cloudmason Vault
-      - Cloudmason Machine
-    ask_credential_on_launch: false
-    limit: zabbix_servers:zabbix_clients
-    ask_limit_on_launch: false
-    ask_tags_on_launch: false
-    webhook_service: github
-    notification_templates_started: ['Cloudmason Slack (awx)']
-    notification_templates_success: ['Cloudmason Slack (awx)']
-    notification_templates_error: ['Cloudmason Slack (awx)']
-  tags:
-    - awx
+# - name: Credential Type
+#   awx.awx.tower_credential_type:
+#     state: present
+#     name: Cloudmason / CloudFlare API Key
+#     description: Cloudmason / CloudFlare API Key
+#     kind: net
+#     inputs:
+#       fields:
+#         - type: string
+#           id: CLOUDFLARE_API_KEY
+#           label: CLOUDFLARE_API_KEY
+#           secret: true
+#       required:
+#         - CLOUDFLARE_API_KEY
+#     injectors:
+#       env:
+#         CLOUDFLARE_API_KEY: !unsafe '{{ CLOUDFLARE_API_KEY }}'
+#   tags:
+#     - awx
+
+# - name: CloudFlare API Key Credential
+#   awx.awx.tower_credential:
+#     state: present
+#     name: Cloudmason CloudFlare API Key
+#     description: Cloudmason CloudFlare API Key
+#     organization: Cloudmason
+#     credential_type: Cloudmason / CloudFlare API Key
+#     inputs:
+#       CLOUDFLARE_API_KEY: !vault |
+#         $ANSIBLE_VAULT;1.1;AES256
+#         61383030636463633363663834663730393033386334653932346135376134643238386134616234
+#         6636343065383764653433376431643737623762323332620a306134386164336138363863613739
+#         35373761353634633434336537383132383263326666396537656664616161626161333330633062
+#         3034316462346633300a323265313035616238336138666432373764656234353131396339383962
+#         65613864343064356331396132636261353832366132343138316461333565643137373730643233
+#         6132316336393732363439666561373531383065643731346532
+#   tags:
+#     - awx
+
+# - name: Credential Type
+#   awx.awx.tower_credential_type:
+#     state: present
+#     name: Cloudmason / CloudFlare API Token
+#     description: Cloudmason / CloudFlare API Token
+#     kind: net
+#     inputs:
+#       fields:
+#         - type: string
+#           id: CLOUDFLARE_API_TOKEN
+#           label: CLOUDFLARE_API_TOKEN
+#           secret: true
+#       required:
+#         - CLOUDFLARE_API_TOKEN
+#     injectors:
+#       env:
+#         CLOUDFLARE_API_TOKEN: !unsafe '{{ CLOUDFLARE_API_TOKEN }}'
+#   tags:
+#     - awx
+
+# - name: CloudFlare API Token Credential
+#   awx.awx.tower_credential:
+#     state: present
+#     name: Cloudmason CloudFlare API Token
+#     description: Cloudmason CloudFlare API Token
+#     organization: Cloudmason
+#     credential_type: Cloudmason / CloudFlare API Token
+#     inputs:
+#       CLOUDFLARE_API_TOKEN: !vault |
+#         $ANSIBLE_VAULT;1.1;AES256
+#         61383030636463633363663834663730393033386334653932346135376134643238386134616234
+#         6636343065383764653433376431643737623762323332620a306134386164336138363863613739
+#         35373761353634633434336537383132383263326666396537656664616161626161333330633062
+#         3034316462346633300a323265313035616238336138666432373764656234353131396339383962
+#         65613864343064356331396132636261353832366132343138316461333565643137373730643233
+#         6132316336393732363439666561373531383065643731346532
+#   tags:
+#     - awx
+
+# - name: Job Template
+#   awx.awx.tower_job_template:
+#     state: present
+#     name: Cloudmason / OctoDNS
+#     job_type: run
+#     organization: Cloudmason
+#     inventory: Cloudmason
+#     ask_inventory_on_launch: false
+#     project: Cloudmason
+#     playbook: ansible/playbooks/octodns.yml
+#     credentials:
+#       - Cloudmason Machine / awx
+#       - Cloudmason PowerDNS API Key
+#       - Cloudmason CloudFlare API Key
+#       - Cloudmason CloudFlare API Token
+#     ask_credential_on_launch: false
+#     limit: lenovo
+#     ask_limit_on_launch: false
+#     notification_templates_started: ['Cloudmason Slack (awx)']
+#     notification_templates_success: ['Cloudmason Slack (awx)']
+#     notification_templates_error: ['Cloudmason Slack (awx)']
+#   tags:
+#     - awx
+
+# - name: Vault Credential
+#   awx.awx.tower_credential:
+#     state: present
+#     name: Cloudmason Vault
+#     description: Cloudmason Vault
+#     organization: Cloudmason
+#     credential_type: Vault
+#     inputs:
+#       vault_id: Cloudmason
+#       vault_password: !vault |
+#         $ANSIBLE_VAULT;1.1;AES256
+#         64383535393831613632353664323562653964663864383430616333376462333938626266356334
+#         3332343636306466623035396462633432333735653766300a663466393461633561363363326666
+#         34653065636366616231356661636465393661303438383730393534646131623738393332316632
+#         3339666535643762300a363163633138626565373565326464393835373636663733383935636133
+#         3764
+#   tags:
+#     - awx
+
+# - name: Job Template
+#   awx.awx.tower_job_template:
+#     state: present
+#     name: Cloudmason / AWX (user)
+#     job_type: run
+#     organization: Cloudmason
+#     inventory: Cloudmason
+#     ask_inventory_on_launch: false
+#     project: Cloudmason
+#     playbook: ansible/playbooks/awx-user.yml
+#     credentials:
+#       - Cloudmason Vault
+#       - Cloudmason Machine / mark
+#     ask_credential_on_launch: true
+#     limit: lenovo
+#     ask_limit_on_launch: true
+#     notification_templates_started: ['Cloudmason Slack (awx)']
+#     notification_templates_success: ['Cloudmason Slack (awx)']
+#     notification_templates_error: ['Cloudmason Slack (awx)']
+#   tags:
+#     - awx
+
+# - name: Job Template
+#   awx.awx.tower_job_template:
+#     state: present
+#     name: Cloudmason / AWX (metronome)
+#     job_type: run
+#     organization: Cloudmason
+#     inventory: Cloudmason
+#     ask_inventory_on_launch: false
+#     project: Cloudmason
+#     playbook: ansible/playbooks/awx.yml
+#     ask_credential_on_launch: false
+#     limit: localhost
+#     ask_limit_on_launch: false
+#     job_tags: metronome
+#     notification_templates_started: ['Cloudmason Slack (awx)']
+#     notification_templates_success: ['Cloudmason Slack (awx)']
+#     notification_templates_error: ['Cloudmason Slack (awx)']
+#   tags:
+#     - awx
+
+# - name: Schedule
+#   awx.awx.tower_schedule:
+#     state: present
+#     name: Cloudmason / AWX (metronome) Schedule
+#     description: Hourly AWX Metronome
+#     rrule: "DTSTART:20210323T000000Z RRULE:FREQ=HOURLY;INTERVAL=1"
+#     unified_job_template: Cloudmason / AWX (metronome)
+#     enabled: true
+#   tags:
+#     - awx
+
+# - name: Workflow Job Template
+#   awx.awx.tower_workflow_job_template:
+#     state: present
+#     name: Cloudmason / OctoDNS Workflow
+#     description: Cloudmason / OctoDNS Workflow
+#     organization: Cloudmason
+#     webhook_service: github
+#     notification_templates_started: ['Cloudmason Slack (awx)']
+#     notification_templates_success: ['Cloudmason Slack (awx)']
+#     notification_templates_error: ['Cloudmason Slack (awx)']
+#   tags:
+#     - awx
+
+# - name: Workflow Job Template Node
+#   awx.awx.tower_workflow_job_template_node:
+#     state: present
+#     identifier: octodns-sync
+#     workflow: Cloudmason / OctoDNS Workflow
+#     unified_job_template: Cloudmason / OctoDNS
+#     organization: Cloudmason
+#   tags:
+#     - awx
+
+# - name: Workflow Job Template Node
+#   awx.awx.tower_workflow_job_template_node:
+#     state: present
+#     identifier: octodns-wan
+#     workflow: Cloudmason / OctoDNS Workflow
+#     unified_job_template: Cloudmason / WAN
+#     organization: Cloudmason
+#     success_nodes:
+#       - octodns-sync
+#   tags:
+#     - awx
 
 
-- name: Workflow Job Template
-  awx.awx.tower_workflow_job_template:
-    state: present
-    name: Cloudmason / Edge Workflow
-    description: Cloudmason / Edge Workflow
-    organization: Cloudmason
-    webhook_service: github
-    notification_templates_started: ['Cloudmason Slack (awx)']
-    notification_templates_success: ['Cloudmason Slack (awx)']
-    notification_templates_error: ['Cloudmason Slack (awx)']
-  tags:
-    - awx
 
-- name: Workflow Job Template Node
-  awx.awx.tower_workflow_job_template_node:
-    state: present
-    identifier: pi-main
-    workflow: Cloudmason / Edge Workflow
-    unified_job_template: Cloudmason / Pi (main)
-    organization: Cloudmason
-  tags:
-    - awx
+# - name: Job Template
+#   awx.awx.tower_job_template:
+#     state: present
+#     name: Cloudmason / Ubuntu (main)
+#     job_type: run
+#     organization: Cloudmason
+#     inventory: Cloudmason
+#     ask_inventory_on_launch: true
+#     project: Cloudmason
+#     playbook: ansible/playbooks/ubuntu.yml
+#     credentials:
+#       - Cloudmason Vault
+#       - Cloudmason Machine
+#     ask_credential_on_launch: true
+#     limit: ubuntu
+#     ask_limit_on_launch: true
+#     notification_templates_started: ['Cloudmason Slack (awx)']
+#     notification_templates_success: ['Cloudmason Slack (awx)']
+#     notification_templates_error: ['Cloudmason Slack (awx)']
+#   tags:
+#     - awx
 
-- name: Workflow Job Template Node
-  awx.awx.tower_workflow_job_template_node:
-    state: present
-    identifier: octodns-workflow
-    workflow: Cloudmason / Edge Workflow
-    unified_job_template: Cloudmason / OctoDNS Workflow
-    organization: Cloudmason
-    success_nodes:
-      - pi-main
-  tags:
-    - awx
+# - name: Job Template
+#   awx.awx.tower_job_template:
+#     state: present
+#     name: Cloudmason / Ubuntu (mark)
+#     job_type: run
+#     organization: Cloudmason
+#     inventory: Cloudmason
+#     ask_inventory_on_launch: true
+#     project: Cloudmason
+#     playbook: ansible/playbooks/ubuntu-mark.yml
+#     credentials:
+#       - Cloudmason Vault
+#       - Cloudmason Machine
+#     ask_credential_on_launch: true
+#     limit: ubuntu
+#     ask_limit_on_launch: true
+#     notification_templates_started: ['Cloudmason Slack (awx)']
+#     notification_templates_success: ['Cloudmason Slack (awx)']
+#     notification_templates_error: ['Cloudmason Slack (awx)']
+#   tags:
+#     - awx
 
-- name: Schedule
-  awx.awx.tower_schedule:
-    state: present
-    name: Cloudmason / Edge Workflow Schedule
-    description: Edge Workflow 6h Schedule
-    rrule: "DTSTART:20210323T000000Z RRULE:FREQ=HOURLY;INTERVAL=6"
-    unified_job_template: Cloudmason / Edge Workflow
-    enabled: true
-  tags:
-    - awx
+# - name: Job Template
+#   awx.awx.tower_job_template:
+#     state: present
+#     name: Cloudmason / Pi (main)
+#     job_type: run
+#     organization: Cloudmason
+#     inventory: Cloudmason
+#     ask_inventory_on_launch: false
+#     project: Cloudmason
+#     playbook: ansible/playbooks/pi.yml
+#     credentials:
+#       - Cloudmason Vault
+#       - Cloudmason Machine
+#     ask_credential_on_launch: false
+#     limit: pi
+#     ask_limit_on_launch: false
+#     ask_tags_on_launch: false
+#     webhook_service: github
+#     notification_templates_started: ['Cloudmason Slack (awx)']
+#     notification_templates_success: ['Cloudmason Slack (awx)']
+#     notification_templates_error: ['Cloudmason Slack (awx)']
+#   tags:
+#     - awx
+
+# - name: Setting TOWER_URL_BASE
+#   tower_settings:
+#     name: TOWER_URL_BASE
+#     value: "{{ lookup('env', 'TOWER_HOST') }}"
+#   tags:
+#     - awx
+
+# - name: Setting SESSION_COOKIE_AGE
+#   tower_settings:
+#     name: SESSION_COOKIE_AGE
+#     value: "86400"
+#   tags:
+#     - awx
+
+# - name: Job Template
+#   awx.awx.tower_job_template:
+#     state: present
+#     name: SnakeBot / deployment
+#     job_type: run
+#     organization: Cloudmason
+#     inventory: Cloudmason
+#     ask_inventory_on_launch: false
+#     project: SnakeBot
+#     playbook: ansible/deployment.yml
+#     credentials:
+#       - Cloudmason Machine / mark
+#       - Cloudmason Vault
+#     ask_credential_on_launch: false
+#     limit: thinkpad
+#     ask_limit_on_launch: false
+#     verbosity: 1
+#     webhook_service: github
+#     notification_templates_started: ['Cloudmason Slack (awx)']
+#     notification_templates_success: ['Cloudmason Slack (awx)']
+#     notification_templates_error: ['Cloudmason Slack (awx)']
+#   tags:
+#     - awx
+
+# - name: Job Template
+#   awx.awx.tower_job_template:
+#     state: present
+#     name: Cloudmason / Zabbix
+#     job_type: run
+#     organization: Cloudmason
+#     inventory: Cloudmason
+#     ask_inventory_on_launch: false
+#     project: Cloudmason
+#     playbook: ansible/playbooks/zabbix.yml
+#     credentials:
+#       - Cloudmason Vault
+#       - Cloudmason Machine
+#     ask_credential_on_launch: false
+#     limit: zabbix_servers:zabbix_clients
+#     ask_limit_on_launch: false
+#     ask_tags_on_launch: false
+#     webhook_service: github
+#     notification_templates_started: ['Cloudmason Slack (awx)']
+#     notification_templates_success: ['Cloudmason Slack (awx)']
+#     notification_templates_error: ['Cloudmason Slack (awx)']
+#   tags:
+#     - awx
+
+
+# - name: Workflow Job Template
+#   awx.awx.tower_workflow_job_template:
+#     state: present
+#     name: Cloudmason / Edge Workflow
+#     description: Cloudmason / Edge Workflow
+#     organization: Cloudmason
+#     webhook_service: github
+#     notification_templates_started: ['Cloudmason Slack (awx)']
+#     notification_templates_success: ['Cloudmason Slack (awx)']
+#     notification_templates_error: ['Cloudmason Slack (awx)']
+#   tags:
+#     - awx
+
+# - name: Workflow Job Template Node
+#   awx.awx.tower_workflow_job_template_node:
+#     state: present
+#     identifier: pi-main
+#     workflow: Cloudmason / Edge Workflow
+#     unified_job_template: Cloudmason / Pi (main)
+#     organization: Cloudmason
+#   tags:
+#     - awx
+
+# - name: Workflow Job Template Node
+#   awx.awx.tower_workflow_job_template_node:
+#     state: present
+#     identifier: octodns-workflow
+#     workflow: Cloudmason / Edge Workflow
+#     unified_job_template: Cloudmason / OctoDNS Workflow
+#     organization: Cloudmason
+#     success_nodes:
+#       - pi-main
+#   tags:
+#     - awx
+
+# - name: Schedule
+#   awx.awx.tower_schedule:
+#     state: present
+#     name: Cloudmason / Edge Workflow Schedule
+#     description: Edge Workflow 6h Schedule
+#     rrule: "DTSTART:20210323T000000Z RRULE:FREQ=HOURLY;INTERVAL=6"
+#     unified_job_template: Cloudmason / Edge Workflow
+#     enabled: true
+#   tags:
+#     - awx

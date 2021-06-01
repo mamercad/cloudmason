@@ -13,8 +13,44 @@
       vars:
         context: thinkpad
   tags:
-    - awx
     - infra
+
+- name: AWX / Get admin password
+  hosts: localhost
+  connection: local
+  gather_facts: false
+  become: false
+  tasks:
+    - name: Get admin password
+      ansible.builtin.shell:
+        cmd: |
+          kubectl -n awx get secret awx-admin-password -o json | jq -r .data.password | base64 -d
+      register: admin_password
+      no_log: true
+      changed_when: false  # Don't care
+    - name: Register admin password
+      ansible.builtin.set_fact:
+        admin_password: "{{ admin_password.stdout | trim }}"
+      no_log: true
+  tags:
+    - always
+
+- name: AWX / deploy_user
+  hosts: localhost
+  connection: local
+  gather_facts: false
+  become: false
+  tasks:
+    - name: Include awx role (config)
+      include_role:
+        name: awx
+        tasks_from: config.yml
+      vars:
+        TOWER_HOST: https://awx-dev.cloudmason.org
+        TOWER_USERNAME: admin
+        TOWER_PASSWORD: "{{ admin_password }}"
+  tags:
+    - config
 
 # - name: AWX / config
 #   hosts: localhost
