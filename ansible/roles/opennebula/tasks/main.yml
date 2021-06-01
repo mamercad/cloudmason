@@ -1,0 +1,66 @@
+- name: Deploy opennebula apt key
+  ansible.builtin.apt_key:
+    state: present
+    url: https://downloads.opennebula.io/repo/repo.key
+  become: true
+
+- name: Deploy opennebula repository
+  ansible.builtin.apt_repository:
+    state: present
+    repo: deb https://downloads.opennebula.io/repo/6.0/Ubuntu/18.04 stable opennebula
+    update_cache: true
+  become: true
+
+- name: Create Zabbix database
+  community.mysql.mysql_db:
+    state: present
+    name: opennebula
+    encoding: utf8
+    collation: utf8_bin
+    login_unix_socket: /var/run/mysqld/mysqld.sock
+  register: create_database
+  become: true
+  no_log: true
+
+- name: Create zabbix database user
+  community.mysql.mysql_user:
+    state: present
+    name: oneadmin
+    password: "{{ opennebula_db_password }}"
+    priv: 'opennebula.*:ALL'
+    login_unix_socket: /var/run/mysqld/mysqld.sock
+  become: true
+
+- name: Configure the transaction isolation level
+  community.mysql.mysql_variables:
+    variable: transaction_isolation
+    value: READ-COMMITTED
+    mode: global
+    login_unix_socket: /var/run/mysqld/mysqld.sock
+  become: true
+
+- name: Create /etc/one
+  ansible.builtin.file:
+    state: directory
+    path: /etc/one
+    owner: root
+    group: root
+    mode: 0755
+  become: true
+
+- name: Deploy /etc/one/oned.conf
+  ansible.builtin.copy:
+    dest: /etc/one/oned.conf
+    owner: root
+    group: root
+    mode: 0600
+    content: |
+      DB = [ BACKEND = "mysql",
+            SERVER  = "localhost",
+            PORT    = 0,
+            USER    = "oneadmin",
+            PASSWD  = "{{ opennebula_db_password }}"
+            DB_NAME = "opennebula",
+            CONNECTIONS = 25,
+            COMPARE_BINARY = "no" ]
+  become: true
