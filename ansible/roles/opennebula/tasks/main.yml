@@ -11,7 +11,7 @@
     update_cache: true
   become: true
 
-- name: Create Zabbix database
+- name: Create opennebula database
   community.mysql.mysql_db:
     state: present
     name: opennebula
@@ -22,7 +22,7 @@
   become: true
   no_log: true
 
-- name: Create zabbix database user
+- name: Create oneadmin database user
   community.mysql.mysql_user:
     state: present
     name: oneadmin
