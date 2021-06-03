@@ -74,3 +74,18 @@
     update_cache: true
   become: true
 
+- name: Install opennebula packages
+  ansible.builtin.apt:
+    state: present
+    name:
+      - opennebula
+      - opennebula-fireedge
+      - opennebula-flow
+      - opennebula-gate
+      - opennebula-libs
+      - opennebula-rubygems
+      - opennebula-sunstone
+      - opennebula-provision
+      - opennebula-tools
+    update_cache: true
+  become: true
