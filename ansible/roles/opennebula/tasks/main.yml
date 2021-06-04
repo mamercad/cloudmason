@@ -56,11 +56,11 @@
     mode: 0600
     content: |
       DB = [ BACKEND = "mysql",
-            SERVER  = "localhost",
-            PORT    = 0,
-            USER    = "oneadmin",
-            PASSWD  = "{{ opennebula_db_password }}"
-            DB_NAME = "opennebula",
+            SERVER   = "localhost",
+            PORT     = 0,
+            USER     = "oneadmin",
+            PASSWD   = "{{ opennebula_db_password }}",
+            DB_NAME  = "opennebula",
             CONNECTIONS = 25,
             COMPARE_BINARY = "no" ]
   become: true
@@ -96,4 +96,21 @@
     name: oneadmin
     groups: docker
     append: true
+  become: true
+
+# - name: Deploy /var/lib/one/.one/one_auth
+#   ansible.builtin.copy:
+#     path: /var/lib/one/.one/one_auth
+
+- name: Start and enable opennebula services
+  ansible.builtin.systemd:
+    name: "{{ item }}"
+    state: started
+    enabled: true
+  loop:
+    - opennebula
+    - opennebula-sunstone
+    - opennebula-fireedge
+    - opennebula-gate
+    - opennebula-flow
   become: true
