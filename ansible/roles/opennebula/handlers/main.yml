@@ -1,0 +1,5 @@
+- name: restart-opennebula-sunstone
+  ansible.builtin.systemd:
+    name: opennebula-sunstone
+    state: restarted
+  become: true

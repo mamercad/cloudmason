@@ -94,6 +94,15 @@
 #   ansible.builtin.copy:
 #     path: /var/lib/one/.one/one_auth
 
+- name: Configure opennebula-fireedge
+  ansible.builtin.replace:
+    path: /etc/one/sunstone-server.conf
+    regexp: ":public_fireedge_endpoint: http://localhost:2616"
+    replace: ":public_fireedge_endpoint: http://{{ ansible_fqdn }}:2616"
+    backup: true
+  notify: restart-opennebula-sunstone
+  become: true
+
 - name: Start and enable opennebula services
   ansible.builtin.systemd:
     name: "{{ item }}"
