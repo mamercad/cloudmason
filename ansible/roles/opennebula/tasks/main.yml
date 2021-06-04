@@ -7,7 +7,7 @@
 - name: Deploy opennebula repository
   ansible.builtin.apt_repository:
     state: present
-    repo: deb https://downloads.opennebula.io/repo/6.0/Ubuntu/18.04 stable opennebula
+    repo: deb https://downloads.opennebula.io/repo/6.0/Ubuntu/{{ ansible_distribution_version }} stable opennebula
     update_cache: true
   become: true
 
