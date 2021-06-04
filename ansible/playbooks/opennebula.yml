@@ -1,6 +1,7 @@
 ---
-- name: OpenNebula / main
-  hosts: opennebula_servers
+
+- name: OpenNebula / frontend
+  hosts: opennebula_frontend
   gather_facts: true
   become: false
   tasks:
@@ -8,6 +9,12 @@
       include_role:
         name: opennebula
         tasks_from: frontend.yml
+
+- name: OpenNebula / backend
+  hosts: opennebula_backend
+  gather_facts: true
+  become: false
+  tasks:
     - name: Include opennebula role (backend)
       include_role:
         name: opennebula
