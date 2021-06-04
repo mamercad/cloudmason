@@ -103,6 +103,15 @@
   notify: restart-opennebula-sunstone
   become: true
 
+- name: Configure opennebula-oneflow
+  ansible.builtin.replace:
+    path: /etc/one/oneflow-server.conf
+    regexp: ":host: 127.0.0.1"
+    replace: ":host: 0.0.0.0"
+    backup: true
+  notify: restart-opennebula-flow
+  become: true
+
 - name: Start and enable opennebula services
   ansible.builtin.systemd:
     name: "{{ item }}"

@@ -3,3 +3,15 @@
     name: opennebula-sunstone
     state: restarted
   become: true
+
+- name: restart-opennebula-flow
+  ansible.builtin.systemd:
+    name: opennebula-flow
+    state: restarted
+  become: true
+
+- name: restart-opennebula
+  ansible.builtin.systemd:
+    name: opennebula
+    state: restarted
+  become: true
