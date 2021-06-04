@@ -82,6 +82,7 @@
       - opennebula-fireedge
       - opennebula-flow
       - opennebula-gate
+      - opennebula-guacd
       - opennebula-libs
       - opennebula-rubygems
       - opennebula-sunstone
