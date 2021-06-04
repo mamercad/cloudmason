@@ -59,3 +59,10 @@
     content: "{{ oneadmin_authorized_keys }}"
     backup: true
   become: true
+
+- name: Add oneadmin to docker
+  ansible.builtin.user:
+    name: oneadmin
+    groups: docker
+    append: true
+  become: true
