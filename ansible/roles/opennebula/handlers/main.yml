@@ -21,3 +21,9 @@
     name: opennebula
     state: restarted
   become: true
+
+- name: restart-libvirtd
+  ansible.builtin.systemd:
+    name: opennebula
+    state: libvirtd
+  become: true
