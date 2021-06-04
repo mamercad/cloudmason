@@ -35,6 +35,10 @@ awx-dev:
   type: A
   value: {{eth0}}
   ttl: 3600
+opennebula:
+  type: A
+  value: {{eth0}}
+  ttl: 3600
 zabbix:
   type: A
   value: {{eth0}}
