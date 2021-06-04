@@ -125,6 +125,10 @@
             rule = "Host(`awx-dev.cloudmason.org`)"
             service = "awx-dev"
             [http.routers.awx-dev.tls]
+          [http.routers.opennebula]
+            rule = "Host(`opennebula.cloudmason.org`)"
+            service = "opennebula"
+            [http.routers.opennebula.tls]
           [http.routers.zabbix]
             rule = "Host(`zabbix.cloudmason.org`)"
             service = "zabbix"
@@ -193,6 +197,9 @@
           [http.services.awx-dev.loadBalancer]
             [[http.services.awx-dev.loadBalancer.servers]]
               url = "http://awx-service.awx.thinkpad.cloudmason.org:80/"
+          [http.services.opennebula.loadBalancer]
+            [[http.services.opennebula.loadBalancer.servers]]
+              url = "http://thinkpad.cloudmason.org:9869/"
           [http.services.zabbix.loadBalancer]
             [[http.services.zabbix.loadBalancer.servers]]
               url = "http://thinkpad.cloudmason.org:8080/"
