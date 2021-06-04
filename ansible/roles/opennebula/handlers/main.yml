@@ -10,6 +10,12 @@
     state: restarted
   become: true
 
+- name: restart-opennebula-gate
+  ansible.builtin.systemd:
+    name: opennebula-gate
+    state: restarted
+  become: true
+
 - name: restart-opennebula
   ansible.builtin.systemd:
     name: opennebula
