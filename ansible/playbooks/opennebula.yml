@@ -4,7 +4,11 @@
   gather_facts: true
   become: false
   tasks:
-    - name: Include opennebula role (main)
+    - name: Include opennebula role (frontend)
       include_role:
         name: opennebula
-        tasks_from: main.yml
+        tasks_from: frontend.yml
+    - name: Include opennebula role (backend)
+      include_role:
+        name: opennebula
+        tasks_from: backend.yml
