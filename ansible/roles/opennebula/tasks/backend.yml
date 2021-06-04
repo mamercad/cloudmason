@@ -1,0 +1,8 @@
+- name: Install opennebula packages
+  ansible.builtin.apt:
+    state: present
+    name:
+      - opennebula-node-kvm
+    update_cache: true
+  notify: restart-libvirtd
+  become: true
