@@ -53,8 +53,8 @@
     src: oned.conf.j2
     dest: /etc/one/oned.conf
     owner: root
-    group: root
-    mode: 0600
+    group: oneadmin
+    mode: 0640
   become: true
 
 - name: Install opennebula dependencies
