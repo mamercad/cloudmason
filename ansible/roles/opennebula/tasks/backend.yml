@@ -16,6 +16,7 @@
     state: present
     name:
       - opennebula-node-kvm
+      - opennebula-node-lxc
     update_cache: true
   notify: restart-libvirtd
   become: true
