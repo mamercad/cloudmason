@@ -210,7 +210,7 @@
     mode: 0755
     content: |
       #!/usr/bin/env bash
-      for table in comments records domains domainmetadata cryptokeys
+      for table in comments records domains domainmetadata cryptokeys tsigkeys
       do
         count=$(sudo mysql -sN pdns -e "show indexes from ${table} where key_name like '%_%'" | grep -v PRIMARY | awk '{print $3}' | grep -E '_[0-9]+' | wc -l)
         if [[ "${count}" -ne "0" ]]; then
