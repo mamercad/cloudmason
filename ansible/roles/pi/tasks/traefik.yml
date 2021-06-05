@@ -129,6 +129,10 @@
             rule = "Host(`opennebula.cloudmason.org`)"
             service = "opennebula"
             [http.routers.opennebula.tls]
+          [http.routers.fireedge]
+            rule = "Host(`fireedge.cloudmason.org`)"
+            service = "fireedge"
+            [http.routers.fireedge.tls]
           [http.routers.zabbix]
             rule = "Host(`zabbix.cloudmason.org`)"
             service = "zabbix"
@@ -200,6 +204,9 @@
           [http.services.opennebula.loadBalancer]
             [[http.services.opennebula.loadBalancer.servers]]
               url = "http://thinkpad.cloudmason.org:9869/"
+          [http.services.fireedge.loadBalancer]
+            [[http.services.fireedge.loadBalancer.servers]]
+              url = "http://thinkpad.cloudmason.org:2616/"
           [http.services.zabbix.loadBalancer]
             [[http.services.zabbix.loadBalancer.servers]]
               url = "http://thinkpad.cloudmason.org:8080/"

@@ -39,6 +39,10 @@ opennebula:
   type: A
   value: {{eth0}}
   ttl: 3600
+fireedge:
+  type: A
+  value: {{eth0}}
+  ttl: 3600
 zabbix:
   type: A
   value: {{eth0}}
