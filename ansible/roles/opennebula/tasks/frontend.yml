@@ -97,8 +97,8 @@
 - name: Configure opennebula-fireedge
   ansible.builtin.replace:
     path: /etc/one/sunstone-server.conf
-    regexp: ":public_fireedge_endpoint: http://localhost:2616"
-    replace: ":public_fireedge_endpoint: http://{{ ansible_fqdn }}:2616"
+    regexp: ":public_fireedge_endpoint: .*$"
+    replace: ":public_fireedge_endpoint: {{ public_fireedge_endpoint }}"
     backup: true
   notify: restart-opennebula-sunstone
   become: true
