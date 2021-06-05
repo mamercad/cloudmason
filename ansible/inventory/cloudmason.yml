@@ -109,6 +109,9 @@ all:
       hosts:
         thinkpad:
         lenovo:
+    docker_servers:
+      hosts:
+        lenovo:
     # clusterpi:
     #   hosts:
     #     clusterpi0:
