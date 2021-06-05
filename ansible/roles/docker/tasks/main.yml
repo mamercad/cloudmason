@@ -1,0 +1,55 @@
+# Following: https://docs.docker.com/engine/install/ubuntu/
+
+- name: Remove docker docker-engine docker.io containerd runc
+  ansible.builtin.apt:
+    state: absent
+    name:
+      - docker
+      - docker-engine
+      - docker.io
+      - containerd
+      - runc
+  become: true
+
+- name: Install apt-transport-https ca-certificates curl gnupg lsb-release
+  ansible.builtin.apt:
+    state: present
+    update_cache: yes
+    name:
+      - apt-transport-https
+      - ca-certificates
+      - curl
+      - gnupg
+      - lsb-release
+  become: true
+
+- name: Install Docker's GPG key
+  ansible.builtin.apt_key:
+    state: present
+    url: https://download.docker.com/linux/ubuntu/gpg
+    keyring: /usr/share/keyrings/docker-archive-keyring.gpg
+  become: yes
+
+- name: Deploy Docker's Apt repository
+  ansible.builtin.apt_repository:
+    state: present
+    repo: deb [arch=amd64 signed-by=/usr/share/keyrings/docker-archive-keyring.gpg] https://download.docker.com/linux/ubuntu {{ ansible_distribution_release }} stable
+  become: yes
+
+- name: Install docker-ce docker-ce-cli containerd.io
+  ansible.builtin.apt:
+    state: present
+    update_cache: yes
+    name:
+      - docker-ce
+      - docker-ce-cli
+      - containerd.io
+  become: yes
+
+- name: Add folks to the docker group
+  ansible.builtin.user:
+    name: "{{ item }}"
+    groups: docker
+    append: yes
+  loop: "{{ docker_admins | default([]) }}"
+  become: yes
