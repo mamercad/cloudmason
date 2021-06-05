@@ -23,7 +23,6 @@
     backup: true
   become: true
   become_user: "{{ mark.user }}"
-  ignore_errors: true  # I don't care if it doesn't exist
 
 - name: Ensure eval starship in ~/.zshrc
   ansible.builtin.lineinfile:
@@ -32,4 +31,3 @@
     backup: true
   become: true
   become_user: "{{ mark.user }}"
-  ignore_errors: true  # I don't care if it doesn't exist
