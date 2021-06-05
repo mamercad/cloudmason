@@ -78,3 +78,5 @@
     groups: docker
     append: true
   become: true
+  when:
+    - type == "kvm"
