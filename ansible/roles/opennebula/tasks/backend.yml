@@ -19,6 +19,18 @@
     update_cache: true
   notify: restart-libvirtd
   become: true
+  when:
+    - type == "kvm"
+
+- name: Install opennebula packages
+  ansible.builtin.apt:
+    state: present
+    name:
+      - opennebula-node-lxd
+    update_cache: true
+  become: true
+  when:
+    - type == "lxd"
 
 - name: Deploy oneadmin ssh pubkey
   ansible.builtin.copy:
