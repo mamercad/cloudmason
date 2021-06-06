@@ -1,0 +1,42 @@
+- name: Install hypervisor packages
+  ansible.builtin.apt:
+    state: present
+    name:
+      - qemu-kvm
+      - libvirt-daemon
+      - bridge-utils
+      - virtinst
+      - libvirt-daemon-system
+      - virt-top
+      - libguestfs-tools
+      - libosinfo-bin
+      - qemu-system
+      - virt-manager
+    update_cache: true
+  become: true
+
+- name: Deploy netplan bridge
+  ansible.builtin.copy:
+    dest: /etc/netplan/br0.yaml
+    owner: root
+    group: root
+    mode: 0644
+    content: |
+      network:
+        version: 2
+        renderer: networkd
+        ethernets:
+          enp1s0:
+            dhcp4: false
+            dhcp6: false
+        bridges:
+          br0:
+            interfaces: [{{ bridgeif }}]
+            mtu: 1500
+            parameters:
+              stp: true
+              forward-delay: 4
+            dhcp4: true
+            dhcp6: false
+  when: bridgeif is defined
+  notify: restart-network-manager
