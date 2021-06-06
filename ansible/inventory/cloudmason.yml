@@ -15,7 +15,7 @@ all:
       ansible_python_interpreter: /usr/bin/python3
       healthchecks_io: https://hc-ping.com/b4576296-81ee-4cf5-a239-4286af184cf3
     gala:
-      ansible_host: 192.168.1.138
+      ansible_host: 192.168.1.73
       ansible_python_interpreter: /usr/bin/python3
       healthchecks_io: https://hc-ping.com/3c245b36-bde6-440b-97ba-4c4b231d95b2
       hypervisor: true
