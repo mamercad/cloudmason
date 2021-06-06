@@ -1,6 +1,0 @@
-targets:
-  - "net1.cloudmason.org:9100"
-  - "net2.cloudmason.org:9100"
-  - "thinkpad.cloudmason.org:9100"
-  - "lenovo.cloudmason.org:9100"
-  - "gala.cloudmason.org:9100"
