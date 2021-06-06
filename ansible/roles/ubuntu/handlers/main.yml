@@ -3,3 +3,8 @@
     name: network-manager
     state: restarted
   become: true
+
+- name: netplan-try
+  ansible.builtin.shell:
+    cmd: netplan try
+  become: true
