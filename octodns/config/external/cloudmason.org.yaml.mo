@@ -73,5 +73,9 @@ lenovo:
   ttl: 3600
 thinkpad:
   type: A
-  value: 192.168.1.139
+  value: 192.168.1.67
+  ttl: 3600
+gala:
+  type: A
+  value: 192.168.1.73
   ttl: 3600
