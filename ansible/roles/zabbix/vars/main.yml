@@ -70,7 +70,7 @@ linux_servers:
   - dns: thinkpad.cloudmason.org
     ip: 192.168.1.67
   - dns: gala.cloudmason.org
-    ip: 192.168.1.138
+    ip: 192.168.1.73
   - dns: lenovo.cloudmason.org
     ip: 192.168.1.98
   - dns: net1.cloudmason.org
