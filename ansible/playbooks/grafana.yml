@@ -1,0 +1,10 @@
+---
+- name: Grafana
+  hosts: prometheus_servers
+  gather_facts: true
+  become: false
+  tasks:
+    - name: Include grafana role (main)
+      include_role:
+        name: grafana
+        tasks_from: main.yml
