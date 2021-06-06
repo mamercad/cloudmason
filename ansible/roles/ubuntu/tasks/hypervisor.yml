@@ -26,7 +26,7 @@
         version: 2
         renderer: networkd
         ethernets:
-          enp1s0:
+          {{ bridgeif }}:
             dhcp4: false
             dhcp6: false
         bridges:
@@ -38,5 +38,5 @@
               forward-delay: 4
             dhcp4: true
             dhcp6: false
+  become: true
   when: bridgeif is defined
-  notify: restart-network-manager
