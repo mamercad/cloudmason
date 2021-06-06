@@ -108,7 +108,6 @@ all:
     k3s_servers:
       hosts:
         thinkpad:
-      hosts:
         gala:
     opennebula_frontend:
       hosts:
@@ -126,6 +125,9 @@ all:
     docker_servers:
       hosts:
         lenovo:
+    prometheus_servers:
+      hosts:
+        thinkpad:
     # clusterpi:
     #   hosts:
     #     clusterpi0:
