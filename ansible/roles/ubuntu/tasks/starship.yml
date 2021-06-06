@@ -10,6 +10,7 @@
     url: https://starship.rs/install.sh
     dest: /tmp/starship.sh
     mode: 0755
+  become: true
 
 - name: Install starship.sh
   ansible.builtin.shell:
