@@ -15,20 +15,14 @@
 - name: Install starship.sh
   ansible.builtin.shell:
     cmd: /tmp/starship.sh -y
+  args:
+    creates: /usr/local/bin/starship
   become: true
 
-# - name: Ensure eval starship in ~/.bashrc
-#   ansible.builtin.lineinfile:
-#     path: "{{ mark.home }}/.bashrc"
-#     line: eval "$(starship init bash)"
-#     backup: true
-#   become: true
-#   become_user: "{{ mark.user }}"
-
-# - name: Ensure eval starship in ~/.zshrc
-#   ansible.builtin.lineinfile:
-#     path: "{{ mark.home }}/.zshrc"
-#     line: eval "$(starship init zsh)"
-#     backup: true
-#   become: true
-#   become_user: "{{ mark.user }}"
+- name: Ensure eval starship in ~/.bashrc
+  ansible.builtin.lineinfile:
+    path: "{{ mark.home }}/.bashrc"
+    line: eval "$(starship init bash)"
+    backup: true
+  become: true
+  become_user: "{{ mark.user }}"
