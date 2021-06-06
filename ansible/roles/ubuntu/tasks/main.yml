@@ -21,6 +21,10 @@
   include_tasks:
     file: starship.yml
 
+- name: Include Prometheus
+  include_tasks:
+    file: prometheus.yml
+
 - name: Include pi / postfix
   include_role:
     name: pi
