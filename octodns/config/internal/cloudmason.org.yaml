@@ -140,9 +140,12 @@ familyroom:
 fuji:
   type: A
   value: 192.168.1.51
-gala:
+gala-wireless:
   type: A
   value: 192.168.1.138
+gala-wired:
+  type: A
+  value: 192.168.1.73
 garagedoor:
   type: A
   value: 192.168.1.121
@@ -382,6 +385,9 @@ switch4:
 thelounge:
   type: CNAME
   value: net.cloudmason.org.
+gala:
+  type: CNAME
+  value: gala-wired.cloudmason.org.
 thinkpad:
   type: CNAME
   value: thinkpad-wired.cloudmason.org.
