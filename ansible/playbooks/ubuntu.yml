@@ -15,5 +15,10 @@
       include_role:
         name: ubuntu
         tasks_from: thelounge.yml
-      when:
-        - thelounge | default(False, True)
+      when: thelounge | default(False, True)
+
+    - name: Include ubuntu role (hypervisor)
+      include_role:
+        name: ubuntu
+        tasks_from: hypervisor.yml
+      when: hypervisor | default(False, True)
