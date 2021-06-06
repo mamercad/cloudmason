@@ -29,45 +29,6 @@ all:
       ansible_host: 192.168.1.98
       ansible_python_interpreter: /usr/bin/python3
       healthchecks_io: https://hc-ping.com/c8bd3c9c-9d8b-445b-bdf0-75935b4e6db4
-    lxd1:
-      ansible_host: 192.168.1.180
-      ansible_python_interpreter: /usr/bin/python3
-      ansible_user: ubuntu
-    # clusterpi0:
-    #   ansible_host: 192.168.1.62
-    #   ansible_python_interpreter: /usr/bin/python3
-    #   healthchecks_io: https://hc-ping.com/9e4b7ec3-9590-4341-b1aa-d51ae4d45282
-    #   k3s_options: --cluster-init
-    # clusterpi1:
-    #   ansible_host: 192.168.1.81
-    #   ansible_python_interpreter: /usr/bin/python3
-    #   healthchecks_io: https://hc-ping.com/29c8d430-9375-46a3-ab62-dcdeef183faf
-    #   k3s_options: --server https://clusterpi0.cloudmason.org:6443
-    # clusterpi2:
-    #   ansible_host: 192.168.1.64
-    #   ansible_python_interpreter: /usr/bin/python3
-    #   healthchecks_io: https://hc-ping.com/e1ae9db1-b39a-4af2-9c6b-149a05f1784e
-    #   k3s_options: --server https://clusterpi0.cloudmason.org:6443
-    # clusterpi3:
-    #   ansible_host: 192.168.1.116
-    #   ansible_python_interpreter: /usr/bin/python3
-    #   healthchecks_io: https://hc-ping.com/9a5cc3d5-63ab-4021-b5c6-e5c6efb5534b
-    #   k3s_options: --server https://clusterpi0.cloudmason.org:6443
-    # clusterpi4:
-    #   ansible_host: 192.168.1.66
-    #   ansible_python_interpreter: /usr/bin/python3
-    #   healthchecks_io: https://hc-ping.com/a338d1db-7f24-4000-b676-a6a7ad60ff3a
-    #   k3s_options: --server https://clusterpi0.cloudmason.org:6443
-    # clusterpi5:
-    #   ansible_host: 192.168.1.68
-    #   ansible_python_interpreter: /usr/bin/python3
-    #   healthchecks_io: https://hc-ping.com/c8b46701-e89f-4fa1-965e-4bd610b027ba
-    #   k3s_options: --server https://clusterpi0.cloudmason.org:6443
-    # clusterpi6:
-    #   ansible_host: 192.168.1.111
-    #   ansible_python_interpreter: /usr/bin/python3
-    #   healthchecks_io: https://hc-ping.com/e7af7746-58c3-44c1-89db-1a86277ed034
-    #   k3s_options: --server https://clusterpi0.cloudmason.org:6443
   vars:
     network:
       interface: eth0
@@ -128,12 +89,10 @@ all:
     prometheus_servers:
       hosts:
         thinkpad:
-    # clusterpi:
-    #   hosts:
-    #     clusterpi0:
-    #     clusterpi1:
-    #     clusterpi2:
-    #     clusterpi3:
-    #     clusterpi4:
-    #     clusterpi5:
-    #     clusterpi6:
+    prometheus_clients:
+      hosts:
+        net1:
+        net2:
+        gala:
+        lenovo:
+        thinkpad:
