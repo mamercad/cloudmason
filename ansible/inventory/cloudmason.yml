@@ -108,6 +108,8 @@ all:
     k3s_servers:
       hosts:
         thinkpad:
+      hosts:
+        gala:
     opennebula_frontend:
       hosts:
         thinkpad:
