@@ -117,6 +117,8 @@ all:
           type: kvm
         lenovo:
           type: kvm
+        gala:
+          type: lxd
         lxd1:
           type: lxd
     docker_servers:
