@@ -1,3 +1,4 @@
-- "thinkpad.cloudmason.org:9090"
-- "lenovo.cloudmason.org:9090"
-- "gala.cloudmason.org:9090"
+targets:
+  - "thinkpad.cloudmason.org:9090"
+  - "lenovo.cloudmason.org:9090"
+  - "gala.cloudmason.org:9090"
