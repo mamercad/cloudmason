@@ -42,12 +42,18 @@
   become: true
   register: kubeconfig
 
+# - name: Write the kubeconfig
+#   ansible.builtin.copy:
+#     dest: "/home/mark/.kube/config"
+#     owner: mark
+#     group: mark
+#     mode: "0600"
+#     content: "{{ kubeconfig.content | b64decode }}"
+#     backup: true
+#   delegate_to: localhost
+
 - name: Write the kubeconfig
-  ansible.builtin.copy:
-    dest: "/home/mark/.kube/config"
-    owner: mark
-    group: mark
-    mode: "0600"
-    content: "{{ kubeconfig.content | b64decode }}"
-    backup: true
+  ansible.builtin.pause:
+    minutes: 0
+    prompt: "{{ kubeconfig.content | b64decode }}"
   delegate_to: localhost
