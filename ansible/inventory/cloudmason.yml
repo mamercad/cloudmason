@@ -80,12 +80,18 @@ all:
     prometheus_servers:
       hosts:
         thinkpad:
+    grafana_servers:
+      hosts:
+        grafana:
     prometheus_clients:
       hosts:
         net1:
         net2:
         gala:
         lenovo:
+        thinkpad:
+    unifi_pollers:
+      hosts:
         thinkpad:
   vars:
     network:
