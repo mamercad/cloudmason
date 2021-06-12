@@ -1,0 +1,5 @@
+- name: restart-unifi-poller
+  ansible.builtin.systemd:
+    name: unifi-poller
+    state: restarted
+  become: true
