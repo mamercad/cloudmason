@@ -44,10 +44,22 @@
     mode: 0755
   become: true
 
-- name: Build prometheus targets
+- name: Build prometheus targets (node_exporter)
   ansible.builtin.set_fact:
-    targets: "{{ targets|default([],True) + [item + '.' + network.domain + ':9100'] }}"
+    node_exporter_targets: "{{ node_exporter_targets|default([],True) + [item + '.' + network.domain + ':9100'] }}"
   loop: "{{ groups.prometheus_clients }}"
+  run_once: true
+
+- name: Build grafana targets (grafana)
+  ansible.builtin.set_fact:
+    grafana_targets: "{{ grafana_targets|default([],True) + [item + '.' + network.domain + ':443'] }}"
+  loop: "{{ groups.grafana_servers }}"
+  run_once: true
+
+- name: Build prometheus targets (unifi_pollers)
+  ansible.builtin.set_fact:
+    unifi_pollers: "{{ unifi_pollers|default([],True) + [item + '.' + network.domain + ':9130'] }}"
+  loop: "{{ groups.unifi_pollers }}"
   run_once: true
 
 - name: Deploy prometheus config
@@ -59,7 +71,8 @@
     content: |
       global:
         scrape_interval: 1m
-        evaluation_interval: 1m
+        scrape_timeout: 30s
+        evaluation_interval: 15m
       alerting:
         alertmanagers:
         - static_configs:
@@ -68,7 +81,16 @@
       scrape_configs:
         - job_name: prometheus
           static_configs:
-          - targets: {{ targets }}
+          - targets: {{ node_exporter_targets }}
+        - job_name: grafana
+          scheme: https
+          static_configs:
+          - targets: {{ grafana_targets }}
+        - job_name: unifi
+          static_configs:
+          - targets: {{ unifi_pollers }}
+          scrape_interval: 15m
+          scrape_timeout: 5m
   notify: restart-prometheus
   become: true
 
