@@ -23,3 +23,14 @@
     state: started
     enabled: true
   become: true
+
+- name: Install grafana plugins
+  ansible.builtin.shell:
+    cmd: |
+      grafana-cli plugins install grafana-clock-panel
+      grafana-cli plugins install natel-discrete-panel
+      grafana-cli plugins install grafana-piechart-panel
+  args:
+    creates: /var/lib/grafana/plugins/grafana-clock-panel
+  notify: restart-grafana-server
+  become: true
