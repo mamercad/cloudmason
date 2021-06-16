@@ -26,9 +26,22 @@
     - 11
   become: true
 
+- name: Install Ubuntu OpenJDK PPA
+  ansible.builtin.apt_repository:
+    state: present
+    repo: deb http://ppa.launchpad.net/openjdk-r/ppa/ubuntu focal main
+  become: true
+
+- name: Install openjdk-17-jre-headless
+  ansible.builtin.apt:
+    state: present
+    name: openjdk-17-jre-headless
+    update_cache: true
+  become: true
+
 - name: Minecraft server jar
   ansible.builtin.get_url:
-    url: https://launcher.mojang.com/v1/objects/1b557e7b033b583cd9f66746b7a9ab1ec1673ced/server.jar
+    url: "{{ server_jar }}"
     dest: "{{ home }}/minecraft_server.jar"
   become: true
   become_user: "{{ user }}"

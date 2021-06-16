@@ -3,3 +3,5 @@ group: minecraft
 home: /home/minecraft
 gamename: Cloudmason Minecraft
 port: 25565
+
+server_jar: https://launcher.mojang.com/v1/objects/0a269b5f2c5b93b1712d0f5dc43b6182b9ab254e/server.jar
