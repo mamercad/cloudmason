@@ -32,6 +32,12 @@
     repo: deb http://ppa.launchpad.net/openjdk-r/ppa/ubuntu focal main
   become: true
 
+- name: Add an apt key by id from a keyserver
+  ansible.builtin.apt_key:
+    keyserver: keyserver.ubuntu.com
+    id: EB9B1D8886F44E2A
+  become: true
+
 - name: Install openjdk-17-jre-headless
   ansible.builtin.apt:
     state: present
