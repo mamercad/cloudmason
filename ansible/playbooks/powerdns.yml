@@ -3,8 +3,32 @@
   hosts: powerdns_servers
   gather_facts: true
   become: false
-  tasks:
-    - name: Include powerdns role (main)
-      include_role:
-        name: powerdns
-        tasks_from: main.yml
+
+  vars:
+
+    database_name: /var/lib/powerdns/db.sqlite
+
+    pdns_config:
+      master: true
+      slave: false
+      local-address: "{{ ansible_host }}"
+
+    pdns_backends:
+      gsqlite3:
+        database: "{{ database_name }}"
+        dnssec: false
+
+    pdns_sqlite_databases_locations:
+      - "{{ database_name }}"
+
+    pdns_rec_config:
+      allow-from: "192.168.0.0/16"
+      local-address: "{{ ansible_host }}:5300"
+
+  roles:
+
+    - role: PowerDNS.pdns
+      become: true
+
+    - role: PowerDNS.pdns_recursor
+      become: true
