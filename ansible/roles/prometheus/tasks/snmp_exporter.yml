@@ -1,13 +1,13 @@
 - name: Fetch snmp_exporter
   ansible.builtin.get_url:
-    url: https://github.com/prometheus/snmp_exporter/releases/download/v0.20.0/snmp_exporter-0.20.0.linux-amd64.tar.gz
-    checksum: sha256:004a0c26e649db29288e36962e03bb659d70e56dcd46aa96782a77cb303a8488
-    dest: /tmp/snmp_exporter-0.20.0.linux-amd64.tar.gz
+    url: "{{ snmp_exporter.url }}"
+    checksum: "{{ snmp_exporter.checksum }}"
+    dest: /tmp/snmp_exporter-{{ snmp_exporter.version }}.linux-amd64.tar.gz
   become: true
 
 - name: Unarchive snmp_exporter tarball
   ansible.builtin.unarchive:
-    src: /tmp/snmp_exporter-0.20.0.linux-amd64.tar.gz
+    src: /tmp/snmp_exporter-{{ snmp_exporter.version }}.linux-amd64.tar.gz
     dest: /tmp/
     remote_src: yes
   become: true
@@ -22,7 +22,7 @@
 
 - name: Deploy snmp_exporter binary to /opt/prometheus/snmp_exporter
   ansible.builtin.copy:
-    src: /tmp/snmp_exporter-0.20.0.linux-amd64/snmp_exporter
+    src: /tmp/snmp_exporter-{{ snmp_exporter.version }}.linux-amd64/snmp_exporter
     dest: /opt/prometheus/snmp_exporter/snmp_exporter
     remote_src: true
     owner: prometheus
@@ -32,7 +32,7 @@
 
 - name: Deploy snmp_exporter config to /opt/prometheus/snmp_exporter
   ansible.builtin.copy:
-    src: /tmp/snmp_exporter-0.20.0.linux-amd64/snmp.yml
+    src: /tmp/snmp_exporter-{{ snmp_exporter.version }}.linux-amd64/snmp.yml
     dest: /opt/prometheus/snmp_exporter/snmp.yml
     remote_src: true
     owner: prometheus
