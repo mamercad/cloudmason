@@ -12,6 +12,11 @@
       master: true
       slave: false
       local-address: "{{ ansible_host }}"
+      api: true
+      api-key: "powerdns"
+      webserver: true
+      webserver-address: "0.0.0.0"
+      webserver-port: "8001"
 
     pdns_backends:
       gsqlite3:
