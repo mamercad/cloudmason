@@ -86,11 +86,27 @@
           scheme: https
           static_configs:
           - targets: {{ grafana_targets }}
-        - job_name: unifi
+        # - job_name: unifi
+        #   static_configs:
+        #   - targets: {{ unifi_pollers }}
+        #   scrape_interval: 15m
+        #   scrape_timeout: 5m
+        - job_name: 'snmp'
           static_configs:
-          - targets: {{ unifi_pollers }}
-          scrape_interval: 15m
-          scrape_timeout: 5m
+            - targets:
+              - 192.168.1.120  # familyroom
+          metrics_path: /snmp
+          params:
+            module: [if_mib]
+          relabel_configs:
+            - source_labels: [__address__]
+              target_label: __param_target
+            - source_labels: [__param_target]
+              target_label: instance
+            - target_label: __address__
+              replacement: 127.0.0.1:9116  # The SNMP exporter's real hostname:port.
+           scrape_interval: 15m
+           scrape_timeout: 5m
   notify: restart-prometheus
   become: true
 
