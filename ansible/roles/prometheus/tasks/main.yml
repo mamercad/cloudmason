@@ -115,8 +115,7 @@
         - job_name: dns
           metrics_path: /probe
           static_configs:
-            - targets:
-              - localhost:9115@dns_cloudmason_org_a@192.168.1.10:53
+            - targets: {{ dns_targets }}
           relabel_configs:
             - source_labels: [__address__]
               regex: '(.*)@.*@.*'
