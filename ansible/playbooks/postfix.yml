@@ -1,0 +1,10 @@
+---
+- name: Postfix / main
+  hosts: ubuntu
+  gather_facts: true
+  become: false
+  tasks:
+    - name: Include postfix role (main)
+      include_role:
+        name: postfix
+        tasks_from: main.yml
