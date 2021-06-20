@@ -58,3 +58,10 @@
       WantedBy=multi-user.target
   become: true
   notify: reload-systemd
+
+- name: Start and enable
+  ansible.builtin.systemd:
+    name: snmp_exporter
+    state: started
+    enabled: true
+  become: true
