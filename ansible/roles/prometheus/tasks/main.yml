@@ -116,7 +116,7 @@
           metrics_path: /probe
           static_configs:
             - targets:
-              - localhost:9115@dns_cloudmason_a@192.168.1.10:53
+              - localhost:9115@dns_cloudmason_org_a@192.168.1.10:53
           relabel_configs:
             - source_labels: [__address__]
               regex: '(.*)@.*@.*'
