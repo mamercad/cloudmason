@@ -23,12 +23,19 @@
         database: "{{ database_name }}"
         dnssec: false
 
+    pdns_install_repo: "{{ pdns_auth_powerdns_repo_44 }}"
+
     pdns_sqlite_databases_locations:
       - "{{ database_name }}"
+
+    pdns_rec_install_repo: "{{ pdns_rec_powerdns_repo_44 }}"
 
     pdns_rec_config:
       allow-from: "{{ network.cidr_wide }}"
       local-address: "{{ ansible_host }}:5300"
+      webserver: true
+      webserver-address: "0.0.0.0"
+      webserver-port: "8081"
 
   roles:
 
