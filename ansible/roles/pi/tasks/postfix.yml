@@ -20,6 +20,7 @@
       smtpd_banner = $myhostname ESMTP $mail_name (Ubuntu)
       biff = no
       append_dot_mydomain = yes
+      append_at_myorigin = yes
       readme_directory = no
       compatibility_level = 2
       smtpd_tls_cert_file=/etc/ssl/certs/ssl-cert-snakeoil.pem
@@ -45,7 +46,7 @@
       smtp_sasl_password_maps = hash:/etc/postfix/gmail_sasl
       smtp_tls_security_level = encrypt
       smtp_tls_CAfile = /etc/ssl/certs/ca-certificates.crt
-      masquerade_domains = $mydomain
+      masquerade_domains = $myhostname
     backup: true
   become: true
   notify: Restart postfix
