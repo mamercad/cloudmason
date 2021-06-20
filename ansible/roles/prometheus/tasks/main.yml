@@ -62,6 +62,12 @@
   loop: "{{ groups.unifi_pollers }}"
   run_once: true
 
+- name: Build prometheus targets (snmp_targets)
+  ansible.builtin.set_fact:
+    snmp_targets: "{{ snmp_targets|default([],True) + [item] }}"
+  loop: "{{ groups.snmp_targets }}"
+  run_once: true
+
 - name: Deploy prometheus config
   ansible.builtin.copy:
     dest: /opt/prometheus/prometheus-{{ version }}.linux-amd64/prometheus.yml
@@ -93,12 +99,7 @@
         #   scrape_timeout: 5m
         - job_name: 'snmp'
           static_configs:
-            - targets:
-              - 192.168.1.1  # gateway
-              - 192.168.1.63  # basement
-              - 192.168.1.87  # diningroom
-              - 192.168.1.120  # familyroom
-              - 192.168.1.124  # bedroom
+            - targets: {{ snmp_targets }}
           metrics_path: /snmp
           params:
             module: [if_mib]
@@ -108,9 +109,27 @@
             - source_labels: [__param_target]
               target_label: instance
             - target_label: __address__
-              replacement: 127.0.0.1:9116  # The SNMP exporter's real hostname:port.
+              replacement: 127.0.0.1:9116
           scrape_interval: 15m
           scrape_timeout: 5m
+        - job_name: dns
+          metrics_path: /probe
+          params:
+            module:
+              - dns_cloudmason_a
+          static_configs:
+            - targets:
+              - 8.8.8.8
+              - 8.8.4.4
+              - 1.1.1.1
+              - 1.0.0.1
+          relabel_configs:
+            - source_labels: [__address__]
+              target_label: __param_target
+            - source_labels: [__param_target]
+              target_label: instance
+            - target_label: __address__
+              replacement: 127.0.0.1:9115
   notify: restart-prometheus
   become: true
 
