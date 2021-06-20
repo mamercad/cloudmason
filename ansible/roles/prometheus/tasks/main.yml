@@ -114,22 +114,36 @@
           scrape_timeout: 5m
         - job_name: dns
           metrics_path: /probe
-          params:
-            module:
-              - dns_cloudmason_a
           static_configs:
             - targets:
-              - 8.8.8.8
-              - 8.8.4.4
-              - 1.1.1.1
-              - 1.0.0.1
+              - localhost:9115@dns_cloudmason_a@192.168.1.10:53
           relabel_configs:
             - source_labels: [__address__]
-              target_label: __param_target
-            - source_labels: [__param_target]
-              target_label: instance
-            - target_label: __address__
-              replacement: 127.0.0.1:9115
+              regex: '(.*)@.*@.*'
+              replacement: $1
+              target_label: 'instance'      # instance label for Prometheus datapoints
+            - source_labels: [__address__]
+              regex: '.*@(.*)@.*'
+              replacement: $1
+              target_label: __param_module  # module parameter to blackbox exporter
+            - source_labels: [__address__]
+              regex: '.*@(.*)@.*'
+              replacement: $1
+              target_label: module          # module label for Prometheus datapoints
+            - source_labels: [__address__]
+              regex: '.*@.*@(.*)'
+              replacement: $1
+              target_label: __param_target  # target parameter to blackbox exporter
+            - source_labels: [__address__]
+              regex: '.*@.*@(.*)'
+              replacement: $1
+              target_label: resolver        # resolver label for Prometheus datapoints
+            - source_labels: [__address__]
+              regex: '(.*)@.*@.*'
+              replacement: $1
+              target_label: __address__     # The blackbox exporter's real hostname:port.
+          scrape_interval: 15m
+          scrape_timeout: 5m
   notify: restart-prometheus
   become: true
 
