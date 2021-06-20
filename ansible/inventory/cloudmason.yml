@@ -90,6 +90,13 @@ all:
         gala:
         lenovo:
         thinkpad:
+    snmp_targets:
+      hosts:
+        gateway:
+        basement:
+        bedroom:
+        diningroom:
+        familyroom:
     unifi_pollers:
       hosts:
         thinkpad:
