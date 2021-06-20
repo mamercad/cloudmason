@@ -13,8 +13,7 @@
   become: true
 
 - name: Install starship.sh
-  ansible.builtin.shell:
-    cmd: /tmp/starship.sh -y
+  ansible.builtin.command: /tmp/starship.sh -y
   args:
     creates: /usr/local/bin/starship
   become: true

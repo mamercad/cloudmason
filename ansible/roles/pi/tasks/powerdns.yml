@@ -118,7 +118,7 @@
     state: stopped
     enabled: false
     name: avahi-daemon
-  ignore_errors: true  # Might not exist
+  ignore_errors: true  # noqa ignore-errors
   become: true
 
 - name: Disable systemd-resolved
@@ -230,7 +230,7 @@
   become: true
 
 - name: Run nuke dupe index hack
-  ansible.builtin.command: /usr/local/bin/pdns-nuke-dup-idx.sh
+  ansible.builtin.command: /usr/local/bin/pdns-nuke-dup-idx.sh  # noqa no-changed-when
   become: true
 
 - name: Create PowerDNS schema

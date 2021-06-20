@@ -5,6 +5,5 @@
   become: true
 
 - name: netplan-try
-  ansible.builtin.shell:
-    cmd: netplan try
+  ansible.builtin.command: netplan try
   become: true
