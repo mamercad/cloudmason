@@ -4,6 +4,10 @@
   gather_facts: true
   become: false
   tasks:
+    - name: Include prometheus role (blackbox_exporter)
+      include_role:
+        name: prometheus
+        tasks_from: blackbox_exporter.yml
     - name: Include prometheus role (snmp_exporter)
       include_role:
         name: prometheus
