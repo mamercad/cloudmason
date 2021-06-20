@@ -62,6 +62,18 @@
   loop: "{{ groups.unifi_pollers }}"
   run_once: true
 
+- name: Build prometheus targets (powerdns_auth_targets)
+  ansible.builtin.set_fact:
+    powerdns_auth_targets: "{{ powerdns_auth_targets|default([],True) + [item + ':8001'] }}"
+  loop: "{{ groups.powerdns_servers }}"
+  run_once: true
+
+- name: Build prometheus targets (powerdns_rec_targets)
+  ansible.builtin.set_fact:
+    powerdns_rec_targets: "{{ powerdns_rec_targets|default([],True) + [item + ':8081'] }}"
+  loop: "{{ groups.powerdns_servers }}"
+  run_once: true
+
 - name: Build prometheus targets (snmp_targets)
   ansible.builtin.set_fact:
     snmp_targets: "{{ snmp_targets|default([],True) + [item] }}"
@@ -92,11 +104,16 @@
           scheme: https
           static_configs:
           - targets: {{ grafana_targets }}
-        # - job_name: unifi
-        #   static_configs:
-        #   - targets: {{ unifi_pollers }}
-        #   scrape_interval: 15m
-        #   scrape_timeout: 5m
+        - job_name: powerdns_authoritative
+          static_configs:
+          - targets: {{ powerdns_auth_targets }}
+          scrape_interval: 15m
+          scrape_timeout: 5m
+        - job_name: powerdns_recursor
+          static_configs:
+          - targets: {{ powerdns_rec_targets }}
+          scrape_interval: 15m
+          scrape_timeout: 5m
         - job_name: 'snmp'
           static_configs:
             - targets: {{ snmp_targets }}
