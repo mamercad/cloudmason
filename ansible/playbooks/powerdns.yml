@@ -27,7 +27,7 @@
       - "{{ database_name }}"
 
     pdns_rec_config:
-      allow-from: "192.168.0.0/16"
+      allow-from: "{{ cidr_wide }}"
       local-address: "{{ ansible_host }}:5300"
 
   roles:
