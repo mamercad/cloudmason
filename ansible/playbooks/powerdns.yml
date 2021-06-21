@@ -11,12 +11,13 @@
     pdns_config:
       master: true
       slave: false
-      local-address: "{{ ansible_host }}"
+      local-address: "0.0.0.0:5353"
       api: true
-      api-key: "powerdns"
+      api-key: "{{ powerdns.api_key }}"
       webserver: true
       webserver-address: "0.0.0.0"
-      webserver-port: "8001"
+      webserver-port: "8081"
+      webserver-allow-from: "{{ network.cidr }}"
 
     pdns_backends:
       gsqlite3:
@@ -31,11 +32,58 @@
     pdns_rec_install_repo: "{{ pdns_rec_powerdns_repo_44 }}"
 
     pdns_rec_config:
-      allow-from: "{{ network.cidr_wide }}"
-      local-address: "{{ ansible_host }}:5300"
+      allow-from: "127.0.0.0/8,{{ network.cidr_wide }}"
+      forward-zones: "{{ powerdns.forward_zones }}"
+      local-address: "0.0.0.0:53"
       webserver: true
       webserver-address: "0.0.0.0"
-      webserver-port: "8081"
+      webserver-port: "8082"
+      webserver-allow-from: "{{ network.cidr }}"
+
+    dns_checks:
+      - localhost/A
+      - example.com./A
+      - google.com/A
+      - reddit.com/A
+      - twitter.com/A
+      - digitalocean.com/A
+      - cloudmason.org/A
+      - cloudmason.org/MX
+      - letsbuildthe.cloud/A
+      - letsbuildthe.cloud/MX
+      - gateway.cloudmason.org/A
+      - 192.168.1.1/PTR
+      - 192.168.1.10/PTR
+      - 192.168.1.11/PTR
+      - 192.168.1.67/PTR
+
+  pre_tasks:
+
+    - name: Remove avahi-daemon
+      ansible.builtin.apt:
+        name: avahi-daemon
+        state: absent
+      become: true
+
+    - name: Stop/disable systemd-resolved
+      ansible.builtin.systemd:
+        name: systemd-resolved
+        state: stopped
+        enabled: false
+      become: true
+
+    - name: Deploy /etc/resolv.conf
+      ansible.builtin.copy:
+        dest: /etc/resolv.conf
+        backup: true
+        owner: root
+        group: root
+        mode: 0644
+        content: |
+          nameserver 192.168.1.10
+          domain {{ network.domain }}
+          search {{ network.domain }}
+      become: true
 
   roles:
 
@@ -44,3 +92,13 @@
 
     - role: PowerDNS.pdns_recursor
       become: true
+
+  tasks:
+
+    - name: Check DNS
+      block:
+
+        - name: Check DNS
+          ansible.builtin.debug:
+            msg: "{{ lookup('community.general.dig', item) }}"
+          loop: "{{ dns_checks }}"
