@@ -39,8 +39,9 @@ all:
         thinkpad:
     powerdns_servers:
       hosts:
-        thinkpad:
+        net1:
         net2:
+        thinkpad:
     zabbix_servers:
       hosts:
         thinkpad:
