@@ -17,7 +17,7 @@
       webserver: true
       webserver-address: "0.0.0.0"
       webserver-port: "8081"
-      webserver-allow-from: "{{ network.cidr }}"
+      webserver-allow-from: "127.0.0.0/8,{{ network.cidr_wide }}"
 
     pdns_backends:
       gsqlite3:
@@ -41,7 +41,7 @@
       webserver-allow-from: "{{ network.cidr }}"
 
     dns_checks:
-      - localhost/A
+      - localhost./A
       - example.com./A
       - google.com/A
       - reddit.com/A
@@ -80,25 +80,51 @@
         group: root
         mode: 0644
         content: |
-          nameserver 192.168.1.10
+          nameserver {{ ansible_default_ipv4.address }}
           domain {{ network.domain }}
           search {{ network.domain }}
       become: true
 
   roles:
 
+    # They don't support non-x86_64 right now
     - role: PowerDNS.pdns
       become: true
+      when: ansible_architecture == "x86_64"
 
+    # They don't support non-x86_64 right now
     - role: PowerDNS.pdns_recursor
       become: true
+      when: ansible_architecture == "x86_64"
 
   tasks:
 
+    - name: Include powerdns role (main.yml)
+      ansible.builtin.include_role:
+        name: powerdns
+        tasks_from: main.yml
+      vars:
+        powerdns_version: 4.4
+        powerdns_gpg_key_id: 9FAAA5577E8FCF62093D036C1B0C6205FD380FBB
+        powerdns_auth_repo: deb http://repo.powerdns.com/raspbian buster-auth-44 main
+        powerdns_auth_repo_filename: powerdns-auth-44
+        powerdns_rec_repo: deb http://repo.powerdns.com/raspbian buster-rec-44 main
+        powerdns_rec_repo_filename: powerdns-rec-44
+        powerdns_forward_zones: cloudmason.org=127.0.0.1:5353,1.168.192.in-addr.arpa=127.0.0.1:5353
+        powerdns_api_key: !vault |
+          $ANSIBLE_VAULT;1.1;AES256
+          65336233633238616431323962666261613764663863323233333561376165316533333639653036
+          6431366539653638363464326166346262666434643834310a636563656338663734636565326561
+          64653832643863303332306635636362616661383466373564316563616137353039353631306535
+          3465343137373265630a303837656537663464393037623131663836323166393335316361346266
+          3064
+      when: ansible_architecture != "arm7l"
+
     - name: Check DNS
       block:
-
         - name: Check DNS
           ansible.builtin.debug:
             msg: "{{ lookup('community.general.dig', item) }}"
           loop: "{{ dns_checks }}"
+          register: dig
+          failed_when: dig.msg is search("NXDOMAIN")
