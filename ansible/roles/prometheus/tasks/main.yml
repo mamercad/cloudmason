@@ -64,13 +64,13 @@
 
 - name: Build prometheus targets (powerdns_auth_targets)
   ansible.builtin.set_fact:
-    powerdns_auth_targets: "{{ powerdns_auth_targets|default([],True) + [item + ':8001'] }}"
+    powerdns_auth_targets: "{{ powerdns_auth_targets|default([],True) + [item + ':8081'] }}"
   loop: "{{ groups.powerdns_servers }}"
   run_once: true
 
 - name: Build prometheus targets (powerdns_rec_targets)
   ansible.builtin.set_fact:
-    powerdns_rec_targets: "{{ powerdns_rec_targets|default([],True) + [item + ':8081'] }}"
+    powerdns_rec_targets: "{{ powerdns_rec_targets|default([],True) + [item + ':8082'] }}"
   loop: "{{ groups.powerdns_servers }}"
   run_once: true
 
