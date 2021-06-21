@@ -35,4 +35,5 @@ if [[ "$1" == "--doit" ]]; then
   echo "Restarting PowerDNS"
   ssh mark@192.168.1.10 "sudo systemctl restart pdns; sudo systemctl restart pdns-recursor"; sleep 3
   ssh mark@192.168.1.11 "sudo systemctl restart pdns; sudo systemctl restart pdns-recursor"; sleep 3
+  ssh mark@192.168.1.67 "sudo systemctl restart pdns; sudo systemctl restart pdns-recursor"; sleep 3
 fi
