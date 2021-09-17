@@ -1,3 +1,1 @@
-Stuff for my home network
-
-Testing
+Stuff for my home network (being deprecated)
