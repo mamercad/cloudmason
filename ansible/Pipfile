@@ -8,6 +8,8 @@ ansible = "3.4.0"
 ansible-lint = "5.2.1"
 
 [dev-packages]
+awxkit = "19.0.1"
+kubernetes = "18.20.0"
 
 [requires]
 python_version = "3.8.8"
