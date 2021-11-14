@@ -32,3 +32,17 @@
       - op: replace
         path: /spec/type
         value: LoadBalancer
+
+- name: get admin secret
+  kubernetes.core.k8s_info:
+    context: "{{ context }}"
+    namespace: "{{ namespace }}"
+    api_version: v1
+    kind: Secret
+    name: argocd-initial-admin-secret
+  register: admin_secret
+
+- name: show admin password
+  ansible.builtin.debug:
+    msg: |
+      argo admin password: {{ admin_secret.resources.0.data.password | b64decode }}
