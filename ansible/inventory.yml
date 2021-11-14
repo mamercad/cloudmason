@@ -1,0 +1,13 @@
+all:
+  hosts:
+    honeycrisp:
+      ansible_python_interpreter: /usr/bin/python3
+    lenovo:
+      ansible_python_interpreter: /usr/bin/python3
+  children:
+    macos:
+      hosts:
+        honeycrisp:
+    ubuntu:
+      hosts:
+        lenovo:
