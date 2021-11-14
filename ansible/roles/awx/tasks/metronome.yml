@@ -1,6 +1,0 @@
----
-
-- name: Post to Healthchecks.io
-  uri:
-    url: "{{ awx_secrets.awx.metronome.healthchecks_io }}"
-    method: POST

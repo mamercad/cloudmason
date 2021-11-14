@@ -1,1 +1,0 @@
-ssh -q gateway /opt/vyatta/bin/vyatta-show-interfaces | grep 'inet ' | grep eth1 | awk '{print $2}' | sed 's/\/.*$//'

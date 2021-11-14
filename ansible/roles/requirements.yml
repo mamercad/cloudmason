@@ -1,4 +1,0 @@
----
-roles:
-  - powerdns.pdns
-  - powerdns.pdns_recursor

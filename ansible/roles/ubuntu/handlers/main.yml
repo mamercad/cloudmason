@@ -1,9 +1,0 @@
-- name: restart-network-manager
-  ansible.builtin.systemd:
-    name: network-manager
-    state: restarted
-  become: true
-
-- name: netplan-try
-  ansible.builtin.command: netplan try
-  become: true
