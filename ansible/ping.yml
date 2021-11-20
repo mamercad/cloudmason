@@ -1,0 +1,11 @@
+---
+- name: ping
+  hosts: all
+  connection: ssh
+  gather_facts: false
+  become: false
+
+  tasks:
+
+    - name: ping
+      ansible.builtin.ping:
