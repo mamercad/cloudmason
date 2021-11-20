@@ -1,0 +1,78 @@
+---
+- name: traefik
+  hosts: traefik
+  connection: ssh
+  gather_facts: true
+  become: false
+
+  tasks:
+
+    - name: include traefik role (main tasks)
+      ansible.builtin.include_role:
+        name: traefik
+        tasks_from: main.yml
+      vars:
+        traefik:
+          account:
+            user: traefik
+            group: traefik
+            comment: Traefik
+            shell: /bin/bash
+            home: /home/traefik
+          install:
+            version: 2.5.4
+            platform: linux
+            arch: armv7
+            tarball: https://github.com/traefik/traefik/releases/download/v2.5.4/traefik_v2.5.4_linux_armv7.tar.gz
+            sha256: 041026f38fe19d30341998764a102ede2cc2213eb1e1abe14275ab02e1fe2f65
+            bindir: /usr/local/bin
+            cfgdir: /usr/local/etc
+          config:
+            letsencrypt:
+              CF_DNS_API_TOKEN: !vault |
+                $ANSIBLE_VAULT;1.1;AES256
+                33653564333139336532316633643035653062376563323636633663383165353031333030316535
+                3439643639633430366539633534363566333336313566300a646535343438613562303739663631
+                39656436346465386138653763336633633361376135363933363662376264316562333431356432
+                3564303835306565630a386438363263323830373237353539333366656133626363663037343065
+                34656530306632636663623062633764663464653464306531653661623161626434366139343539
+                6430353336653734636139373037643234376137353732316332
+            resolver:
+              acme:
+                email: mamercad@gmail.com
+                storage: /usr/local/etc/acme.json
+                caServer: https://acme-v02.api.letsencrypt.org/directory
+                dnsChallenge:
+                  provider: cloudflare
+                  delayBeforeCheck: 0
+                  resolvers:
+                    - 1.1.1.1:53
+                    - 8.8.8.8:53
+            middleware:
+              admin:
+                username: admin
+                password: !vault |
+                  $ANSIBLE_VAULT;1.1;AES256
+                  30613266613137343261336538623663343661326336613464336431356133366535613334623635
+                  3136313939343166383765366366653262333533383064390a326566336566356437303336393038
+                  65323831333862333432373438363339383839666264333330316166366636646238343133353162
+                  3739363433376137380a383264346665656361623864353332306131303133343533306139623530
+                  36663936626439396662383034383363373231346435336230623938303035613038323961646162
+                  3133366538316137336331373164613532356437323162636635
+              internal:
+                ipWhiteList:
+                  sourceRange:
+                    - "127.0.0.1"
+                    - "192.168.1.0/24"
+                    - "100.88.226.83"   # honeycrisp
+                    - "100.122.123.10"  # boomer
+                    - "100.93.209.27"   # clusterpi0
+                    - "100.87.109.78"   # clusterpi1
+                    - "100.117.181.104" # clusterpi2
+                    - "100.71.247.18"   # fuji
+                    - "100.125.224.21"  # gala
+                    - "100.107.179.32"  # lenovo
+                    - "100.78.176.32"   # net1
+                    - "100.78.6.96"     # net2
+                    - "100.81.5.61"     # prodesk
+                    - "100.88.47.75"    # thinkpad
