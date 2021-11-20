@@ -1,0 +1,54 @@
+---
+
+resources:
+
+  # - name: src
+  #   type: git
+  #   source:
+  #     uri: https://github.com/mamercad/cloudmason.git
+  #     branch: ci
+
+jobs:
+
+  - name: site
+    plan:
+
+      # - get: src
+      #   trigger: true
+
+      # - task: ping
+      #   file: src/ci/tasks/ping.yml
+
+      - task: ping
+        params:
+          count: 4
+          target: usg1.cloudmason.org
+        config:
+          platform: linux
+          image_resource:
+            type: registry-image
+            source:
+              repository: busybox
+          run:
+            path: sh
+            args:
+              - -cx
+              - |
+                ping -c${count} $target
+
+      # - task: output
+      #   config:
+      #     platform: linux
+      #     image_resource:
+      #       type: registry-image
+      #       source:
+      #         repository: busybox
+      #     run:
+      #       path: sh
+      #       args:
+      #         - -cx
+      #         - |
+      #           pwd
+      #           ls -l .
+      #     inputs:
+      #       - name: repo
