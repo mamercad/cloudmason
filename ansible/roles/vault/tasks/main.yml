@@ -1,0 +1,23 @@
+- name: create {{ namespace }} namespace
+  kubernetes.core.k8s:
+    state: present
+    context: "{{ context }}"
+    definition:
+      apiVersion: v1
+      kind: Namespace
+      metadata:
+        name: "{{ namespace }}"
+
+- name: install hashicorp helm repo
+  community.kubernetes.helm_repository:
+    name: hashicorp
+    repo_url: https://helm.releases.hashicorp.com
+
+- name: install vault from helm
+  community.kubernetes.helm:
+    name: vault
+    chart_ref: "{{ helm.chart_ref }}"
+    chart_version: "{{ helm.chart_version }}"
+    release_namespace: "{{ namespace }}"
+    create_namespace: false
+    values: "{{ helm.helm_values }}"

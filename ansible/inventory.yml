@@ -1,13 +1,23 @@
 all:
   hosts:
     honeycrisp:
-      ansible_python_interpreter: /usr/bin/python3
     lenovo:
-      ansible_python_interpreter: /usr/bin/python3
+    net1:
+    net2:
   children:
     macos:
       hosts:
         honeycrisp:
+      vars:
+        ansible_python_interpreter: /usr/bin/python3
     ubuntu:
       hosts:
         lenovo:
+        net1:
+        net2:
+      vars:
+        ansible_python_interpreter: /usr/bin/python3
+    traefik:
+      hosts:
+        net1:
+        net2:

@@ -1,0 +1,114 @@
+- name: create the traefik group
+  ansible.builtin.group:
+    name: "{{ traefik.account.group }}"
+  become: true
+
+- name: create the traefik user
+  ansible.builtin.user:
+    name: "{{ traefik.account.user }}"
+    comment: "{{ traefik.account.comment }}"
+    group: "{{ traefik.account.group }}"
+    shell: "{{ traefik.account.shell }}"
+    home: "{{ traefik.account.home }}"
+    create_home: true
+  become: true
+
+- name: pull down the traefik tarball
+  ansible.builtin.get_url:
+    url: "{{ traefik.install.tarball }}"
+    checksum: "sha256:{{ traefik.install.sha256 }}"
+    dest: /tmp/traefik_v{{ traefik.install.version }}_{{ traefik.install.platform }}_{{ traefik.install.arch }}.tar.gz
+    owner: "{{ traefik.account.user }}"
+    group: "{{ traefik.account.group }}"
+    mode: 0644
+  become: true
+  notify: restart traefik
+
+- name: create extract directory
+  ansible.builtin.file:
+    state: directory
+    path: "/tmp/traefik_v{{ traefik.install.version }}_{{ traefik.install.platform }}_{{ traefik.install.arch }}"
+    owner: "{{ traefik.account.user }}"
+    group: "{{ traefik.account.group }}"
+    mode: 0755
+  become: true
+  notify: restart traefik
+
+- name: extract the traefik tarball
+  ansible.builtin.unarchive:
+    src: "/tmp/traefik_v{{ traefik.install.version }}_{{ traefik.install.platform }}_{{ traefik.install.arch }}.tar.gz"
+    dest: "/tmp/traefik_v{{ traefik.install.version }}_{{ traefik.install.platform }}_{{ traefik.install.arch }}"
+    remote_src: true
+    owner: "{{ traefik.account.user }}"
+    group: "{{ traefik.account.group }}"
+    creates: /tmp/traefik_v{{ traefik.install.version }}_{{ traefik.install.platform }}_{{ traefik.install.arch }}/traefik
+  become: true
+  notify: restart traefik
+
+- name: copy the binary to dest
+  ansible.builtin.copy:
+    src: /tmp/traefik_v{{ traefik.install.version }}_{{ traefik.install.platform }}_{{ traefik.install.arch }}/traefik
+    remote_src: true
+    dest: "{{ traefik.install.bindir }}/traefik"
+    owner: root
+    group: root
+    mode: 0755
+  become: true
+  notify: restart traefik
+
+- name: deploy traefik static config
+  ansible.builtin.template:
+    src: traefik.yml.j2
+    dest: "{{ traefik.install.cfgdir }}/traefik.yml"
+    owner: root
+    group: root
+    mode: 0644
+  become: true
+  notify: restart traefik
+
+- name: deploy traefik dynamic config
+  ansible.builtin.template:
+    src: traefik_dynamic.yml.j2
+    dest: "{{ traefik.install.cfgdir }}/traefik_dynamic.yml"
+    owner: root
+    group: root
+    mode: 0644
+  become: true
+  notify: restart traefik
+
+- name: give net priv ports to traefik
+  community.general.capabilities:
+    state: present
+    path: "{{ traefik.install.bindir }}/traefik"
+    capability: cap_net_bind_service=+ep
+  register: caps
+  changed_when: false  # this module isn't idempotent
+  become: true
+
+- name: ensure letsencrypt acme exists
+  ansible.builtin.file:
+    state: touch
+    path: "{{ traefik.config.resolver.acme.storage }}"
+    owner: "{{ traefik.account.user }}"
+    group: "{{ traefik.account.group }}"
+    mode: 0640
+  become: true
+  notify: restart traefik
+
+- name: deploy the traefik systemd unit file
+  ansible.builtin.template:
+    src: traefik.service.j2
+    dest: /etc/systemd/system/traefik.service
+    owner: root
+    group: root
+    mode: 0640
+  become: true
+  notify: restart traefik
+
+- name: start and enable traefik
+  ansible.builtin.systemd:
+    name: traefik
+    state: started
+    enabled: true
+    daemon_reload: true
+  become: true

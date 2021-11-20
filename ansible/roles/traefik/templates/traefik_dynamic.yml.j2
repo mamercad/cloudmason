@@ -1,0 +1,221 @@
+tcp:
+  routers:
+    lenovo-ttyd:
+      rule: HostSNI(`*`)
+      service: lenovo-repl-ttyd
+      entryPoints:
+        - lenovo-replbot-ttyd
+    lenovo-sshd:
+      rule: HostSNI(`*`)
+      service: lenovo-repl-sshd
+      entryPoints:
+        - lenovo-replbot-sshd
+    thinkpad-ttyd:
+      rule: HostSNI(`*`)
+      service: thinkpad-repl-ttyd
+      entryPoints:
+        - thinkpad-replbot-ttyd
+    thinkpad-sshd:
+      rule: HostSNI(`*`)
+      service: thinkpad-repl-sshd
+      entryPoints:
+        - thinkpad-replbot-sshd
+  services:
+    lenovo-replbot-ttyd:
+      loadBalancer:
+        servers:
+          - address: lenovo.cloudmason.org:8383
+    lenovo-replbot-sshd:
+      loadBalancer:
+        servers:
+          - address: lenovo.cloudmason.org:8384
+    thinkpad-replbot-ttyd:
+      loadBalancer:
+        servers:
+          - address: thinkpad.cloudmason.org:7373
+    thinkpad-replbot-sshd:
+      loadBalancer:
+        servers:
+          - address: thinkpad.cloudmason.org:7374
+http:
+  routers:
+    apex:
+      rule: Host(`cloudmason.org`)
+      service: apex
+      tls:
+        certResolver: myresolver
+        domains:
+          - main: cloudmason.org
+            sans:
+              - '*.cloudmason.org'
+    # dashboard:
+    #   rule: Host(`cloudmason.org`) && (PathPrefix(`/api`) || PathPrefix(`/dashboard`))
+    #   service: api@internal
+    ara:
+      rule: Host(`ara.cloudmason.org`)
+      service: ara
+      tls: {}
+    awx:
+      rule: Host(`awx.cloudmason.org`)
+      service: awx
+      tls: {}
+    awx-dev:
+      rule: Host(`awx-dev.cloudmason.org`)
+      service: awx-dev
+      tls: {}
+    opennebula:
+      rule: Host(`opennebula.cloudmason.org`)
+      service: opennebula
+      tls: {}
+    fireedge:
+      rule: Host(`fireedge.cloudmason.org`)
+      service: fireedge
+      tls: {}
+    zabbix:
+      rule: Host(`zabbix.cloudmason.org`)
+      service: zabbix
+      tls: {}
+    concourse:
+      rule: Host(`concourse.cloudmason.org`)
+      service: concourse
+      tls: {}
+      middlewares: ['internal-only']
+    vault:
+      rule: Host(`vault.cloudmason.org`)
+      service: vault
+      tls: {}
+      middlewares: ['internal-only']
+    grafana:
+      rule: Host(`grafana.cloudmason.org`)
+      service: grafana
+      tls: {}
+    prometheus:
+      rule: Host(`prometheus.cloudmason.org`)
+      service: prometheus
+      tls: {}
+    web:
+      rule: Host(`web.cloudmason.org`)
+      service: web
+      tls: {}
+    www:
+      rule: Host(`www.cloudmason.org`)
+      service: www
+      tls: {}
+    unifi:
+      rule: Host(`unifi.cloudmason.org`)
+      service: unifi
+      tls: {}
+    nzbget:
+      rule: Host(`nzbget.cloudmason.org`)
+      service: nzbget
+      tls: {}
+    sonarr:
+      rule: Host(`sonarr.cloudmason.org`)
+      service: sonarr
+      tls: {}
+    radarr:
+      rule: Host(`radarr.cloudmason.org`)
+      service: radarr
+      tls: {}
+    thelounge:
+      rule: Host(`thelounge.cloudmason.org`)
+      service: thelounge
+      tls: {}
+    qnapweb:
+      rule: Host(`qnapweb.cloudmason.org`)
+      service: qnapweb
+      tls: {}
+  middlewares:
+    admin-user:
+      basicAuth:
+        users:
+          - "{{ traefik.config.middleware.admin.username }}:{{ traefik.config.middleware.admin.password }}"
+    internal-only:
+      ipWhiteList:
+        sourceRange: "{{ traefik.config.middleware.internal.ipWhiteList.sourceRange }}"
+    zabbix:
+      addPrefix:
+        prefix: /zabbix
+  services:
+    apex:
+      loadBalancer:
+        servers:
+          - url: http://cloudmason.org:8000/
+    ara:
+      loadBalancer:
+        servers:
+          - url: http://ara-svc.ara.lenovo.cloudmason.org:8000/
+    awx:
+      loadBalancer:
+        servers:
+          - url: http://awx-service.awx.thinkpad.cloudmason.org:80/
+    awx-dev:
+      loadBalancer:
+        servers:
+          - url: http://awx-dev-service.default.lenovo.cloudmason.org:80/
+    opennebula:
+      loadBalancer:
+        servers:
+          - url: http://thinkpad.cloudmason.org:9869/
+    fireedge:
+      loadBalancer:
+        servers:
+          - url: http://thinkpad.cloudmason.org:2616/
+    zabbix:
+      loadBalancer:
+        servers:
+          - url: http://thinkpad.cloudmason.org:8080/
+    concourse:
+      loadBalancer:
+        servers:
+          - url: http://concourse-web.concourse-main.thinkpad.cloudmason.org:8080/
+    vault:
+      loadBalancer:
+        servers:
+          - url: http://vault-ui.vault-main.thinkpad.cloudmason.org:8200/
+    grafana:
+      loadBalancer:
+        servers:
+          - url: http://thinkpad.cloudmason.org:3000/
+    prometheus:
+      loadBalancer:
+        servers:
+          - url: http://thinkpad.cloudmason.org:9090/
+    web:
+      loadBalancer:
+        servers:
+          - url: http://web.cloudmason.org:8000/
+    www:
+      loadBalancer:
+        servers:
+          - url: http://web.cloudmason.org:8000/
+    unifi:
+      loadBalancer:
+        servers:
+          - url: https://cloudkey2.cloudmason.org:8443/
+    nzbget:
+      loadBalancer:
+        servers:
+          - url: http://qnap.cloudmason.org:11000/
+    sonarr:
+      loadBalancer:
+        servers:
+          - url: http://qnap.cloudmason.org:11001/
+    radarr:
+      loadBalancer:
+        servers:
+          - url: http://qnap.cloudmason.org:11002/
+    thelounge:
+      loadBalancer:
+        servers:
+          - url: http://thinkpad.cloudmason.org:9000/
+    qnapweb:
+      loadBalancer:
+        servers:
+          - url: http://qnap.cloudmason.org:10000/
+tls:
+  options:
+    default:
+      minVersion: VersionTLS12
+    mintls13:
+      minVersion: VersionTLS13
