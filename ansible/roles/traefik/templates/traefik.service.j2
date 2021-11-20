@@ -1,0 +1,15 @@
+[Unit]
+Description=Traefik
+Documentation=https://doc.traefik.io/traefik/
+
+[Service]
+User={{ traefik.account.user }}
+AmbientCapabilities=CAP_NET_BIND_SERVICE
+Type=notify
+Environment=CF_DNS_API_TOKEN={{ traefik.config.letsencrypt.CF_DNS_API_TOKEN }}
+ExecStart={{ traefik.install.bindir }}/traefik --configFile={{ traefik.install.cfgdir }}/traefik.yaml
+Restart=always
+WatchdogSec=1s
+
+[Install]
+WantedBy=multi-user.target

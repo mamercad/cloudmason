@@ -1,0 +1,33 @@
+api: {}
+  # dashboard: true
+defaultEntryPoints:
+  - http
+  - https
+entryPoints:
+  http:
+    address: :80
+    http:
+      redirections:
+        entryPoint:
+          to: https
+          scheme: https
+  https:
+    address: :443
+  traefik:
+    address: :8080
+providers:
+  file:
+    filename: "{{ traefik.install.cfgdir }}/traefik_dynamic.yml"
+certificatesResolvers:
+  myresolver:
+    acme:
+      email: "{{ traefik.config.resolver.acme.email }}"
+      storage: "{{ traefik.config.resolver.acme.storage }}"
+      caServer: "{{ traefik.config.resolver.acme.caServer }}"
+      dnsChallenge:
+        provider: "{{ traefik.config.resolver.acme.dnsChallenge.provider }}"
+        delayBeforeCheck: "{{ traefik.config.resolver.acme.dnsChallenge.delayBeforeCheck }}"
+        resolvers: "{{ traefik.config.resolver.acme.dnsChallenge.resolvers }}"
+log:
+  level: DEBUG
+accessLog: {}
