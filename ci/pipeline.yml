@@ -2,53 +2,46 @@
 
 resources:
 
-  # - name: src
-  #   type: git
-  #   source:
-  #     uri: https://github.com/mamercad/cloudmason.git
-  #     branch: ci
+  - name: src
+    type: git
+    source:
+      uri: https://github.com/mamercad/cloudmason.git
+      branch: ci
 
 jobs:
 
   - name: site
     plan:
 
-      # - get: src
-      #   trigger: true
-
-      # - task: ping
-      #   file: src/ci/tasks/ping.yml
+      - get: src
+        trigger: true
 
       - task: ping
-        params:
-          count: 4
-          target: usg1.cloudmason.org
         config:
+          params:
+            ANSIBLE_FORCE_COLOR: true
+            CONCOURSE_SSH_KEY: ((CONCOURSE_SSH_KEY))
+          inputs:
+            - name: src
           platform: linux
           image_resource:
             type: registry-image
             source:
-              repository: busybox
+              repository: mamercad/cloudmason
           run:
-            path: sh
+            path: bash
             args:
-              - -cx
+              - -c
               - |
-                ping -c${count} $target
-
-      # - task: output
-      #   config:
-      #     platform: linux
-      #     image_resource:
-      #       type: registry-image
-      #       source:
-      #         repository: busybox
-      #     run:
-      #       path: sh
-      #       args:
-      #         - -cx
-      #         - |
-      #           pwd
-      #           ls -l .
-      #     inputs:
-      #       - name: repo
+                stty cols 120
+                cd src/ansible
+                ansible --version
+                echo
+                touch ~/concourse.key
+                chmod 600 ~/concourse.key
+                echo "$CONCOURSE_SSH_KEY" | base64 -d > ~/concourse.key
+                eval $(ssh-agent)
+                ssh-add ~/concourse.key
+                ssh-add -l
+                echo
+                ansible -i inventory.yml -m ping all
