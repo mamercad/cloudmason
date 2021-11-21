@@ -1,8 +1,11 @@
-IMAGE := foo
-VERSION := 0.0.1
-CONCOURSE_TARGET := cloudmason
-PIPELINE := cloudmason
-JOB := job
+SHELL := $(SHELL)
+
+IMAGE := $(IMAGE)
+TAG := $(TAG)
+
+CONCOURSE_TARGET := $(CONCOURSE_TARGET)
+PIPELINE := $(PIPELINE)
+JOB := $(JOB)
 
 .PHONY: all
 .DEFAULT_GOAL: help
@@ -12,32 +15,26 @@ help: ## Shows this help
 		fgrep -v fgrep | sed -e 's/\\$$//' | sed -e 's/##//'
 
 build: ## Build the Docker images
-	@docker build -t $(IMAGE):$(shell cat VERSION) .
-	@docker tag $(IMAGE):$(shell cat VERSION) $(IMAGE):latest
+	@docker build -t $(IMAGE):$(TAG) .
 
 push: ## Push the Docker images
-	@docker push $(IMAGE):$(shell cat VERSION)
-	@docker push $(IMAGE):latest
+	@docker push $(IMAGE):$(TAG)
 
 run: ## Run the (local) Docker image
-	@docker run --rm -it $(IMAGE):$(shell cat VERSION)
+	@docker run --rm -it $(IMAGE):$(TAG)
 
 validate: ## Validate the pipeline
 	@fly --target $(CONCOURSE_TARGET) \
 		validate-pipeline \
 		--config pipeline.yml
-# var SLACK_BOT_TOKEN=$(SLACK_BOT_TOKEN) \
-# var SLACK_CHANNEL=$(SLACK_CHANNEL)
 
 set: ## Set the pipeline
 	@fly --target $(CONCOURSE_TARGET) \
 		set-pipeline \
 		--config pipeline.yml \
 		--pipeline $(PIPELINE) \
+		--var CONCOURSE_SSH_KEY="${CONCOURSE_SSH_KEY}" \
 		--non-interactive
-
-#		--var SLACK_BOT_TOKEN=$(SLACK_BOT_TOKEN) \
-#		--var SLACK_CHANNEL=$(SLACK_CHANNEL)
 
 destroy: ## Destroy the pipeline
 	@fly --target $(CONCOURSE_TARGET) \
@@ -55,6 +52,3 @@ trigger: ## Launch the pipeline
 	trigger-job \
 	--job $(PIPELINE)/$(JOB) \
 	--watch
-
-# shipit: build push set launch ## Build, push, set and launch
-# 	@echo shipit
