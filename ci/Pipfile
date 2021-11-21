@@ -1,0 +1,15 @@
+[[source]]
+url = "https://pypi.org/simple"
+verify_ssl = true
+name = "pypi"
+
+[packages]
+ansible = "==4.8.0"
+
+[dev-packages]
+ansible-lint = "==5.2.1"
+awxkit = "==19.1.0"
+kubernetes = "==18.20.0"
+
+[requires]
+python_version = "3.8.12"
