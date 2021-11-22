@@ -26,7 +26,7 @@ jobs:
             CONCOURSE_TARGET: cloudmason
             PIPELINE: cloudmason
             JOB: job
-            DOCKER_IO_USERNAME: mamercad
+            DOCKER_IO_USERNAME: ((DOCKER_IO_USERNAME))
             DOCKER_IO_PASSWORD: ((DOCKER_IO_PASSWORD))
           inputs:
             - name: src
