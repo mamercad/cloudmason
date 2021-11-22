@@ -34,6 +34,8 @@ set: ## Set the pipeline
 		--config pipeline.yml \
 		--pipeline $(PIPELINE) \
 		--var CONCOURSE_SSH_KEY="${CONCOURSE_SSH_KEY}" \
+		--var DOCKER_IO_USERNAME="${DOCKER_IO_USERNAME}" \
+		--var DOCKER_IO_PASSWORD="${DOCKER_IO_PASSWORD}" \
 		--non-interactive
 
 destroy: ## Destroy the pipeline
