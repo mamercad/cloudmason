@@ -10,11 +10,48 @@ resources:
 
 jobs:
 
-  - name: site
+  - name: ci-image
     plan:
 
       - get: src
-        trigger: true
+        trigger: false
+
+      - task: docker
+        privileged: true
+        config:
+          params:
+            SHELL: /bin/bash
+            IMAGE: mamercad/cloudmason
+            TAG: latest
+            CONCOURSE_TARGET: cloudmason
+            PIPELINE: cloudmason
+            JOB: job
+            DOCKER_IO_USERNAME: mamercad
+            DOCKER_IO_PASSWORD: ((DOCKER_IO_PASSWORD))
+          inputs:
+            - name: src
+          platform: linux
+          image_resource:
+            type: registry-image
+            source:
+              repository: amidos/dcind
+          run:
+            path: bash
+            args:
+              - -ec
+              - |
+                source /docker-lib.sh
+                start_docker
+                cd src/ci
+                echo "$DOCKER_IO_PASSWORD" | base64 -d | docker login --username $DOCKER_IO_USERNAME --password-stdin
+                make build
+                make push
+
+  - name: ansible
+    plan:
+
+      - get: src
+        trigger: false
 
       - task: ping
         config:
