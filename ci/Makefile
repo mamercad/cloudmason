@@ -36,6 +36,7 @@ set: ## Set the pipeline
 		--var CONCOURSE_SSH_KEY="${CONCOURSE_SSH_KEY}" \
 		--var DOCKER_IO_USERNAME="${DOCKER_IO_USERNAME}" \
 		--var DOCKER_IO_PASSWORD="${DOCKER_IO_PASSWORD}" \
+		--var SLACK_WEBHOOK="${SLACK_WEBHOOK}" \
 		--non-interactive
 
 destroy: ## Destroy the pipeline

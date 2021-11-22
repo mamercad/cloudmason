@@ -1,5 +1,30 @@
 ---
 
+slack_notify: &slack_notify
+  on_success:
+    put: slack-alert
+    params:
+      alert_type: success
+  on_failure:
+    put: slack-alert
+    params:
+      alert_type: failed
+  on_abort:
+    put: slack-alert
+    params:
+      alert_type: aborted
+  on_error:
+    put: slack-alert
+    params:
+      alert_type: errored
+
+resource_types:
+
+  - name: slack-alert
+    type: docker-image
+    source:
+      repository: arbourd/concourse-slack-alert-resource
+
 resources:
 
   - name: src
@@ -7,6 +32,11 @@ resources:
     source:
       uri: https://github.com/mamercad/cloudmason.git
       branch: main
+
+  - name: slack-alert
+    type: slack-alert
+    source:
+      url: ((SLACK_WEBHOOK))
 
 jobs:
 
@@ -47,6 +77,8 @@ jobs:
                 make build
                 make push
 
+    <<: *slack_notify
+
   - name: ansible
     plan:
 
@@ -82,3 +114,5 @@ jobs:
                 ssh-add -l
                 echo
                 ansible -i inventory.yml -m ping all
+
+    <<: *slack_notify
