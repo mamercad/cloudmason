@@ -6,7 +6,7 @@ resources:
     type: git
     source:
       uri: https://github.com/mamercad/cloudmason.git
-      branch: ci
+      branch: main
 
 jobs:
 
