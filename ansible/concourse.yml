@@ -4,9 +4,7 @@
   connection: ssh
   gather_facts: false
   become: false
-
   tasks:
-
     - name: include concourse role (user tasks)
       ansible.builtin.include_role:
         name: concourse
