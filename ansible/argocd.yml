@@ -4,9 +4,7 @@
   connection: local
   gather_facts: false
   become: false
-
   tasks:
-
     - name: include argocd role (main tasks)
       ansible.builtin.include_role:
         name: argocd
