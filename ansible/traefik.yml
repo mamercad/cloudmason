@@ -4,9 +4,7 @@
   connection: ssh
   gather_facts: true
   become: false
-
   tasks:
-
     - name: include traefik role (main tasks)
       ansible.builtin.include_role:
         name: traefik
