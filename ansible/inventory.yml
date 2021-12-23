@@ -4,6 +4,7 @@ all:
     lenovo:
     net1:
     net2:
+    stackstorm:
   children:
     macos:
       hosts:
